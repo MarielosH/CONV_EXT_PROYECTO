@@ -1,0 +1,97 @@
+"MENU_PRINCIPAl": [
+    {
+      "IP": "",
+      "ABREVIACION": "Complementos",
+      "COLOR": "text-black",
+      "ICONO": "fa fa-cogs",
+      "ID_MENU": "",
+      "ID_MENU_SISTEMA": "742",
+      "MENU": "Complementos",
+      "PARAMETROS": "{}",
+      "TOOLTIP": "Complementos",
+      "URL_MENU": "mantenimientos/complementos",
+      "hijos": [
+        
+      ]
+    },
+    {
+      "IP": "",
+      "ABREVIACION": "Dependencias Nominales",
+      "COLOR": "text-black",
+      "ICONO": "fa fa-bank",
+      "ID_MENU": "",
+      "ID_MENU_SISTEMA": "735",
+      "MENU": "Dependencias Nominales",
+      "PARAMETROS": "{}",
+      "TOOLTIP": "Dependencias Nominales",
+      "URL_MENU": "mantenimientos/dependencias",
+      "hijos": [
+        
+      ]
+    },
+    {
+      "IP": "",
+      "ABREVIACION": "Gestion Dependencia",
+      "COLOR": "text-black",
+      "ICONO": "fa fa-server",
+      "ID_MENU": "",
+      "ID_MENU_SISTEMA": "709",
+      "MENU": "Gestion Dependencia",
+      "PARAMETROS": "{}",
+      "TOOLTIP": "Administración Dependencias",
+      "URL_MENU": "mantenimientos",
+      "hijos": [
+        {
+          "IP": "",
+          "ABREVIACION": "Atendidos Dependencia",
+          "COLOR": "text-black",
+          "ICONO": "fa fa-check-square-o",
+          "ID_MENU": "",
+          "ID_MENU_SISTEMA": "712",
+          "MENU": "Atendidos Dependencia",
+          "PARAMETROS": "{}",
+          "TOOLTIP": "Atendidos Dependencia",
+          "URL_MENU": "gestiones/2"
+        },
+        {
+          "IP": "",
+          "ABREVIACION": "Rechazados Dependencia",
+          "COLOR": "text-black",
+          "ICONO": "fa fa-legal",
+          "ID_MENU": "",
+          "ID_MENU_SISTEMA": "711",
+          "MENU": "Rechazados Dependencia",
+          "PARAMETROS": "{}",
+          "TOOLTIP": "Rechazados Dependencia",
+          "URL_MENU": "gestiones/3"
+        },
+        {
+          "IP": "",
+          "ABREVIACION": "Solicitud Dependencia",
+          "COLOR": "text-black",
+          "ICONO": "fa fa-archive",
+          "ID_MENU": "",
+          "ID_MENU_SISTEMA": "710",
+          "MENU": "Solicitud Dependencia",
+          "PARAMETROS": "{}",
+          "TOOLTIP": "Creación Dependencia",
+          "URL_MENU": "gestiones/1"
+        }
+      ]
+    },
+    {
+      "IP": "",
+      "ABREVIACION": "Reporte Sistema",
+      "COLOR": "text-gray",
+      "ICONO": "fa fa-bullseye",
+      "ID_MENU": "",
+      "ID_MENU_SISTEMA": "747",
+      "MENU": "Reportes  Sistema",
+      "PARAMETROS": "{}",
+      "TOOLTIP": "Reportes",
+      "URL_MENU": "reportes",
+      "hijos": [
+        
+      ]
+    }
+  ]
