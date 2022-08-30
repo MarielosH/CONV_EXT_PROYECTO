@@ -1,0 +1,80 @@
+
+
+        <div class="logo">
+          <a class="simple-text logo-mini">
+            <div class="logo-img">
+                <img src="./assets/img/logoOJBlanco.png"/>
+            </div>
+          </a>
+            <a href="/" class="simple-text logo-normal">
+              Organismo Judicial
+            </a>
+        </div>
+
+
+        <div class="sidebar-wrapper">
+            <!-- user profile -->
+            <div class="user" *ngIf="isMobileMenu()">
+                <div class="photo">
+                    <!-- <img src="./assets/img/faces/avatar.jpg" /> -->
+                    <img [src]="avatar" />
+                </div>
+                <div class="user-info">
+                    <a data-toggle="collapse" href="#collapseExample" class="collapsed">
+                        <span>
+                            {{usuario}}
+                            <b class="caret"></b>
+                        </span>
+                    </a>
+                    <div class="collapse" id="collapseExample">
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" class="nav-link">
+                                    <!-- <span class="sidebar-mini">MP</span> -->
+                                    <span class="sidebar-normal">{{nombre}}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" class="nav-link">
+                                    <!-- <span class="sidebar-mini">EP</span> -->
+                                    <span class="sidebar-normal">{{correo}}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" class="nav-link">
+                                    <!-- <span class="sidebar-mini">S</span> -->
+                                    <span class="sidebar-normal" [routerLink]="['/login']" (click)="logOut()">Cerrar Sesión</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <ul class="nav">
+                <li routerLinkActive="active" *ngFor="let menuitem of menuItems" class="nav-item">
+                    <!--If is a single link-->
+                    <a [routerLink]="['/'+menuitem.path]" *ngIf="menuitem.type === 'link'" class="nav-link">
+                        <i class="{{menuitem.icontype}}"></i>
+                        <p>{{menuitem.title}}</p>
+                    </a>
+                    <!--If it have a submenu-->
+                    <a data-toggle="collapse" href="#{{menuitem.collapse}}" *ngIf="menuitem.type === 'sub'" (click)="updatePS()" class="nav-link">
+                        <i class="{{menuitem.icontype}}"></i>
+                        <p>{{menuitem.title}}<b class="caret"></b></p>
+                    </a>
+
+                    <!--Display the submenu items-->
+                    <div id="{{menuitem.collapse}}" class="collapse" *ngIf="menuitem.type === 'sub'">
+                        <ul class="nav">
+                            <li routerLinkActive="active" *ngFor="let childitem of menuitem.children; let i = index;" class="nav-item">
+                                <a  [routerLink]='["/"+menuitem.path, childitem.path]' class="nav-link">
+                                    <i class="{{childitem.ab}}"></i>
+                                    <span class="sidebar-normal">{{childitem.title}}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
