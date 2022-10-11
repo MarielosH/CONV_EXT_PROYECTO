@@ -1,0 +1,170 @@
+<br />
+<br />
+<br />
+<br />
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Información Personal</ng-template>
+      <div class="row">
+        <div class="form-group col">
+          <mat-form-field color="warn"  class="textos">
+            <input matInput formControlName="nombres" type="text" maxlength="150" placeholder="Nombres" required>
+            <mat-error *ngIf="this.firstFormGroup.controls.nombres.errors?.required">
+              Nombres Requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="primerApellido" type="text" maxlength="150" placeholder="Primer Apellido" required>
+            <mat-error *ngIf="this.firstFormGroup.controls.primerApellido.errors?.required">
+              Primer Apellido Requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn"  class="textos">
+            <input matInput formControlName="segundoApellido" type="text" maxlength="150" placeholder="Segundo Apellido" required>
+            <mat-error *ngIf="this.firstFormGroup.controls.primerApellido.errors?.required">
+              Segundo Apellido Requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>        
+      <div class="row"> 
+        <div class="form-group col">
+          <mat-form-field color="warn"  style="font-size: 12px;">
+            <input matInput (click)="picker4.open()" formControlName="fechaNac" (ngModelChange)="parseDate($event)"
+              [matDatepicker]="picker4" placeholder="FECHA NACIMIENTO">
+            <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #picker4></mat-datepicker>
+            <mat-error *ngIf="this.firstFormGroup.controls.fechaNac.errors?.required">
+              FECHA NACIMIENTO REQUERIDO
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="edad" type="number" placeholder="Edad" required>
+            <mat-error *ngIf="this.firstFormGroup.controls.edad.errors?.required">
+              Edad Requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field >
+            <mat-select placeholder="SEXO" formControlName="sexo" required>
+              <mat-option *ngFor="let sexos of generos" [value]="sexos.ID"
+                style="font-size: 12px;">{{sexos.DESCRIPCION}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row"> 
+        <div class="form-group col">
+          <mat-form-field color="warn"  class="textos">
+            <input matInput formControlName="profesion" class="textos" type="text" maxlength="2048"
+              placeholder="Profesión u Oficio" >
+            <mat-error *ngIf="this.firstFormGroup.controls.profesion.errors?.required">
+              Profesión u Oficio Requerido
+            </mat-error>
+            <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field >
+            <mat-select placeholder="ESTADO CIVIL" formControlName="estadoCivilAspirante" required>
+              <mat-option *ngFor="let estados of estadoCivil" [value]="estados.ID"
+                style="font-size: 12px;">{{estados.DESCRIPCION}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn"  class="textos">
+            <input matInput formControlName="nacionalidad" class="textos" type="text" maxlength="2048"
+              placeholder="Nacionalidad" >
+            <mat-error *ngIf="this.firstFormGroup.controls.nacionalidad.errors?.required">
+              Nacionalidad Requerida
+            </mat-error>
+            <mat-hint align="end">{{f.nacionalidad.value.length}} / 2048</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row"> 
+        <div class="form-group col">
+          <mat-form-field color="warn"  class="textos">
+            <input matInput formControlName="direccion" class="textos" type="text" maxlength="2048"
+              placeholder="Dirección de domicilio" >
+            <mat-error *ngIf="this.firstFormGroup.controls.direccion.errors?.required">
+              Dirección de domicilio Requerido
+            </mat-error>
+            <mat-hint align="end">{{f.direccion.value.length}} / 2048</mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field>
+            <mat-select placeholder="DEPARTAMENTO" formControlName="selDepartamento">
+              <mat-option (onSelectionChange)="getMunicipio($event,deptos.DEPARTAMENTO)"
+                *ngFor="let deptos of listaDepartamentos" [value]="deptos.DEPARTAMENTO"
+                style="font-size: 12px;">{{deptos.NOMBRE_DEPARTAMENTO}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="this.firstFormGroup.controls.selDepartamento.errors?.required">
+              DEPARTAMENTO REQUERIDO
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field>
+            <mat-select placeholder="MUNICIPIO" formControlName="selMunicipio">
+              <mat-option *ngFor="let munis of municipios" [value]="munis.MUNICIPIO"
+                style="font-size: 12px;">{{munis.NOMBRE_MUNICIPIO}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="this.firstFormGroup.controls.selMunicipio.errors?.required">
+              MUNICIPIO REQUERIDO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Amount & Stock</ng-template>
+      <mat-form-field>
+        <mat-label>Amount</mat-label>
+        <input matInput placeholder="Amount" formControlName="amount" required>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Stock</mat-label>
+        <input matInput placeholder="Stock" formControlName="stock" required>
+      </mat-form-field>
+      <br />
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You are now done.</p>
+
+    <mat-list>
+      <mat-list-item> <strong>Name:</strong> {{ this.firstFormGroup.value.name }}</mat-list-item>
+      <mat-list-item> <strong>Description:</strong> {{ this.firstFormGroup.value.description }}</mat-list-item>
+      <mat-list-item> <strong>Amount:</strong> {{ this.secondFormGroup.value.amount }}</mat-list-item>
+      <mat-list-item> <strong>Stock:</strong> {{ this.secondFormGroup.value.stock }}</mat-list-item>
+    </mat-list>
+
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+      <button mat-button (click)="submit()">Submit</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

@@ -77,6 +77,35 @@ export const PerfilesPersonas = [
     
 ];
 
+export const Sexo = [
+    {
+        ID: 0,
+        DESCRIPCION: 'FEMENINO'
+    },
+    {
+        ID: 1,
+        DESCRIPCION: 'MASCULINO'
+    }
+]
+
+export const EstadoCivil = [
+    {
+        ID: 0,
+        DESCRIPCION: 'SOLTERO(A)'
+    },
+    {
+        ID: 1,
+        DESCRIPCION: 'CASADO(A)'
+    },
+    {
+        ID: 2,
+        DESCRIPCION: 'UNION LEGALMENTE DECLARADA'
+    },
+    {
+        ID: 3,
+        DESCRIPCION: 'OTRO'
+    }
+]
 export const Aplicaciones = [
     {
         TITULO: 'Convocatoria Externa No. 004-2022/lcdz',

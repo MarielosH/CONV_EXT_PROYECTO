@@ -17,6 +17,7 @@ import { PerfilSolicitudEmpleoComponent } from './perfil-solicitud-empleo/perfil
 import { ListaJefevComponent } from './lista-jefev/lista-jefev.component';
 import { BandejaComponent } from './bandeja/bandeja.component';
 import { VerPerfilesComponent } from './ver-perfiles/ver-perfiles.component';
+import { PerfilwizardComponent } from './perfilwizard/perfilwizard.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { VerPerfilesComponent } from './ver-perfiles/ver-perfiles.component';
   PerfilSolicitudEmpleoComponent,
   ListaJefevComponent,
   BandejaComponent,
-  VerPerfilesComponent],
+  VerPerfilesComponent,
+  PerfilwizardComponent],
   imports: [
     CommonModule,
     ConvocatoriasExternasRoutingModule,

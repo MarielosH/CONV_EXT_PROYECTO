@@ -11,6 +11,7 @@ import { PerfilSolicitudEmpleoComponent } from './perfil-solicitud-empleo/perfil
 import { ListaJefevComponent } from './lista-jefev/lista-jefev.component';
 import { BandejaComponent } from './bandeja/bandeja.component';
 import { VerPerfilesComponent } from './ver-perfiles/ver-perfiles.component';
+import { PerfilwizardComponent } from './perfilwizard/perfilwizard.component';
 
 const routes: Routes = [
  /* {
@@ -60,6 +61,10 @@ const routes: Routes = [
   {
     path: 'ver-perfiles',
     component: VerPerfilesComponent
+  }, 
+  {
+    path: 'wizard',
+    component: PerfilwizardComponent
   }
 ];
 
