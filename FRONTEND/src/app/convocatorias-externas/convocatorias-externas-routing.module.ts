@@ -44,7 +44,7 @@ const routes: Routes = [
   },
   {
     path: 'perfil-solicitud-empleo',
-    component: PerfilSolicitudEmpleoComponent
+    component: PerfilwizardComponent
   },
   {
     path: 'detalle',

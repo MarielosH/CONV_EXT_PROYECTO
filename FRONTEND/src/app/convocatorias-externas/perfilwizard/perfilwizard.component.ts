@@ -8,15 +8,19 @@ import swal from 'sweetalert2';
 import { AuthService } from '../../recursos/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConvocatoriasExternasService } from '../convocatorias-externas.service';
-import { Sexo, EstadoCivil} from 'app/constantes';
+import { Sexo, EstadoCivil, TiposLicencia, Discapacidad, Raza , Idioma} from 'app/constantes';
 @Component({
   selector: 'app-perfilwizard',
   templateUrl: './perfilwizard.component.html',
   styleUrls: ['./perfilwizard.component.scss']
 })
 export class PerfilwizardComponent implements OnInit {
+  cantidiomas = 0;
   generos = [];
-  estadoCivil = []; 
+  estadoCivil = [];
+  tiposLicencias = [];
+  discapacidades = [];
+  etnias = [];
   floatLabelControl = new FormControl('none');
   floatLabelControl2 = new FormControl('none');
   title = 'newMat';
@@ -31,6 +35,7 @@ export class PerfilwizardComponent implements OnInit {
   validaFechaPublica = false;
   checked = false;
   listaDepartamentos;
+  listaComunidadLinguistica;
   municipios;
   selMunicipio;
   selDepartamento;
@@ -53,6 +58,7 @@ export class PerfilwizardComponent implements OnInit {
   nit;
   nombreClase;
   numeroLicencia;
+  discapacidad;
   idioma1;
   idioma2;
   idioma3;
@@ -62,10 +68,96 @@ export class PerfilwizardComponent implements OnInit {
   telPadre;
   vivePadre;
   profesionPadre;
+  trabajaPadre;
   lugarTrabajoPadre;
+  entnia;
+  comunidadLinguistica;
   isLinear = true;
+  etniasPerfil = [];
+  comunidadesLinguisticas = [];
+  idiomas: Idioma[] = [];
+  listaDependientes = [];
+  listarazaPerfil;
+  listaComunidadesLinguisticas;
+  madre;
+  fechaNacmadre;
+  telmadre;
+  vivemadre;
+  profesionmadre;
+  lugarTrabajomadre;
+  trabajamadre;
+  hermano1;
+  fechaNachermano1;
+  telhermano1;
+  vivehermano1;
+  profesionhermano1;
+  lugarTrabajohermano1;
+  trabajahermano1;
+  hermano2;
+  fechaNachermano2;
+  telhermano2;
+  vivehermano2;
+  profesionhermano2;
+  lugarTrabajohermano2;
+  trabajahermano2;
+  hermano3;
+  fechaNachermano3;
+  telhermano3;
+  vivehermano3;
+  profesionhermano3;
+  lugarTrabajohermano3;
+  trabajahermano3;
+  conyuge;
+  fechaNacconyuge;
+  telconyuge;
+  viveconyuge;
+  profesionconyuge;
+  lugarTrabajoconyuge;
+  trabajaconyuge;
+  hijos;
+  noHijo;
+  dependientes;
+  parentesco;
+  nombreFamiliar;
+  dependencia;
+  puesto;
+  parentesco1;
+  nombreFamiliar1;
+  dependencia1;
+  puesto1;
+  parentesco2;
+  nombreFamiliar2;
+  dependencia2;
+  puesto2;
+  gradoAprobado;
+  institucionEstudios;
+  constancia;
+  institucionEstudios1;
+  constancia1;
+  gradoAprobado1;
+  institucionEstudios2;
+  constancia2;
+  gradoAprobado2;
+  anioGraduacion;
+  carrera;
+  carreraU;
+  universidad;
+  constancia3;
+  semestreA;
+  cierre;
+  gradoTecnico;
+  gradoLicenciatura;
+  colegiado;
+  vigenciaColegiado;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
+  thirdFormGroup: FormGroup;
+  fourthFormGroup: FormGroup;
+  fifthFormGroup: FormGroup;
+  sixthFormGroup: FormGroup;
+  seventhFormGroup: FormGroup;
+  eighthFormGroup: FormGroup;
+  nineFormGroup: FormGroup;
 
   constructor(private convocatoriasService: ConvocatoriasExternasService, public authService: AuthService,
     public HttpClient: HttpClient, private fb: FormBuilder, private _location: Location, private datePipe: DatePipe,
@@ -77,33 +169,216 @@ export class PerfilwizardComponent implements OnInit {
   ngOnInit() {
     this.generos = Sexo;
     this.estadoCivil = EstadoCivil;
+    this.tiposLicencias = TiposLicencia;
+    this.discapacidades = Discapacidad;
+    this.etnias = Raza;
     this.firstFormGroup = this.fb.group({
-      nombres: ['', Validators.required],
-      primerApellido: ['', Validators.required],
-      segundoApellido: ['', Validators.required],
+      nombres: [localStorage.getItem('nombres'), Validators.required],
+      primerApellido: [localStorage.getItem('primerApellido'), Validators.required],
+      segundoApellido: [localStorage.getItem('segundoApellido'), Validators.required],
       fechaNac: ['', Validators.required],
       edad: ['', Validators.required],
       sexo: ['', Validators.required],
       estadoCivilAspirante: ['', Validators.required],
       nacionalidad: ['', Validators.required],
       profesion: ['', Validators.required],
-      direccion: ['', Validators.required], 
-      selDepartamento: ['', Validators.required], 
-      selMunicipio: ['', Validators.required] 
+      direccion: ['', Validators.required],
+      selDepartamento: ['', Validators.required],
+      selMunicipio: ['', Validators.required],
+      correo: [localStorage.getItem('correo'), Validators.required],
+      telefonoCasa: ['', Validators.required],
+      telefonoCelular: ['', Validators.required],
+      dpi: [localStorage.getItem('cui'), Validators.required],
+      fechaVencDPI: ['', Validators.required],
+      nit: ['', Validators.required],
+      nombreClase: ['', Validators.required],
+      numeroLicencia: [''],
+      discapacidad: ['', Validators.required]
     });
-    this.secondFormGroup = this.fb.group({
-      amount: ['', Validators.required],
-      stock: ['', Validators.required]
+    this.secondFormGroup = this.fb.group({    
+      etnia: ['', Validators.required],
+      comunidadLinguistica: ['',Validators.required],
+      idioma1: '',
+      idiomas: [[]]
     });
 
-    this.convocatoriasService
-    .getListaDepartamentosConv()
-    .subscribe(
-      data => {
-        this.listaDepartamentos = data;
-      });
+    this.thirdFormGroup = this.fb.group({
+      listarazaPerfil: ''
+    });
+
+    this.fourthFormGroup = this.fb.group({
+      listaComunidadesLinguisticas: ''
+    });
+
+    this.fifthFormGroup = this.fb.group({
+      idioma1: '',
+      idioma2: '',
+      idioma3: '',
+      idioma4: ''
+    });
+
+    this.sixthFormGroup = this.fb.group({
+      padre: [''],
+      fechaNacPadre: [''],
+      telPadre: [''],
+      vivePadre: [''],
+      profesionPadre: [''],
+      lugarTrabajoPadre: [''],
+      trabajaPadre: [''],
+      madre: [''],
+      fechaNacmadre: [''],
+      telmadre: [''],
+      vivemadre: [''],
+      profesionmadre: [''],
+      lugarTrabajomadre: [''],
+      trabajamadre: [''],
+      hermano1: [''],
+      fechaNachermano1: [''],
+      telhermano1: [''],
+      vivehermano1: [''],
+      profesionhermano1: [''],
+      lugarTrabajohermano1: [''],
+      trabajahermano1: [''],
+      hermano2: [''],
+      fechaNachermano2: [''],
+      telhermano2: [''],
+      vivehermano2: [''],
+      profesionhermano2: [''],
+      lugarTrabajohermano2: [''],
+      trabajahermano2: [''],
+      hermano3: [''],
+      fechaNachermano3: [''],
+      telhermano3: [''],
+      vivehermano3: [''],
+      profesionhermano3: [''],
+      lugarTrabajohermano3: [''],
+      trabajahermano3: [''],
+      conyuge: [''],
+      fechaNacconyuge: [''],
+      telconyuge: [''],
+      viveconyuge: [''],
+      profesionconyuge: [''],
+      lugarTrabajoconyuge: [''],
+      trabajaconyuge: ['']
+
+    });
+
+    this.seventhFormGroup = this.fb.group({
+      hijos: [''],
+      noHijo: [''],
+      dependientes: ['']
+    });
+    this.eighthFormGroup = this.fb.group({
+      parentesco: [''],
+      nombreFamiliar: [''],
+      dependencia: [''],
+      puesto: [''],
+      parentesco1: [''],
+      nombreFamiliar1: [''],
+      dependencia1: [''],
+      puesto1: [''],
+      parentesco2: [''],
+      nombreFamiliar2: [''],
+      dependencia2: [''],
+      puesto2: ['']
+    });
+
+    this.nineFormGroup = this.fb.group({
+      gradoAprobado: [''],
+      institucionEstudios: [''],
+      constancia: [''],
+      institucionEstudios1: [''],
+      constancia1: [''],
+      gradoAprobado1: [''],
+      institucionEstudios2: [''],
+      constancia2: [''],
+      gradoAprobado2: [''],
+      anioGraduacion: [''],
+      carrera: [''],
+      carreraU: [''],
+      universidad: [''],
+      constancia3: [''],
+      semestreA: [''],
+      cierre: [''],
+      gradoTecnico: [''],
+      gradoLicenciatura: [''],
+      colegiado: [''],
+      vigenciaColegiado: ['']
+    });
+    this.obtenerDepartamentos();
+    this.obtenerComunidadesLinguisticas();
   }
 
+
+
+  obtenerDepartamentos() {
+    this.convocatoriasService
+      .getListaDepartamentosConv()
+      .subscribe(
+        data => {
+          this.listaDepartamentos = data;
+        });
+  }
+
+  obtenerComunidadesLinguisticas() {
+    this.convocatoriasService
+      .getListaComunidadLinguisticaConv()
+      .subscribe(
+        data => {
+          this.listaComunidadLinguistica = data;
+        });
+  }
+  cambioListaEtnias(e) {
+    //console.log(e);
+    if (e.option.selected === true) {
+      this.etniasPerfil.push(e.option.value);
+    } else {
+      let index = this.etniasPerfil.indexOf(e.option.value);
+      this.etniasPerfil.splice(index, 1);
+    }
+    console.log(this.etniasPerfil);
+    //console.log(this.listarazaPerfil);
+  }
+
+  agregarIdioma(){
+    console.log("se agrega un idioma"); 
+    this.idiomas.push({
+      id_idioma : 0,
+      idioma: "",
+      habla: "",
+      lee: "",
+      escribe: ""
+    });
+  }
+  cambioListaComunidadesLinguistica(e) {
+    // console.log(e);
+    if (e.option.selected === true) {
+      this.comunidadesLinguisticas.push(e.option.value);
+    } else {
+      let index = this.comunidadesLinguisticas.indexOf(e.option.value);
+      this.comunidadesLinguisticas.splice(index, 1);
+    }
+    console.log(this.comunidadesLinguisticas);
+    //console.log(this.listaComunidadesLinguisticas);
+  }
+
+  crearPerfil(){
+    this.obtenerDepartamentos();
+    this.obtenerComunidadesLinguisticas();
+   // swal("Perfil Solicitud Empleo", "Cambios Guardados", "success")
+  }
+  cambioListaDependientes(e) {
+    // console.log(e);
+    if (e.option.selected === true) {
+      this.listaDependientes.push(e.option.value);
+    } else {
+      let index = this.listaDependientes.indexOf(e.option.value);
+      this.listaDependientes.splice(index, 1);
+    }
+    console.log(this.listaDependientes);
+    //console.log(this.listaComunidadesLinguisticas);
+
+  }
   getMunicipio(event: any, valDepto: number) {
     if (event.isUserInput) {
       this.convocatoriasService.getListaMunicipioConv(valDepto).subscribe(

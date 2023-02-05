@@ -354,5 +354,9 @@ export class CreacionConvocatoriaComponent implements OnInit {
   cancelar(){
     this.router.navigate(['/mantenimientos/gestiones/1']);
   }
+
+  crearConvocatoria(){
+    swal("Convocaria Externa", "Convocatoria Creada", "success")
+  }
   
 }

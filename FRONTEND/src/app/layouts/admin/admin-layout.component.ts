@@ -132,6 +132,11 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit  {
                         let encryptPermisos=new cryptoOJ().encrypt("permisos2"+this.appSettings.sistemaId,this.salida.SESSION.PERMISOS.toString());
                         this.authService.saveLocalData("permisos2"+this.appSettings.sistemaId,encryptPermisos);
                         this.authService.saveLocalData("permisos"+this.appSettings.sistemaId,this.salida.SESSION.PERMISOS.toString());
+                        this.authService.saveLocalData("nombres",data.NOMBRE);
+                        this.authService.saveLocalData("primerApellido", data.PRIMER_APELLIDO);
+                        this.authService.saveLocalData("segundoApellido", data.SEGUNDO_APELLIDO);
+                        this.authService.saveLocalData("correo", data.CORREO);
+                        this.authService.saveLocalData("cui", data.CUI);
                         this.authService.getConstantes().subscribe(
                             data => {
                                 if(data!=undefined){

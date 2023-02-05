@@ -2,14 +2,27 @@
 <br />
 <br />
 <br />
+<br />
+<div class="row">
+  <div class="col-10"></div>
+  <div class="col-2">
+    <div class="button-group">
+      <button mat-raised-button class="btn btn-primary btn-block"  (click)="crearPerfil()"
+        style="font-size: 12px;">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<br />
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
-      <ng-template matStepLabel>Información Personal</ng-template>
+      <ng-template matStepLabel></ng-template>
+      <mat-label style="font-size: 24px; "> <b>Información Básica </b></mat-label>
       <div class="row">
         <div class="form-group col">
-          <mat-form-field color="warn"  class="textos">
-            <input matInput formControlName="nombres" type="text" maxlength="150" placeholder="Nombres" required>
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="nombres" type="text" maxlength="150" placeholder="NOMBRES" required>
             <mat-error *ngIf="this.firstFormGroup.controls.nombres.errors?.required">
               Nombres Requerido
             </mat-error>
@@ -17,24 +30,26 @@
         </div>
         <div class="form-group col">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="primerApellido" type="text" maxlength="150" placeholder="Primer Apellido" required>
+            <input matInput formControlName="primerApellido" type="text" maxlength="150" placeholder="PRIMER APELLIDO"
+              required>
             <mat-error *ngIf="this.firstFormGroup.controls.primerApellido.errors?.required">
               Primer Apellido Requerido
             </mat-error>
           </mat-form-field>
         </div>
         <div class="form-group col">
-          <mat-form-field color="warn"  class="textos">
-            <input matInput formControlName="segundoApellido" type="text" maxlength="150" placeholder="Segundo Apellido" required>
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="segundoApellido" type="text" maxlength="150" placeholder="SEGUNDO APELLIDO"
+              required>
             <mat-error *ngIf="this.firstFormGroup.controls.primerApellido.errors?.required">
               Segundo Apellido Requerido
             </mat-error>
           </mat-form-field>
         </div>
-      </div>        
-      <div class="row"> 
+      </div>
+      <div class="row">
         <div class="form-group col">
-          <mat-form-field color="warn"  style="font-size: 12px;">
+          <mat-form-field color="warn" style="font-size: 12px;">
             <input matInput (click)="picker4.open()" formControlName="fechaNac" (ngModelChange)="parseDate($event)"
               [matDatepicker]="picker4" placeholder="FECHA NACIMIENTO">
             <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
@@ -46,26 +61,26 @@
         </div>
         <div class="form-group col">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="edad" type="number" placeholder="Edad" required>
+            <input matInput formControlName="edad" type="number" placeholder="EDAD" required>
             <mat-error *ngIf="this.firstFormGroup.controls.edad.errors?.required">
               Edad Requerido
             </mat-error>
           </mat-form-field>
         </div>
         <div class="form-group col">
-          <mat-form-field >
+          <mat-form-field>
             <mat-select placeholder="SEXO" formControlName="sexo" required>
-              <mat-option *ngFor="let sexos of generos" [value]="sexos.ID"
-                style="font-size: 12px;">{{sexos.DESCRIPCION}}</mat-option>
+              <mat-option *ngFor="let sexos of generos" [value]="sexos.ID" style="font-size: 12px;">
+                {{sexos.DESCRIPCION}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
       </div>
-      <div class="row"> 
+      <div class="row">
         <div class="form-group col">
-          <mat-form-field color="warn"  class="textos">
+          <mat-form-field color="warn" class="textos">
             <input matInput formControlName="profesion" class="textos" type="text" maxlength="2048"
-              placeholder="Profesión u Oficio" >
+              placeholder="PROFESIÓN U OFICIO">
             <mat-error *ngIf="this.firstFormGroup.controls.profesion.errors?.required">
               Profesión u Oficio Requerido
             </mat-error>
@@ -73,17 +88,17 @@
           </mat-form-field>
         </div>
         <div class="form-group col">
-          <mat-form-field >
+          <mat-form-field>
             <mat-select placeholder="ESTADO CIVIL" formControlName="estadoCivilAspirante" required>
-              <mat-option *ngFor="let estados of estadoCivil" [value]="estados.ID"
-                style="font-size: 12px;">{{estados.DESCRIPCION}}</mat-option>
+              <mat-option *ngFor="let estados of estadoCivil" [value]="estados.ID" style="font-size: 12px;">
+                {{estados.DESCRIPCION}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
         <div class="form-group col">
-          <mat-form-field color="warn"  class="textos">
+          <mat-form-field color="warn" class="textos">
             <input matInput formControlName="nacionalidad" class="textos" type="text" maxlength="2048"
-              placeholder="Nacionalidad" >
+              placeholder="NACIONALIDAD">
             <mat-error *ngIf="this.firstFormGroup.controls.nacionalidad.errors?.required">
               Nacionalidad Requerida
             </mat-error>
@@ -91,11 +106,11 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="row"> 
+      <div class="row">
         <div class="form-group col">
-          <mat-form-field color="warn"  class="textos">
+          <mat-form-field color="warn" class="textos">
             <input matInput formControlName="direccion" class="textos" type="text" maxlength="2048"
-              placeholder="Dirección de domicilio" >
+              placeholder="DIRECCIÓN">
             <mat-error *ngIf="this.firstFormGroup.controls.direccion.errors?.required">
               Dirección de domicilio Requerido
             </mat-error>
@@ -106,8 +121,8 @@
           <mat-form-field>
             <mat-select placeholder="DEPARTAMENTO" formControlName="selDepartamento">
               <mat-option (onSelectionChange)="getMunicipio($event,deptos.DEPARTAMENTO)"
-                *ngFor="let deptos of listaDepartamentos" [value]="deptos.DEPARTAMENTO"
-                style="font-size: 12px;">{{deptos.NOMBRE_DEPARTAMENTO}}</mat-option>
+                *ngFor="let deptos of listaDepartamentos" [value]="deptos.DEPARTAMENTO" style="font-size: 12px;">
+                {{deptos.NOMBRE_DEPARTAMENTO}}</mat-option>
             </mat-select>
             <mat-error *ngIf="this.firstFormGroup.controls.selDepartamento.errors?.required">
               DEPARTAMENTO REQUERIDO
@@ -117,8 +132,8 @@
         <div class="form-group col">
           <mat-form-field>
             <mat-select placeholder="MUNICIPIO" formControlName="selMunicipio">
-              <mat-option *ngFor="let munis of municipios" [value]="munis.MUNICIPIO"
-                style="font-size: 12px;">{{munis.NOMBRE_MUNICIPIO}}</mat-option>
+              <mat-option *ngFor="let munis of municipios" [value]="munis.MUNICIPIO" style="font-size: 12px;">
+                {{munis.NOMBRE_MUNICIPIO}}</mat-option>
             </mat-select>
             <mat-error *ngIf="this.firstFormGroup.controls.selMunicipio.errors?.required">
               MUNICIPIO REQUERIDO
@@ -126,45 +141,1028 @@
           </mat-form-field>
         </div>
       </div>
+      <div class="row">
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="correo" class="textos" type="text" maxlength="2048"
+              placeholder="CORREO ELECTRONICO">
+            <mat-error *ngIf="this.firstFormGroup.controls.correo.errors?.required">
+              Correo Requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="telefonoCasa" class="textos" type="text" maxlength="10"
+              placeholder="TELEFONO CASA">
+            <mat-error *ngIf="this.firstFormGroup.controls.telefonoCasa.errors?.required">
+              Telefono Casa Requerido
+            </mat-error>
+
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="telefonoCelular" color="warn" maxlength="10" class="textos"
+              placeholder="TELEFONO CELULAR">
+            <mat-error *ngIf="this.firstFormGroup.controls.telefonoCelular.errors?.required">
+              Telefono Celular REQUERIDO
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="dpi" type="text" placeholder="DPI" (ngModelChange)="valDpi($event)">
+            <mat-error *ngIf="this.firstFormGroup.controls.dpi.errors?.required">
+              Número de DPI Requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" style="font-size: 12px;">
+            <input matInput (click)="picker5.open()" formControlName="fechaVencDPI" (ngModelChange)="parseDate($event)"
+              [matDatepicker]="picker5" placeholder="FECHA VENCIMIENTO DPI">
+            <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #picker5></mat-datepicker>
+            <mat-error *ngIf="this.firstFormGroup.controls.fechaVencDPI.errors?.required">
+              FECHA VENCIMIENTO DPI REQUERIDO
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="nit" class="textos" type="text" maxlength="10" placeholder="NIT">
+            <mat-error *ngIf="this.firstFormGroup.controls.nit.errors?.required">
+              NIT Requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col">
+          <mat-form-field>
+            <mat-select placeholder="LICENCIA" formControlName="nombreClase" required>
+              <mat-option *ngFor="let tipo of tiposLicencias" [value]="tipo.ID" style="font-size: 12px;">
+                {{tipo.DESCRIPCION}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="numeroLicencia" class="textos" type="number" maxlength="10"
+              placeholder="NUMERO DE LICENCIA">
+            <mat-error *ngIf="this.firstFormGroup.controls.numeroLicencia.errors?.required">
+              Numero de Licencia Requerido
+            </mat-error>
+
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field>
+            <mat-select placeholder="DISCAPACIDAD" formControlName="discapacidad" required>
+              <mat-option *ngFor="let tipo of discapacidades" [value]="tipo.ID" style="font-size: 12px;">
+                {{tipo.DESCRIPCION}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
       <div>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperNext>Siguiente</button>
       </div>
     </form>
   </mat-step>
   <mat-step [stepControl]="secondFormGroup">
     <form [formGroup]="secondFormGroup">
-      <ng-template matStepLabel>Amount & Stock</ng-template>
-      <mat-form-field>
-        <mat-label>Amount</mat-label>
-        <input matInput placeholder="Amount" formControlName="amount" required>
-      </mat-form-field>
-      <br />
-      <mat-form-field>
-        <mat-label>Stock</mat-label>
-        <input matInput placeholder="Stock" formControlName="stock" required>
-      </mat-form-field>
+      <ng-template matStepLabel></ng-template>
+      <mat-label style="font-size: 24px; "> <b>Información Linguistica</b></mat-label>           
+      <div class="row">
+        <div class="form-group col">
+          <mat-form-field>
+            <mat-select placeholder="ETNIA" formControlName="etnia" required>
+              <mat-option *ngFor="let etnia of etnias" [value]="etnia.ID" style="font-size: 12px;">
+                {{etnia.DESCRIPCION}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field>
+            <mat-select placeholder="COMUNIDAD LINGUISTICA" formControlName="comunidadLinguistica" required>
+              <mat-option *ngFor="let comunidad of listaComunidadLinguistica" [value]="comunidad.ID_COMUNIDAD" style="font-size: 12px;">
+                {{comunidad.COMUNIDAD}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <mat-label style="font-size: 24px; "> <b>Idiomas que domina</b></mat-label>
+      <div class="row">
+        <div class="col-2">
+          <div class="button-group">
+            <button mat-raised-button class="btn btn-primary btn-block"  (click)="agregarIdioma()"
+              style="font-size: 12px;">Agregar Idioma</button>
+          </div>
+        </div>
+        <div class="col-8"></div>
+      </div>
+
+      <div class="container-fluid" style="padding-left: inherit; padding-right: inherit;">
+        <div class="row row-cols-4">
+          <div class="form-group col">
+            <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+              <input matInput formControlName="idioma1" type="text" placeholder="Idioma"
+                (ngModelChange)="valDpi($event)">
+
+              <mat-hint style="color:red;" *ngIf="this.validaDpi">
+                Error Idioma ya Existente
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="form-group col">
+            <mat-form-field [floatLabel]="floatLabelControl.value">
+              <mat-label style="font-size: 14px;">HABLA</mat-label>
+              <mat-select>
+                <mat-option style="font-size: 12px;">Excelente</mat-option>
+                <mat-option style="font-size: 12px;">Muy bueno</mat-option>
+                <mat-option style="font-size: 12px;">Bueno</mat-option>
+                <mat-option style="font-size: 12px;">Regular</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group col">
+            <mat-form-field [floatLabel]="floatLabelControl.value">
+              <mat-label style="font-size: 14px;">LEE</mat-label>
+              <mat-select>
+                <mat-option style="font-size: 12px;">Excelente</mat-option>
+                <mat-option style="font-size: 12px;">Muy bueno</mat-option>
+                <mat-option style="font-size: 12px;">Bueno</mat-option>
+                <mat-option style="font-size: 12px;">Regular</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group col">
+            <mat-form-field [floatLabel]="floatLabelControl.value">
+              <mat-label style="font-size: 14px;">ESCRIBE</mat-label>
+              <mat-select>
+                <mat-option style="font-size: 12px;">Excelente</mat-option>
+                <mat-option style="font-size: 12px;">Muy bueno</mat-option>
+                <mat-option style="font-size: 12px;">Bueno</mat-option>
+                <mat-option style="font-size: 12px;">Regular</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      
+      </div>
+      <div>
+        <table >
+          <tbody>
+            <tr *ngFor="let d of idiomas; let i= index">
+              <td>{{i+1}}</td>
+              <td>
+                  <input matInput formControlName="d.idioma" type="text" placeholder="Idioma">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <br />
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperPrevious>Atrás</button>
+        <button mat-button matStepperNext>Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="thirdFormGroup">
+    <form [formGroup]="thirdFormGroup">
+     
+      <br />
+      <div>
+        <button mat-button matStepperPrevious>Atrás</button>
+        <button mat-button matStepperNext>Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="fourthFormGroup">
+    <form [formGroup]="fourthFormGroup">
+      <ng-template matStepLabel></ng-template>
+      <mat-label style="font-size: 24px; "> <b>Seleccione la Comunidad Linguistica a la que pertenece </b></mat-label>
+      <div class="ex1">
+        <mat-selection-list color="primary" (selectionChange)="cambioListaComunidadesLinguistica($event)">
+          <mat-list-option checkboxPosition="before" *ngFor="let comunidad of listaComunidadLinguistica"
+            [value]="comunidad">
+            {{comunidad.COMUNIDAD}}
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
+
+      <br />
+      <div>
+        <button mat-button matStepperPrevious>Atrás</button>
+        <button mat-button matStepperNext>Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="fifthFormGroup">
+    <form [formGroup]="fifthFormGroup">
+      <ng-template matStepLabel></ng-template>
+      <mat-label style="font-size: 24px; "> <b>Idiomas que domina</b></mat-label>
+      <div class="row">
+        <div class="col-2">
+          <button mat-raised-button class="btn btn-primary" style="font-size: 12px;"
+            (click)="verInformacion()">
+            <i class="fa fa-plus"></i>
+            &nbsp;&nbsp; Añadir Idioma
+          </button>
+      
+        </div>
+        <div class="col-8"></div>
+      </div>
+
+      <div class="container-fluid" style="padding-left: inherit; padding-right: inherit;">
+        <div class="row row-cols-4">
+          <div class="form-group col">
+            <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+              <input matInput formControlName="idioma1" type="text" placeholder="Idioma"
+                (ngModelChange)="valDpi($event)">
+
+              <mat-hint style="color:red;" *ngIf="this.validaDpi">
+                Error Idioma ya Existente
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="form-group col">
+            <mat-form-field [floatLabel]="floatLabelControl.value">
+              <mat-label style="font-size: 14px;">HABLA</mat-label>
+              <mat-select>
+                <mat-option style="font-size: 12px;">Excelente</mat-option>
+                <mat-option style="font-size: 12px;">Muy bueno</mat-option>
+                <mat-option style="font-size: 12px;">Bueno</mat-option>
+                <mat-option style="font-size: 12px;">Regular</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group col">
+            <mat-form-field [floatLabel]="floatLabelControl.value">
+              <mat-label style="font-size: 14px;">LEE</mat-label>
+              <mat-select>
+                <mat-option style="font-size: 12px;">Excelente</mat-option>
+                <mat-option style="font-size: 12px;">Muy bueno</mat-option>
+                <mat-option style="font-size: 12px;">Bueno</mat-option>
+                <mat-option style="font-size: 12px;">Regular</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group col">
+            <mat-form-field [floatLabel]="floatLabelControl.value">
+              <mat-label style="font-size: 14px;">ESCRIBE</mat-label>
+              <mat-select>
+                <mat-option style="font-size: 12px;">Excelente</mat-option>
+                <mat-option style="font-size: 12px;">Muy bueno</mat-option>
+                <mat-option style="font-size: 12px;">Bueno</mat-option>
+                <mat-option style="font-size: 12px;">Regular</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row row-cols-4">
+          <div class="form-group col">
+            <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+              <input matInput formControlName="idioma2" type="text" placeholder="Idioma"
+                (ngModelChange)="valDpi($event)">
+
+              <mat-hint style="color:red;" *ngIf="this.validaDpi">
+                Error Idioma ya Existente
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="form-group col">
+            <mat-form-field [floatLabel]="floatLabelControl.value">
+              <mat-label style="font-size: 14px;">HABLA</mat-label>
+              <mat-select>
+                <mat-option style="font-size: 12px;">Excelente</mat-option>
+                <mat-option style="font-size: 12px;">Muy bueno</mat-option>
+                <mat-option style="font-size: 12px;">Bueno</mat-option>
+                <mat-option style="font-size: 12px;">Regular</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group col">
+            <mat-form-field [floatLabel]="floatLabelControl.value">
+              <mat-label style="font-size: 14px;">LEE</mat-label>
+              <mat-select>
+                <mat-option style="font-size: 12px;">Excelente</mat-option>
+                <mat-option style="font-size: 12px;">Muy bueno</mat-option>
+                <mat-option style="font-size: 12px;">Bueno</mat-option>
+                <mat-option style="font-size: 12px;">Regular</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group col">
+            <mat-form-field [floatLabel]="floatLabelControl.value">
+              <mat-label style="font-size: 14px;">ESCRIBE</mat-label>
+              <mat-select>
+                <mat-option style="font-size: 12px;">Excelente</mat-option>
+                <mat-option style="font-size: 12px;">Muy bueno</mat-option>
+                <mat-option style="font-size: 12px;">Bueno</mat-option>
+                <mat-option style="font-size: 12px;">Regular</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row row-cols-4">
+          <div class="form-group col">
+            <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+              <input matInput formControlName="idioma3" type="text" placeholder="Idioma"
+                (ngModelChange)="valDpi($event)">
+
+              <mat-hint style="color:red;" *ngIf="this.validaDpi">
+                Error Idioma ya Existente
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="form-group col">
+            <mat-form-field [floatLabel]="floatLabelControl.value">
+              <mat-label style="font-size: 14px;">HABLA</mat-label>
+              <mat-select>
+                <mat-option style="font-size: 12px;">Excelente</mat-option>
+                <mat-option style="font-size: 12px;">Muy bueno</mat-option>
+                <mat-option style="font-size: 12px;">Bueno</mat-option>
+                <mat-option style="font-size: 12px;">Regular</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group col">
+            <mat-form-field [floatLabel]="floatLabelControl.value">
+              <mat-label style="font-size: 14px;">LEE</mat-label>
+              <mat-select>
+                <mat-option style="font-size: 12px;">Excelente</mat-option>
+                <mat-option style="font-size: 12px;">Muy bueno</mat-option>
+                <mat-option style="font-size: 12px;">Bueno</mat-option>
+                <mat-option style="font-size: 12px;">Regular</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group col">
+            <mat-form-field [floatLabel]="floatLabelControl.value">
+              <mat-label style="font-size: 14px;">ESCRIBE</mat-label>
+              <mat-select>
+                <mat-option style="font-size: 12px;">Excelente</mat-option>
+                <mat-option style="font-size: 12px;">Muy bueno</mat-option>
+                <mat-option style="font-size: 12px;">Bueno</mat-option>
+                <mat-option style="font-size: 12px;">Regular</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <br />
+      <div>
+        <button mat-button matStepperPrevious>Atrás</button>
+        <button mat-button matStepperNext>Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="sixthFormGroup">
+    <form [formGroup]="sixthFormGroup">
+      <div class="ex1">
+        <ng-template matStepLabel></ng-template>
+        <mat-label style="font-size: 24px; "> <b>Información Familiar</b></mat-label>
+        <br />
+        <div class="card">
+          <mat-label style="font-size: 18px; "> <b>PADRE</b> </mat-label>
+          <div class="row row-cols-4">
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="padre" type="text" placeholder="Padre">
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
+                <input matInput (click)="picker6.open()" formControlName="fechaNacPadre"
+                  (ngModelChange)="parseDate($event)" [matDatepicker]="picker6" placeholder="FECHA NACIMIENTO">
+                <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker6></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="telPadre" class="textos" type="text" maxlength="10"
+                  placeholder="Telefono">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row row-cols-4">
+            <div class="form-group col">
+              <mat-form-field [floatLabel]="floatLabelControl.value">
+                <mat-label style="font-size: 14px;">VIVE</mat-label>
+                <mat-select formControlName="vivePadre">
+                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
+                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="profesionPadre" type="text" placeholder="Profesión u Oficio"
+                  (ngModelChange)="asignaNombreDoc($event)">
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field [floatLabel]="floatLabelControl.value">
+                <mat-label style="font-size: 14px;">TRABAJA ACTUALMENTE</mat-label>
+                <mat-select formControlName="trabajaPadre">
+                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
+                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="lugarTrabajoPadre" class="textos" type="text" maxlength="2048"
+                  placeholder="Lugar de Trabajo" (ngModelChange)="asignaNombreDoc($event)">
+                <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <mat-label style="font-size: 18px; "> <b> MADRE </b></mat-label>
+          <div class="row row-cols-4">
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="madre" type="text" placeholder="Madre">
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
+                <input matInput (click)="picker7.open()" formControlName="fechaNacmadre"
+                  (ngModelChange)="parseDate($event)" [matDatepicker]="picker7" placeholder="FECHA NACIMIENTO">
+                <mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker7></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="telmadre" class="textos" type="text" maxlength="10"
+                  placeholder="Telefono">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row row-cols-4">
+            <div class="form-group col">
+              <mat-form-field [floatLabel]="floatLabelControl.value">
+                <mat-label style="font-size: 14px;">VIVE</mat-label>
+                <mat-select formControlName="vivemadre">
+                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
+                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="profesionmadre" type="text" placeholder="Profesión u Oficio"
+                  (ngModelChange)="asignaNombreDoc($event)">
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field [floatLabel]="floatLabelControl.value">
+                <mat-label style="font-size: 14px;">TRABAJA ACTUALMENTE</mat-label>
+                <mat-select formControlName="trabajamadre">
+                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
+                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="lugarTrabajomadre" class="textos" type="text" maxlength="2048"
+                  placeholder="Lugar de Trabajo" (ngModelChange)="asignaNombreDoc($event)">
+                <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <mat-label style="font-size: 18px; "> <b> HERMANO(A)1 </b></mat-label>
+          <div class="row row-cols-4">
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="hermano1" type="text" placeholder="hermano1">
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
+                <input matInput (click)="picker8.open()" formControlName="fechaNachermano1"
+                  (ngModelChange)="parseDate($event)" [matDatepicker]="picker8" placeholder="FECHA NACIMIENTO">
+                <mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker8></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="telhermano1" class="textos" type="text" maxlength="10"
+                  placeholder="Telefono">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row row-cols-4">
+            <div class="form-group col">
+              <mat-form-field [floatLabel]="floatLabelControl.value">
+                <mat-label style="font-size: 14px;">VIVE</mat-label>
+                <mat-select formControlName="vivehermano1">
+                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
+                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="profesionhermano1" type="text" placeholder="Profesión u Oficio"
+                  (ngModelChange)="asignaNombreDoc($event)">
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field [floatLabel]="floatLabelControl.value">
+                <mat-label style="font-size: 14px;">TRABAJA ACTUALMENTE</mat-label>
+                <mat-select formControlName="trabajahermano1">
+                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
+                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="lugarTrabajohermano1" class="textos" type="text" maxlength="2048"
+                  placeholder="Lugar de Trabajo" (ngModelChange)="asignaNombreDoc($event)">
+                <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <mat-label style="font-size: 18px; "> <b> HERMANO(A)2 </b></mat-label>
+          <div class="row row-cols-4">
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="hermano2" type="text" placeholder="hermano2">
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
+                <input matInput (click)="picker9.open()" formControlName="fechaNachermano2"
+                  (ngModelChange)="parseDate($event)" [matDatepicker]="picker9" placeholder="FECHA NACIMIENTO">
+                <mat-datepicker-toggle matSuffix [for]="picker9"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker9></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="telhermano2" class="textos" type="text" maxlength="10"
+                  placeholder="Telefono">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row row-cols-4">
+            <div class="form-group col">
+              <mat-form-field [floatLabel]="floatLabelControl.value">
+                <mat-label style="font-size: 14px;">VIVE</mat-label>
+                <mat-select formControlName="vivehermano2">
+                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
+                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="profesionhermano2" type="text" placeholder="Profesión u Oficio"
+                  (ngModelChange)="asignaNombreDoc($event)">
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field [floatLabel]="floatLabelControl.value">
+                <mat-label style="font-size: 14px;">TRABAJA ACTUALMENTE</mat-label>
+                <mat-select formControlName="trabajahermano2">
+                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
+                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="lugarTrabajohermano2" class="textos" type="text" maxlength="2048"
+                  placeholder="Lugar de Trabajo" (ngModelChange)="asignaNombreDoc($event)">
+                <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="card">
+          <mat-label style="font-size: 18px; "> <b> HERMANO(A)3 </b></mat-label>
+          <div class="row row-cols-4">
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="hermano3" type="text" placeholder="hermano3">
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
+                <input matInput (click)="picker10.open()" formControlName="fechaNachermano3"
+                  (ngModelChange)="parseDate($event)" [matDatepicker]="picker10" placeholder="FECHA NACIMIENTO">
+                <mat-datepicker-toggle matSuffix [for]="picker10"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker10></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="telhermano3" class="textos" type="text" maxlength="10"
+                  placeholder="Telefono">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row row-cols-4">
+            <div class="form-group col">
+              <mat-form-field [floatLabel]="floatLabelControl.value">
+                <mat-label style="font-size: 14px;">VIVE</mat-label>
+                <mat-select formControlName="vivehermano3">
+                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
+                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="profesionhermano3" type="text" placeholder="Profesión u Oficio"
+                  (ngModelChange)="asignaNombreDoc($event)">
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field [floatLabel]="floatLabelControl.value">
+                <mat-label style="font-size: 14px;">TRABAJA ACTUALMENTE</mat-label>
+                <mat-select formControlName="trabajahermano3">
+                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
+                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="lugarTrabajohermano3" class="textos" type="text" maxlength="2048"
+                  placeholder="Lugar de Trabajo" (ngModelChange)="asignaNombreDoc($event)">
+                <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <mat-label style="font-size: 18px; "> <b>CONYUGE </b></mat-label>
+          <div class="row row-cols-4">
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="conyuge" type="text" placeholder="conyuge">
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
+                <input matInput (click)="picker11.open()" formControlName="fechaNacconyuge"
+                  (ngModelChange)="parseDate($event)" [matDatepicker]="picker11" placeholder="FECHA NACIMIENTO">
+                <mat-datepicker-toggle matSuffix [for]="picker11"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker11></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="telconyuge" class="textos" type="text" maxlength="10"
+                  placeholder="Telefono">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row row-cols-4">
+            <div class="form-group col">
+              <mat-form-field [floatLabel]="floatLabelControl.value">
+                <mat-label style="font-size: 14px;">VIVE</mat-label>
+                <mat-select formControlName="viveconyuge">
+                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
+                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="profesionconyuge" type="text" placeholder="Profesión u Oficio"
+                  (ngModelChange)="asignaNombreDoc($event)">
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field [floatLabel]="floatLabelControl.value">
+                <mat-label style="font-size: 14px;">TRABAJA ACTUALMENTE</mat-label>
+                <mat-select formControlName="trabajaconyuge">
+                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
+                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group col">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="lugarTrabajoconyuge" class="textos" type="text" maxlength="2048"
+                  placeholder="Lugar de Trabajo" (ngModelChange)="asignaNombreDoc($event)">
+                <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div>
+        <button mat-button matStepperPrevious>Atrás</button>
+        <button mat-button matStepperNext>Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="seventhFormGroup">
+    <form [formGroup]="seventhFormGroup">
+      <ng-template matStepLabel></ng-template>
+      <mat-label style="font-size: 24px; "> <b> Dependientes </b></mat-label>
+      <div class="row">
+        <div class="form-group col">
+          <mat-form-field>
+            <mat-select placeholder="HIJOS" formControlName="hijos" required>
+              <mat-option [value]="0" style="font-size: 12px;"> NO</mat-option>
+              <mat-option [value]="1" style="font-size: 12px;"> SI</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="noHijo" class="textos" type="number" placeholder="Numero de Hijos">
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-label style="font-size: 12px; "> Seleccione quienes dependen económicamente de usted </mat-label>
+          <mat-selection-list color="primary" (selectionChange)="cambioListaDependientes($event)">
+            <mat-list-option checkboxPosition="before" [value]="0">
+              Hijos
+            </mat-list-option>
+            <mat-list-option checkboxPosition="before" [value]="1">
+              Padre
+            </mat-list-option>
+            <mat-list-option checkboxPosition="before" [value]="2">
+              Madre
+            </mat-list-option>
+            <mat-list-option checkboxPosition="before" [value]="3">
+              Otro
+            </mat-list-option>
+          </mat-selection-list>
+        </div>
+      </div>
+      <br />
+      <div>
+        <button mat-button matStepperPrevious>Atrás</button>
+        <button mat-button matStepperNext>Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="eighthFormGroup">
+    <form [formGroup]="eighthFormGroup">
+      <ng-template matStepLabel></ng-template>
+      <mat-label style="font-size: 22px; "> <b> Familiares laborando en el Organismo Judicial </b></mat-label>
+      <div class="row">
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="parentesco" class="textos" type="text" maxlength="1024"
+              placeholder="PARENTESCO">
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="nombreFamiliar" class="textos" type="text" maxlength="1024"
+              placeholder="NOMBRE COMPLETO">
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="dependencia" class="textos" type="text" maxlength="1024"
+              placeholder="DEPENDENCIA">
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="puesto" class="textos" type="text" maxlength="100" placeholder="PUESTO">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="parentesco1" class="textos" type="text" maxlength="1024"
+              placeholder="PARENTESCO">
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="nombreFamiliar1" class="textos" type="text" maxlength="1024"
+              placeholder="NOMBRE COMPLETO">
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="dependencia1" class="textos" type="text" maxlength="1024"
+              placeholder="DEPENDENCIA">
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="puesto1" class="textos" type="text" maxlength="100" placeholder="PUESTO">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="parentesco2" class="textos" type="text" maxlength="1024"
+              placeholder="PARENTESCO">
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="nombreFamiliar2" class="textos" type="text" maxlength="1024"
+              placeholder="NOMBRE COMPLETO">
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="dependencia2" class="textos" type="text" maxlength="1024"
+              placeholder="DEPENDENCIA">
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="puesto2" class="textos" type="text" maxlength="100" placeholder="PUESTO">
+          </mat-form-field>
+        </div>
+      </div>
+      <br />
+      <div>
+        <button mat-button matStepperPrevious>Atrás</button>
+        <button mat-button matStepperNext>Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="nineFormGroup">
+    <form [formGroup]="nineFormGroup">
+      <ng-template matStepLabel></ng-template>
+      <mat-label style="font-size: 22px; "> <b> Información Académica</b></mat-label>
+      <div class="row">
+        <div class=div class="card w-100">
+          <mat-label style="font-size: 12px; "> PRIMARIA</mat-label>
+          <div class="form-group col">
+            <mat-form-field color="warn" class="textos">
+              <input matInput formControlName="gradoAprobado" class="textos" type="text" maxlength="1024"
+                placeholder="GRADO APROBADO">
+            </mat-form-field>
+          </div>
+        </div>
+        
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="institucionEstudios" class="textos" type="text" maxlength="1024"
+              placeholder="INSTITUCIÓN DE ESTUDIOS">
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="constancia" class="textos" type="text" maxlength="1024"
+              placeholder="CONSTANCIA QUE LO ACREDITA">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <mat-label style="font-size: 12px; "> BASICOS</mat-label>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="gradoAprobado1" class="textos" type="text" maxlength="1024"
+              placeholder="GRADO APROBADO">
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="institucionEstudios1" class="textos" type="text" maxlength="1024"
+              placeholder="INSTITUCIÓN DE ESTUDIOS">
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="constancia1" class="textos" type="text" maxlength="1024"
+              placeholder="CONSTANCIA QUE LO ACREDITA">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <mat-label style="font-size: 11px; ">DIVERSIFICADO</mat-label>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="gradoAprobado2" class="textos" type="text" maxlength="1024"
+              placeholder="GRADO APROBADO">
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="institucionEstudios2" class="textos" type="text" maxlength="1024"
+              placeholder="INSTITUCIÓN DE ESTUDIOS">
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="constancia2" class="textos" type="text" maxlength="1024"
+              placeholder="CONSTANCIA QUE LO ACREDITA">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="anioGraduacion" class="textos" type="text" maxlength="1024"
+              placeholder="AÑO DE GRADUACIÓN">
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="carrera" class="textos" type="text" maxlength="1024" placeholder="CARRERA">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <mat-label style="font-size: 11px; ">UNIVERSIDAD (Pregrado)</mat-label>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="carreraU" class="textos" type="text" maxlength="1024"
+              placeholder="CARRERA">
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="universidad" class="textos" type="text" maxlength="1024"
+              placeholder="UNIVERSIDAD">
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="constancia3" class="textos" type="text" maxlength="1024"
+              placeholder="CONSTANCIA QUE LO ACREDITA">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="semestreA" class="textos" type="text" maxlength="1024"
+              placeholder="SEMESTRE APROBADO">
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="colegiado" class="textos" type="text" maxlength="1024"
+              placeholder="COLEGIADO">
+          </mat-form-field>
+        </div>
+      </div>
+      <br />
+      <div>
+        <button mat-button matStepperPrevious>Atrás</button>
+        <button mat-button matStepperNext>Siguiente</button>
       </div>
     </form>
   </mat-step>
   <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
+    <ng-template matStepLabel>Resumen</ng-template>
+    <p>Resumen Perfil Solicutud Empleo</p>
 
     <mat-list>
-      <mat-list-item> <strong>Name:</strong> {{ this.firstFormGroup.value.name }}</mat-list-item>
-      <mat-list-item> <strong>Description:</strong> {{ this.firstFormGroup.value.description }}</mat-list-item>
-      <mat-list-item> <strong>Amount:</strong> {{ this.secondFormGroup.value.amount }}</mat-list-item>
-      <mat-list-item> <strong>Stock:</strong> {{ this.secondFormGroup.value.stock }}</mat-list-item>
+      <mat-list-item> <strong>Nombre:</strong> {{ this.firstFormGroup.value.nombres }}</mat-list-item>
+      <mat-list-item> <strong>Primer apellido:</strong> {{ this.firstFormGroup.value.primerApellido }}</mat-list-item>
+      <mat-list-item> <strong>Segundo apellido:</strong> {{ this.firstFormGroup.value.segundoApellido }}</mat-list-item>
+      <mat-list-item> <strong>Fecha Nac:</strong> {{ this.firstFormGroup.value.fechaNac }}</mat-list-item>
     </mat-list>
 
     <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
-      <button mat-button (click)="submit()">Submit</button>
+      <button mat-button matStepperPrevious>Atrás</button>
+      <button mat-button (click)="stepper.reset()">Reiniciar</button>
+      <button mat-button (click)="submit()">Enviar</button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>

@@ -24,6 +24,13 @@ export class ConvocatoriasExternasService {
       );
   }
 
+  getListaComunidadLinguisticaConv(): Observable<any> {
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + 'Convocatorias-Externas/getComunidadLinguistica')
+      .pipe(
+        catchError(this.handleError('getListaComunidadLinguisticaConv', []))
+      );
+  }
+
   constructor(private http: HttpClient, private appSettings: AppconfigService) { }
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

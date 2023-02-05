@@ -1,3 +1,11 @@
+export interface Idioma {
+    id_idioma: number,
+    idioma: string,
+    habla: string,
+    escribe: string,
+    lee
+}
+
 export const ConvocatoriaEjemplo = [
     {
         INFO: 'Coordinar la Unidad de Control, Seguimiento y Evaluación de los Órganos Especializados en Delitos de Femicidio y Otras Formas de Violencia contra la Mujer del Organismo Judicial, para cumplir con las metas de la dependencia.'
@@ -47,7 +55,11 @@ export const Convocatorias = [
     {
         TITULO: 'Convocatoria Externa No. 010-2022/lcdz',
         DESCRIPCION: 'Convocatoria Externa TRABAJADOR (A) SOCIAL. Tribunales de Sentencia Penal de Delitos de Femicidio y Otras Formas de Violencia contra la Mujer y Violencia Sexual/ Juzgados de Primera Instancia Penal de Delitos de Femicidio y Otras Formas de Violencia contra la Mujer y Violencia Sexual/Sistema de Atención Integral'
-    }  
+    } ,
+    {
+        TITULO: 'Convocatoria Externa No. 007-2021/lcdz',
+        DESCRIPCION: '	AGENTE DE SEGURIDAD (MUJERES) Régimen de Servicio: Libre Nombramiento y Remoción'
+    } 
 ];
 
 export const PerfilesPersonas = [
@@ -88,6 +100,33 @@ export const Sexo = [
     }
 ]
 
+export const TiposLicencia = [
+    {
+        ID: 0,
+        DESCRIPCION: 'NINGUNA'
+    },
+    {
+        ID: 1,
+        DESCRIPCION: 'A'
+    },
+    {
+        ID: 2,
+        DESCRIPCION: 'B'
+    },
+    {
+        ID: 3,
+        DESCRIPCION: 'C'
+    }, 
+    {
+        ID: 4,
+        DESCRIPCION: 'E'
+    }, 
+    {
+        ID: 5,
+        DESCRIPCION: 'M'
+    }
+]
+
 export const EstadoCivil = [
     {
         ID: 0,
@@ -106,6 +145,30 @@ export const EstadoCivil = [
         DESCRIPCION: 'OTRO'
     }
 ]
+
+export const Discapacidad = [
+    {
+        ID: 0,
+        DESCRIPCION: 'NINGUNA'
+    },
+    {
+        ID: 1,
+        DESCRIPCION: 'AUDITIVA'
+    },
+    {
+        ID: 2,
+        DESCRIPCION: 'VISUAL'
+    },
+    {
+        ID: 3,
+        DESCRIPCION: 'FÍSICA'
+    }, 
+    {
+        ID: 4,
+        DESCRIPCION: 'MÚLTIPLE'
+    }
+]
+
 export const Aplicaciones = [
     {
         TITULO: 'Convocatoria Externa No. 004-2022/lcdz',
@@ -118,5 +181,32 @@ export const Aplicaciones = [
     {
         TITULO: 'Convocatoria Externa No. 006-2022/lcdz',
         ESTADO: 'Aprobada'
+    }
+]
+
+export const Raza = [
+    {
+        ID: 0,
+        DESCRIPCION: 'MAYA'
+    },
+    {
+        ID: 1,
+        DESCRIPCION: 'GARIFUNA'
+    },
+    {
+        ID: 2,
+        DESCRIPCION: 'XINCA'
+    },
+    {
+        ID: 3,
+        DESCRIPCION: 'LADINO O MESTIZO'
+    }, 
+    {
+        ID: 4,
+        DESCRIPCION: 'AFRODESCENDIENTE'
+    },
+    {
+        ID: 5,
+        DESCRIPCION: 'OTRO'
     }
 ]
