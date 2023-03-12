@@ -60,6 +60,9 @@ export class PerfilwizardComponent implements OnInit {
   numeroLicencia;
   discapacidad;
   idioma1;
+  habla1;
+  lee1;
+  escribe1;
   idioma2;
   idioma3;
   idioma4;
@@ -76,6 +79,7 @@ export class PerfilwizardComponent implements OnInit {
   etniasPerfil = [];
   comunidadesLinguisticas = [];
   idiomas: Idioma[] = [];
+  nuevoIdioma : Idioma;
   listaDependientes = [];
   listarazaPerfil;
   listaComunidadesLinguisticas;
@@ -167,6 +171,15 @@ export class PerfilwizardComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    /*this.nuevoIdioma ={
+      id_idioma : 0,
+      idioma: this.idioma1,
+      habla: this.habla1,
+      lee: this.lee1,
+      escribe: this.escribe1
+    };
+    this.idiomas.push(this.nuevoIdioma); */
     this.generos = Sexo;
     this.estadoCivil = EstadoCivil;
     this.tiposLicencias = TiposLicencia;
@@ -198,8 +211,10 @@ export class PerfilwizardComponent implements OnInit {
     this.secondFormGroup = this.fb.group({    
       etnia: ['', Validators.required],
       comunidadLinguistica: ['',Validators.required],
-      idioma1: '',
-      idiomas: [[]]
+      idioma1: [''],
+      habla1: [''],
+      lee1: [''],
+      escribe1: ['']
     });
 
     this.thirdFormGroup = this.fb.group({
@@ -329,7 +344,6 @@ export class PerfilwizardComponent implements OnInit {
         });
   }
   cambioListaEtnias(e) {
-    //console.log(e);
     if (e.option.selected === true) {
       this.etniasPerfil.push(e.option.value);
     } else {
@@ -337,21 +351,34 @@ export class PerfilwizardComponent implements OnInit {
       this.etniasPerfil.splice(index, 1);
     }
     console.log(this.etniasPerfil);
-    //console.log(this.listarazaPerfil);
   }
 
-  agregarIdioma(){
-    console.log("se agrega un idioma"); 
-    this.idiomas.push({
-      id_idioma : 0,
-      idioma: "",
-      habla: "",
-      lee: "",
-      escribe: ""
+  agregarIdioma(){   
+    console.log("Agregar idioma");     
+    if(this.secondFormGroup.value.idioma1 !== '' && this.secondFormGroup.value.idioma1 !== undefined){
+      
+      this.nuevoIdioma ={
+        id_idioma : 0,
+        idioma: this.secondFormGroup.value.idioma1,
+        habla: this.secondFormGroup.value.habla1,
+        lee: this.secondFormGroup.value.lee1,
+        escribe: this.secondFormGroup.value.escribe1
+      };
+      this.idiomas.push(this.nuevoIdioma); 
+    }
+    this.secondFormGroup = this.fb.group({    
+      etnia: [this.secondFormGroup.value.etnia, Validators.required],
+      comunidadLinguistica: [this.secondFormGroup.value.comunidadLinguistica,Validators.required],
+      idioma1: [''],
+      habla1: [''],
+      lee1: [''],
+      escribe1: ['']
     });
+    console.log("se agrega un idioma"); 
+    console.log(this.idiomas); 
+    console.log(this.secondFormGroup.value.idioma1);
   }
   cambioListaComunidadesLinguistica(e) {
-    // console.log(e);
     if (e.option.selected === true) {
       this.comunidadesLinguisticas.push(e.option.value);
     } else {
@@ -359,7 +386,6 @@ export class PerfilwizardComponent implements OnInit {
       this.comunidadesLinguisticas.splice(index, 1);
     }
     console.log(this.comunidadesLinguisticas);
-    //console.log(this.listaComunidadesLinguisticas);
   }
 
   crearPerfil(){
@@ -368,18 +394,15 @@ export class PerfilwizardComponent implements OnInit {
    // swal("Perfil Solicitud Empleo", "Cambios Guardados", "success")
   }
   cambioListaDependientes(e) {
-    // console.log(e);
     if (e.option.selected === true) {
       this.listaDependientes.push(e.option.value);
     } else {
       let index = this.listaDependientes.indexOf(e.option.value);
       this.listaDependientes.splice(index, 1);
     }
-    console.log(this.listaDependientes);
-    //console.log(this.listaComunidadesLinguisticas);
 
   }
-  getMunicipio(event: any, valDepto: number) {
+  getMunicipio(event: any, valDepto: number) {  
     if (event.isUserInput) {
       this.convocatoriasService.getListaMunicipioConv(valDepto).subscribe(
         data => {
@@ -444,6 +467,35 @@ export class PerfilwizardComponent implements OnInit {
     }*/
 
     return this.validaCodPres;
+  }
+
+  guardarData(){
+    let PerfilUsuario = {
+      NOMBRES: this.firstFormGroup.value.nombres,
+      PRIMER_APELLDO: this.firstFormGroup.value.primerApellido,
+      SEGUNDO_APELLIDO: this.firstFormGroup.value.segundoApellido,
+      FECHA_NACIMIENTO:this.firstFormGroup.value.fechaNac,
+      EDAD:this.firstFormGroup.value.edad,
+      SEXO: this.firstFormGroup.value.sexo,
+      ESTADO_CIVIL: this.firstFormGroup.value.estadoCivilAspirante,
+      NACIONALIDAD: this.firstFormGroup.value.nacionalidad,
+      PROFESION: this.firstFormGroup.value.profesion,
+      DIRECCION: this.firstFormGroup.value.direccion,
+      DEPARTAMENTO: this.firstFormGroup.value.selDepartamento,
+      MUNICIPIO: this.firstFormGroup.value.selMunicipio,
+      CORREO: this.firstFormGroup.value.correo,
+      TELEFONO_CASA: this.firstFormGroup.value.telefonoCasa,
+      TELEFONO_CELULAR: this.firstFormGroup.value.telefonoCelular,
+      DPI: this.firstFormGroup.value.dpi,
+      FECHA_VENC_DPI: this.firstFormGroup.value.fechaVencDPI,
+      NIT: this.firstFormGroup.value.nit,
+      CLASE_LICENCIA: this.firstFormGroup.value.nombreClase,
+      NUMERO_LICENCIA: this.firstFormGroup.value.numeroLicencia,
+      DISCAPACIDAD: this.firstFormGroup.value.discapacidad,
+    }
+    console.log("Perfil Usuario");
+    console.log(PerfilUsuario); 
+
   }
 
   submit() {
