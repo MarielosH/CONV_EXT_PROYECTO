@@ -8,7 +8,7 @@ import swal from 'sweetalert2';
 import { AuthService } from '../../recursos/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConvocatoriasExternasService } from '../convocatorias-externas.service';
-import { Sexo, EstadoCivil, TiposLicencia, Discapacidad, Raza , Idioma} from 'app/constantes';
+import { Sexo, EstadoCivil, TiposLicencia, Discapacidad, Raza, Idioma, Familiar } from 'app/constantes';
 @Component({
   selector: 'app-perfilwizard',
   templateUrl: './perfilwizard.component.html',
@@ -63,9 +63,8 @@ export class PerfilwizardComponent implements OnInit {
   habla1;
   lee1;
   escribe1;
-  idioma2;
-  idioma3;
-  idioma4;
+  entnia;
+  comunidadLinguistica;
   padre;
   fechaNacPadre;
   telPadre;
@@ -73,44 +72,22 @@ export class PerfilwizardComponent implements OnInit {
   profesionPadre;
   trabajaPadre;
   lugarTrabajoPadre;
-  entnia;
-  comunidadLinguistica;
+  parentezco;
+  familiar;
+  fechaNacFamiliar;
+  telFamiliar;
+  viveFamiliar;
+  profesionFamiliar;
+  trabajaFamiliar;
+  lugarTrabajoFamiliar;
   isLinear = true;
-  etniasPerfil = [];
-  comunidadesLinguisticas = [];
   idiomas: Idioma[] = [];
-  nuevoIdioma : Idioma;
+  nuevoIdioma: Idioma;
+  familiares: Familiar[] = [];
+  nuevoFamiliar: Familiar;
   listaDependientes = [];
   listarazaPerfil;
   listaComunidadesLinguisticas;
-  madre;
-  fechaNacmadre;
-  telmadre;
-  vivemadre;
-  profesionmadre;
-  lugarTrabajomadre;
-  trabajamadre;
-  hermano1;
-  fechaNachermano1;
-  telhermano1;
-  vivehermano1;
-  profesionhermano1;
-  lugarTrabajohermano1;
-  trabajahermano1;
-  hermano2;
-  fechaNachermano2;
-  telhermano2;
-  vivehermano2;
-  profesionhermano2;
-  lugarTrabajohermano2;
-  trabajahermano2;
-  hermano3;
-  fechaNachermano3;
-  telhermano3;
-  vivehermano3;
-  profesionhermano3;
-  lugarTrabajohermano3;
-  trabajahermano3;
   conyuge;
   fechaNacconyuge;
   telconyuge;
@@ -171,15 +148,6 @@ export class PerfilwizardComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    /*this.nuevoIdioma ={
-      id_idioma : 0,
-      idioma: this.idioma1,
-      habla: this.habla1,
-      lee: this.lee1,
-      escribe: this.escribe1
-    };
-    this.idiomas.push(this.nuevoIdioma); */
     this.generos = Sexo;
     this.estadoCivil = EstadoCivil;
     this.tiposLicencias = TiposLicencia;
@@ -208,9 +176,9 @@ export class PerfilwizardComponent implements OnInit {
       numeroLicencia: [''],
       discapacidad: ['', Validators.required]
     });
-    this.secondFormGroup = this.fb.group({    
+    this.secondFormGroup = this.fb.group({
       etnia: ['', Validators.required],
-      comunidadLinguistica: ['',Validators.required],
+      comunidadLinguistica: ['', Validators.required],
       idioma1: [''],
       habla1: [''],
       lee1: [''],
@@ -218,7 +186,14 @@ export class PerfilwizardComponent implements OnInit {
     });
 
     this.thirdFormGroup = this.fb.group({
-      listarazaPerfil: ''
+      parentezco: [''],
+      familiar: [''],
+      fechaNacFamiliar: [''],
+      telFamiliar: [''],
+      viveFamiliar: [''],
+      profesionFamiliar: [''],
+      trabajaFamiliar: [''],
+      lugarTrabajoFamiliar: ['']
     });
 
     this.fourthFormGroup = this.fb.group({
@@ -343,55 +318,33 @@ export class PerfilwizardComponent implements OnInit {
           this.listaComunidadLinguistica = data;
         });
   }
-  cambioListaEtnias(e) {
-    if (e.option.selected === true) {
-      this.etniasPerfil.push(e.option.value);
-    } else {
-      let index = this.etniasPerfil.indexOf(e.option.value);
-      this.etniasPerfil.splice(index, 1);
-    }
-    console.log(this.etniasPerfil);
-  }
 
-  agregarIdioma(){   
-    console.log("Agregar idioma");     
-    if(this.secondFormGroup.value.idioma1 !== '' && this.secondFormGroup.value.idioma1 !== undefined){
-      
-      this.nuevoIdioma ={
-        id_idioma : 0,
+  agregarIdioma() {
+    if (this.secondFormGroup.value.idioma1 !== '' && this.secondFormGroup.value.idioma1 !== undefined) {
+      this.nuevoIdioma = {
+        id_idioma: 0,
         idioma: this.secondFormGroup.value.idioma1,
         habla: this.secondFormGroup.value.habla1,
         lee: this.secondFormGroup.value.lee1,
         escribe: this.secondFormGroup.value.escribe1
       };
-      this.idiomas.push(this.nuevoIdioma); 
+      this.idiomas.push(this.nuevoIdioma);
     }
-    this.secondFormGroup = this.fb.group({    
+    this.secondFormGroup = this.fb.group({
       etnia: [this.secondFormGroup.value.etnia, Validators.required],
-      comunidadLinguistica: [this.secondFormGroup.value.comunidadLinguistica,Validators.required],
+      comunidadLinguistica: [this.secondFormGroup.value.comunidadLinguistica, Validators.required],
       idioma1: [''],
       habla1: [''],
       lee1: [''],
       escribe1: ['']
     });
-    console.log("se agrega un idioma"); 
-    console.log(this.idiomas); 
-    console.log(this.secondFormGroup.value.idioma1);
-  }
-  cambioListaComunidadesLinguistica(e) {
-    if (e.option.selected === true) {
-      this.comunidadesLinguisticas.push(e.option.value);
-    } else {
-      let index = this.comunidadesLinguisticas.indexOf(e.option.value);
-      this.comunidadesLinguisticas.splice(index, 1);
-    }
-    console.log(this.comunidadesLinguisticas);
+
   }
 
-  crearPerfil(){
+  crearPerfil() {
     this.obtenerDepartamentos();
     this.obtenerComunidadesLinguisticas();
-   // swal("Perfil Solicitud Empleo", "Cambios Guardados", "success")
+    // swal("Perfil Solicitud Empleo", "Cambios Guardados", "success")
   }
   cambioListaDependientes(e) {
     if (e.option.selected === true) {
@@ -402,7 +355,7 @@ export class PerfilwizardComponent implements OnInit {
     }
 
   }
-  getMunicipio(event: any, valDepto: number) {  
+  getMunicipio(event: any, valDepto: number) {
     if (event.isUserInput) {
       this.convocatoriasService.getListaMunicipioConv(valDepto).subscribe(
         data => {
@@ -442,18 +395,15 @@ export class PerfilwizardComponent implements OnInit {
   get f() { return this.firstFormGroup.controls; }
 
   valDpi(valor: any): boolean {
-    /*
-    if(valor !== null && valor !== undefined &&  valor !== "" && this.iniciaValDep){
-    this.mantenimientoDependenciaService.validaCodigosCreacion(valor,1).subscribe(
-      data => {
-        this.validaCodDep = data.id !== 0;       
-      });
 
-    }else{
-      this.validaCodDep = false;
+    if (valor !== null && valor !== undefined && valor !== "") {
+      if (valor.length === 13) {
+        console.log("dpi correcto");
+        return true;
+      }
     }
-*/
-    return true;
+    return false;
+
   }
   valCodPres(valor: any): boolean {
     /*
@@ -469,13 +419,13 @@ export class PerfilwizardComponent implements OnInit {
     return this.validaCodPres;
   }
 
-  guardarData(){
+  guardarData() {
     let PerfilUsuario = {
       NOMBRES: this.firstFormGroup.value.nombres,
       PRIMER_APELLDO: this.firstFormGroup.value.primerApellido,
       SEGUNDO_APELLIDO: this.firstFormGroup.value.segundoApellido,
-      FECHA_NACIMIENTO:this.firstFormGroup.value.fechaNac,
-      EDAD:this.firstFormGroup.value.edad,
+      FECHA_NACIMIENTO: this.firstFormGroup.value.fechaNac,
+      EDAD: this.firstFormGroup.value.edad,
       SEXO: this.firstFormGroup.value.sexo,
       ESTADO_CIVIL: this.firstFormGroup.value.estadoCivilAspirante,
       NACIONALIDAD: this.firstFormGroup.value.nacionalidad,
@@ -494,7 +444,7 @@ export class PerfilwizardComponent implements OnInit {
       DISCAPACIDAD: this.firstFormGroup.value.discapacidad,
     }
     console.log("Perfil Usuario");
-    console.log(PerfilUsuario); 
+    console.log(PerfilUsuario);
 
   }
 
@@ -503,5 +453,11 @@ export class PerfilwizardComponent implements OnInit {
     console.log(this.secondFormGroup.value);
   }
 
+  eliminarIdioma(index: number) {
+    console.log("Se eliimnará el idioma: " + index);
+    this.idiomas.splice(index, 1);
+    console.log("Despues de eliminar");
+    console.log(this.idiomas);
+  }
 
 }

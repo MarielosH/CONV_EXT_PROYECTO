@@ -3,7 +3,18 @@ export interface Idioma {
     idioma: string,
     habla: string,
     escribe: string,
-    lee
+    lee: string
+}
+
+export interface Familiar {
+    id_familiar: number,
+    parentezco: string,
+    fecha_nacimiento: string,
+    telefono: string,
+    vive: string,
+    profesion: string, 
+    trabaja: string,
+    lugar_trabajo: string
 }
 
 export const ConvocatoriaEjemplo = [
