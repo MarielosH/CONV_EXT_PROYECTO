@@ -341,6 +341,38 @@ export class PerfilwizardComponent implements OnInit {
 
   }
 
+  agregarFamiliar() {
+    console.log("Agregar familiar");
+    console.log(this.thirdFormGroup.value.familiar);
+    if (this.thirdFormGroup.value.familiar !== '' && this.thirdFormGroup.value.familiar !== undefined) {
+      console.log("es distinto de undefined");
+
+      this.nuevoFamiliar = {
+        nombreFamiliar: this.thirdFormGroup.value.familiar,
+        parentezco: this.thirdFormGroup.value.parentezco,
+        fechaNacimiento: this.thirdFormGroup.value.fechaNacFamiliar,
+        telefono: this.thirdFormGroup.value.telFamiliar,
+        vive: this.thirdFormGroup.value.viveFamiliar,
+        profesion: this.thirdFormGroup.value.profesionFamiliar,
+        trabaja: this.thirdFormGroup.value.trabajaFamiliar,
+        lugarTrabajo: this.thirdFormGroup.value.lugarTrabajoFamiliar
+      };
+      console.log(this.nuevoFamiliar);
+      this.familiares.push(this.nuevoFamiliar);
+    }
+    this.thirdFormGroup = this.fb.group({
+      parentezco: [''],
+      familiar: [''],
+      fechaNacFamiliar: [''],
+      telFamiliar: [''],
+      viveFamiliar: [''],
+      profesionFamiliar: [''],
+      trabajaFamiliar: [''],
+      lugarTrabajoFamiliar: ['']
+    });
+    console.log( this.familiares);
+  }
+
   crearPerfil() {
     this.obtenerDepartamentos();
     this.obtenerComunidadesLinguisticas();

@@ -261,7 +261,7 @@
           <mat-label style="font-size: 24px; "> <b>Idiomas que domina</b></mat-label>
         </div>
         <div class="col-3" style="text-align: center;">
-          
+
         </div>
       </div>
       <div class="row">
@@ -272,7 +272,7 @@
                 <td class="text-center" style="width: 250px;">
                   <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                     <input matInput formControlName="idioma1" type="text" placeholder="Idioma">
-  
+
                     <mat-hint style="color:red;" *ngIf="this.validaDpi">
                       Error Idioma ya Existente
                     </mat-hint>
@@ -308,60 +308,60 @@
                     </mat-select>
                   </mat-form-field>
                 </td>
-                <td style="width: 50px;"> <button mat-raised-button class="btn btn-primary" (click)="agregarIdioma()" style="font-size: 10px;">
-                  <i class="fa fa-plus"></i>
-                  &nbsp;&nbsp; Agregar Idioma
-                </button></td>
+                <td style="width: 50px;"> <button mat-raised-button class="btn btn-primary" (click)="agregarIdioma()"
+                    style="font-size: 10px;">
+                    <i class="fa fa-plus"></i>
+                    &nbsp;&nbsp; Agregar Idioma
+                  </button></td>
               </tr>
             </thead>
             <tbody *ngIf="idiomas.length>0">
-                <tr *ngFor="let d of idiomas; let index = index">
-                  <td class="text-center" style="width: 250px;">
-                    <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                      <input matInput [value]="d.idioma" type="text" placeholder="Idioma" disabled
-                        >
+              <tr *ngFor="let d of idiomas; let index = index">
+                <td class="text-center" style="width: 250px;">
+                  <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                    <input matInput [value]="d.idioma" type="text" placeholder="Idioma" disabled>
 
-                      <mat-hint style="color:red;" *ngIf="this.validaDpi">
-                        Error Idioma ya Existente
-                      </mat-hint>
-                    </mat-form-field>
-                  </td>
-                  <td class="text-center" style="width: 150px;">
-                    <mat-form-field>
-                      <mat-select placeholder="HABLA" [value]="d.habla" disabled>
-                        <mat-option [value]="0">Excelente</mat-option>
-                        <mat-option [value]="1">Muy bueno</mat-option>
-                        <mat-option [value]="2">Bueno</mat-option>
-                        <mat-option [value]="3">Regular</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </td>
-                  <td class="text-center" style="width: 150px;">
-                    <mat-form-field>
-                      <mat-select placeholder="LEE" [value]="d.lee" disabled>
-                        <mat-option [value]="0">Excelente</mat-option>
-                        <mat-option [value]="1">Muy bueno</mat-option>
-                        <mat-option [value]="2">Bueno</mat-option>
-                        <mat-option [value]="3">Regular</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </td>
-                  <td class="text-center" style="width: 150px;" >
-                    <mat-form-field>
-                      <mat-select placeholder="ESCRIBE" [value]="d.escribe" disabled>
-                        <mat-option [value]="0">Excelente</mat-option>
-                        <mat-option [value]="1">Muy bueno</mat-option>
-                        <mat-option [value]="2">Bueno</mat-option>
-                        <mat-option [value]="3">Regular</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </td>
-                  <td class="text-center" style="width: 50px;">
-                    <button type="button" class="btn btn-danger btn-s" (click)="eliminarIdioma(index)" >
-                      <span class="fa fa-trash"></span>
-                    </button>
-                  </td>
-                </tr>
+                    <mat-hint style="color:red;" *ngIf="this.validaDpi">
+                      Error Idioma ya Existente
+                    </mat-hint>
+                  </mat-form-field>
+                </td>
+                <td class="text-center" style="width: 150px;">
+                  <mat-form-field>
+                    <mat-select placeholder="HABLA" [value]="d.habla" disabled>
+                      <mat-option [value]="0">Excelente</mat-option>
+                      <mat-option [value]="1">Muy bueno</mat-option>
+                      <mat-option [value]="2">Bueno</mat-option>
+                      <mat-option [value]="3">Regular</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+                <td class="text-center" style="width: 150px;">
+                  <mat-form-field>
+                    <mat-select placeholder="LEE" [value]="d.lee" disabled>
+                      <mat-option [value]="0">Excelente</mat-option>
+                      <mat-option [value]="1">Muy bueno</mat-option>
+                      <mat-option [value]="2">Bueno</mat-option>
+                      <mat-option [value]="3">Regular</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+                <td class="text-center" style="width: 150px;">
+                  <mat-form-field>
+                    <mat-select placeholder="ESCRIBE" [value]="d.escribe" disabled>
+                      <mat-option [value]="0">Excelente</mat-option>
+                      <mat-option [value]="1">Muy bueno</mat-option>
+                      <mat-option [value]="2">Bueno</mat-option>
+                      <mat-option [value]="3">Regular</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+                <td class="text-center" style="width: 50px;">
+                  <button type="button" class="btn btn-danger btn-s" (click)="eliminarIdioma(index)">
+                    <span class="fa fa-trash"></span>
+                  </button>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -379,69 +379,160 @@
       <ng-template matStepLabel></ng-template>
       <mat-label style="font-size: 24px; "> <b>Información Familiar</b></mat-label>
       <br />
-      <div class="card">
-        <mat-label style="font-size: 18px; "> <b>NOMBRE FAMILIAR</b> </mat-label>
-        <div class="row">
-          <div class="col-4">
-            <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-              <input matInput formControlName="familiar" type="text" placeholder="Padre">
-            </mat-form-field>
-          </div>
-          <div class="col-3">
-            <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
-              <input matInput (click)="picker6.open()" formControlName="fechaNacFamiliar"
-                (ngModelChange)="parseDate($event)" [matDatepicker]="picker6" placeholder="FECHA NACIMIENTO">
-              <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
-              <mat-datepicker touchUi #picker6></mat-datepicker>
-            </mat-form-field>
-          </div>
-          <div class="col-3">
-            <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-              <input matInput formControlName="telFamiliar" class="textos" type="text" maxlength="10"
-                placeholder="Telefono">
-            </mat-form-field>
-          </div>
-          <div class="col-2">
-            <button mat-raised-button class="btn btn-primary" (click)="agregarIdioma()" style="font-size: 10px;">
-              <i class="fa fa-plus"></i>
-              &nbsp; Agregar
-            </button>
-          </div>
-        </div>
+      <div>
+        <mat-card>
+          <mat-card-title> FAMILIAR </mat-card-title>
+          <mat-card-content>
+            <div class="row">
+              <div class="col-5">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput formControlName="familiar" type="text" placeholder="NOMBRE">
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
+                  <input matInput (click)="picker6.open()" formControlName="fechaNacFamiliar"
+                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker6" placeholder="FECHA NACIMIENTO">
+                  <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #picker6></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput formControlName="telFamiliar" class="textos" type="text" maxlength="10"
+                    placeholder="Telefono">
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <mat-form-field [floatLabel]="floatLabelControl.value">
+                  <mat-label style="font-size: 14px;">PARENTEZCO</mat-label>
+                  <mat-select formControlName="parentezco">
+                    <mat-option [value]="0" style="font-size: 12px;">PADRE</mat-option>
+                    <mat-option [value]="1" style="font-size: 12px;">MADRE</mat-option>
+                    <mat-option [value]="2" style="font-size: 12px;">HERMANO(A)</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
 
-        <div class="row">
-          <div class="col-2">
-            <mat-form-field [floatLabel]="floatLabelControl.value">
-              <mat-label style="font-size: 14px;">VIVE</mat-label>
-              <mat-select formControlName="viveFamiliar">
-                <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
-                <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-4">
-            <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-              <input matInput formControlName="profesionFamiliar" type="text" placeholder="Profesión u Oficio"
-                (ngModelChange)="asignaNombreDoc($event)">
-            </mat-form-field>
-          </div>
-          <div class="col-2">
-            <mat-form-field [floatLabel]="floatLabelControl.value">
-              <mat-label style="font-size: 14px;">TRABAJA ACTUALMENTE</mat-label>
-              <mat-select formControlName="trabajaFamiliar">
-                <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
-                <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-4">
-            <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-              <input matInput formControlName="lugarTrabajoFamiliar" class="textos" type="text" maxlength="2048"
-                placeholder="Lugar de Trabajo" (ngModelChange)="asignaNombreDoc($event)">
-              <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
-            </mat-form-field>
-          </div>
-        </div>
+            <div class="row">
+              <div class="col-1">
+                <mat-form-field [floatLabel]="floatLabelControl.value">
+                  <mat-label style="font-size: 14px;">VIVE</mat-label>
+                  <mat-select formControlName="viveFamiliar">
+                    <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
+                    <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-4">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput formControlName="profesionFamiliar" type="text" placeholder="Profesión u Oficio">
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <mat-form-field [floatLabel]="floatLabelControl.value">
+                  <mat-label style="font-size: 14px;">TRABAJA ACTUALMENTE</mat-label>
+                  <mat-select formControlName="trabajaFamiliar">
+                    <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
+                    <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput formControlName="lugarTrabajoFamiliar" class="textos" type="text" maxlength="2048"
+                    placeholder="Lugar de Trabajo">
+                  <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <button mat-raised-button class="btn btn-primary" (click)="agregarFamiliar()" style="font-size: 10px;">
+                  <i class="fa fa-plus"></i>
+                  &nbsp; Agregar
+                </button>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <br />
+      <br />
+      <div>
+        <mat-card *ngFor="let familiar of familiares">
+          <mat-card-content>
+            <div class="row">
+              <div class="col-5">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput [value]="familiar.nombreFamiliar" type="text" placeholder="NOMBRE">
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
+                  <input matInput (click)="picker6.open()" [value]="familiar.fechaNacimiento"
+                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker6" placeholder="FECHA NACIMIENTO">
+                  <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #picker6></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput [value]="familiar.telefono" class="textos" type="text" maxlength="10"
+                    placeholder="Telefono">
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <mat-form-field [floatLabel]="floatLabelControl.value">
+                  <mat-label style="font-size: 14px;">PARENTEZCO</mat-label>
+                  <mat-select [value]="familiar.parentezco">
+                    <mat-option [value]="0" style="font-size: 12px;">PADRE</mat-option>
+                    <mat-option [value]="1" style="font-size: 12px;">MADRE</mat-option>
+                    <mat-option [value]="2" style="font-size: 12px;">HERMANO(A)</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-1">
+                <mat-form-field [floatLabel]="floatLabelControl.value">
+                  <mat-label style="font-size: 14px;">VIVE</mat-label>
+                  <mat-select [value]="familiar.vive">
+                    <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
+                    <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-4">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput [value]="familiar.profesion" type="text" placeholder="Profesión u Oficio">
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <mat-form-field [floatLabel]="floatLabelControl.value">
+                  <mat-label style="font-size: 14px;">TRABAJA ACTUALMENTE</mat-label>
+                  <mat-select [value]="familiar.trabaja">
+                    <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
+                    <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput [value]="familiar.lugarTrabajo" class="textos" type="text" maxlength="2048"
+                    placeholder="Lugar de Trabajo">
+                  <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <button mat-raised-button class="btn btn-primary" (click)="agregarFamiliar()" style="font-size: 10px;">
+                  <i class="fa fa-plus"></i>
+                  &nbsp; Agregar
+                </button>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
       </div>
       <br />
       <div>
@@ -454,7 +545,7 @@
   <mat-step [stepControl]="fourthFormGroup">
     <form [formGroup]="fourthFormGroup">
       <ng-template matStepLabel></ng-template>
-      
+
       <br />
       <div>
         <button mat-button matStepperPrevious>Atrás</button>

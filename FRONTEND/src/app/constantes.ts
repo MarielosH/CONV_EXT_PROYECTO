@@ -7,14 +7,14 @@ export interface Idioma {
 }
 
 export interface Familiar {
-    id_familiar: number,
+    nombreFamiliar: string,
     parentezco: string,
-    fecha_nacimiento: string,
+    fechaNacimiento: string,
     telefono: string,
     vive: string,
     profesion: string, 
     trabaja: string,
-    lugar_trabajo: string
+    lugarTrabajo: string
 }
 
 export const ConvocatoriaEjemplo = [
