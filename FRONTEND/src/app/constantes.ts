@@ -17,6 +17,13 @@ export interface Familiar {
     lugarTrabajo: string
 }
 
+export interface FamiliarLaborandoOJ {
+    nombreCompleto: string,
+    parentezco: string,
+    dependencia: string,
+    puesto: string
+}
+
 export const ConvocatoriaEjemplo = [
     {
         INFO: 'Coordinar la Unidad de Control, Seguimiento y Evaluación de los Órganos Especializados en Delitos de Femicidio y Otras Formas de Violencia contra la Mujer del Organismo Judicial, para cumplir con las metas de la dependencia.'

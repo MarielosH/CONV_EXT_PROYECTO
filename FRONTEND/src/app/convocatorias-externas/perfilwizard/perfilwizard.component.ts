@@ -8,7 +8,7 @@ import swal from 'sweetalert2';
 import { AuthService } from '../../recursos/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConvocatoriasExternasService } from '../convocatorias-externas.service';
-import { Sexo, EstadoCivil, TiposLicencia, Discapacidad, Raza, Idioma, Familiar } from 'app/constantes';
+import { Sexo, EstadoCivil, TiposLicencia, Discapacidad, Raza, Idioma, Familiar, FamiliarLaborandoOJ} from 'app/constantes';
 @Component({
   selector: 'app-perfilwizard',
   templateUrl: './perfilwizard.component.html',
@@ -85,6 +85,8 @@ export class PerfilwizardComponent implements OnInit {
   nuevoIdioma: Idioma;
   familiares: Familiar[] = [];
   nuevoFamiliar: Familiar;
+  familiaresLaborandoOJ: FamiliarLaborandoOJ[] = [];
+  nuevoFamiliarLaborandoOJ: FamiliarLaborandoOJ;
   listaDependientes = [];
   listarazaPerfil;
   listaComunidadesLinguisticas;
@@ -102,6 +104,10 @@ export class PerfilwizardComponent implements OnInit {
   nombreFamiliar;
   dependencia;
   puesto;
+  parentescoFOJ;
+  nombreFOJ;
+  dependenciaFOJ;
+  puestoFOJ;
   parentesco1;
   nombreFamiliar1;
   dependencia1;
@@ -186,6 +192,9 @@ export class PerfilwizardComponent implements OnInit {
     });
 
     this.thirdFormGroup = this.fb.group({
+      hijos: [''],
+      noHijo: [''],
+      dependientes: [''],
       parentezco: [''],
       familiar: [''],
       fechaNacFamiliar: [''],
@@ -197,7 +206,10 @@ export class PerfilwizardComponent implements OnInit {
     });
 
     this.fourthFormGroup = this.fb.group({
-      listaComunidadesLinguisticas: ''
+      parentescoFOJ: [''],
+      nombreFOJ: [''],
+      dependenciaFOJ: [''],
+      puestoFOJ: ['']
     });
 
     this.fifthFormGroup = this.fb.group({
@@ -320,7 +332,7 @@ export class PerfilwizardComponent implements OnInit {
   }
 
   agregarIdioma() {
-    if (this.secondFormGroup.value.idioma1 !== '' && this.secondFormGroup.value.idioma1 !== undefined) {
+    if (this.secondFormGroup.value.idioma1 !== '' && this.secondFormGroup.value.idioma1 !== undefined && this.secondFormGroup.value.idioma1 !== null) {
       this.nuevoIdioma = {
         id_idioma: 0,
         idioma: this.secondFormGroup.value.idioma1,
@@ -329,22 +341,23 @@ export class PerfilwizardComponent implements OnInit {
         escribe: this.secondFormGroup.value.escribe1
       };
       this.idiomas.push(this.nuevoIdioma);
+
+      this.secondFormGroup = this.fb.group({
+        etnia: [this.secondFormGroup.value.etnia, Validators.required],
+        comunidadLinguistica: [this.secondFormGroup.value.comunidadLinguistica, Validators.required],
+        idioma1: [''],
+        habla1: [''],
+        lee1: [''],
+        escribe1: ['']
+      });
     }
-    this.secondFormGroup = this.fb.group({
-      etnia: [this.secondFormGroup.value.etnia, Validators.required],
-      comunidadLinguistica: [this.secondFormGroup.value.comunidadLinguistica, Validators.required],
-      idioma1: [''],
-      habla1: [''],
-      lee1: [''],
-      escribe1: ['']
-    });
 
   }
 
   agregarFamiliar() {
     console.log("Agregar familiar");
     console.log(this.thirdFormGroup.value.familiar);
-    if (this.thirdFormGroup.value.familiar !== '' && this.thirdFormGroup.value.familiar !== undefined) {
+    if (this.thirdFormGroup.value.familiar !== '' && this.thirdFormGroup.value.familiar !== undefined && this.thirdFormGroup.value.familiar !== null) {
       console.log("es distinto de undefined");
 
       this.nuevoFamiliar = {
@@ -359,18 +372,47 @@ export class PerfilwizardComponent implements OnInit {
       };
       console.log(this.nuevoFamiliar);
       this.familiares.push(this.nuevoFamiliar);
+
+      this.thirdFormGroup = this.fb.group({
+        parentezco: [''],
+        familiar: [''],
+        fechaNacFamiliar: [''],
+        telFamiliar: [''],
+        viveFamiliar: [''],
+        profesionFamiliar: [''],
+        trabajaFamiliar: [''],
+        lugarTrabajoFamiliar: ['']
+      });
+      console.log(this.familiares);
     }
-    this.thirdFormGroup = this.fb.group({
-      parentezco: [''],
-      familiar: [''],
-      fechaNacFamiliar: [''],
-      telFamiliar: [''],
-      viveFamiliar: [''],
-      profesionFamiliar: [''],
-      trabajaFamiliar: [''],
-      lugarTrabajoFamiliar: ['']
-    });
-    console.log( this.familiares);
+
+  }
+
+  agregarFamiliarLaborandoOJ() {
+    console.log("Agregar familiar Laborando OJ");
+    console.log(this.thirdFormGroup.value.familiar);
+    if (this.fourthFormGroup.value.nombreFOJ !== '' && this.fourthFormGroup.value.nombreFOJ !== undefined && this.fourthFormGroup.value.nombreFOJ !== null) {
+      console.log("es distinto de undefined");
+
+      this.nuevoFamiliarLaborandoOJ = {
+        nombreCompleto: this.fourthFormGroup.value.nombreFOJ,
+        parentezco: this.fourthFormGroup.value.parentescoFOJ,
+        dependencia: this.fourthFormGroup.value.dependenciaFOJ,
+        puesto: this.fourthFormGroup.value.puestoFOJ
+      };
+      console.log(this.nuevoFamiliarLaborandoOJ);
+      this.familiaresLaborandoOJ.push(this.nuevoFamiliarLaborandoOJ);
+
+      this.fourthFormGroup = this.fb.group({
+        parentescoFOJ: [''],
+        nombreFOJ: [''],
+        dependenciaFOJ: [''],
+        puestoFOJ: ['']
+      });
+  
+      console.log(this.familiaresLaborandoOJ);
+    }
+
   }
 
   crearPerfil() {
@@ -490,6 +532,13 @@ export class PerfilwizardComponent implements OnInit {
     this.idiomas.splice(index, 1);
     console.log("Despues de eliminar");
     console.log(this.idiomas);
+  }
+
+  eliminarFamiliar(index: number) {
+    console.log("Se eliimnará el familiar: " + index);
+    this.familiares.splice(index, 1);
+    console.log("Despues de eliminar");
+    console.log(this.familiares);
   }
 
 }

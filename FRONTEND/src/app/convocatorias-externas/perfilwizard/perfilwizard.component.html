@@ -397,7 +397,7 @@
                   <mat-datepicker touchUi #picker6></mat-datepicker>
                 </mat-form-field>
               </div>
-              <div class="col-3">
+              <div class="col-2">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input matInput formControlName="telFamiliar" class="textos" type="text" maxlength="10"
                     placeholder="Telefono">
@@ -458,6 +458,44 @@
       </div>
       <br />
       <br />
+      <mat-card>
+        <mat-card-content>
+          <div class="row">
+            <div class="col-2">
+              <mat-form-field>
+                <mat-select placeholder="HIJOS" formControlName="hijos" required>
+                  <mat-option [value]="0" style="font-size: 12px;"> NO</mat-option>
+                  <mat-option [value]="1" style="font-size: 12px;"> SI</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-3">
+              <mat-form-field color="warn" class="textos">
+                <input matInput formControlName="noHijo" class="textos" type="number" placeholder="NUMERO DE HIJOS">
+              </mat-form-field>
+            </div>
+            <div class="col-4">
+              <mat-label  style="font-size: 18px; "> Seleccione quienes dependen económicamente de usted </mat-label>
+              <mat-selection-list color="primary" (selectionChange)="cambioListaDependientes($event)">
+                <mat-list-option checkboxPosition="before" [value]="0">
+                  Hijos
+                </mat-list-option>
+                <mat-list-option checkboxPosition="before" [value]="1">
+                  Padre
+                </mat-list-option>
+                <mat-list-option checkboxPosition="before" [value]="2">
+                  Madre
+                </mat-list-option>
+                <mat-list-option checkboxPosition="before" [value]="3">
+                  Otro
+                </mat-list-option>
+              </mat-selection-list>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <br />
+      <br />
       <div>
         <mat-card *ngFor="let familiar of familiares">
           <mat-card-content>
@@ -475,7 +513,7 @@
                   <mat-datepicker touchUi #picker6></mat-datepicker>
                 </mat-form-field>
               </div>
-              <div class="col-3">
+              <div class="col-2">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input matInput [value]="familiar.telefono" class="textos" type="text" maxlength="10"
                     placeholder="Telefono">
@@ -488,6 +526,7 @@
                     <mat-option [value]="0" style="font-size: 12px;">PADRE</mat-option>
                     <mat-option [value]="1" style="font-size: 12px;">MADRE</mat-option>
                     <mat-option [value]="2" style="font-size: 12px;">HERMANO(A)</mat-option>
+                    <mat-option [value]="3" style="font-size: 12px;">CONYUGUE</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -525,9 +564,8 @@
                 </mat-form-field>
               </div>
               <div class="col-2">
-                <button mat-raised-button class="btn btn-primary" (click)="agregarFamiliar()" style="font-size: 10px;">
-                  <i class="fa fa-plus"></i>
-                  &nbsp; Agregar
+                <button type="button" class="btn btn-danger btn-s" (click)="eliminarFamiliar(index)">
+                  <span class="fa fa-trash"></span>
                 </button>
               </div>
             </div>
@@ -545,7 +583,134 @@
   <mat-step [stepControl]="fourthFormGroup">
     <form [formGroup]="fourthFormGroup">
       <ng-template matStepLabel></ng-template>
+      <mat-label style="font-size: 24px; "> <b>Familiares Laborando en El Organismo Judicial</b></mat-label>
+      <br />
+      <div>
+        <mat-card>
+          <mat-card-title> FAMILIAR </mat-card-title>
+          <mat-card-content>
+            <div class="row">
+              <div class="col-2">
+                <mat-form-field [floatLabel]="floatLabelControl.value">
+                  <mat-label style="font-size: 14px;">PARENTEZCO</mat-label>
+                  <mat-select formControlName="parentescoFOJ">
+                    <mat-option [value]="0" style="font-size: 12px;">PADRE</mat-option>
+                    <mat-option [value]="1" style="font-size: 12px;">MADRE</mat-option>
+                    <mat-option [value]="2" style="font-size: 12px;">HERMANO(A)</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-5">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput formControlName="nombreFOJ" type="text" placeholder="NOMBRE COMPLETO">
+                </mat-form-field>
+              </div>
+              <div class="col-4">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput formControlName="dependenciaFOJ" class="textos" type="text" maxlength="10"
+                    placeholder="DEPENDENCIA">
+                </mat-form-field>
+              </div>
+              
+            </div>
 
+            <div class="row">
+              <div class="col-5">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput formControlName="puestoFOJ" class="textos" type="text" maxlength="2048"
+                    placeholder="Puesto">
+                  <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <button mat-raised-button class="btn btn-primary" (click)="agregarFamiliarLaborandoOJ()" style="font-size: 10px;">
+                  <i class="fa fa-plus"></i>
+                  &nbsp; Agregar
+                </button>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <br />
+      <br />
+      <div>
+        <mat-card *ngFor="let familiar of familiares">
+          <mat-card-content>
+            <div class="row">
+              <div class="col-5">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput [value]="familiar.nombreFamiliar" type="text" placeholder="NOMBRE">
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
+                  <input matInput (click)="picker6.open()" [value]="familiar.fechaNacimiento"
+                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker6" placeholder="FECHA NACIMIENTO">
+                  <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #picker6></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput [value]="familiar.telefono" class="textos" type="text" maxlength="10"
+                    placeholder="Telefono">
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <mat-form-field [floatLabel]="floatLabelControl.value">
+                  <mat-label style="font-size: 14px;">PARENTEZCO</mat-label>
+                  <mat-select [value]="familiar.parentezco">
+                    <mat-option [value]="0" style="font-size: 12px;">PADRE</mat-option>
+                    <mat-option [value]="1" style="font-size: 12px;">MADRE</mat-option>
+                    <mat-option [value]="2" style="font-size: 12px;">HERMANO(A)</mat-option>
+                    <mat-option [value]="3" style="font-size: 12px;">CONYUGUE</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-1">
+                <mat-form-field [floatLabel]="floatLabelControl.value">
+                  <mat-label style="font-size: 14px;">VIVE</mat-label>
+                  <mat-select [value]="familiar.vive">
+                    <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
+                    <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-4">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput [value]="familiar.profesion" type="text" placeholder="Profesión u Oficio">
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <mat-form-field [floatLabel]="floatLabelControl.value">
+                  <mat-label style="font-size: 14px;">TRABAJA ACTUALMENTE</mat-label>
+                  <mat-select [value]="familiar.trabaja">
+                    <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
+                    <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput [value]="familiar.lugarTrabajo" class="textos" type="text" maxlength="2048"
+                    placeholder="Lugar de Trabajo">
+                  <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <button type="button" class="btn btn-danger btn-s" (click)="eliminarFamiliar(index)">
+                  <span class="fa fa-trash"></span>
+                </button>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <br />
       <br />
       <div>
         <button mat-button matStepperPrevious>Atrás</button>
