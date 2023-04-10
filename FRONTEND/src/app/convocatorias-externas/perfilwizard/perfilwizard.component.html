@@ -260,9 +260,6 @@
         <div class="col-9" style="text-align: left;">
           <mat-label style="font-size: 24px; "> <b>Idiomas que domina</b></mat-label>
         </div>
-        <div class="col-3" style="text-align: center;">
-
-        </div>
       </div>
       <div class="row">
         <div class="table-responsive">
@@ -316,7 +313,7 @@
               </tr>
             </thead>
             <tbody *ngIf="idiomas.length>0">
-              <tr *ngFor="let d of idiomas; let index = index">
+              <tr *ngFor="let d of idiomas; let index = index" disabled>
                 <td class="text-center" style="width: 250px;">
                   <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                     <input matInput [value]="d.idioma" type="text" placeholder="Idioma" disabled>
@@ -410,6 +407,7 @@
                     <mat-option [value]="0" style="font-size: 12px;">PADRE</mat-option>
                     <mat-option [value]="1" style="font-size: 12px;">MADRE</mat-option>
                     <mat-option [value]="2" style="font-size: 12px;">HERMANO(A)</mat-option>
+                    <mat-option [value]="3" style="font-size: 12px;">CONYUGE</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -475,7 +473,7 @@
               </mat-form-field>
             </div>
             <div class="col-4">
-              <mat-label  style="font-size: 18px; "> Seleccione quienes dependen económicamente de usted </mat-label>
+              <mat-label style="font-size: 18px; "> Seleccione quienes dependen económicamente de usted </mat-label>
               <mat-selection-list color="primary" (selectionChange)="cambioListaDependientes($event)">
                 <mat-list-option checkboxPosition="before" [value]="0">
                   Hijos
@@ -496,10 +494,10 @@
       </mat-card>
       <br />
       <br />
-      <div>
+      <div *ngIf="familiares.length>0">
         <mat-card *ngFor="let familiar of familiares">
           <mat-card-content>
-            <div class="row">
+            <div class="row" disabled>
               <div class="col-5">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input matInput [value]="familiar.nombreFamiliar" type="text" placeholder="NOMBRE">
@@ -507,10 +505,10 @@
               </div>
               <div class="col-2">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
-                  <input matInput (click)="picker6.open()" [value]="familiar.fechaNacimiento"
-                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker6" placeholder="FECHA NACIMIENTO">
-                  <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
-                  <mat-datepicker touchUi #picker6></mat-datepicker>
+                  <input matInput (click)="picker7.open()" [value]="familiar.fechaNacimiento"
+                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker7" placeholder="FECHA NACIMIENTO">
+                  <mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #picker7></mat-datepicker>
                 </mat-form-field>
               </div>
               <div class="col-2">
@@ -526,7 +524,7 @@
                     <mat-option [value]="0" style="font-size: 12px;">PADRE</mat-option>
                     <mat-option [value]="1" style="font-size: 12px;">MADRE</mat-option>
                     <mat-option [value]="2" style="font-size: 12px;">HERMANO(A)</mat-option>
-                    <mat-option [value]="3" style="font-size: 12px;">CONYUGUE</mat-option>
+                    <mat-option [value]="3" style="font-size: 12px;">CONYUGE</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -587,34 +585,34 @@
       <br />
       <div>
         <mat-card>
-          <mat-card-title> FAMILIAR </mat-card-title>
+          <mat-card-title> Nuevo Familiar </mat-card-title>
           <mat-card-content>
             <div class="row">
-              <div class="col-2">
+              <div class="col-6">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput formControlName="nombreFOJ" type="text" placeholder="NOMBRE COMPLETO">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
                 <mat-form-field [floatLabel]="floatLabelControl.value">
                   <mat-label style="font-size: 14px;">PARENTEZCO</mat-label>
                   <mat-select formControlName="parentescoFOJ">
                     <mat-option [value]="0" style="font-size: 12px;">PADRE</mat-option>
                     <mat-option [value]="1" style="font-size: 12px;">MADRE</mat-option>
                     <mat-option [value]="2" style="font-size: 12px;">HERMANO(A)</mat-option>
+                    <mat-option [value]="3" style="font-size: 12px;">CONYUGE</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
-              <div class="col-5">
-                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput formControlName="nombreFOJ" type="text" placeholder="NOMBRE COMPLETO">
-                </mat-form-field>
-              </div>
-              <div class="col-4">
-                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput formControlName="dependenciaFOJ" class="textos" type="text" maxlength="10"
-                    placeholder="DEPENDENCIA">
-                </mat-form-field>
-              </div>
-              
             </div>
 
             <div class="row">
+              <div class="col-4">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput formControlName="dependenciaFOJ" class="textos" type="text" maxlength="2048"
+                    placeholder="DEPENDENCIA">
+                </mat-form-field>
+              </div>
               <div class="col-5">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input matInput formControlName="puestoFOJ" class="textos" type="text" maxlength="2048"
@@ -622,8 +620,10 @@
                   <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
                 </mat-form-field>
               </div>
+              <div class="col-1"> </div>
               <div class="col-2">
-                <button mat-raised-button class="btn btn-primary" (click)="agregarFamiliarLaborandoOJ()" style="font-size: 10px;">
+                <button mat-raised-button class="btn btn-primary" (click)="agregarFamiliarLaborandoOJ()"
+                  style="font-size: 10px;">
                   <i class="fa fa-plus"></i>
                   &nbsp; Agregar
                 </button>
@@ -635,74 +635,41 @@
       <br />
       <br />
       <div>
-        <mat-card *ngFor="let familiar of familiares">
+        <mat-card *ngFor="let familiar of familiaresLaborandoOJ">
           <mat-card-content>
             <div class="row">
-              <div class="col-5">
+              <div class="col-6">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput [value]="familiar.nombreFamiliar" type="text" placeholder="NOMBRE">
+                  <input matInput [value]="familiar.nombreCompleto" type="text" placeholder="NOMBRE">
                 </mat-form-field>
               </div>
-              <div class="col-2">
-                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
-                  <input matInput (click)="picker6.open()" [value]="familiar.fechaNacimiento"
-                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker6" placeholder="FECHA NACIMIENTO">
-                  <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
-                  <mat-datepicker touchUi #picker6></mat-datepicker>
-                </mat-form-field>
-              </div>
-              <div class="col-2">
-                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput [value]="familiar.telefono" class="textos" type="text" maxlength="10"
-                    placeholder="Telefono">
-                </mat-form-field>
-              </div>
-              <div class="col-2">
+              <div class="col-3">
                 <mat-form-field [floatLabel]="floatLabelControl.value">
                   <mat-label style="font-size: 14px;">PARENTEZCO</mat-label>
                   <mat-select [value]="familiar.parentezco">
                     <mat-option [value]="0" style="font-size: 12px;">PADRE</mat-option>
                     <mat-option [value]="1" style="font-size: 12px;">MADRE</mat-option>
                     <mat-option [value]="2" style="font-size: 12px;">HERMANO(A)</mat-option>
-                    <mat-option [value]="3" style="font-size: 12px;">CONYUGUE</mat-option>
+                    <mat-option [value]="3" style="font-size: 12px;">CONYUGE</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
             </div>
-
             <div class="row">
-              <div class="col-1">
-                <mat-form-field [floatLabel]="floatLabelControl.value">
-                  <mat-label style="font-size: 14px;">VIVE</mat-label>
-                  <mat-select [value]="familiar.vive">
-                    <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
-                    <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
               <div class="col-4">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput [value]="familiar.profesion" type="text" placeholder="Profesión u Oficio">
+                  <input matInput [value]="familiar.dependencia" class="textos" type="text" maxlength="2048"
+                    placeholder="Dependencia">
                 </mat-form-field>
               </div>
-              <div class="col-2">
-                <mat-form-field [floatLabel]="floatLabelControl.value">
-                  <mat-label style="font-size: 14px;">TRABAJA ACTUALMENTE</mat-label>
-                  <mat-select [value]="familiar.trabaja">
-                    <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
-                    <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-              <div class="col-3">
+              <div class="col-5">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput [value]="familiar.lugarTrabajo" class="textos" type="text" maxlength="2048"
-                    placeholder="Lugar de Trabajo">
-                  <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
+                  <input matInput [value]="familiar.puesto" type="text" placeholder="Puesto">
                 </mat-form-field>
               </div>
+              <div class="col-1"> </div>
               <div class="col-2">
-                <button type="button" class="btn btn-danger btn-s" (click)="eliminarFamiliar(index)">
+                <button type="button" class="btn btn-danger btn-s" (click)="eliminarFamiliarLaborandoOJ(index)">
                   <span class="fa fa-trash"></span>
                 </button>
               </div>
@@ -722,7 +689,230 @@
   <mat-step [stepControl]="fifthFormGroup">
     <form [formGroup]="fifthFormGroup">
       <ng-template matStepLabel></ng-template>
-
+      <mat-label style="font-size: 22px; "> <b> Información Académica</b></mat-label>
+      <br />
+      <br />
+      <div class="row">
+        <div class="col-1">
+          <h2 style="font-size: 18px;"> <b>PRIMARIA</b></h2>
+        </div>
+        <div class="col-3">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="gradoAprobadoPrimaria" class="textos" type="text" maxlength="1024"
+              placeholder="GRADO APROBADO">
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="institucionEstudiosPrimaria" class="textos" type="text" maxlength="1024"
+              placeholder="INSTITUCIÓN DE ESTUDIOS">
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="constanciaPrimaria" class="textos" type="text" maxlength="1024"
+              placeholder="CONSTANCIA QUE LO ACREDITA">
+          </mat-form-field>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-1">
+          <h2 style="font-size: 18px;"><b>BASICOS</b></h2>
+        </div>
+        <div class="col-3">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="gradoAprobadoBasicos" class="textos" type="text" maxlength="1024"
+              placeholder="GRADO APROBADO">
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="institucionEstudiosBasicos" class="textos" type="text" maxlength="1024"
+              placeholder="INSTITUCIÓN DE ESTUDIOS">
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="constanciaBasicos" class="textos" type="text" maxlength="1024"
+              placeholder="CONSTANCIA QUE LO ACREDITA">
+          </mat-form-field>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-1">
+          <h2 style="font-size: 18px;"><b>DIVERSIFICADO</b></h2>
+        </div>
+        <div class="col-3">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="gradoAprobadoDiversificado" class="textos" type="text" maxlength="1024"
+              placeholder="GRADO APROBADO">
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="institucionEstudiosDiversificado" class="textos" type="text"
+              maxlength="1024" placeholder="INSTITUCIÓN DE ESTUDIOS">
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="constanciaDiversificado" class="textos" type="text" maxlength="1024"
+              placeholder="CONSTANCIA QUE LO ACREDITA">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-1"> </div>
+        <div class="col-3">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="anioGraduacionDiversificado" class="textos" type="text" maxlength="1024"
+              placeholder="AÑO DE GRADUACIÓN">
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="carreraDiversificado" class="textos" type="text" maxlength="1024"
+              placeholder="CARRERA">
+          </mat-form-field>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-1"> <h2 style="font-size: 18px;"><b>UNIVERSIDAD</b></h2> </div>
+        <div class="col-3">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="carreraU" class="textos" type="text" maxlength="1024"
+              placeholder="CARRERA">
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="universidad" class="textos" type="text" maxlength="1024"
+              placeholder="UNIVERSIDAD">
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="constanciaUniversidad" class="textos" type="text" maxlength="1024"
+              placeholder="CONSTANCIA QUE LO ACREDITA">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col-3">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="semestreA" class="textos" type="text" maxlength="1024"
+              placeholder="SEMESTRE APROBADO">
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field [floatLabel]="floatLabelControl.value">
+            <mat-label style="font-size: 14px;">CIERRE DE PENSUM</mat-label>
+            <mat-select formControlName="cierre">
+              <mat-option [value]="0" style="font-size: 12px;">SI</mat-option>
+              <mat-option [value]="1" style="font-size: 12px;">NO</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field [floatLabel]="floatLabelControl.value">
+            <mat-label style="font-size: 14px;">GRADUADO TÉCNICO UNIVERSITARIO</mat-label>
+            <mat-select formControlName="graduadoTecnico">
+              <mat-option [value]="0" style="font-size: 12px;">SI</mat-option>
+              <mat-option [value]="1" style="font-size: 12px;">NO</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col-3">
+          <mat-form-field [floatLabel]="floatLabelControl.value">
+            <mat-label style="font-size: 14px;">GRADO A NIVEL LICENCIATURA</mat-label>
+            <mat-select formControlName="gradoLicenciatura">
+              <mat-option [value]="0" style="font-size: 12px;">SI</mat-option>
+              <mat-option [value]="1" style="font-size: 12px;">NO</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="colegiado" class="textos" type="text" maxlength="1024"
+              placeholder="COLEGIADO">
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="vigenciaColegiado" class="textos" type="text" maxlength="1024"
+              placeholder="VIGENCIA COLEGIADO">
+          </mat-form-field>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-1"> <h2 style="font-size: 18px;"><b>POSGRADO</b></h2> </div>
+        <div class="col-3">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="carreraPosgrado" class="textos" type="text" maxlength="1024"
+              placeholder="CARRERA">
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="universidadPosgrado" class="textos" type="text" maxlength="1024"
+              placeholder="UNIVERSIDAD">
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="constanciaUniversidadPosgrado" class="textos" type="text" maxlength="1024"
+              placeholder="CONSTANCIA QUE LO ACREDITA">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col-3">
+          <mat-form-field color="warn" class="textos">
+            <input matInput formControlName="semestreAprobadoPosgrado" class="textos" type="text" maxlength="1024"
+              placeholder="SEMESTRE APROBADO">
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field [floatLabel]="floatLabelControl.value">
+            <mat-label style="font-size: 14px;">CIERRE DE PENSUM</mat-label>
+            <mat-select formControlName="cierrePensumPosgrado">
+              <mat-option [value]="0" style="font-size: 12px;">SI</mat-option>
+              <mat-option [value]="1" style="font-size: 12px;">NO</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field [floatLabel]="floatLabelControl.value">
+            <mat-label style="font-size: 14px;">GRADUADO MAESTRIA</mat-label>
+            <mat-select formControlName="graduadoMaestria">
+              <mat-option [value]="0" style="font-size: 12px;">SI</mat-option>
+              <mat-option [value]="1" style="font-size: 12px;">NO</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col-3">
+          <mat-form-field [floatLabel]="floatLabelControl.value">
+            <mat-label style="font-size: 14px;">GRADUADO DE DOCTORADO</mat-label>
+            <mat-select formControlName="graduadoDoctorado">
+              <mat-option [value]="0" style="font-size: 12px;">SI</mat-option>
+              <mat-option [value]="1" style="font-size: 12px;">NO</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <br />
       <br />
       <div>
         <button mat-button matStepperPrevious>Atrás</button>
@@ -733,352 +923,87 @@
 
   <mat-step [stepControl]="sixthFormGroup">
     <form [formGroup]="sixthFormGroup">
-      <div class="ex1">
-        <ng-template matStepLabel></ng-template>
-        <mat-label style="font-size: 24px; "> <b>Información Familiar</b></mat-label>
-        <br />
-        <div class="card">
-          <mat-label style="font-size: 18px; "> <b>PADRE</b> </mat-label>
-          <div class="row row-cols-4">
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="padre" type="text" placeholder="Padre">
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="telPadre" class="textos" type="text" maxlength="10"
-                  placeholder="Telefono">
-              </mat-form-field>
-            </div>
-          </div>
+      <div class="row">
+        <div class="table-responsive">
+          <table class="table table-borderless">
+            <thead>
+              <tr>
+                <td class="text-center" style="width: 150px;">
+                  <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                    <input matInput formControlName="dependenciaPasantia" type="text" placeholder="Dependencia">
+                    <mat-hint style="color:red;" *ngIf="this.validaDpi">
+                      Error Dependencia ya Existente
+                    </mat-hint>
+                  </mat-form-field>
+                </td>
+                <td class="text-center" style="width: 150px;">
+                    <mat-form-field color="warn" style="font-size: 12px;">
+                      <input matInput (click)="picker8.open()" formControlName="inicioPasantia" (ngModelChange)="parseDate($event)"
+                        [matDatepicker]="picker8" placeholder="Fecha Inicio">
+                      <mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
+                      <mat-datepicker touchUi #picker8></mat-datepicker>
+                    </mat-form-field>
+                </td>
+                <td class="text-center" style="width: 150px;">
+                  <mat-form-field color="warn" style="font-size: 12px;">
+                    <input matInput (click)="picker9.open()" formControlName="finPasantia" (ngModelChange)="parseDate($event)"
+                      [matDatepicker]="picker9" placeholder="Fecha Finalizacion">
+                    <mat-datepicker-toggle matSuffix [for]="picker9"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi #picker9></mat-datepicker>
+                  </mat-form-field>
+              </td>
+              <td class="text-center" style="width: 150px;">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput formControlName="secrectarioJuezPasantia" type="text" placeholder="Nombre del Secretario y/o Juez">
+                </mat-form-field>
+              </td>
+                <td style="width: 50px;"> <button mat-raised-button class="btn btn-primary" (click)="agregarPasantia()"
+                    style="font-size: 10px;">
+                    <i class="fa fa-plus"></i>
+                    &nbsp;&nbsp; Agregar Pasantia
+                  </button></td>
+              </tr>
+            </thead>
+            <tbody *ngIf="pasantiasOJ.length>0">
+              <tr *ngFor="let d of pasantiasOJ; let index = index" disabled>
+                <td class="text-center" style="width: 150px;">
+                  <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                    <input matInput [value]="d.dependencia" type="text" placeholder="Dependencia" disabled>
+                  </mat-form-field>
+                </td>
 
-          <div class="row row-cols-4">
-            <div class="form-group col">
-              <mat-form-field [floatLabel]="floatLabelControl.value">
-                <mat-label style="font-size: 14px;">VIVE</mat-label>
-                <mat-select formControlName="vivePadre">
-                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
-                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="profesionPadre" type="text" placeholder="Profesión u Oficio"
-                  (ngModelChange)="asignaNombreDoc($event)">
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field [floatLabel]="floatLabelControl.value">
-                <mat-label style="font-size: 14px;">TRABAJA ACTUALMENTE</mat-label>
-                <mat-select formControlName="trabajaPadre">
-                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
-                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="lugarTrabajoPadre" class="textos" type="text" maxlength="2048"
-                  placeholder="Lugar de Trabajo" (ngModelChange)="asignaNombreDoc($event)">
-                <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
-              </mat-form-field>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <mat-label style="font-size: 18px; "> <b> MADRE </b></mat-label>
-          <div class="row row-cols-4">
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="madre" type="text" placeholder="Madre">
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
-                <input matInput (click)="picker7.open()" formControlName="fechaNacmadre"
-                  (ngModelChange)="parseDate($event)" [matDatepicker]="picker7" placeholder="FECHA NACIMIENTO">
-                <mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
-                <mat-datepicker touchUi #picker7></mat-datepicker>
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="telmadre" class="textos" type="text" maxlength="10"
-                  placeholder="Telefono">
-              </mat-form-field>
-            </div>
-          </div>
-
-          <div class="row row-cols-4">
-            <div class="form-group col">
-              <mat-form-field [floatLabel]="floatLabelControl.value">
-                <mat-label style="font-size: 14px;">VIVE</mat-label>
-                <mat-select formControlName="vivemadre">
-                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
-                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="profesionmadre" type="text" placeholder="Profesión u Oficio"
-                  (ngModelChange)="asignaNombreDoc($event)">
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field [floatLabel]="floatLabelControl.value">
-                <mat-label style="font-size: 14px;">TRABAJA ACTUALMENTE</mat-label>
-                <mat-select formControlName="trabajamadre">
-                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
-                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="lugarTrabajomadre" class="textos" type="text" maxlength="2048"
-                  placeholder="Lugar de Trabajo" (ngModelChange)="asignaNombreDoc($event)">
-                <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
-              </mat-form-field>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <mat-label style="font-size: 18px; "> <b> HERMANO(A)1 </b></mat-label>
-          <div class="row row-cols-4">
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="hermano1" type="text" placeholder="hermano1">
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
-                <input matInput (click)="picker8.open()" formControlName="fechaNachermano1"
-                  (ngModelChange)="parseDate($event)" [matDatepicker]="picker8" placeholder="FECHA NACIMIENTO">
-                <mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
-                <mat-datepicker touchUi #picker8></mat-datepicker>
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="telhermano1" class="textos" type="text" maxlength="10"
-                  placeholder="Telefono">
-              </mat-form-field>
-            </div>
-          </div>
-
-          <div class="row row-cols-4">
-            <div class="form-group col">
-              <mat-form-field [floatLabel]="floatLabelControl.value">
-                <mat-label style="font-size: 14px;">VIVE</mat-label>
-                <mat-select formControlName="vivehermano1">
-                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
-                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="profesionhermano1" type="text" placeholder="Profesión u Oficio"
-                  (ngModelChange)="asignaNombreDoc($event)">
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field [floatLabel]="floatLabelControl.value">
-                <mat-label style="font-size: 14px;">TRABAJA ACTUALMENTE</mat-label>
-                <mat-select formControlName="trabajahermano1">
-                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
-                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="lugarTrabajohermano1" class="textos" type="text" maxlength="2048"
-                  placeholder="Lugar de Trabajo" (ngModelChange)="asignaNombreDoc($event)">
-                <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
-              </mat-form-field>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <mat-label style="font-size: 18px; "> <b> HERMANO(A)2 </b></mat-label>
-          <div class="row row-cols-4">
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="hermano2" type="text" placeholder="hermano2">
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
-                <input matInput (click)="picker9.open()" formControlName="fechaNachermano2"
-                  (ngModelChange)="parseDate($event)" [matDatepicker]="picker9" placeholder="FECHA NACIMIENTO">
-                <mat-datepicker-toggle matSuffix [for]="picker9"></mat-datepicker-toggle>
-                <mat-datepicker touchUi #picker9></mat-datepicker>
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="telhermano2" class="textos" type="text" maxlength="10"
-                  placeholder="Telefono">
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row row-cols-4">
-            <div class="form-group col">
-              <mat-form-field [floatLabel]="floatLabelControl.value">
-                <mat-label style="font-size: 14px;">VIVE</mat-label>
-                <mat-select formControlName="vivehermano2">
-                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
-                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="profesionhermano2" type="text" placeholder="Profesión u Oficio"
-                  (ngModelChange)="asignaNombreDoc($event)">
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field [floatLabel]="floatLabelControl.value">
-                <mat-label style="font-size: 14px;">TRABAJA ACTUALMENTE</mat-label>
-                <mat-select formControlName="trabajahermano2">
-                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
-                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="lugarTrabajohermano2" class="textos" type="text" maxlength="2048"
-                  placeholder="Lugar de Trabajo" (ngModelChange)="asignaNombreDoc($event)">
-                <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
-              </mat-form-field>
-            </div>
-          </div>
-
-
-        </div>
-        <div class="card">
-          <mat-label style="font-size: 18px; "> <b> HERMANO(A)3 </b></mat-label>
-          <div class="row row-cols-4">
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="hermano3" type="text" placeholder="hermano3">
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
-                <input matInput (click)="picker10.open()" formControlName="fechaNachermano3"
-                  (ngModelChange)="parseDate($event)" [matDatepicker]="picker10" placeholder="FECHA NACIMIENTO">
-                <mat-datepicker-toggle matSuffix [for]="picker10"></mat-datepicker-toggle>
-                <mat-datepicker touchUi #picker10></mat-datepicker>
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="telhermano3" class="textos" type="text" maxlength="10"
-                  placeholder="Telefono">
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row row-cols-4">
-            <div class="form-group col">
-              <mat-form-field [floatLabel]="floatLabelControl.value">
-                <mat-label style="font-size: 14px;">VIVE</mat-label>
-                <mat-select formControlName="vivehermano3">
-                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
-                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="profesionhermano3" type="text" placeholder="Profesión u Oficio"
-                  (ngModelChange)="asignaNombreDoc($event)">
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field [floatLabel]="floatLabelControl.value">
-                <mat-label style="font-size: 14px;">TRABAJA ACTUALMENTE</mat-label>
-                <mat-select formControlName="trabajahermano3">
-                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
-                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="lugarTrabajohermano3" class="textos" type="text" maxlength="2048"
-                  placeholder="Lugar de Trabajo" (ngModelChange)="asignaNombreDoc($event)">
-                <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
-              </mat-form-field>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <mat-label style="font-size: 18px; "> <b>CONYUGE </b></mat-label>
-          <div class="row row-cols-4">
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="conyuge" type="text" placeholder="conyuge">
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
-                <input matInput (click)="picker11.open()" formControlName="fechaNacconyuge"
-                  (ngModelChange)="parseDate($event)" [matDatepicker]="picker11" placeholder="FECHA NACIMIENTO">
-                <mat-datepicker-toggle matSuffix [for]="picker11"></mat-datepicker-toggle>
-                <mat-datepicker touchUi #picker11></mat-datepicker>
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="telconyuge" class="textos" type="text" maxlength="10"
-                  placeholder="Telefono">
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row row-cols-4">
-            <div class="form-group col">
-              <mat-form-field [floatLabel]="floatLabelControl.value">
-                <mat-label style="font-size: 14px;">VIVE</mat-label>
-                <mat-select formControlName="viveconyuge">
-                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
-                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="profesionconyuge" type="text" placeholder="Profesión u Oficio"
-                  (ngModelChange)="asignaNombreDoc($event)">
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field [floatLabel]="floatLabelControl.value">
-                <mat-label style="font-size: 14px;">TRABAJA ACTUALMENTE</mat-label>
-                <mat-select formControlName="trabajaconyuge">
-                  <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
-                  <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="form-group col">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="lugarTrabajoconyuge" class="textos" type="text" maxlength="2048"
-                  placeholder="Lugar de Trabajo" (ngModelChange)="asignaNombreDoc($event)">
-                <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
-              </mat-form-field>
-            </div>
-          </div>
+                <td class="text-center" style="width: 150px;">
+                  <mat-form-field color="warn" style="font-size: 12px;">
+                    <input matInput (click)="picker10.open()" [value]="d.fechaInicio" (ngModelChange)="parseDate($event)"
+                      [matDatepicker]="picker10" placeholder="Fecha Inicio" disabled>
+                    <mat-datepicker-toggle matSuffix [for]="picker10"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi #picker10></mat-datepicker>
+                  </mat-form-field>
+                </td>
+                <td class="text-center" style="width: 150px;">
+                  <mat-form-field color="warn" style="font-size: 12px;">
+                    <input matInput (click)="picker11.open()" [value]="d.fechaFinalizacion" (ngModelChange)="parseDate($event)"
+                      [matDatepicker]="picker11" placeholder="Fecha Inicio" disabled>
+                    <mat-datepicker-toggle matSuffix [for]="picker11"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi #picker11></mat-datepicker>
+                  </mat-form-field>
+                </td>
+                <td class="text-center" style="width: 150px;">
+                  <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                    <input matInput [value]="d.secretarioJuez" type="text" placeholder="Secretario y/o Juez" disabled>
+                  </mat-form-field>
+                </td>
+                <td class="text-center" style="width: 50px;">
+                  <button type="button" class="btn btn-danger btn-s" (click)="eliminarPasantiaOJ(index)">
+                    <span class="fa fa-trash"></span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
+      <br />
       <br />
       <div>
         <button mat-button matStepperPrevious>Atrás</button>
@@ -1091,38 +1016,7 @@
     <form [formGroup]="seventhFormGroup">
       <ng-template matStepLabel></ng-template>
       <mat-label style="font-size: 24px; "> <b> Dependientes </b></mat-label>
-      <div class="row">
-        <div class="form-group col">
-          <mat-form-field>
-            <mat-select placeholder="HIJOS" formControlName="hijos" required>
-              <mat-option [value]="0" style="font-size: 12px;"> NO</mat-option>
-              <mat-option [value]="1" style="font-size: 12px;"> SI</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="noHijo" class="textos" type="number" placeholder="Numero de Hijos">
-          </mat-form-field>
-        </div>
-        <div class="form-group col">
-          <mat-label style="font-size: 12px; "> Seleccione quienes dependen económicamente de usted </mat-label>
-          <mat-selection-list color="primary" (selectionChange)="cambioListaDependientes($event)">
-            <mat-list-option checkboxPosition="before" [value]="0">
-              Hijos
-            </mat-list-option>
-            <mat-list-option checkboxPosition="before" [value]="1">
-              Padre
-            </mat-list-option>
-            <mat-list-option checkboxPosition="before" [value]="2">
-              Madre
-            </mat-list-option>
-            <mat-list-option checkboxPosition="before" [value]="3">
-              Otro
-            </mat-list-option>
-          </mat-selection-list>
-        </div>
-      </div>
+
       <br />
       <div>
         <button mat-button matStepperPrevious>Atrás</button>

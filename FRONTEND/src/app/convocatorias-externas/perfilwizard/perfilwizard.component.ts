@@ -8,7 +8,7 @@ import swal from 'sweetalert2';
 import { AuthService } from '../../recursos/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConvocatoriasExternasService } from '../convocatorias-externas.service';
-import { Sexo, EstadoCivil, TiposLicencia, Discapacidad, Raza, Idioma, Familiar, FamiliarLaborandoOJ} from 'app/constantes';
+import { Sexo, EstadoCivil, TiposLicencia, Discapacidad, Raza, Idioma, Familiar, FamiliarLaborandoOJ, PasantiaOJ, ExperienciaLaboralOJ, ExperienciaLaboral, ReferenciaPersonal } from 'app/constantes';
 @Component({
   selector: 'app-perfilwizard',
   templateUrl: './perfilwizard.component.html',
@@ -87,6 +87,12 @@ export class PerfilwizardComponent implements OnInit {
   nuevoFamiliar: Familiar;
   familiaresLaborandoOJ: FamiliarLaborandoOJ[] = [];
   nuevoFamiliarLaborandoOJ: FamiliarLaborandoOJ;
+  pasantiasOJ: PasantiaOJ[] = [];
+  nuevaPasantiaOJ: PasantiaOJ;
+  dependenciaPasantia;
+  inicioPasantia;
+  finPasantia;
+  secrectarioJuezPasantia;
   listaDependientes = [];
   listarazaPerfil;
   listaComunidadesLinguisticas;
@@ -116,26 +122,38 @@ export class PerfilwizardComponent implements OnInit {
   nombreFamiliar2;
   dependencia2;
   puesto2;
-  gradoAprobado;
-  institucionEstudios;
-  constancia;
-  institucionEstudios1;
-  constancia1;
-  gradoAprobado1;
-  institucionEstudios2;
-  constancia2;
-  gradoAprobado2;
-  anioGraduacion;
-  carrera;
+  nivelAcademicoPrimaria;
+  nivelAcademicoBasicos;
+  nivelAcademicoDiversificado;
+  gradoAprobadoPrimaria;
+  institucionEstudiosPrimaria;
+  constanciaPrimaria;
+  gradoAprobadoBasicos;
+  institucionEstudiosBasicos;
+  constanciaBasicos;
+  gradoAprobadoDiversificado;
+  institucionEstudiosDiversificado;
+  constanciaDiversificado;
+  anioGraduacionDiversificado;
+  carreraDiversificado;
   carreraU;
   universidad;
+  constanciaUniversidad;
   constancia3;
   semestreA;
   cierre;
+  graduadoTecnico;
   gradoTecnico;
   gradoLicenciatura;
   colegiado;
   vigenciaColegiado;
+  carreraPosgrado;
+  universidadPosgrado;
+  constanciaUniversidadPosgrado;
+  semestreAprobadoPosgrado;
+  cierrePensumPosgrado;
+  graduadoMaestria;
+  graduadoDoctorado;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
@@ -213,56 +231,45 @@ export class PerfilwizardComponent implements OnInit {
     });
 
     this.fifthFormGroup = this.fb.group({
-      idioma1: '',
-      idioma2: '',
-      idioma3: '',
-      idioma4: ''
+      nivelAcademicoPrimaria: [''],
+      nivelAcademicoBasicos: [''],
+      nivelAcademicoDiversificado: [''],
+      gradoAprobadoPrimaria: [''],
+      institucionEstudiosPrimaria: [''],
+      constanciaPrimaria: [''],
+      gradoAprobadoBasicos: [''],
+      institucionEstudiosBasicos: [''],
+      constanciaBasicos: [''],
+      gradoAprobadoDiversificado: [''],
+      institucionEstudiosDiversificado: [''],
+      constanciaDiversificado: [''],
+      anioGraduacionDiversificado: [''],
+      carreraDiversificado: [''],
+      carreraU: [''],
+      universidad: [''],
+      constancia3: [''],
+      constanciaUniversidad: [''],
+      semestreA: [''],
+      cierre: [''],
+      gradoTecnico: [''],
+      graduadoTecnico: [''],
+      gradoLicenciatura: [''],
+      colegiado: [''],
+      vigenciaColegiado: [''],
+      carreraPosgrado: [''],
+      universidadPosgrado: [''],
+      constanciaUniversidadPosgrado: [''],
+      semestreAprobadoPosgrado: [''],
+      cierrePensumPosgrado: [''],
+      graduadoMaestria: [''],
+      graduadoDoctorado: ['']
     });
 
     this.sixthFormGroup = this.fb.group({
-      padre: [''],
-      fechaNacPadre: [''],
-      telPadre: [''],
-      vivePadre: [''],
-      profesionPadre: [''],
-      lugarTrabajoPadre: [''],
-      trabajaPadre: [''],
-      madre: [''],
-      fechaNacmadre: [''],
-      telmadre: [''],
-      vivemadre: [''],
-      profesionmadre: [''],
-      lugarTrabajomadre: [''],
-      trabajamadre: [''],
-      hermano1: [''],
-      fechaNachermano1: [''],
-      telhermano1: [''],
-      vivehermano1: [''],
-      profesionhermano1: [''],
-      lugarTrabajohermano1: [''],
-      trabajahermano1: [''],
-      hermano2: [''],
-      fechaNachermano2: [''],
-      telhermano2: [''],
-      vivehermano2: [''],
-      profesionhermano2: [''],
-      lugarTrabajohermano2: [''],
-      trabajahermano2: [''],
-      hermano3: [''],
-      fechaNachermano3: [''],
-      telhermano3: [''],
-      vivehermano3: [''],
-      profesionhermano3: [''],
-      lugarTrabajohermano3: [''],
-      trabajahermano3: [''],
-      conyuge: [''],
-      fechaNacconyuge: [''],
-      telconyuge: [''],
-      viveconyuge: [''],
-      profesionconyuge: [''],
-      lugarTrabajoconyuge: [''],
-      trabajaconyuge: ['']
-
+      dependenciaPasantia: [''],
+      inicioPasantia: [''],
+      finPasantia: [''],
+      secrectarioJuezPasantia: ['']
     });
 
     this.seventhFormGroup = this.fb.group({
@@ -409,8 +416,35 @@ export class PerfilwizardComponent implements OnInit {
         dependenciaFOJ: [''],
         puestoFOJ: ['']
       });
-  
+
       console.log(this.familiaresLaborandoOJ);
+    }
+
+  }
+
+  agregarPasantia() {
+    console.log("Agregar pasantia OJ");
+    console.log(this.sixthFormGroup.value.dependenciaPasantia);
+    if (this.sixthFormGroup.value.dependenciaPasantia !== '' && this.sixthFormGroup.value.dependenciaPasantia !== undefined && this.sixthFormGroup.value.dependenciaPasantia !== null) {
+      console.log("es distinto de undefined");
+
+      this.nuevaPasantiaOJ = {
+        dependencia: this.sixthFormGroup.value.dependenciaPasantia,
+        fechaInicio: this.sixthFormGroup.value.inicioPasantia,
+        fechaFinalizacion: this.sixthFormGroup.value.finPasantia,
+        secretarioJuez: this.sixthFormGroup.value.secrectarioJuezPasantia
+      };
+      console.log(this.nuevaPasantiaOJ);
+      this.pasantiasOJ.push(this.nuevaPasantiaOJ);
+
+      this.sixthFormGroup = this.fb.group({
+        dependenciaPasantia: [''],
+        inicioPasantia: [''],
+        finPasantia: [''],
+        secrectarioJuezPasantia: ['']
+      });
+
+      console.log(this.pasantiasOJ);
     }
 
   }
@@ -539,6 +573,20 @@ export class PerfilwizardComponent implements OnInit {
     this.familiares.splice(index, 1);
     console.log("Despues de eliminar");
     console.log(this.familiares);
+  }
+
+  eliminarFamiliarLaborandoOJ(index: number) {
+    console.log("Se eliimnará el familiar: " + index);
+    this.familiaresLaborandoOJ.splice(index, 1);
+    console.log("Despues de eliminar");
+    console.log(this.familiares);
+  }
+
+  eliminarPasantiaOJ(index: number) {
+    console.log("Se eliimnará pasantia: " + index);
+    this.pasantiasOJ.splice(index, 1);
+    console.log("Despues de eliminar");
+    console.log(this.pasantiasOJ);
   }
 
 }

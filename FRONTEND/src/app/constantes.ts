@@ -24,6 +24,41 @@ export interface FamiliarLaborandoOJ {
     puesto: string
 }
 
+export interface PasantiaOJ {
+    dependencia: string,
+    fechaInicio: string,    
+    fechaFinalizacion: string,
+    secretarioJuez: string
+}
+
+export interface ExperienciaLaboralOJ {
+    dependencia: string,
+    fechaInicio: string,    
+    fechaFinalizacion: string,
+    jefeInmediato: string,
+    puesto: string, 
+    renglonPresupuestario: string, 
+    motivoFinRelacionLaboral: string
+}
+
+export interface ExperienciaLaboral {
+    institucionEmpresa: string,
+    fechaInicio: string,    
+    fechaFinalizacion: string,
+    renglonPresupuestario: string,
+    puesto: string, 
+    jefeInmediato: string,
+    telefono: string,
+    motivoFinRelacionLaboral: string
+}
+
+export interface ReferenciaPersonal {
+    nombre: string,
+    tipoRelacion: string,    
+    aniosConocerlo: string,
+    telefono: string
+}
+
 export const ConvocatoriaEjemplo = [
     {
         INFO: 'Coordinar la Unidad de Control, Seguimiento y Evaluación de los Órganos Especializados en Delitos de Femicidio y Otras Formas de Violencia contra la Mujer del Organismo Judicial, para cumplir con las metas de la dependencia.'
