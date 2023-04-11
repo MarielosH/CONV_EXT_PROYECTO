@@ -994,7 +994,7 @@
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" style="font-size: 12px;">
                     <input matInput (click)="picker11.open()" [value]="d.fechaFinalizacion"
-                      (ngModelChange)="parseDate($event)" [matDatepicker]="picker11" placeholder="Fecha Inicio"
+                      (ngModelChange)="parseDate($event)" [matDatepicker]="picker11" placeholder="Fecha Finalizacion"
                       disabled>
                     <mat-datepicker-toggle matSuffix [for]="picker11"></mat-datepicker-toggle>
                     <mat-datepicker touchUi #picker11></mat-datepicker>
@@ -1050,19 +1050,18 @@
               <div class="col-2">
                 <mat-form-field color="warn" style="font-size: 12px;">
                   <input matInput (click)="picker13.open()" formControlName="fechaInicioExperienciaOJ"
-                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker13" placeholder="Fecha finalización">
+                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker13" placeholder="Fecha Finalización">
                   <mat-datepicker-toggle matSuffix [for]="picker13"></mat-datepicker-toggle>
                   <mat-datepicker touchUi #picker13></mat-datepicker>
                 </mat-form-field>
               </div>
               <div class="col-2">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput formControlName="renglonPresupuestarioExperienciaOJ" class="textos" type="text" maxlength="20"
-                    placeholder="Renglón Presupuestario">
+                  <input matInput formControlName="renglonPresupuestarioExperienciaOJ" class="textos" type="text"
+                    maxlength="20" placeholder="Renglón Presupuestario">
                 </mat-form-field>
-              </div>              
+              </div>
             </div>
-
             <div class="row">
               <div class="col-3">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
@@ -1072,8 +1071,8 @@
               </div>
               <div class="col-3">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput formControlName="jefeInmediatoExperienciaOJ" class="textos" type="text" maxlength="2048"
-                    placeholder="Jefe Inmediato">
+                  <input matInput formControlName="jefeInmediatoExperienciaOJ" class="textos" type="text"
+                    maxlength="2048" placeholder="Jefe Inmediato">
                 </mat-form-field>
               </div>
               <div class="col-3">
@@ -1101,8 +1100,73 @@
       <br />
       <br />
       <div>
-     
+        <mat-card *ngFor="let experiencia of experienciaLaboralOJ">
+          <mat-card-content>
+            <div class="row">
+              <div class="col-3">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput [value]="experiencia.puesto" type="text" placeholder="Puesto">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field color="warn" style="font-size: 12px;">
+                  <input matInput (click)="picker14.open()" [value]="experiencia.fechaInicio"
+                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker14" placeholder="Fecha Inicio">
+                  <mat-datepicker-toggle matSuffix [for]="picker14"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #picker14></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field color="warn" style="font-size: 12px;">
+                  <input matInput (click)="picker15.open()" [value]="experiencia.fechaFinalizacion"
+                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker15" placeholder="Fecha Finalizacion">
+                  <mat-datepicker-toggle matSuffix [for]="picker15"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #picker15></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput [value]="experiencia.renglonPresupuestario" class="textos" type="text" maxlength="20"
+                    placeholder="Renglón Presupuestario">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput [value]="experiencia.dependencia" class="textos" type="text" maxlength="2048"
+                    placeholder="Dependencia donde laboró">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput [value]="experiencia.jefeInmediato" class="textos" type="text" maxlength="2048"
+                    placeholder="Jefe Inmediato">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field [floatLabel]="floatLabelControl.value">
+                  <mat-label style="font-size: 14px;">Motivo por el cual terminó la relación laboral</mat-label>
+                  <mat-select [value]="experiencia.motivoFinRelacionLaboral">
+                    <mat-option [value]="0" style="font-size: 12px;">Finalización de relación laboral</mat-option>
+                    <mat-option [value]="1" style="font-size: 12px;">Finalización de contrato</mat-option>
+                    <mat-option [value]="2" style="font-size: 12px;">Renuncia</mat-option>
+                    <mat-option [value]="3" style="font-size: 12px;">Destitución</mat-option>
+                    <mat-option [value]="4" style="font-size: 12px;">Otro</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <button type="button" class="btn btn-danger" (click)="eliminarExperienciaOJ(index)"
+                  title="Eliminar Experiencia Laboral OJ">
+                  <span class="fa fa-trash"></span>
+                </button>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
       </div>
+      <br />
       <br />
       <div>
         <button mat-button matStepperPrevious>Atrás</button>
@@ -1114,81 +1178,148 @@
   <mat-step [stepControl]="eighthFormGroup">
     <form [formGroup]="eighthFormGroup">
       <ng-template matStepLabel></ng-template>
-      <mat-label style="font-size: 22px; "> <b> Familiares laborando en el Organismo Judicial </b></mat-label>
-      <div class="row">
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="parentesco" class="textos" type="text" maxlength="1024"
-              placeholder="PARENTESCO">
-          </mat-form-field>
-        </div>
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="nombreFamiliar" class="textos" type="text" maxlength="1024"
-              placeholder="NOMBRE COMPLETO">
-          </mat-form-field>
-        </div>
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="dependencia" class="textos" type="text" maxlength="1024"
-              placeholder="DEPENDENCIA">
-          </mat-form-field>
-        </div>
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="puesto" class="textos" type="text" maxlength="100" placeholder="PUESTO">
-          </mat-form-field>
-        </div>
+      <mat-label style="font-size: 24px; "> <b> Experiencia laboral </b></mat-label>
+      <br />
+      <div>
+        <mat-card>
+          <mat-card-content>
+            <div class="row">
+              <div class="col-4">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput formControlName="institucionEmpresaExperienciaLaboral" type="text"
+                    placeholder="Institución o Empresa">
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <mat-form-field color="warn" style="font-size: 12px;">
+                  <input matInput (click)="picker16.open()" formControlName="fechaInicioExperienciaLaboral"
+                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker16" placeholder="Fecha Inicio">
+                  <mat-datepicker-toggle matSuffix [for]="picker16"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #picker16></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <mat-form-field color="warn" style="font-size: 12px;">
+                  <input matInput (click)="picker17.open()" formControlName="fechaFinalizacionExperienciaLaboral"
+                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker17" placeholder="Fecha Finalización">
+                  <mat-datepicker-toggle matSuffix [for]="picker17"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #picker17></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput formControlName="renglonPresupuestarioExperienciaLaboral" class="textos" type="text"
+                    maxlength="20" placeholder="Renglón Presupuestario">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput formControlName="puestoExperienciaLaboral" class="textos" type="text" maxlength="2048"
+                    placeholder="Puesto">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput formControlName="jefeInmediatoExperienciaLaboral" class="textos" type="text"
+                    maxlength="2048" placeholder="Jefe Inmediato">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput formControlName="telefonoExperienciaLaboral" class="textos" type="text" maxlength="20"
+                    placeholder="Telefono">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-10">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput formControlName="motivoFinRelacionLaboralExperienciaLaboral" class="textos"
+                    type="text" maxlength="2048" placeholder="Motivo Finalización Relación Laboral">
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <button mat-raised-button class="btn btn-primary" (click)="agregarExperienciaLaboral()"
+                  style="font-size: 10px;">
+                  <i class="fa fa-plus"></i> Agregar
+                </button>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
       </div>
-      <div class="row">
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="parentesco1" class="textos" type="text" maxlength="1024"
-              placeholder="PARENTESCO">
-          </mat-form-field>
-        </div>
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="nombreFamiliar1" class="textos" type="text" maxlength="1024"
-              placeholder="NOMBRE COMPLETO">
-          </mat-form-field>
-        </div>
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="dependencia1" class="textos" type="text" maxlength="1024"
-              placeholder="DEPENDENCIA">
-          </mat-form-field>
-        </div>
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="puesto1" class="textos" type="text" maxlength="100" placeholder="PUESTO">
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="parentesco2" class="textos" type="text" maxlength="1024"
-              placeholder="PARENTESCO">
-          </mat-form-field>
-        </div>
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="nombreFamiliar2" class="textos" type="text" maxlength="1024"
-              placeholder="NOMBRE COMPLETO">
-          </mat-form-field>
-        </div>
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="dependencia2" class="textos" type="text" maxlength="1024"
-              placeholder="DEPENDENCIA">
-          </mat-form-field>
-        </div>
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="puesto2" class="textos" type="text" maxlength="100" placeholder="PUESTO">
-          </mat-form-field>
-        </div>
+      <br />
+      <div>
+        <mat-card *ngFor="let experiencia of experienciaLaboral">
+          <mat-card-content>
+            <div class="row">
+              <div class="col-4">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput [value]="experiencia.institucionEmpresa" type="text"
+                    placeholder="Institución o Empresa">
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <mat-form-field color="warn" style="font-size: 12px;">
+                  <input matInput (click)="picker18.open()" [value]="experiencia.fechaInicio"
+                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker18" placeholder="Fecha Inicio">
+                  <mat-datepicker-toggle matSuffix [for]="picker18"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #picker18></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <mat-form-field color="warn" style="font-size: 12px;">
+                  <input matInput (click)="picker19.open()" [value]="experiencia.fechaFinalizacion"
+                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker19" placeholder="Fecha Finalización">
+                  <mat-datepicker-toggle matSuffix [for]="picker19"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #picker19></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput [value]="experiencia.renglonPresupuestario" class="textos" type="text" maxlength="20"
+                    placeholder="Renglón Presupuestario">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput [value]="experiencia.puesto" class="textos" type="text" maxlength="2048"
+                    placeholder="Puesto">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput [value]="experiencia.jefeInmediato" class="textos" type="text" maxlength="2048"
+                    placeholder="Jefe Inmediato">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput [value]="experiencia.telefono" class="textos" type="text" maxlength="20"
+                    placeholder="Telefono">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-10">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput [value]="motivoFinRelacionLaboral" class="textos" type="text" maxlength="2048"
+                    placeholder="Motivo Finalización Relación Laboral">
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <button type="button" class="btn btn-danger" (click)="eliminarExperiencia(index)"
+                  title="Eliminar Experiencia Laboral">
+                  <span class="fa fa-trash"></span>
+                </button>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
       </div>
       <br />
       <div>
@@ -1201,122 +1332,80 @@
   <mat-step [stepControl]="nineFormGroup">
     <form [formGroup]="nineFormGroup">
       <ng-template matStepLabel></ng-template>
-      <mat-label style="font-size: 22px; "> <b> Información Académica</b></mat-label>
+      <mat-label style="font-size: 24px; "> <b>Referencias Personales</b></mat-label>
+      <br />
       <div class="row">
-        <div class=div class="card w-100">
-          <mat-label style="font-size: 12px; "> PRIMARIA</mat-label>
-          <div class="form-group col">
-            <mat-form-field color="warn" class="textos">
-              <input matInput formControlName="gradoAprobado" class="textos" type="text" maxlength="1024"
-                placeholder="GRADO APROBADO">
-            </mat-form-field>
-          </div>
-        </div>
-
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="institucionEstudios" class="textos" type="text" maxlength="1024"
-              placeholder="INSTITUCIÓN DE ESTUDIOS">
-          </mat-form-field>
-        </div>
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="constancia" class="textos" type="text" maxlength="1024"
-              placeholder="CONSTANCIA QUE LO ACREDITA">
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <mat-label style="font-size: 12px; "> BASICOS</mat-label>
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="gradoAprobado1" class="textos" type="text" maxlength="1024"
-              placeholder="GRADO APROBADO">
-          </mat-form-field>
-        </div>
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="institucionEstudios1" class="textos" type="text" maxlength="1024"
-              placeholder="INSTITUCIÓN DE ESTUDIOS">
-          </mat-form-field>
-        </div>
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="constancia1" class="textos" type="text" maxlength="1024"
-              placeholder="CONSTANCIA QUE LO ACREDITA">
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <mat-label style="font-size: 11px; ">DIVERSIFICADO</mat-label>
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="gradoAprobado2" class="textos" type="text" maxlength="1024"
-              placeholder="GRADO APROBADO">
-          </mat-form-field>
-        </div>
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="institucionEstudios2" class="textos" type="text" maxlength="1024"
-              placeholder="INSTITUCIÓN DE ESTUDIOS">
-          </mat-form-field>
-        </div>
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="constancia2" class="textos" type="text" maxlength="1024"
-              placeholder="CONSTANCIA QUE LO ACREDITA">
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="anioGraduacion" class="textos" type="text" maxlength="1024"
-              placeholder="AÑO DE GRADUACIÓN">
-          </mat-form-field>
-        </div>
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="carrera" class="textos" type="text" maxlength="1024" placeholder="CARRERA">
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <mat-label style="font-size: 11px; ">UNIVERSIDAD (Pregrado)</mat-label>
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="carreraU" class="textos" type="text" maxlength="1024"
-              placeholder="CARRERA">
-          </mat-form-field>
-        </div>
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="universidad" class="textos" type="text" maxlength="1024"
-              placeholder="UNIVERSIDAD">
-          </mat-form-field>
-        </div>
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="constancia3" class="textos" type="text" maxlength="1024"
-              placeholder="CONSTANCIA QUE LO ACREDITA">
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="semestreA" class="textos" type="text" maxlength="1024"
-              placeholder="SEMESTRE APROBADO">
-          </mat-form-field>
-        </div>
-        <div class="form-group col">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="colegiado" class="textos" type="text" maxlength="1024"
-              placeholder="COLEGIADO">
-          </mat-form-field>
+        <div class="table-responsive">
+          <table class="table table-borderless">
+            <thead>
+              <tr>
+                <td class="text-center" style="width: 150px;">
+                  <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                    <input matInput formControlName="nombreReferenciaPersonal" type="text" placeholder="Nombre">
+                  </mat-form-field>
+                </td>
+                <td class="text-center" style="width: 200px;">
+                  <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                    <input matInput formControlName="tipoRelacionReferenciaPersonal" type="text"
+                      placeholder="Tipo de relación(Profesional o amistad)">
+                  </mat-form-field>
+                </td>
+                <td class="text-center" style="width: 150px;">
+                  <mat-form-field color="warn" class="textos">
+                    <input matInput formControlName="aniosConocerloReferenciaPersonal" type="number" placeholder="EDAD"
+                      required>
+                  </mat-form-field>
+                </td>
+                <td class="text-center" style="width: 150px;">
+                  <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                    <input matInput formControlName="telefonoReferenciaPersonal" type="text" placeholder="Telefonos">
+                  </mat-form-field>
+                </td>
+                <td style="width: 100px;"> <button mat-raised-button class="btn btn-primary"
+                    (click)="agregarReferenciaPersonal()" style="font-size: 10px;">
+                    <i class="fa fa-plus"></i>
+                    &nbsp;&nbsp; Agregar Referencia Personal
+                  </button>
+                </td>
+              </tr>
+            </thead>
+            <tbody *ngIf="referenciasPersonales.length>0">
+              <tr *ngFor="let referencia of referenciasPersonales; let index = index" disabled>
+                <td class="text-center" style="width: 150px;">
+                  <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                    <input [value]="referencia.nombre" type="text" placeholder="Nombre">
+                  </mat-form-field>
+                </td>
+                <td class="text-center" style="width: 200px;">
+                  <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                    <input matInput [value]="referencia.tipoRelacion" type="text"
+                      placeholder="Tipo de relación(Profesional o amistad)">
+                  </mat-form-field>
+                </td>
+                <td class="text-center" style="width: 150px;">
+                  <mat-form-field color="warn" class="textos">
+                    <input matInput [value]="aniosConocerlo" type="number" placeholder="EDAD" required>
+                  </mat-form-field>
+                </td>
+                <td class="text-center" style="width: 150px;">
+                  <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                    <input matInput [value]="telefono" type="text" placeholder="Telefonos">
+                  </mat-form-field>
+                </td>
+                <td style="width: 100px; text-align: left;">
+                  <button type="button" class="btn btn-danger" (click)="eliminarReferenciaPersonal(index)"
+                    title="Eliminar Referencia Personal">
+                    <span class="fa fa-trash"></span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
       <br />
+      <br />
+
       <div>
         <button mat-button matStepperPrevious>Atrás</button>
         <button mat-button matStepperNext>Siguiente</button>

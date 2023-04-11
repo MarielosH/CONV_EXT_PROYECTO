@@ -91,6 +91,10 @@ export class PerfilwizardComponent implements OnInit {
   nuevaPasantiaOJ: PasantiaOJ;
   experienciaLaboralOJ: ExperienciaLaboralOJ[] = [];
   nuevaExperienciaLaboralOJ: ExperienciaLaboralOJ;
+  experienciaLaboral: ExperienciaLaboral[] = [];
+  nuevaExperienciaLaboral: ExperienciaLaboral;
+  referenciasPersonales: ReferenciaPersonal[] = [];
+  nuevaReferenciaPersoal: ReferenciaPersonal;
   dependenciaPasantia;
   inicioPasantia;
   finPasantia;
@@ -157,12 +161,24 @@ export class PerfilwizardComponent implements OnInit {
   graduadoMaestria;
   graduadoDoctorado;
   dependenciaExperienciaOJ;
-  fechaInicioExperienciaOJ;    
+  fechaInicioExperienciaOJ;
   fechaFinalizacionExperienciaOJ;
   jefeInmediatoExperienciaOJ;
-  puestoExperienciaOJ; 
+  puestoExperienciaOJ;
   renglonPresupuestarioExperienciaOJ;
   motivoFinRelacionLaboralExperienciaOJ;
+  institucionEmpresaExperienciaLaboral;
+  fechaInicioExperienciaLaboral;
+  fechaFinalizacionExperienciaLaboral;
+  renglonPresupuestarioExperienciaLaboral;
+  puestoExperienciaLaboral;
+  jefeInmediatoExperienciaLaboral;
+  telefonoExperienciaLaboral;
+  motivoFinRelacionLaboralExperienciaLaboral;
+  nombreReferenciaPersonal;
+  tipoRelacionReferenciaPersonal;
+  aniosConocerloReferenciaPersonal;
+  telefonoReferenciaPersonal;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
@@ -283,7 +299,7 @@ export class PerfilwizardComponent implements OnInit {
 
     this.seventhFormGroup = this.fb.group({
       dependenciaExperienciaOJ: [''],
-      fechaInicioExperienciaOJ: [''],    
+      fechaInicioExperienciaOJ: [''],
       fechaFinalizacionExperienciaOJ: [''],
       jefeInmediatoExperienciaOJ: [''],
       puestoExperienciaOJ: [''],
@@ -292,42 +308,23 @@ export class PerfilwizardComponent implements OnInit {
     });
 
     this.eighthFormGroup = this.fb.group({
-      parentesco: [''],
-      nombreFamiliar: [''],
-      dependencia: [''],
-      puesto: [''],
-      parentesco1: [''],
-      nombreFamiliar1: [''],
-      dependencia1: [''],
-      puesto1: [''],
-      parentesco2: [''],
-      nombreFamiliar2: [''],
-      dependencia2: [''],
-      puesto2: ['']
+      institucionEmpresaExperienciaLaboral: [''],
+      fechaInicioExperienciaLaboral: [''],
+      fechaFinalizacionExperienciaLaboral: [''],
+      renglonPresupuestarioExperienciaLaboral: [''],
+      puestoExperienciaLaboral: [''],
+      jefeInmediatoExperienciaLaboral: [''],
+      telefonoExperienciaLaboral: [''],
+      motivoFinRelacionLaboralExperienciaLaboral: ['']
     });
 
     this.nineFormGroup = this.fb.group({
-      gradoAprobado: [''],
-      institucionEstudios: [''],
-      constancia: [''],
-      institucionEstudios1: [''],
-      constancia1: [''],
-      gradoAprobado1: [''],
-      institucionEstudios2: [''],
-      constancia2: [''],
-      gradoAprobado2: [''],
-      anioGraduacion: [''],
-      carrera: [''],
-      carreraU: [''],
-      universidad: [''],
-      constancia3: [''],
-      semestreA: [''],
-      cierre: [''],
-      gradoTecnico: [''],
-      gradoLicenciatura: [''],
-      colegiado: [''],
-      vigenciaColegiado: ['']
+      nombreReferenciaPersonal: [''],
+      tipoRelacionReferenciaPersonal: [''],
+      aniosConocerloReferenciaPersonal: [''],
+      telefonoReferenciaPersonal: ['']
     });
+
     this.obtenerDepartamentos();
     this.obtenerComunidadesLinguisticas();
   }
@@ -466,23 +463,23 @@ export class PerfilwizardComponent implements OnInit {
   agregarExperienciaLaboralOJ() {
     console.log("Agregar Experiencia laboral OJ");
     console.log(this.seventhFormGroup.value.puestoExperienciaOJ);
-    if (this.seventhFormGroup.value.puestoExperienciaOJ !== '' && this.sixthFormGroup.value.puestoExperienciaOJ !== undefined && this.sixthFormGroup.value.puestoExperienciaOJ !== null) {
+    if (this.seventhFormGroup.value.puestoExperienciaOJ !== '' && this.seventhFormGroup.value.puestoExperienciaOJ !== undefined && this.seventhFormGroup.value.puestoExperienciaOJ !== null) {
       console.log("es distinto de undefined");
       this.nuevaExperienciaLaboralOJ = {
         dependencia: this.seventhFormGroup.value.dependenciaExperienciaOJ,
         fechaInicio: this.seventhFormGroup.value.fechaFinalizacionExperienciaOJ,
         fechaFinalizacion: this.seventhFormGroup.value.fechaInicioExperienciaOJ,
-        jefeInmediato:  this.seventhFormGroup.value.jefeInmediatoExperienciaOJ,
-        puesto:  this.seventhFormGroup.value.puestoExperienciaOJ,
-        renglonPresupuestario:  this.seventhFormGroup.value.renglonPresupuestarioExperienciaOJ, 
-        motivoFinRelacionLaboral:  this.seventhFormGroup.value.motivoFinRelacionLaboralExperienciaOJ
+        jefeInmediato: this.seventhFormGroup.value.jefeInmediatoExperienciaOJ,
+        puesto: this.seventhFormGroup.value.puestoExperienciaOJ,
+        renglonPresupuestario: this.seventhFormGroup.value.renglonPresupuestarioExperienciaOJ,
+        motivoFinRelacionLaboral: this.seventhFormGroup.value.motivoFinRelacionLaboralExperienciaOJ
       };
       console.log(this.nuevaExperienciaLaboralOJ);
       this.experienciaLaboralOJ.push(this.nuevaExperienciaLaboralOJ);
 
       this.seventhFormGroup = this.fb.group({
         dependenciaExperienciaOJ: [''],
-        fechaInicioExperienciaOJ: [''],    
+        fechaInicioExperienciaOJ: [''],
         fechaFinalizacionExperienciaOJ: [''],
         jefeInmediatoExperienciaOJ: [''],
         puestoExperienciaOJ: [''],
@@ -491,6 +488,66 @@ export class PerfilwizardComponent implements OnInit {
       });
 
       console.log(this.experienciaLaboralOJ);
+    }
+
+  }
+
+  agregarReferenciaPersonal() {
+    console.log("Agregar referencia");
+    console.log(this.nineFormGroup.value.nombreReferenciaPersonal);
+    if (this.nineFormGroup.value.nombreReferenciaPersonal !== '' && this.nineFormGroup.value.nombreReferenciaPersonal !== undefined && this.nineFormGroup.value.nombreReferenciaPersonal !== null) {
+      console.log("es distinto de undefined");
+
+      this.nuevaReferenciaPersoal = {
+        nombre:  this.nineFormGroup.value.nombreReferenciaPersonal,
+        tipoRelacion:  this.nineFormGroup.value.tipoRelacionReferenciaPersonal,   
+        aniosConocerlo:  this.nineFormGroup.value.aniosConocerloReferenciaPersonal,
+        telefono:  this.nineFormGroup.value.telefonoReferenciaPersonal
+       };
+      console.log(this.nuevaReferenciaPersoal);
+      this.referenciasPersonales.push(this.nuevaReferenciaPersoal);
+
+      this.nineFormGroup = this.fb.group({
+        nombreReferenciaPersonal: [''],
+        tipoRelacionReferenciaPersonal: [''],
+        aniosConocerloReferenciaPersonal: [''],
+        telefonoReferenciaPersonal: ['']
+      });
+
+      console.log(this.referenciasPersonales);
+    }
+
+  }
+  agregarExperienciaLaboral() {
+    console.log("Agregar Experiencia laboral ");
+    console.log(this.eighthFormGroup.value.institucionEmpresaExperienciaLaboral);
+    if (this.eighthFormGroup.value.institucionEmpresaExperienciaLaboral !== '' && this.eighthFormGroup.value.institucionEmpresaExperienciaLaboral !== undefined && this.eighthFormGroup.value.institucionEmpresaExperienciaLaboral !== null) {
+      console.log("es distinto de undefined");
+      this.nuevaExperienciaLaboral = {
+        institucionEmpresa: this.eighthFormGroup.value.institucionEmpresaExperienciaLaboral,
+        fechaInicio: this.eighthFormGroup.value.fechaInicioExperienciaLaboral,
+        fechaFinalizacion: this.eighthFormGroup.value.fechaFinalizacionExperienciaLaboral,
+        renglonPresupuestario: this.eighthFormGroup.value.renglonPresupuestarioExperienciaLaboral,
+        puesto: this.eighthFormGroup.value.puestoExperienciaLaboral,
+        jefeInmediato: this.eighthFormGroup.value.jefeInmediatoExperienciaLaboral,
+        telefono: this.eighthFormGroup.value.telefonoExperienciaLaboral,
+        motivoFinRelacionLaboral: this.eighthFormGroup.value.motivoFinRelacionLaboralExperienciaLaboral
+      };
+      console.log(this.nuevaExperienciaLaboral);
+      this.experienciaLaboral.push(this.nuevaExperienciaLaboral);
+
+      this.eighthFormGroup = this.fb.group({
+        institucionEmpresaExperienciaLaboral: [''],
+        fechaInicioExperienciaLaboral: [''],
+        fechaFinalizacionExperienciaLaboral: [''],
+        renglonPresupuestarioExperienciaLaboral: [''],
+        puestoExperienciaLaboral: [''],
+        jefeInmediatoExperienciaLaboral: [''],
+        telefonoExperienciaLaboral: [''],
+        motivoFinRelacionLaboralExperienciaLaboral: ['']
+      });
+
+      console.log(this.experienciaLaboral);
     }
 
   }
@@ -635,4 +692,24 @@ export class PerfilwizardComponent implements OnInit {
     console.log(this.pasantiasOJ);
   }
 
+  eliminarExperienciaOJ(index: number) {
+    console.log("Se eliimnará experiencia en oj: " + index);
+    this.experienciaLaboralOJ.splice(index, 1);
+    console.log("Despues de eliminar");
+    console.log(this.experienciaLaboralOJ);
+  }
+
+  eliminarExperiencia(index: number) {
+    console.log("Se eliimnará experiencia : " + index);
+    this.experienciaLaboral.splice(index, 1);
+    console.log("Despues de eliminar");
+    console.log(this.experienciaLaboral);
+  }
+
+  eliminarReferenciaPersonal(index: number) {
+    console.log("Se eliimnará referencia personal : " + index);
+    this.referenciasPersonales.splice(index, 1);
+    console.log("Despues de eliminar");
+    console.log(this.referenciasPersonales);
+  }
 }
