@@ -89,6 +89,8 @@ export class PerfilwizardComponent implements OnInit {
   nuevoFamiliarLaborandoOJ: FamiliarLaborandoOJ;
   pasantiasOJ: PasantiaOJ[] = [];
   nuevaPasantiaOJ: PasantiaOJ;
+  experienciaLaboralOJ: ExperienciaLaboralOJ[] = [];
+  nuevaExperienciaLaboralOJ: ExperienciaLaboralOJ;
   dependenciaPasantia;
   inicioPasantia;
   finPasantia;
@@ -154,6 +156,13 @@ export class PerfilwizardComponent implements OnInit {
   cierrePensumPosgrado;
   graduadoMaestria;
   graduadoDoctorado;
+  dependenciaExperienciaOJ;
+  fechaInicioExperienciaOJ;    
+  fechaFinalizacionExperienciaOJ;
+  jefeInmediatoExperienciaOJ;
+  puestoExperienciaOJ; 
+  renglonPresupuestarioExperienciaOJ;
+  motivoFinRelacionLaboralExperienciaOJ;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
@@ -273,10 +282,15 @@ export class PerfilwizardComponent implements OnInit {
     });
 
     this.seventhFormGroup = this.fb.group({
-      hijos: [''],
-      noHijo: [''],
-      dependientes: ['']
+      dependenciaExperienciaOJ: [''],
+      fechaInicioExperienciaOJ: [''],    
+      fechaFinalizacionExperienciaOJ: [''],
+      jefeInmediatoExperienciaOJ: [''],
+      puestoExperienciaOJ: [''],
+      renglonPresupuestarioExperienciaOJ: [''],
+      motivoFinRelacionLaboralExperienciaOJ: ['']
     });
+
     this.eighthFormGroup = this.fb.group({
       parentesco: [''],
       nombreFamiliar: [''],
@@ -445,6 +459,38 @@ export class PerfilwizardComponent implements OnInit {
       });
 
       console.log(this.pasantiasOJ);
+    }
+
+  }
+
+  agregarExperienciaLaboralOJ() {
+    console.log("Agregar Experiencia laboral OJ");
+    console.log(this.seventhFormGroup.value.puestoExperienciaOJ);
+    if (this.seventhFormGroup.value.puestoExperienciaOJ !== '' && this.sixthFormGroup.value.puestoExperienciaOJ !== undefined && this.sixthFormGroup.value.puestoExperienciaOJ !== null) {
+      console.log("es distinto de undefined");
+      this.nuevaExperienciaLaboralOJ = {
+        dependencia: this.seventhFormGroup.value.dependenciaExperienciaOJ,
+        fechaInicio: this.seventhFormGroup.value.fechaFinalizacionExperienciaOJ,
+        fechaFinalizacion: this.seventhFormGroup.value.fechaInicioExperienciaOJ,
+        jefeInmediato:  this.seventhFormGroup.value.jefeInmediatoExperienciaOJ,
+        puesto:  this.seventhFormGroup.value.puestoExperienciaOJ,
+        renglonPresupuestario:  this.seventhFormGroup.value.renglonPresupuestarioExperienciaOJ, 
+        motivoFinRelacionLaboral:  this.seventhFormGroup.value.motivoFinRelacionLaboralExperienciaOJ
+      };
+      console.log(this.nuevaExperienciaLaboralOJ);
+      this.experienciaLaboralOJ.push(this.nuevaExperienciaLaboralOJ);
+
+      this.seventhFormGroup = this.fb.group({
+        dependenciaExperienciaOJ: [''],
+        fechaInicioExperienciaOJ: [''],    
+        fechaFinalizacionExperienciaOJ: [''],
+        jefeInmediatoExperienciaOJ: [''],
+        puestoExperienciaOJ: [''],
+        renglonPresupuestarioExperienciaOJ: [''],
+        motivoFinRelacionLaboralExperienciaOJ: ['']
+      });
+
+      console.log(this.experienciaLaboralOJ);
     }
 
   }

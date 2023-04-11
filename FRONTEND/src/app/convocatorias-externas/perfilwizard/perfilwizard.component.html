@@ -353,8 +353,8 @@
                     </mat-select>
                   </mat-form-field>
                 </td>
-                <td class="text-center" style="width: 50px;">
-                  <button type="button" class="btn btn-danger btn-s" (click)="eliminarIdioma(index)">
+                <td style="width: 50px; text-align: left;">
+                  <button type="button" class="btn btn-danger" (click)="eliminarIdioma(index)" title="Eliminar Idioma">
                     <span class="fa fa-trash"></span>
                   </button>
                 </td>
@@ -562,7 +562,8 @@
                 </mat-form-field>
               </div>
               <div class="col-2">
-                <button type="button" class="btn btn-danger btn-s" (click)="eliminarFamiliar(index)">
+                <button type="button" class="btn btn-danger" (click)="eliminarFamiliar(index)"
+                  title="Eliminar Familiar">
                   <span class="fa fa-trash"></span>
                 </button>
               </div>
@@ -669,7 +670,8 @@
               </div>
               <div class="col-1"> </div>
               <div class="col-2">
-                <button type="button" class="btn btn-danger btn-s" (click)="eliminarFamiliarLaborandoOJ(index)">
+                <button type="button" class="btn btn-danger" (click)="eliminarFamiliarLaborandoOJ(index)"
+                  title="Eliminar Familiar Laborando OJ">
                   <span class="fa fa-trash"></span>
                 </button>
               </div>
@@ -780,7 +782,9 @@
       </div>
       <hr>
       <div class="row">
-        <div class="col-1"> <h2 style="font-size: 18px;"><b>UNIVERSIDAD</b></h2> </div>
+        <div class="col-1">
+          <h2 style="font-size: 18px;"><b>UNIVERSIDAD</b></h2>
+        </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="carreraU" class="textos" type="text" maxlength="1024"
@@ -853,7 +857,9 @@
       </div>
       <hr>
       <div class="row">
-        <div class="col-1"> <h2 style="font-size: 18px;"><b>POSGRADO</b></h2> </div>
+        <div class="col-1">
+          <h2 style="font-size: 18px;"><b>POSGRADO</b></h2>
+        </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="carreraPosgrado" class="textos" type="text" maxlength="1024"
@@ -923,6 +929,9 @@
 
   <mat-step [stepControl]="sixthFormGroup">
     <form [formGroup]="sixthFormGroup">
+      <ng-template matStepLabel></ng-template>
+      <mat-label style="font-size: 24px; "> <b>Pasantías en el Organismo Judicial</b></mat-label>
+      <br />
       <div class="row">
         <div class="table-responsive">
           <table class="table table-borderless">
@@ -937,26 +946,27 @@
                   </mat-form-field>
                 </td>
                 <td class="text-center" style="width: 150px;">
-                    <mat-form-field color="warn" style="font-size: 12px;">
-                      <input matInput (click)="picker8.open()" formControlName="inicioPasantia" (ngModelChange)="parseDate($event)"
-                        [matDatepicker]="picker8" placeholder="Fecha Inicio">
-                      <mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
-                      <mat-datepicker touchUi #picker8></mat-datepicker>
-                    </mat-form-field>
+                  <mat-form-field color="warn" style="font-size: 12px;">
+                    <input matInput (click)="picker8.open()" formControlName="inicioPasantia"
+                      (ngModelChange)="parseDate($event)" [matDatepicker]="picker8" placeholder="Fecha Inicio">
+                    <mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi #picker8></mat-datepicker>
+                  </mat-form-field>
                 </td>
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" style="font-size: 12px;">
-                    <input matInput (click)="picker9.open()" formControlName="finPasantia" (ngModelChange)="parseDate($event)"
-                      [matDatepicker]="picker9" placeholder="Fecha Finalizacion">
+                    <input matInput (click)="picker9.open()" formControlName="finPasantia"
+                      (ngModelChange)="parseDate($event)" [matDatepicker]="picker9" placeholder="Fecha Finalizacion">
                     <mat-datepicker-toggle matSuffix [for]="picker9"></mat-datepicker-toggle>
                     <mat-datepicker touchUi #picker9></mat-datepicker>
                   </mat-form-field>
-              </td>
-              <td class="text-center" style="width: 150px;">
-                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput formControlName="secrectarioJuezPasantia" type="text" placeholder="Nombre del Secretario y/o Juez">
-                </mat-form-field>
-              </td>
+                </td>
+                <td class="text-center" style="width: 150px;">
+                  <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                    <input matInput formControlName="secrectarioJuezPasantia" type="text"
+                      placeholder="Nombre del Secretario y/o Juez">
+                  </mat-form-field>
+                </td>
                 <td style="width: 50px;"> <button mat-raised-button class="btn btn-primary" (click)="agregarPasantia()"
                     style="font-size: 10px;">
                     <i class="fa fa-plus"></i>
@@ -974,16 +984,18 @@
 
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" style="font-size: 12px;">
-                    <input matInput (click)="picker10.open()" [value]="d.fechaInicio" (ngModelChange)="parseDate($event)"
-                      [matDatepicker]="picker10" placeholder="Fecha Inicio" disabled>
+                    <input matInput (click)="picker10.open()" [value]="d.fechaInicio"
+                      (ngModelChange)="parseDate($event)" [matDatepicker]="picker10" placeholder="Fecha Inicio"
+                      disabled>
                     <mat-datepicker-toggle matSuffix [for]="picker10"></mat-datepicker-toggle>
                     <mat-datepicker touchUi #picker10></mat-datepicker>
                   </mat-form-field>
                 </td>
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" style="font-size: 12px;">
-                    <input matInput (click)="picker11.open()" [value]="d.fechaFinalizacion" (ngModelChange)="parseDate($event)"
-                      [matDatepicker]="picker11" placeholder="Fecha Inicio" disabled>
+                    <input matInput (click)="picker11.open()" [value]="d.fechaFinalizacion"
+                      (ngModelChange)="parseDate($event)" [matDatepicker]="picker11" placeholder="Fecha Inicio"
+                      disabled>
                     <mat-datepicker-toggle matSuffix [for]="picker11"></mat-datepicker-toggle>
                     <mat-datepicker touchUi #picker11></mat-datepicker>
                   </mat-form-field>
@@ -993,8 +1005,9 @@
                     <input matInput [value]="d.secretarioJuez" type="text" placeholder="Secretario y/o Juez" disabled>
                   </mat-form-field>
                 </td>
-                <td class="text-center" style="width: 50px;">
-                  <button type="button" class="btn btn-danger btn-s" (click)="eliminarPasantiaOJ(index)">
+                <td style="width: 50px; text-align: left;">
+                  <button type="button" class="btn btn-danger" (click)="eliminarPasantiaOJ(index)"
+                    title="Eliminar Pasantia en el OJ">
                     <span class="fa fa-trash"></span>
                   </button>
                 </td>
@@ -1015,8 +1028,81 @@
   <mat-step [stepControl]="seventhFormGroup">
     <form [formGroup]="seventhFormGroup">
       <ng-template matStepLabel></ng-template>
-      <mat-label style="font-size: 24px; "> <b> Dependientes </b></mat-label>
+      <mat-label style="font-size: 24px; "> <b> Experiencia laboral en el Organismo Judicial </b></mat-label>
+      <br />
+      <div>
+        <mat-card>
+          <mat-card-content>
+            <div class="row">
+              <div class="col-3">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput formControlName="puestoExperienciaOJ" type="text" placeholder="Puesto">
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <mat-form-field color="warn" style="font-size: 12px;">
+                  <input matInput (click)="picker12.open()" formControlName="fechaFinalizacionExperienciaOJ"
+                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker12" placeholder="Fecha Inicio">
+                  <mat-datepicker-toggle matSuffix [for]="picker12"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #picker12></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <mat-form-field color="warn" style="font-size: 12px;">
+                  <input matInput (click)="picker13.open()" formControlName="fechaInicioExperienciaOJ"
+                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker13" placeholder="Fecha finalización">
+                  <mat-datepicker-toggle matSuffix [for]="picker13"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #picker13></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput formControlName="renglonPresupuestarioExperienciaOJ" class="textos" type="text" maxlength="20"
+                    placeholder="Renglón Presupuestario">
+                </mat-form-field>
+              </div>              
+            </div>
 
+            <div class="row">
+              <div class="col-3">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput formControlName="dependenciaExperienciaOJ" class="textos" type="text" maxlength="2048"
+                    placeholder="Dependencia donde laboró">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input matInput formControlName="jefeInmediatoExperienciaOJ" class="textos" type="text" maxlength="2048"
+                    placeholder="Jefe Inmediato">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field [floatLabel]="floatLabelControl.value">
+                  <mat-label style="font-size: 14px;">Motivo por el cual terminó la relación laboral</mat-label>
+                  <mat-select formControlName="motivoFinRelacionLaboralExperienciaOJ">
+                    <mat-option [value]="0" style="font-size: 12px;">Finalización de relación laboral</mat-option>
+                    <mat-option [value]="1" style="font-size: 12px;">Finalización de contrato</mat-option>
+                    <mat-option [value]="2" style="font-size: 12px;">Renuncia</mat-option>
+                    <mat-option [value]="3" style="font-size: 12px;">Destitución</mat-option>
+                    <mat-option [value]="4" style="font-size: 12px;">Otro</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-2">
+                <button mat-raised-button class="btn btn-primary" (click)="agregarExperienciaLaboralOJ()"
+                  style="font-size: 10px;">
+                  <i class="fa fa-plus"></i> Agregar
+                </button>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <br />
+      <br />
+      <div>
+     
+      </div>
       <br />
       <div>
         <button mat-button matStepperPrevious>Atrás</button>
