@@ -94,7 +94,7 @@ export class PerfilwizardComponent implements OnInit {
   experienciaLaboral: ExperienciaLaboral[] = [];
   nuevaExperienciaLaboral: ExperienciaLaboral;
   referenciasPersonales: ReferenciaPersonal[] = [];
-  nuevaReferenciaPersoal: ReferenciaPersonal;
+  nuevaReferenciaPersonal: ReferenciaPersonal;
   dependenciaPasantia;
   inicioPasantia;
   finPasantia;
@@ -102,13 +102,6 @@ export class PerfilwizardComponent implements OnInit {
   listaDependientes = [];
   listarazaPerfil;
   listaComunidadesLinguisticas;
-  conyuge;
-  fechaNacconyuge;
-  telconyuge;
-  viveconyuge;
-  profesionconyuge;
-  lugarTrabajoconyuge;
-  trabajaconyuge;
   hijos;
   noHijo;
   dependientes;
@@ -120,14 +113,6 @@ export class PerfilwizardComponent implements OnInit {
   nombreFOJ;
   dependenciaFOJ;
   puestoFOJ;
-  parentesco1;
-  nombreFamiliar1;
-  dependencia1;
-  puesto1;
-  parentesco2;
-  nombreFamiliar2;
-  dependencia2;
-  puesto2;
   nivelAcademicoPrimaria;
   nivelAcademicoBasicos;
   nivelAcademicoDiversificado;
@@ -492,32 +477,6 @@ export class PerfilwizardComponent implements OnInit {
 
   }
 
-  agregarReferenciaPersonal() {
-    console.log("Agregar referencia");
-    console.log(this.nineFormGroup.value.nombreReferenciaPersonal);
-    if (this.nineFormGroup.value.nombreReferenciaPersonal !== '' && this.nineFormGroup.value.nombreReferenciaPersonal !== undefined && this.nineFormGroup.value.nombreReferenciaPersonal !== null) {
-      console.log("es distinto de undefined");
-
-      this.nuevaReferenciaPersoal = {
-        nombre:  this.nineFormGroup.value.nombreReferenciaPersonal,
-        tipoRelacion:  this.nineFormGroup.value.tipoRelacionReferenciaPersonal,   
-        aniosConocerlo:  this.nineFormGroup.value.aniosConocerloReferenciaPersonal,
-        telefono:  this.nineFormGroup.value.telefonoReferenciaPersonal
-       };
-      console.log(this.nuevaReferenciaPersoal);
-      this.referenciasPersonales.push(this.nuevaReferenciaPersoal);
-
-      this.nineFormGroup = this.fb.group({
-        nombreReferenciaPersonal: [''],
-        tipoRelacionReferenciaPersonal: [''],
-        aniosConocerloReferenciaPersonal: [''],
-        telefonoReferenciaPersonal: ['']
-      });
-
-      console.log(this.referenciasPersonales);
-    }
-
-  }
   agregarExperienciaLaboral() {
     console.log("Agregar Experiencia laboral ");
     console.log(this.eighthFormGroup.value.institucionEmpresaExperienciaLaboral);
@@ -552,6 +511,33 @@ export class PerfilwizardComponent implements OnInit {
 
   }
 
+  agregarReferenciaPersonal() {
+    console.log("Agregar referencia");
+    console.log(this.nineFormGroup.value.nombreReferenciaPersonal);
+    if (this.nineFormGroup.value.nombreReferenciaPersonal !== '' && this.nineFormGroup.value.nombreReferenciaPersonal !== undefined && this.nineFormGroup.value.nombreReferenciaPersonal !== null) {
+      console.log("es distinto de undefined");
+
+      this.nuevaReferenciaPersonal = {
+        nombre: this.nineFormGroup.value.nombreReferenciaPersonal,
+        tipoRelacion: this.nineFormGroup.value.tipoRelacionReferenciaPersonal,
+        aniosConocerlo: this.nineFormGroup.value.aniosConocerloReferenciaPersonal,
+        telefono: this.nineFormGroup.value.telefonoReferenciaPersonal
+      };
+      console.log(this.nuevaReferenciaPersonal);
+      this.referenciasPersonales.push(this.nuevaReferenciaPersonal);
+
+      this.nineFormGroup = this.fb.group({
+        nombreReferenciaPersonal: [''],
+        tipoRelacionReferenciaPersonal: [''],
+        aniosConocerloReferenciaPersonal: [''],
+        telefonoReferenciaPersonal: ['']
+      });
+
+      console.log(this.referenciasPersonales);
+    }
+
+  }
+
   crearPerfil() {
     this.obtenerDepartamentos();
     this.obtenerComunidadesLinguisticas();
@@ -575,11 +561,92 @@ export class PerfilwizardComponent implements OnInit {
     }
   }
 
+  parseDatePasantias(dateString: any): any {
+    if (dateString) {
+      if (this.valDatesPasantias()) {
+        swal("Fecha Inválida", "Fecha Finalización de Pasantía no puede ser anterior a Fecha de Inicio de Pasantía.", "info")
+      }
+      return this.datePipe.transform(dateString, 'yyyy-MM-dd')
+    } else {
+      return null;
+    }
+  }
+
+  valDatesPasantias() {
+    let inicio = new Date(this.sixthFormGroup.value.inicioPasantia);
+    let fin = new Date(this.sixthFormGroup.value.finPasantia);
+
+    this.validaFecha = false;
+
+    if (inicio.getFullYear() > fin.getFullYear()) {
+      this.validaFecha = true;
+    } else if (inicio.getMonth() == fin.getMonth() && inicio.getFullYear() == fin.getFullYear()) {
+      this.validaFecha = inicio.getDate() > fin.getDate();
+    } else if (inicio.getMonth() > fin.getMonth() && inicio.getFullYear() == fin.getFullYear()) {
+      this.validaFecha = true;
+    }
+
+    return this.validaFecha;
+  }
+
+  parseDateExperienciaLaboralOJ(dateString: any): any {
+    if (dateString) {
+      if (this.valDatesExperienciaLaboralOJ()) {
+        swal("Fecha Inválida", "Fecha Finalización Experiencia Laboral OJ no puede ser anterior a Fecha de Inicio Experiencia Laboral OJ.", "info")
+      }
+      return this.datePipe.transform(dateString, 'yyyy-MM-dd')
+    } else {
+      return null;
+    }
+  }
+
+  valDatesExperienciaLaboralOJ() {
+    let inicio = new Date(this.seventhFormGroup.value.fechaInicioExperienciaOJ);
+    let fin = new Date(this.seventhFormGroup.value.fechaFinalizacionExperienciaOJ);
+
+    this.validaFecha = false;
+
+    if (inicio.getFullYear() > fin.getFullYear()) {
+      this.validaFecha = true;
+    } else if (inicio.getMonth() == fin.getMonth() && inicio.getFullYear() == fin.getFullYear()) {
+      this.validaFecha = inicio.getDate() > fin.getDate();
+    } else if (inicio.getMonth() > fin.getMonth() && inicio.getFullYear() == fin.getFullYear()) {
+      this.validaFecha = true;
+    }
+
+    return this.validaFecha;
+  }
+
+  parseDateExperienciaLaboral(dateString: any): any {
+    if (dateString) {
+      if (this.valDatesExperienciaLaboral()) {
+        swal("Fecha Inválida", "Fecha Finalización Experiencia Laboral no puede ser anterior a Fecha de Inicio Experiencia Laboral.", "info")
+      }
+      return this.datePipe.transform(dateString, 'yyyy-MM-dd')
+    } else {
+      return null;
+    }
+  }
+
+  valDatesExperienciaLaboral() {
+    let inicio = new Date(this.eighthFormGroup.value.fechaInicioExperienciaLaboral);
+    let fin = new Date(this.eighthFormGroup.value.fechaFinalizacionExperienciaLaboral);
+
+    this.validaFecha = false;
+
+    if (inicio.getFullYear() > fin.getFullYear()) {
+      this.validaFecha = true;
+    } else if (inicio.getMonth() == fin.getMonth() && inicio.getFullYear() == fin.getFullYear()) {
+      this.validaFecha = inicio.getDate() > fin.getDate();
+    } else if (inicio.getMonth() > fin.getMonth() && inicio.getFullYear() == fin.getFullYear()) {
+      this.validaFecha = true;
+    }
+
+    return this.validaFecha;
+  }
+
   parseDate(dateString: any): any {
     if (dateString) {
-      if (this.valDates()) {
-        swal("Fecha Inválida", "Fecha Inicio de Vigencia no puede ser anterior a Fecha de Acuerdo", "info")
-      }
       return this.datePipe.transform(dateString, 'yyyy-MM-dd')
     } else {
       return null;

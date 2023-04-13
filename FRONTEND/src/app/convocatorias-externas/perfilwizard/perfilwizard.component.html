@@ -1,8 +1,6 @@
 <br />
 <br />
 <br />
-<br />
-<br />
 <div class="row">
   <div class="col-10"></div>
   <div class="col-2">
@@ -12,8 +10,8 @@
     </div>
   </div>
 </div>
-
 <br />
+
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
@@ -50,8 +48,8 @@
       <div class="row">
         <div class="form-group col">
           <mat-form-field color="warn" style="font-size: 12px;">
-            <input matInput (click)="picker4.open()" formControlName="fechaNac" (ngModelChange)="parseDate($event)"
-              [matDatepicker]="picker4" placeholder="FECHA NACIMIENTO">
+            <input matInput (click)="picker4.open()" formControlName="fechaNac" [matDatepicker]="picker4" 
+            (ngModelChange)="parseDate($event)" placeholder="FECHA NACIMIENTO">
             <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
             <mat-datepicker touchUi #picker4></mat-datepicker>
             <mat-error *ngIf="this.firstFormGroup.controls.fechaNac.errors?.required">
@@ -182,8 +180,8 @@
         </div>
         <div class="form-group col">
           <mat-form-field color="warn" style="font-size: 12px;">
-            <input matInput (click)="picker5.open()" formControlName="fechaVencDPI" (ngModelChange)="parseDate($event)"
-              [matDatepicker]="picker5" placeholder="FECHA VENCIMIENTO DPI">
+            <input matInput (click)="picker5.open()" formControlName="fechaVencDPI" [matDatepicker]="picker5" 
+            (ngModelChange)="parseDate($event)" placeholder="FECHA VENCIMIENTO DPI">
             <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
             <mat-datepicker touchUi #picker5></mat-datepicker>
             <mat-error *ngIf="this.firstFormGroup.controls.fechaVencDPI.errors?.required">
@@ -388,8 +386,8 @@
               </div>
               <div class="col-2">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
-                  <input matInput (click)="picker6.open()" formControlName="fechaNacFamiliar"
-                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker6" placeholder="FECHA NACIMIENTO">
+                  <input matInput (click)="picker6.open()" formControlName="fechaNacFamiliar" [matDatepicker]="picker6" 
+                  (ngModelChange)="parseDate($event)" placeholder="FECHA NACIMIENTO">
                   <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
                   <mat-datepicker touchUi #picker6></mat-datepicker>
                 </mat-form-field>
@@ -505,8 +503,8 @@
               </div>
               <div class="col-2">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
-                  <input matInput (click)="picker7.open()" [value]="familiar.fechaNacimiento"
-                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker7" placeholder="FECHA NACIMIENTO">
+                  <input matInput (click)="picker7.open()" [value]="familiar.fechaNacimiento" [matDatepicker]="picker7" 
+                  (ngModelChange)="parseDate($event)" placeholder="FECHA NACIMIENTO">
                   <mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
                   <mat-datepicker touchUi #picker7></mat-datepicker>
                 </mat-form-field>
@@ -948,7 +946,7 @@
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" style="font-size: 12px;">
                     <input matInput (click)="picker8.open()" formControlName="inicioPasantia"
-                      (ngModelChange)="parseDate($event)" [matDatepicker]="picker8" placeholder="Fecha Inicio">
+                      (ngModelChange)="parseDatePasantias($event)" [matDatepicker]="picker8" placeholder="Fecha Inicio">
                     <mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
                     <mat-datepicker touchUi #picker8></mat-datepicker>
                   </mat-form-field>
@@ -956,7 +954,7 @@
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" style="font-size: 12px;">
                     <input matInput (click)="picker9.open()" formControlName="finPasantia"
-                      (ngModelChange)="parseDate($event)" [matDatepicker]="picker9" placeholder="Fecha Finalizacion">
+                      (ngModelChange)="parseDatePasantias($event)" [matDatepicker]="picker9" placeholder="Fecha Finalizacion">
                     <mat-datepicker-toggle matSuffix [for]="picker9"></mat-datepicker-toggle>
                     <mat-datepicker touchUi #picker9></mat-datepicker>
                   </mat-form-field>
@@ -984,8 +982,7 @@
 
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" style="font-size: 12px;">
-                    <input matInput (click)="picker10.open()" [value]="d.fechaInicio"
-                      (ngModelChange)="parseDate($event)" [matDatepicker]="picker10" placeholder="Fecha Inicio"
+                    <input matInput (click)="picker10.open()" [value]="d.fechaInicio" [matDatepicker]="picker10" placeholder="Fecha Inicio"
                       disabled>
                     <mat-datepicker-toggle matSuffix [for]="picker10"></mat-datepicker-toggle>
                     <mat-datepicker touchUi #picker10></mat-datepicker>
@@ -993,8 +990,7 @@
                 </td>
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" style="font-size: 12px;">
-                    <input matInput (click)="picker11.open()" [value]="d.fechaFinalizacion"
-                      (ngModelChange)="parseDate($event)" [matDatepicker]="picker11" placeholder="Fecha Finalizacion"
+                    <input matInput (click)="picker11.open()" [value]="d.fechaFinalizacion" [matDatepicker]="picker11" placeholder="Fecha Finalizacion"
                       disabled>
                     <mat-datepicker-toggle matSuffix [for]="picker11"></mat-datepicker-toggle>
                     <mat-datepicker touchUi #picker11></mat-datepicker>
@@ -1041,16 +1037,16 @@
               </div>
               <div class="col-2">
                 <mat-form-field color="warn" style="font-size: 12px;">
-                  <input matInput (click)="picker12.open()" formControlName="fechaFinalizacionExperienciaOJ"
-                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker12" placeholder="Fecha Inicio">
+                  <input matInput (click)="picker12.open()" formControlName="fechaInicioExperienciaOJ"
+                    (ngModelChange)="parseDateExperienciaLaboralOJ($event)" [matDatepicker]="picker12" placeholder="Fecha Inicio">
                   <mat-datepicker-toggle matSuffix [for]="picker12"></mat-datepicker-toggle>
                   <mat-datepicker touchUi #picker12></mat-datepicker>
                 </mat-form-field>
               </div>
               <div class="col-2">
                 <mat-form-field color="warn" style="font-size: 12px;">
-                  <input matInput (click)="picker13.open()" formControlName="fechaInicioExperienciaOJ"
-                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker13" placeholder="Fecha Finalización">
+                  <input matInput (click)="picker13.open()" formControlName="fechaFinalizacionExperienciaOJ"
+                    (ngModelChange)="parseDateExperienciaLaboralOJ($event)" [matDatepicker]="picker13" placeholder="Fecha Finalización">
                   <mat-datepicker-toggle matSuffix [for]="picker13"></mat-datepicker-toggle>
                   <mat-datepicker touchUi #picker13></mat-datepicker>
                 </mat-form-field>
@@ -1110,16 +1106,14 @@
               </div>
               <div class="col-3">
                 <mat-form-field color="warn" style="font-size: 12px;">
-                  <input matInput (click)="picker14.open()" [value]="experiencia.fechaInicio"
-                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker14" placeholder="Fecha Inicio">
+                  <input matInput (click)="picker14.open()" [value]="experiencia.fechaInicio" [matDatepicker]="picker14" placeholder="Fecha Inicio">
                   <mat-datepicker-toggle matSuffix [for]="picker14"></mat-datepicker-toggle>
                   <mat-datepicker touchUi #picker14></mat-datepicker>
                 </mat-form-field>
               </div>
               <div class="col-3">
                 <mat-form-field color="warn" style="font-size: 12px;">
-                  <input matInput (click)="picker15.open()" [value]="experiencia.fechaFinalizacion"
-                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker15" placeholder="Fecha Finalizacion">
+                  <input matInput (click)="picker15.open()" [value]="experiencia.fechaFinalizacion" [matDatepicker]="picker15" placeholder="Fecha Finalizacion">
                   <mat-datepicker-toggle matSuffix [for]="picker15"></mat-datepicker-toggle>
                   <mat-datepicker touchUi #picker15></mat-datepicker>
                 </mat-form-field>
@@ -1193,7 +1187,7 @@
               <div class="col-2">
                 <mat-form-field color="warn" style="font-size: 12px;">
                   <input matInput (click)="picker16.open()" formControlName="fechaInicioExperienciaLaboral"
-                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker16" placeholder="Fecha Inicio">
+                    (ngModelChange)="parseDateExperienciaLaboral($event)" [matDatepicker]="picker16" placeholder="Fecha Inicio">
                   <mat-datepicker-toggle matSuffix [for]="picker16"></mat-datepicker-toggle>
                   <mat-datepicker touchUi #picker16></mat-datepicker>
                 </mat-form-field>
@@ -1201,7 +1195,7 @@
               <div class="col-2">
                 <mat-form-field color="warn" style="font-size: 12px;">
                   <input matInput (click)="picker17.open()" formControlName="fechaFinalizacionExperienciaLaboral"
-                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker17" placeholder="Fecha Finalización">
+                    (ngModelChange)="parseDateExperienciaLaboral($event)" [matDatepicker]="picker17" placeholder="Fecha Finalización">
                   <mat-datepicker-toggle matSuffix [for]="picker17"></mat-datepicker-toggle>
                   <mat-datepicker touchUi #picker17></mat-datepicker>
                 </mat-form-field>
@@ -1263,16 +1257,14 @@
               </div>
               <div class="col-2">
                 <mat-form-field color="warn" style="font-size: 12px;">
-                  <input matInput (click)="picker18.open()" [value]="experiencia.fechaInicio"
-                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker18" placeholder="Fecha Inicio">
+                  <input matInput (click)="picker18.open()" [value]="experiencia.fechaInicio" [matDatepicker]="picker18" placeholder="Fecha Inicio">
                   <mat-datepicker-toggle matSuffix [for]="picker18"></mat-datepicker-toggle>
                   <mat-datepicker touchUi #picker18></mat-datepicker>
                 </mat-form-field>
               </div>
               <div class="col-2">
                 <mat-form-field color="warn" style="font-size: 12px;">
-                  <input matInput (click)="picker19.open()" [value]="experiencia.fechaFinalizacion"
-                    (ngModelChange)="parseDate($event)" [matDatepicker]="picker19" placeholder="Fecha Finalización">
+                  <input matInput (click)="picker19.open()" [value]="experiencia.fechaFinalizacion" [matDatepicker]="picker19" placeholder="Fecha Finalización">
                   <mat-datepicker-toggle matSuffix [for]="picker19"></mat-datepicker-toggle>
                   <mat-datepicker touchUi #picker19></mat-datepicker>
                 </mat-form-field>
@@ -1361,10 +1353,10 @@
                     <input matInput formControlName="telefonoReferenciaPersonal" type="text" placeholder="Telefonos">
                   </mat-form-field>
                 </td>
-                <td style="width: 100px;"> <button mat-raised-button class="btn btn-primary"
-                    (click)="agregarReferenciaPersonal()" style="font-size: 10px;">
+                <td style="width: 50px;"> <button mat-raised-button class="btn btn-primary"
+                    (click)="agregarReferenciaPersonal()" style="font-size: 10px;" title=" Agregar Referencia Personal" >
                     <i class="fa fa-plus"></i>
-                    &nbsp;&nbsp; Agregar Referencia Personal
+                    &nbsp;&nbsp; Agregar
                   </button>
                 </td>
               </tr>
@@ -1373,7 +1365,7 @@
               <tr *ngFor="let referencia of referenciasPersonales; let index = index" disabled>
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                    <input [value]="referencia.nombre" type="text" placeholder="Nombre">
+                    <input matInput [value]="referencia.nombre" type="text" placeholder="Nombre">
                   </mat-form-field>
                 </td>
                 <td class="text-center" style="width: 200px;">
@@ -1384,12 +1376,12 @@
                 </td>
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" class="textos">
-                    <input matInput [value]="aniosConocerlo" type="number" placeholder="EDAD" required>
+                    <input matInput [value]="referencia.aniosConocerlo" type="number" placeholder="EDAD" required>
                   </mat-form-field>
                 </td>
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                    <input matInput [value]="telefono" type="text" placeholder="Telefonos">
+                    <input matInput [value]="referencia.telefono" type="text" placeholder="Telefonos">
                   </mat-form-field>
                 </td>
                 <td style="width: 100px; text-align: left;">
