@@ -653,24 +653,15 @@ export class PerfilwizardComponent implements OnInit {
     }
   }
 
-  valDates() {
-    let acuerdo = new Date(this.firstFormGroup.value.fechaNac);
-    let vigencia = new Date(this.firstFormGroup.value.fechaNacPadre);
-
-    this.validaFecha = false;
-
-    if (acuerdo.getFullYear() > vigencia.getFullYear()) {
-      this.validaFecha = true;
-    } else if (acuerdo.getMonth() == vigencia.getMonth() && acuerdo.getFullYear() == vigencia.getFullYear()) {
-      this.validaFecha = acuerdo.getDate() > vigencia.getDate();
-    } else if (acuerdo.getMonth() > vigencia.getMonth() && acuerdo.getFullYear() == vigencia.getFullYear()) {
-      this.validaFecha = true;
-    }
-
-    return this.validaFecha;
-  }
-
   get f() { return this.firstFormGroup.controls; }
+  get f2() { return this.secondFormGroup.controls; }
+  get f3() { return this.thirdFormGroup.controls; }
+  get f4() { return this.fourthFormGroup.controls; }
+  get f5() { return this.fifthFormGroup.controls; }
+  get f6() { return this.sixthFormGroup.controls; }
+  get f7() { return this.seventhFormGroup.controls; }
+  get f8() { return this.eighthFormGroup.controls; }
+  get f9() { return this.nineFormGroup.controls; }
 
   valDpi(valor: any): boolean {
 
@@ -683,18 +674,16 @@ export class PerfilwizardComponent implements OnInit {
     return false;
 
   }
-  valCodPres(valor: any): boolean {
-    /*
-    if(valor !== null && valor !== undefined &&  valor !== "" && this.iniciaValPres){
-    this.mantenimientoDependenciaService.validaCodigosCreacion(valor,2).subscribe(
-      data => {
-        this.validaCodPres = data.id !== 0;       
-      });
-    }else{
-      this.validaCodPres = false;
-    }*/
+  validaIdioma(): boolean {
+    let valor = this.secondFormGroup.value.idioma1;
 
-    return this.validaCodPres;
+    if (valor !== null && valor !== undefined && valor !== "") {
+      let encontrado = this.idiomas.find(x => x.idioma == valor);
+      console.log("idioma encontrado: " + encontrado);
+      return encontrado != null ? true : false;
+    }
+
+    return false;
   }
 
   guardarData() {

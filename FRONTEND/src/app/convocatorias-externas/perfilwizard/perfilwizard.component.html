@@ -20,28 +20,31 @@
       <div class="row">
         <div class="form-group col">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="nombres" type="text" maxlength="150" placeholder="NOMBRES" required>
+            <input matInput formControlName="nombres" type="text" maxlength="200" placeholder="NOMBRES" required>
             <mat-error *ngIf="this.firstFormGroup.controls.nombres.errors?.required">
               Nombres Requerido
             </mat-error>
+            <mat-hint align="end">{{f.nombres.value.length}} / 200</mat-hint>
           </mat-form-field>
         </div>
         <div class="form-group col">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="primerApellido" type="text" maxlength="150" placeholder="PRIMER APELLIDO"
+            <input matInput formControlName="primerApellido" type="text" maxlength="200" placeholder="PRIMER APELLIDO"
               required>
             <mat-error *ngIf="this.firstFormGroup.controls.primerApellido.errors?.required">
               Primer Apellido Requerido
             </mat-error>
+            <mat-hint align="end">{{f.primerApellido.value.length}} / 200</mat-hint>
           </mat-form-field>
         </div>
         <div class="form-group col">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="segundoApellido" type="text" maxlength="150" placeholder="SEGUNDO APELLIDO"
+            <input matInput formControlName="segundoApellido" type="text" maxlength="200" placeholder="SEGUNDO APELLIDO"
               required>
-            <mat-error *ngIf="this.firstFormGroup.controls.primerApellido.errors?.required">
+            <mat-error *ngIf="this.firstFormGroup.controls.segundoApellido.errors?.required">
               Segundo Apellido Requerido
             </mat-error>
+            <mat-hint align="end">{{f.segundoApellido.value.length}} / 200</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -71,18 +74,21 @@
               <mat-option *ngFor="let sexos of generos" [value]="sexos.ID" style="font-size: 12px;">
                 {{sexos.DESCRIPCION}}</mat-option>
             </mat-select>
+            <mat-error *ngIf="this.firstFormGroup.controls.sexo.errors?.required">
+              Sexo Requerido
+            </mat-error>
           </mat-form-field>
         </div>
       </div>
       <div class="row">
         <div class="form-group col">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="profesion" class="textos" type="text" maxlength="2048"
+            <input matInput formControlName="profesion" class="textos" type="text" maxlength="200"
               placeholder="PROFESIÓN U OFICIO">
             <mat-error *ngIf="this.firstFormGroup.controls.profesion.errors?.required">
               Profesión u Oficio Requerido
             </mat-error>
-            <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
+            <mat-hint align="end">{{f.profesion.value.length}} / 200</mat-hint>
           </mat-form-field>
         </div>
         <div class="form-group col">
@@ -91,28 +97,31 @@
               <mat-option *ngFor="let estados of estadoCivil" [value]="estados.ID" style="font-size: 12px;">
                 {{estados.DESCRIPCION}}</mat-option>
             </mat-select>
+            <mat-error *ngIf="this.firstFormGroup.controls.estadoCivilAspirante.errors?.required">
+              Estado Civil Requerido
+            </mat-error>
           </mat-form-field>
         </div>
         <div class="form-group col">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="nacionalidad" class="textos" type="text" maxlength="2048"
+            <input matInput formControlName="nacionalidad" class="textos" type="text" maxlength="200"
               placeholder="NACIONALIDAD">
             <mat-error *ngIf="this.firstFormGroup.controls.nacionalidad.errors?.required">
               Nacionalidad Requerida
             </mat-error>
-            <mat-hint align="end">{{f.nacionalidad.value.length}} / 2048</mat-hint>
+            <mat-hint align="end">{{f.nacionalidad.value.length}} / 200</mat-hint>
           </mat-form-field>
         </div>
       </div>
       <div class="row">
         <div class="form-group col">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="direccion" class="textos" type="text" maxlength="2048"
+            <input matInput formControlName="direccion" class="textos" type="text" maxlength="200"
               placeholder="DIRECCIÓN">
             <mat-error *ngIf="this.firstFormGroup.controls.direccion.errors?.required">
               Dirección de domicilio Requerido
             </mat-error>
-            <mat-hint align="end">{{f.direccion.value.length}} / 2048</mat-hint>
+            <mat-hint align="end">{{f.direccion.value.length}} / 200</mat-hint>
           </mat-form-field>
         </div>
         <div class="form-group col">
@@ -142,30 +151,32 @@
       <div class="row">
         <div class="form-group col">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="correo" class="textos" type="text" maxlength="2048"
+            <input matInput formControlName="correo" class="textos" type="text" maxlength="200"
               placeholder="CORREO ELECTRONICO">
             <mat-error *ngIf="this.firstFormGroup.controls.correo.errors?.required">
               Correo Requerido
             </mat-error>
+            <mat-hint align="end">{{f.correo.value.length}} / 200</mat-hint>
           </mat-form-field>
         </div>
         <div class="form-group col">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="telefonoCasa" class="textos" type="text" maxlength="10"
+            <input matInput formControlName="telefonoCasa" class="textos" type="text" maxlength="20"
               placeholder="TELEFONO CASA">
             <mat-error *ngIf="this.firstFormGroup.controls.telefonoCasa.errors?.required">
               Telefono Casa Requerido
             </mat-error>
-
+            <mat-hint align="end">{{f.telefonoCasa.value.length}} / 20</mat-hint>
           </mat-form-field>
         </div>
         <div class="form-group col">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="telefonoCelular" color="warn" maxlength="10" class="textos"
+            <input matInput formControlName="telefonoCelular" color="warn" maxlength="20" class="textos"
               placeholder="TELEFONO CELULAR">
             <mat-error *ngIf="this.firstFormGroup.controls.telefonoCelular.errors?.required">
               Telefono Celular REQUERIDO
             </mat-error>
+            <mat-hint align="end">{{f.telefonoCelular.value.length}} / 20</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -191,10 +202,11 @@
         </div>
         <div class="form-group col">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="nit" class="textos" type="text" maxlength="10" placeholder="NIT">
+            <input matInput formControlName="nit" class="textos" type="text" maxlength="15" placeholder="NIT">
             <mat-error *ngIf="this.firstFormGroup.controls.nit.errors?.required">
               NIT Requerido
             </mat-error>
+            <mat-hint align="end">{{f.nit.value.length}} / 15</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -209,12 +221,12 @@
         </div>
         <div class="form-group col">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="numeroLicencia" class="textos" type="number" maxlength="10"
+            <input matInput formControlName="numeroLicencia" class="textos" type="number" maxlength="20"
               placeholder="NUMERO DE LICENCIA">
             <mat-error *ngIf="this.firstFormGroup.controls.numeroLicencia.errors?.required">
               Numero de Licencia Requerido
             </mat-error>
-
+            <mat-hint align="end">{{f.numeroLicencia.value.length}} / 20</mat-hint>
           </mat-form-field>
         </div>
         <div class="form-group col">
@@ -267,10 +279,7 @@
                 <td class="text-center" style="width: 250px;">
                   <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                     <input matInput formControlName="idioma1" type="text" placeholder="Idioma">
-
-                    <mat-hint style="color:red;" *ngIf="this.validaDpi">
-                      Error Idioma ya Existente
-                    </mat-hint>
+                    <mat-hint style="color:red;" *ngIf="this.validaIdioma"> Error Idioma ya Existente </mat-hint>
                   </mat-form-field>
                 </td>
                 <td class="text-center" style="width: 150px;">
@@ -315,10 +324,6 @@
                 <td class="text-center" style="width: 250px;">
                   <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                     <input matInput [value]="d.idioma" type="text" placeholder="Idioma" disabled>
-
-                    <mat-hint style="color:red;" *ngIf="this.validaDpi">
-                      Error Idioma ya Existente
-                    </mat-hint>
                   </mat-form-field>
                 </td>
                 <td class="text-center" style="width: 150px;">
@@ -395,7 +400,7 @@
               <div class="col-2">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input matInput formControlName="telFamiliar" class="textos" type="text" maxlength="10"
-                    placeholder="Telefono">
+                    placeholder="TELEFONO">
                 </mat-form-field>
               </div>
               <div class="col-2">
@@ -423,7 +428,7 @@
               </div>
               <div class="col-4">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput formControlName="profesionFamiliar" type="text" placeholder="Profesión u Oficio">
+                  <input matInput formControlName="profesionFamiliar" type="text" placeholder="PROFESIÓN U OFICIO">
                 </mat-form-field>
               </div>
               <div class="col-2">
@@ -437,9 +442,9 @@
               </div>
               <div class="col-3">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput formControlName="lugarTrabajoFamiliar" class="textos" type="text" maxlength="2048"
-                    placeholder="Lugar de Trabajo">
-                  <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
+                  <input matInput formControlName="lugarTrabajoFamiliar" class="textos" type="text" maxlength="200"
+                    placeholder="LUGAR DE TRABAJO">
+                  <mat-hint align="end">{{f3.lugarTrabajoFamiliar.value.length}} / 200</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-2">
@@ -471,7 +476,7 @@
               </mat-form-field>
             </div>
             <div class="col-4">
-              <mat-label style="font-size: 18px; "> Seleccione quienes dependen económicamente de usted </mat-label>
+              <mat-label style="font-size: 18px; "> SELECCIONE DEPENDIENTES ECONÓMICOS DE USTED </mat-label>
               <mat-selection-list color="primary" (selectionChange)="cambioListaDependientes($event)">
                 <mat-list-option checkboxPosition="before" [value]="0">
                   Hijos
@@ -498,7 +503,7 @@
             <div class="row" disabled>
               <div class="col-5">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput [value]="familiar.nombreFamiliar" type="text" placeholder="NOMBRE">
+                  <input matInput [value]="familiar.nombreFamiliar" type="text" placeholder="NOMBRE">                  
                 </mat-form-field>
               </div>
               <div class="col-2">
@@ -512,7 +517,7 @@
               <div class="col-2">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input matInput [value]="familiar.telefono" class="textos" type="text" maxlength="10"
-                    placeholder="Telefono">
+                    placeholder="TELEFONO">
                 </mat-form-field>
               </div>
               <div class="col-2">
@@ -540,7 +545,7 @@
               </div>
               <div class="col-4">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput [value]="familiar.profesion" type="text" placeholder="Profesión u Oficio">
+                  <input matInput [value]="familiar.profesion" type="text" placeholder="PROFESION U OFICIO">
                 </mat-form-field>
               </div>
               <div class="col-2">
@@ -555,8 +560,7 @@
               <div class="col-3">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input matInput [value]="familiar.lugarTrabajo" class="textos" type="text" maxlength="2048"
-                    placeholder="Lugar de Trabajo">
-                  <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
+                    placeholder="LUGAR DE TRABAJO">                  
                 </mat-form-field>
               </div>
               <div class="col-2">
@@ -589,7 +593,8 @@
             <div class="row">
               <div class="col-6">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput formControlName="nombreFOJ" type="text" placeholder="NOMBRE COMPLETO">
+                  <input matInput formControlName="nombreFOJ" type="text" placeholder="NOMBRE COMPLETO" maxlength="200">
+                  <mat-hint align="end">{{f4.nombreFOJ.value.length}} / 200</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-3">
@@ -608,15 +613,16 @@
             <div class="row">
               <div class="col-4">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput formControlName="dependenciaFOJ" class="textos" type="text" maxlength="2048"
+                  <input matInput formControlName="dependenciaFOJ" class="textos" type="text" maxlength="250"
                     placeholder="DEPENDENCIA">
+                    <mat-hint align="end">{{f4.dependenciaFOJ.value.length}} / 200</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-5">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput formControlName="puestoFOJ" class="textos" type="text" maxlength="2048"
-                    placeholder="Puesto">
-                  <mat-hint align="end">{{f.profesion.value.length}} / 2048</mat-hint>
+                  <input matInput formControlName="puestoFOJ" class="textos" type="text" maxlength="250"
+                    placeholder="PUESTO">
+                  <mat-hint align="end">{{f4.puestoFOJ.value.length}} / 250</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-1"> </div>
@@ -657,13 +663,13 @@
             <div class="row">
               <div class="col-4">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput [value]="familiar.dependencia" class="textos" type="text" maxlength="2048"
-                    placeholder="Dependencia">
+                  <input matInput [value]="familiar.dependencia" class="textos" type="text" maxlength="250"
+                    placeholder="DEPENDENCIA">
                 </mat-form-field>
               </div>
               <div class="col-5">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput [value]="familiar.puesto" type="text" placeholder="Puesto">
+                  <input matInput [value]="familiar.puesto" type="text" placeholder="PUESTO" maxlength="250">
                 </mat-form-field>
               </div>
               <div class="col-1"> </div>
@@ -698,20 +704,23 @@
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="gradoAprobadoPrimaria" class="textos" type="text" maxlength="1024"
+            <input matInput formControlName="gradoAprobadoPrimaria" class="textos" type="text" maxlength="250"
               placeholder="GRADO APROBADO">
+              <mat-hint align="end">{{f5.gradoAprobadoPrimaria.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="institucionEstudiosPrimaria" class="textos" type="text" maxlength="1024"
+            <input matInput formControlName="institucionEstudiosPrimaria" class="textos" type="text" maxlength="250"
               placeholder="INSTITUCIÓN DE ESTUDIOS">
+              <mat-hint align="end">{{f5.institucionEstudiosPrimaria.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="constanciaPrimaria" class="textos" type="text" maxlength="1024"
+            <input matInput formControlName="constanciaPrimaria" class="textos" type="text" maxlength="300"
               placeholder="CONSTANCIA QUE LO ACREDITA">
+              <mat-hint align="end">{{f5.constanciaPrimaria.value.length}} / 300</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -722,20 +731,23 @@
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="gradoAprobadoBasicos" class="textos" type="text" maxlength="1024"
+            <input matInput formControlName="gradoAprobadoBasicos" class="textos" type="text" maxlength="250"
               placeholder="GRADO APROBADO">
+              <mat-hint align="end">{{f5.gradoAprobadoBasicos.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="institucionEstudiosBasicos" class="textos" type="text" maxlength="1024"
+            <input matInput formControlName="institucionEstudiosBasicos" class="textos" type="text" maxlength="250"
               placeholder="INSTITUCIÓN DE ESTUDIOS">
+              <mat-hint align="end">{{f5.institucionEstudiosBasicos.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="constanciaBasicos" class="textos" type="text" maxlength="1024"
+            <input matInput formControlName="constanciaBasicos" class="textos" type="text" maxlength="300"
               placeholder="CONSTANCIA QUE LO ACREDITA">
+              <mat-hint align="end">{{f5.constanciaBasicos.value.length}} / 300</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -746,20 +758,23 @@
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="gradoAprobadoDiversificado" class="textos" type="text" maxlength="1024"
+            <input matInput formControlName="gradoAprobadoDiversificado" class="textos" type="text" maxlength="250"
               placeholder="GRADO APROBADO">
+              <mat-hint align="end">{{f5.gradoAprobadoDiversificado.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="institucionEstudiosDiversificado" class="textos" type="text"
-              maxlength="1024" placeholder="INSTITUCIÓN DE ESTUDIOS">
+              maxlength="250" placeholder="INSTITUCIÓN DE ESTUDIOS">
+              <mat-hint align="end">{{f5.institucionEstudiosDiversificado.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="constanciaDiversificado" class="textos" type="text" maxlength="1024"
+            <input matInput formControlName="constanciaDiversificado" class="textos" type="text" maxlength="300"
               placeholder="CONSTANCIA QUE LO ACREDITA">
+              <mat-hint align="end">{{f5.constanciaDiversificado.value.length}} / 300</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -767,14 +782,16 @@
         <div class="col-1"> </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="anioGraduacionDiversificado" class="textos" type="text" maxlength="1024"
+            <input matInput formControlName="anioGraduacionDiversificado" class="textos" type="text" maxlength="4"
               placeholder="AÑO DE GRADUACIÓN">
+              <mat-hint align="end">{{f5.anioGraduacionDiversificado.value.length}} / 4</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="carreraDiversificado" class="textos" type="text" maxlength="1024"
+            <input matInput formControlName="carreraDiversificado" class="textos" type="text" maxlength="300"
               placeholder="CARRERA">
+              <mat-hint align="end">{{f5.carreraDiversificado.value.length}} / 300</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -785,20 +802,23 @@
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="carreraU" class="textos" type="text" maxlength="1024"
+            <input matInput formControlName="carreraU" class="textos" type="text" maxlength="300"
               placeholder="CARRERA">
+              <mat-hint align="end">{{f5.carreraU.value.length}} / 300</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="universidad" class="textos" type="text" maxlength="1024"
+            <input matInput formControlName="universidad" class="textos" type="text" maxlength="250"
               placeholder="UNIVERSIDAD">
+              <mat-hint align="end">{{f5.universidad.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="constanciaUniversidad" class="textos" type="text" maxlength="1024"
+            <input matInput formControlName="constanciaUniversidad" class="textos" type="text" maxlength="300"
               placeholder="CONSTANCIA QUE LO ACREDITA">
+              <mat-hint align="end">{{f5.constanciaUniversidad.value.length}} / 300</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -806,8 +826,9 @@
         <div class="col-1"></div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="semestreA" class="textos" type="text" maxlength="1024"
+            <input matInput formControlName="semestreA" class="textos" type="text" maxlength="250"
               placeholder="SEMESTRE APROBADO">
+              <mat-hint align="end">{{f5.semestreA.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
@@ -842,14 +863,16 @@
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="colegiado" class="textos" type="text" maxlength="1024"
+            <input matInput formControlName="colegiado" class="textos" type="text" maxlength="250"
               placeholder="COLEGIADO">
+              <mat-hint align="end">{{f5.colegiado.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="vigenciaColegiado" class="textos" type="text" maxlength="1024"
+            <input matInput formControlName="vigenciaColegiado" class="textos" type="text" maxlength="250"
               placeholder="VIGENCIA COLEGIADO">
+              <mat-hint align="end">{{f5.vigenciaColegiado.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -860,20 +883,23 @@
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="carreraPosgrado" class="textos" type="text" maxlength="1024"
+            <input matInput formControlName="carreraPosgrado" class="textos" type="text" maxlength="300"
               placeholder="CARRERA">
+              <mat-hint align="end">{{f5.carreraPosgrado.value.length}} / 300</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="universidadPosgrado" class="textos" type="text" maxlength="1024"
+            <input matInput formControlName="universidadPosgrado" class="textos" type="text" maxlength="250"
               placeholder="UNIVERSIDAD">
+              <mat-hint align="end">{{f5.universidadPosgrado.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="constanciaUniversidadPosgrado" class="textos" type="text" maxlength="1024"
+            <input matInput formControlName="constanciaUniversidadPosgrado" class="textos" type="text" maxlength="300"
               placeholder="CONSTANCIA QUE LO ACREDITA">
+              <mat-hint align="end">{{f5.constanciaUniversidadPosgrado.value.length}} / 300</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -881,8 +907,9 @@
         <div class="col-1"></div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="semestreAprobadoPosgrado" class="textos" type="text" maxlength="1024"
+            <input matInput formControlName="semestreAprobadoPosgrado" class="textos" type="text" maxlength="250"
               placeholder="SEMESTRE APROBADO">
+              <mat-hint align="end">{{f5.semestreAprobadoPosgrado.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
@@ -937,10 +964,8 @@
               <tr>
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                    <input matInput formControlName="dependenciaPasantia" type="text" placeholder="Dependencia">
-                    <mat-hint style="color:red;" *ngIf="this.validaDpi">
-                      Error Dependencia ya Existente
-                    </mat-hint>
+                    <input matInput formControlName="dependenciaPasantia" type="text" placeholder="Dependencia" maxlength="250">
+                    <mat-hint align="end">{{f6.dependenciaPasantia.value.length}} / 250</mat-hint>
                   </mat-form-field>
                 </td>
                 <td class="text-center" style="width: 150px;">
@@ -963,6 +988,7 @@
                   <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                     <input matInput formControlName="secrectarioJuezPasantia" type="text"
                       placeholder="Nombre del Secretario y/o Juez">
+                      <mat-hint align="end">{{f6.secrectarioJuezPasantia.value.length}} / 250</mat-hint>
                   </mat-form-field>
                 </td>
                 <td style="width: 50px;"> <button mat-raised-button class="btn btn-primary" (click)="agregarPasantia()"
@@ -1032,7 +1058,8 @@
             <div class="row">
               <div class="col-3">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput formControlName="puestoExperienciaOJ" type="text" placeholder="Puesto">
+                  <input matInput formControlName="puestoExperienciaOJ" type="text" placeholder="Puesto" maxlength="300">
+                  <mat-hint align="end">{{f7.puestoExperienciaOJ.value.length}} / 300</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-2">
@@ -1054,21 +1081,24 @@
               <div class="col-2">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input matInput formControlName="renglonPresupuestarioExperienciaOJ" class="textos" type="text"
-                    maxlength="20" placeholder="Renglón Presupuestario">
+                    maxlength="100" placeholder="Renglón Presupuestario">
+                    <mat-hint align="end">{{f7.renglonPresupuestarioExperienciaOJ.value.length}} / 100</mat-hint>
                 </mat-form-field>
               </div>
             </div>
             <div class="row">
               <div class="col-3">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput formControlName="dependenciaExperienciaOJ" class="textos" type="text" maxlength="2048"
+                  <input matInput formControlName="dependenciaExperienciaOJ" class="textos" type="text" maxlength="300"
                     placeholder="Dependencia donde laboró">
+                    <mat-hint align="end">{{f7.dependenciaExperienciaOJ.value.length}} / 300</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-3">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input matInput formControlName="jefeInmediatoExperienciaOJ" class="textos" type="text"
-                    maxlength="2048" placeholder="Jefe Inmediato">
+                    maxlength="250" placeholder="Jefe Inmediato">
+                    <mat-hint align="end">{{f7.jefeInmediatoExperienciaOJ.value.length}} / 250</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-3">
@@ -1120,7 +1150,7 @@
               </div>
               <div class="col-2">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput [value]="experiencia.renglonPresupuestario" class="textos" type="text" maxlength="20"
+                  <input matInput [value]="experiencia.renglonPresupuestario" class="textos" type="text" 
                     placeholder="Renglón Presupuestario">
                 </mat-form-field>
               </div>
@@ -1128,13 +1158,13 @@
             <div class="row">
               <div class="col-4">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput [value]="experiencia.dependencia" class="textos" type="text" maxlength="2048"
+                  <input matInput [value]="experiencia.dependencia" class="textos" type="text"
                     placeholder="Dependencia donde laboró">
                 </mat-form-field>
               </div>
               <div class="col-3">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput [value]="experiencia.jefeInmediato" class="textos" type="text" maxlength="2048"
+                  <input matInput [value]="experiencia.jefeInmediato" class="textos" type="text" 
                     placeholder="Jefe Inmediato">
                 </mat-form-field>
               </div>
@@ -1180,8 +1210,9 @@
             <div class="row">
               <div class="col-4">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput formControlName="institucionEmpresaExperienciaLaboral" type="text"
+                  <input matInput formControlName="institucionEmpresaExperienciaLaboral" type="text" maxlength="300"
                     placeholder="Institución o Empresa">
+                    <mat-hint align="end">{{f8.institucionEmpresaExperienciaLaboral.value.length}} / 300</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-2">
@@ -1203,27 +1234,31 @@
               <div class="col-2">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input matInput formControlName="renglonPresupuestarioExperienciaLaboral" class="textos" type="text"
-                    maxlength="20" placeholder="Renglón Presupuestario">
+                    maxlength="100" placeholder="Renglón Presupuestario">
+                    <mat-hint align="end">{{f8.renglonPresupuestarioExperienciaLaboral.value.length}} / 100</mat-hint>
                 </mat-form-field>
               </div>
             </div>
             <div class="row">
               <div class="col-4">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput formControlName="puestoExperienciaLaboral" class="textos" type="text" maxlength="2048"
+                  <input matInput formControlName="puestoExperienciaLaboral" class="textos" type="text" maxlength="300"
                     placeholder="Puesto">
+                    <mat-hint align="end">{{f8.puestoExperienciaLaboral.value.length}} / 300</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-3">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input matInput formControlName="jefeInmediatoExperienciaLaboral" class="textos" type="text"
-                    maxlength="2048" placeholder="Jefe Inmediato">
+                    maxlength="250" placeholder="Jefe Inmediato">
+                    <mat-hint align="end">{{f8.jefeInmediatoExperienciaLaboral.value.length}} / 250</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-3">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput formControlName="telefonoExperienciaLaboral" class="textos" type="text" maxlength="20"
+                  <input matInput formControlName="telefonoExperienciaLaboral" class="textos" type="text" maxlength="10"
                     placeholder="Telefono">
+                    <mat-hint align="end">{{f8.telefonoExperienciaLaboral.value.length}} / 10</mat-hint>
                 </mat-form-field>
               </div>
             </div>
@@ -1231,7 +1266,8 @@
               <div class="col-10">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input matInput formControlName="motivoFinRelacionLaboralExperienciaLaboral" class="textos"
-                    type="text" maxlength="2048" placeholder="Motivo Finalización Relación Laboral">
+                    type="text" maxlength="300" placeholder="Motivo Finalización Relación Laboral">
+                    <mat-hint align="end">{{f8.motivoFinRelacionLaboralExperienciaLaboral.value.length}} / 300</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-2">
@@ -1271,7 +1307,7 @@
               </div>
               <div class="col-2">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput [value]="experiencia.renglonPresupuestario" class="textos" type="text" maxlength="20"
+                  <input matInput [value]="experiencia.renglonPresupuestario" class="textos" type="text" 
                     placeholder="Renglón Presupuestario">
                 </mat-form-field>
               </div>
@@ -1279,19 +1315,19 @@
             <div class="row">
               <div class="col-4">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput [value]="experiencia.puesto" class="textos" type="text" maxlength="2048"
+                  <input matInput [value]="experiencia.puesto" class="textos" type="text" 
                     placeholder="Puesto">
                 </mat-form-field>
               </div>
               <div class="col-3">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput [value]="experiencia.jefeInmediato" class="textos" type="text" maxlength="2048"
+                  <input matInput [value]="experiencia.jefeInmediato" class="textos" type="text"
                     placeholder="Jefe Inmediato">
                 </mat-form-field>
               </div>
               <div class="col-3">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput [value]="experiencia.telefono" class="textos" type="text" maxlength="20"
+                  <input matInput [value]="experiencia.telefono" class="textos" type="text" 
                     placeholder="Telefono">
                 </mat-form-field>
               </div>
@@ -1299,7 +1335,7 @@
             <div class="row">
               <div class="col-10">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput [value]="motivoFinRelacionLaboral" class="textos" type="text" maxlength="2048"
+                  <input matInput [value]="motivoFinRelacionLaboral" class="textos" type="text" 
                     placeholder="Motivo Finalización Relación Laboral">
                 </mat-form-field>
               </div>
@@ -1333,7 +1369,8 @@
               <tr>
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                    <input matInput formControlName="nombreReferenciaPersonal" type="text" placeholder="Nombre">
+                    <input matInput formControlName="nombreReferenciaPersonal" type="text" placeholder="Nombre" maxlength="250">
+                    <mat-hint align="end">{{f9.nombreReferenciaPersonal.value.length}} / 250</mat-hint>
                   </mat-form-field>
                 </td>
                 <td class="text-center" style="width: 200px;">
@@ -1344,13 +1381,14 @@
                 </td>
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" class="textos">
-                    <input matInput formControlName="aniosConocerloReferenciaPersonal" type="number" placeholder="EDAD"
+                    <input matInput formControlName="aniosConocerloReferenciaPersonal" type="number" placeholder="AÑOS DE CONOCERLO"
                       required>
                   </mat-form-field>
                 </td>
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                    <input matInput formControlName="telefonoReferenciaPersonal" type="text" placeholder="Telefonos">
+                    <input matInput formControlName="telefonoReferenciaPersonal" type="text" placeholder="Telefono" maxlength="10">
+                    <mat-hint align="end">{{f9.nombreReferenciaPersonal.value.length}} / 10</mat-hint>
                   </mat-form-field>
                 </td>
                 <td style="width: 50px;"> <button mat-raised-button class="btn btn-primary"
@@ -1376,7 +1414,7 @@
                 </td>
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" class="textos">
-                    <input matInput [value]="referencia.aniosConocerlo" type="number" placeholder="EDAD" required>
+                    <input matInput [value]="referencia.aniosConocerlo" type="number" placeholder="AÑOS DE CONOCERLO" required>
                   </mat-form-field>
                 </td>
                 <td class="text-center" style="width: 150px;">
