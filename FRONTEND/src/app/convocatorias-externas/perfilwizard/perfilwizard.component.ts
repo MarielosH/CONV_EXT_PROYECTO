@@ -377,6 +377,9 @@ export class PerfilwizardComponent implements OnInit {
       this.familiares.push(this.nuevoFamiliar);
 
       this.thirdFormGroup = this.fb.group({
+        hijos: [this.thirdFormGroup.value.hijos],
+        noHijo: [this.thirdFormGroup.value.noHijo],
+        dependientes: [''],
         parentezco: [''],
         familiar: [''],
         fechaNacFamiliar: [''],
@@ -536,6 +539,55 @@ export class PerfilwizardComponent implements OnInit {
       console.log(this.referenciasPersonales);
     }
 
+  }
+
+  buscarEstadoCivil(id): string {
+    let encontrado = this.estadoCivil.find(x => x.ID == id);
+    return encontrado != null ? encontrado.DESCRIPCION : '';
+  }
+
+  buscarDepartamento(id): string {
+    if (this.listaDepartamentos != null && this.listaDepartamentos.length > 0) {
+      let encontrado = this.listaDepartamentos.find(x => x.DEPARTAMENTO == id);
+      return encontrado != null ? encontrado.NOMBRE_DEPARTAMENTO : '';
+    }
+    return '';
+  }
+
+  buscarMunicipio(id): string {
+    if (this.municipios != null && this.municipios.length > 0) {
+    let encontrado = this.municipios.find(x => x.MUNICIPIO == id);
+    return encontrado != null ? encontrado.NOMBRE_MUNICIPIO : '';
+    }
+    return '';
+  }
+
+  buscarClaseLicencia(id): string {
+    let encontrado = this.tiposLicencias.find(x => x.ID == id);
+    return encontrado != null ? encontrado.DESCRIPCION : '';
+  }
+
+  buscarDiscapacidad(id): string {
+    let encontrado = this.discapacidades.find(x => x.ID == id);
+    return encontrado != null ? encontrado.DESCRIPCION : '';
+  }
+
+  buscarEtnia(id): string {
+    console.log(id);
+    if (this.etnias != null && this.etnias.length > 0) {
+      let encontrado = this.etnias.find(x => x.ID == id);
+      return encontrado != null ? encontrado.DESCRIPCION : '';
+    }
+    return '';
+  }
+
+  buscarComunidadLinguistica(id): string {
+    console.log(id);
+    if (this.listaComunidadLinguistica != null && this.listaComunidadLinguistica.length > 0) {
+    let encontrado = this.listaComunidadLinguistica.find(x => x.ID_COMUNIDAD_LINGUISTICA == id);
+    return encontrado != null ? encontrado.COMUNIDAD : '';
+    }
+    return '';
   }
 
   crearPerfil() {
