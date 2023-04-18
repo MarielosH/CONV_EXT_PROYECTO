@@ -556,8 +556,8 @@ export class PerfilwizardComponent implements OnInit {
 
   buscarMunicipio(id): string {
     if (this.municipios != null && this.municipios.length > 0) {
-    let encontrado = this.municipios.find(x => x.MUNICIPIO == id);
-    return encontrado != null ? encontrado.NOMBRE_MUNICIPIO : '';
+      let encontrado = this.municipios.find(x => x.MUNICIPIO == id);
+      return encontrado != null ? encontrado.NOMBRE_MUNICIPIO : '';
     }
     return '';
   }
@@ -584,10 +584,40 @@ export class PerfilwizardComponent implements OnInit {
   buscarComunidadLinguistica(id): string {
     console.log(id);
     if (this.listaComunidadLinguistica != null && this.listaComunidadLinguistica.length > 0) {
-    let encontrado = this.listaComunidadLinguistica.find(x => x.ID_COMUNIDAD_LINGUISTICA == id);
-    return encontrado != null ? encontrado.COMUNIDAD : '';
+      let encontrado = this.listaComunidadLinguistica.find(x => x.ID_COMUNIDAD_LINGUISTICA == id);
+      return encontrado != null ? encontrado.COMUNIDAD : '';
     }
     return '';
+  }
+
+  buscarDependientes(id): string {
+    switch (id) {
+      case 0:
+        return 'Hijos'
+      case 1:
+        return 'Padre'
+      case 2:
+        return 'Madre'
+      case 3:
+        return 'Otro'
+      default:
+        return ''
+    }
+  }
+
+  buscarParentezco(id): string {
+    switch (id) {
+      case 0:
+        return 'Padre'
+      case 1:
+        return 'Madre'
+      case 2:
+        return 'Hermano(a)'
+      case 3:
+        return 'Conyuge'
+      default:
+        return ''
+    }
   }
 
   crearPerfil() {

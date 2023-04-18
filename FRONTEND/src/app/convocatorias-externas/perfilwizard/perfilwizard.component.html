@@ -51,8 +51,8 @@
       <div class="row">
         <div class="form-group col">
           <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
-            <input matInput (click)="picker4.open()" formControlName="fechaNac" [matDatepicker]="picker4" 
-            (ngModelChange)="parseDate($event)" placeholder="FECHA NACIMIENTO">
+            <input matInput (click)="picker4.open()" formControlName="fechaNac" [matDatepicker]="picker4"
+              (ngModelChange)="parseDate($event)" placeholder="FECHA NACIMIENTO">
             <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
             <mat-datepicker touchUi #picker4></mat-datepicker>
             <mat-error *ngIf="this.firstFormGroup.controls.fechaNac.errors?.required">
@@ -191,8 +191,8 @@
         </div>
         <div class="form-group col">
           <mat-form-field color="warn" style="font-size: 12px;">
-            <input matInput (click)="picker5.open()" formControlName="fechaVencDPI" [matDatepicker]="picker5" 
-            (ngModelChange)="parseDate($event)" placeholder="FECHA VENCIMIENTO DPI">
+            <input matInput (click)="picker5.open()" formControlName="fechaVencDPI" [matDatepicker]="picker5"
+              (ngModelChange)="parseDate($event)" placeholder="FECHA VENCIMIENTO DPI">
             <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
             <mat-datepicker touchUi #picker5></mat-datepicker>
             <mat-error *ngIf="this.firstFormGroup.controls.fechaVencDPI.errors?.required">
@@ -221,7 +221,7 @@
         </div>
         <div class="form-group col">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="numeroLicencia" class="textos" type="number" 
+            <input matInput formControlName="numeroLicencia" class="textos" type="number"
               placeholder="NUMERO DE LICENCIA">
             <mat-error *ngIf="this.firstFormGroup.controls.numeroLicencia.errors?.required">
               Numero de Licencia Requerido
@@ -415,7 +415,7 @@
             </div>
           </mat-card-content>
         </mat-card>
-       
+
       </div>
       <br />
       <br />
@@ -430,8 +430,8 @@
             </div>
             <div class="col-2">
               <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
-                <input matInput (click)="picker6.open()" formControlName="fechaNacFamiliar" [matDatepicker]="picker6" 
-                (ngModelChange)="parseDate($event)" placeholder="FECHA NACIMIENTO">
+                <input matInput (click)="picker6.open()" formControlName="fechaNacFamiliar" [matDatepicker]="picker6"
+                  (ngModelChange)="parseDate($event)" placeholder="FECHA NACIMIENTO">
                 <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
                 <mat-datepicker touchUi #picker6></mat-datepicker>
               </mat-form-field>
@@ -502,28 +502,28 @@
           <mat-card-content>
             <div class="row">
               <div class="col-5">
-                <mat-form-field  color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input disabled matInput [value]="familiar.nombreFamiliar" type="text" placeholder="NOMBRE">                  
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input disabled matInput [value]="familiar.nombreFamiliar" type="text" placeholder="NOMBRE">
                 </mat-form-field>
               </div>
               <div class="col-2">
-                <mat-form-field  color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
-                  <input disabled  matInput (click)="picker7.open()" [value]="familiar.fechaNacimiento" [matDatepicker]="picker7" 
-                  (ngModelChange)="parseDate($event)" placeholder="FECHA NACIMIENTO">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" style="font-size: 12px;">
+                  <input disabled matInput (click)="picker7.open()" [value]="familiar.fechaNacimiento"
+                    [matDatepicker]="picker7" (ngModelChange)="parseDate($event)" placeholder="FECHA NACIMIENTO">
                   <mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
                   <mat-datepicker touchUi #picker7></mat-datepicker>
                 </mat-form-field>
               </div>
               <div class="col-2">
-                <mat-form-field  color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input  disabled matInput [value]="familiar.telefono" class="textos" type="text" maxlength="10"
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input disabled matInput [value]="familiar.telefono" class="textos" type="text" maxlength="10"
                     placeholder="TELEFONO">
                 </mat-form-field>
               </div>
               <div class="col-2">
                 <mat-form-field [floatLabel]="floatLabelControl.value">
                   <mat-label style="font-size: 14px;">PARENTEZCO</mat-label>
-                  <mat-select  disabled [value]="familiar.parentezco">
+                  <mat-select disabled [value]="familiar.parentezco">
                     <mat-option [value]="0" style="font-size: 12px;">PADRE</mat-option>
                     <mat-option [value]="1" style="font-size: 12px;">MADRE</mat-option>
                     <mat-option [value]="2" style="font-size: 12px;">HERMANO(A)</mat-option>
@@ -544,7 +544,7 @@
                 </mat-form-field>
               </div>
               <div class="col-4">
-                <mat-form-field  color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input disabled matInput [value]="familiar.profesion" type="text" placeholder="PROFESION U OFICIO">
                 </mat-form-field>
               </div>
@@ -558,9 +558,9 @@
                 </mat-form-field>
               </div>
               <div class="col-3">
-                <mat-form-field  color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input disabled matInput [value]="familiar.lugarTrabajo" class="textos" type="text" maxlength="2048"
-                    placeholder="LUGAR DE TRABAJO">                  
+                    placeholder="LUGAR DE TRABAJO">
                 </mat-form-field>
               </div>
               <div class="col-2">
@@ -615,7 +615,7 @@
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input matInput formControlName="dependenciaFOJ" class="textos" type="text" maxlength="250"
                     placeholder="DEPENDENCIA">
-                    <mat-hint align="end">{{f4.dependenciaFOJ.value.length}} / 200</mat-hint>
+                  <mat-hint align="end">{{f4.dependenciaFOJ.value.length}} / 200</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-5">
@@ -706,21 +706,21 @@
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="gradoAprobadoPrimaria" class="textos" type="text" maxlength="250"
               placeholder="GRADO APROBADO">
-              <mat-hint align="end">{{f5.gradoAprobadoPrimaria.value.length}} / 250</mat-hint>
+            <mat-hint align="end">{{f5.gradoAprobadoPrimaria.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="institucionEstudiosPrimaria" class="textos" type="text" maxlength="250"
               placeholder="INSTITUCIÓN DE ESTUDIOS">
-              <mat-hint align="end">{{f5.institucionEstudiosPrimaria.value.length}} / 250</mat-hint>
+            <mat-hint align="end">{{f5.institucionEstudiosPrimaria.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="constanciaPrimaria" class="textos" type="text" maxlength="300"
               placeholder="CONSTANCIA QUE LO ACREDITA">
-              <mat-hint align="end">{{f5.constanciaPrimaria.value.length}} / 300</mat-hint>
+            <mat-hint align="end">{{f5.constanciaPrimaria.value.length}} / 300</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -733,21 +733,21 @@
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="gradoAprobadoBasicos" class="textos" type="text" maxlength="250"
               placeholder="GRADO APROBADO">
-              <mat-hint align="end">{{f5.gradoAprobadoBasicos.value.length}} / 250</mat-hint>
+            <mat-hint align="end">{{f5.gradoAprobadoBasicos.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="institucionEstudiosBasicos" class="textos" type="text" maxlength="250"
               placeholder="INSTITUCIÓN DE ESTUDIOS">
-              <mat-hint align="end">{{f5.institucionEstudiosBasicos.value.length}} / 250</mat-hint>
+            <mat-hint align="end">{{f5.institucionEstudiosBasicos.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="constanciaBasicos" class="textos" type="text" maxlength="300"
               placeholder="CONSTANCIA QUE LO ACREDITA">
-              <mat-hint align="end">{{f5.constanciaBasicos.value.length}} / 300</mat-hint>
+            <mat-hint align="end">{{f5.constanciaBasicos.value.length}} / 300</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -760,21 +760,21 @@
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="gradoAprobadoDiversificado" class="textos" type="text" maxlength="250"
               placeholder="GRADO APROBADO">
-              <mat-hint align="end">{{f5.gradoAprobadoDiversificado.value.length}} / 250</mat-hint>
+            <mat-hint align="end">{{f5.gradoAprobadoDiversificado.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="institucionEstudiosDiversificado" class="textos" type="text"
               maxlength="250" placeholder="INSTITUCIÓN DE ESTUDIOS">
-              <mat-hint align="end">{{f5.institucionEstudiosDiversificado.value.length}} / 250</mat-hint>
+            <mat-hint align="end">{{f5.institucionEstudiosDiversificado.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="constanciaDiversificado" class="textos" type="text" maxlength="300"
               placeholder="CONSTANCIA QUE LO ACREDITA">
-              <mat-hint align="end">{{f5.constanciaDiversificado.value.length}} / 300</mat-hint>
+            <mat-hint align="end">{{f5.constanciaDiversificado.value.length}} / 300</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -784,14 +784,14 @@
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="anioGraduacionDiversificado" class="textos" type="text" maxlength="4"
               placeholder="AÑO DE GRADUACIÓN">
-              <mat-hint align="end">{{f5.anioGraduacionDiversificado.value.length}} / 4</mat-hint>
+            <mat-hint align="end">{{f5.anioGraduacionDiversificado.value.length}} / 4</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="carreraDiversificado" class="textos" type="text" maxlength="300"
               placeholder="CARRERA">
-              <mat-hint align="end">{{f5.carreraDiversificado.value.length}} / 300</mat-hint>
+            <mat-hint align="end">{{f5.carreraDiversificado.value.length}} / 300</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -802,23 +802,22 @@
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="carreraU" class="textos" type="text" maxlength="300"
-              placeholder="CARRERA">
-              <mat-hint align="end">{{f5.carreraU.value.length}} / 300</mat-hint>
+            <input matInput formControlName="carreraU" class="textos" type="text" maxlength="300" placeholder="CARRERA">
+            <mat-hint align="end">{{f5.carreraU.value.length}} / 300</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="universidad" class="textos" type="text" maxlength="250"
               placeholder="UNIVERSIDAD">
-              <mat-hint align="end">{{f5.universidad.value.length}} / 250</mat-hint>
+            <mat-hint align="end">{{f5.universidad.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="constanciaUniversidad" class="textos" type="text" maxlength="300"
               placeholder="CONSTANCIA QUE LO ACREDITA">
-              <mat-hint align="end">{{f5.constanciaUniversidad.value.length}} / 300</mat-hint>
+            <mat-hint align="end">{{f5.constanciaUniversidad.value.length}} / 300</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -828,7 +827,7 @@
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="semestreA" class="textos" type="text" maxlength="250"
               placeholder="SEMESTRE APROBADO">
-              <mat-hint align="end">{{f5.semestreA.value.length}} / 250</mat-hint>
+            <mat-hint align="end">{{f5.semestreA.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
@@ -865,14 +864,14 @@
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="colegiado" class="textos" type="text" maxlength="250"
               placeholder="COLEGIADO">
-              <mat-hint align="end">{{f5.colegiado.value.length}} / 250</mat-hint>
+            <mat-hint align="end">{{f5.colegiado.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="vigenciaColegiado" class="textos" type="text" maxlength="250"
               placeholder="VIGENCIA COLEGIADO">
-              <mat-hint align="end">{{f5.vigenciaColegiado.value.length}} / 250</mat-hint>
+            <mat-hint align="end">{{f5.vigenciaColegiado.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -885,21 +884,21 @@
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="carreraPosgrado" class="textos" type="text" maxlength="300"
               placeholder="CARRERA">
-              <mat-hint align="end">{{f5.carreraPosgrado.value.length}} / 300</mat-hint>
+            <mat-hint align="end">{{f5.carreraPosgrado.value.length}} / 300</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="universidadPosgrado" class="textos" type="text" maxlength="250"
               placeholder="UNIVERSIDAD">
-              <mat-hint align="end">{{f5.universidadPosgrado.value.length}} / 250</mat-hint>
+            <mat-hint align="end">{{f5.universidadPosgrado.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="constanciaUniversidadPosgrado" class="textos" type="text" maxlength="300"
               placeholder="CONSTANCIA QUE LO ACREDITA">
-              <mat-hint align="end">{{f5.constanciaUniversidadPosgrado.value.length}} / 300</mat-hint>
+            <mat-hint align="end">{{f5.constanciaUniversidadPosgrado.value.length}} / 300</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -909,7 +908,7 @@
           <mat-form-field color="warn" class="textos">
             <input matInput formControlName="semestreAprobadoPosgrado" class="textos" type="text" maxlength="250"
               placeholder="SEMESTRE APROBADO">
-              <mat-hint align="end">{{f5.semestreAprobadoPosgrado.value.length}} / 250</mat-hint>
+            <mat-hint align="end">{{f5.semestreAprobadoPosgrado.value.length}} / 250</mat-hint>
           </mat-form-field>
         </div>
         <div class="col-3">
@@ -964,7 +963,8 @@
               <tr>
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                    <input matInput formControlName="dependenciaPasantia" type="text" placeholder="Dependencia" maxlength="250">
+                    <input matInput formControlName="dependenciaPasantia" type="text" placeholder="Dependencia"
+                      maxlength="250">
                     <mat-hint align="end">{{f6.dependenciaPasantia.value.length}} / 250</mat-hint>
                   </mat-form-field>
                 </td>
@@ -979,7 +979,8 @@
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" style="font-size: 12px;">
                     <input matInput (click)="picker9.open()" formControlName="finPasantia"
-                      (ngModelChange)="parseDatePasantias($event)" [matDatepicker]="picker9" placeholder="Fecha Finalizacion">
+                      (ngModelChange)="parseDatePasantias($event)" [matDatepicker]="picker9"
+                      placeholder="Fecha Finalizacion">
                     <mat-datepicker-toggle matSuffix [for]="picker9"></mat-datepicker-toggle>
                     <mat-datepicker touchUi #picker9></mat-datepicker>
                   </mat-form-field>
@@ -988,7 +989,7 @@
                   <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                     <input matInput formControlName="secrectarioJuezPasantia" type="text"
                       placeholder="Nombre del Secretario y/o Juez">
-                      <mat-hint align="end">{{f6.secrectarioJuezPasantia.value.length}} / 250</mat-hint>
+                    <mat-hint align="end">{{f6.secrectarioJuezPasantia.value.length}} / 250</mat-hint>
                   </mat-form-field>
                 </td>
                 <td style="width: 50px;"> <button mat-raised-button class="btn btn-primary" (click)="agregarPasantia()"
@@ -1008,16 +1009,16 @@
 
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" style="font-size: 12px;">
-                    <input matInput (click)="picker10.open()" [value]="d.fechaInicio" [matDatepicker]="picker10" placeholder="Fecha Inicio"
-                      disabled>
+                    <input matInput (click)="picker10.open()" [value]="d.fechaInicio" [matDatepicker]="picker10"
+                      placeholder="Fecha Inicio" disabled>
                     <mat-datepicker-toggle matSuffix [for]="picker10"></mat-datepicker-toggle>
                     <mat-datepicker touchUi #picker10></mat-datepicker>
                   </mat-form-field>
                 </td>
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" style="font-size: 12px;">
-                    <input matInput (click)="picker11.open()" [value]="d.fechaFinalizacion" [matDatepicker]="picker11" placeholder="Fecha Finalizacion"
-                      disabled>
+                    <input matInput (click)="picker11.open()" [value]="d.fechaFinalizacion" [matDatepicker]="picker11"
+                      placeholder="Fecha Finalizacion" disabled>
                     <mat-datepicker-toggle matSuffix [for]="picker11"></mat-datepicker-toggle>
                     <mat-datepicker touchUi #picker11></mat-datepicker>
                   </mat-form-field>
@@ -1058,14 +1059,16 @@
             <div class="row">
               <div class="col-3">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input matInput formControlName="puestoExperienciaOJ" type="text" placeholder="Puesto" maxlength="300">
+                  <input matInput formControlName="puestoExperienciaOJ" type="text" placeholder="Puesto"
+                    maxlength="300">
                   <mat-hint align="end">{{f7.puestoExperienciaOJ.value.length}} / 300</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-2">
                 <mat-form-field color="warn" style="font-size: 12px;">
                   <input matInput (click)="picker12.open()" formControlName="fechaInicioExperienciaOJ"
-                    (ngModelChange)="parseDateExperienciaLaboralOJ($event)" [matDatepicker]="picker12" placeholder="Fecha Inicio">
+                    (ngModelChange)="parseDateExperienciaLaboralOJ($event)" [matDatepicker]="picker12"
+                    placeholder="Fecha Inicio">
                   <mat-datepicker-toggle matSuffix [for]="picker12"></mat-datepicker-toggle>
                   <mat-datepicker touchUi #picker12></mat-datepicker>
                 </mat-form-field>
@@ -1073,7 +1076,8 @@
               <div class="col-2">
                 <mat-form-field color="warn" style="font-size: 12px;">
                   <input matInput (click)="picker13.open()" formControlName="fechaFinalizacionExperienciaOJ"
-                    (ngModelChange)="parseDateExperienciaLaboralOJ($event)" [matDatepicker]="picker13" placeholder="Fecha Finalización">
+                    (ngModelChange)="parseDateExperienciaLaboralOJ($event)" [matDatepicker]="picker13"
+                    placeholder="Fecha Finalización">
                   <mat-datepicker-toggle matSuffix [for]="picker13"></mat-datepicker-toggle>
                   <mat-datepicker touchUi #picker13></mat-datepicker>
                 </mat-form-field>
@@ -1082,7 +1086,7 @@
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input matInput formControlName="renglonPresupuestarioExperienciaOJ" class="textos" type="text"
                     maxlength="100" placeholder="Renglón Presupuestario">
-                    <mat-hint align="end">{{f7.renglonPresupuestarioExperienciaOJ.value.length}} / 100</mat-hint>
+                  <mat-hint align="end">{{f7.renglonPresupuestarioExperienciaOJ.value.length}} / 100</mat-hint>
                 </mat-form-field>
               </div>
             </div>
@@ -1091,14 +1095,14 @@
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input matInput formControlName="dependenciaExperienciaOJ" class="textos" type="text" maxlength="300"
                     placeholder="Dependencia donde laboró">
-                    <mat-hint align="end">{{f7.dependenciaExperienciaOJ.value.length}} / 300</mat-hint>
+                  <mat-hint align="end">{{f7.dependenciaExperienciaOJ.value.length}} / 300</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-3">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input matInput formControlName="jefeInmediatoExperienciaOJ" class="textos" type="text"
                     maxlength="250" placeholder="Jefe Inmediato">
-                    <mat-hint align="end">{{f7.jefeInmediatoExperienciaOJ.value.length}} / 250</mat-hint>
+                  <mat-hint align="end">{{f7.jefeInmediatoExperienciaOJ.value.length}} / 250</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-3">
@@ -1136,21 +1140,23 @@
               </div>
               <div class="col-3">
                 <mat-form-field color="warn" style="font-size: 12px;">
-                  <input disabled matInput (click)="picker14.open()" [value]="experiencia.fechaInicio" [matDatepicker]="picker14" placeholder="Fecha Inicio">
+                  <input disabled matInput (click)="picker14.open()" [value]="experiencia.fechaInicio"
+                    [matDatepicker]="picker14" placeholder="Fecha Inicio">
                   <mat-datepicker-toggle matSuffix [for]="picker14"></mat-datepicker-toggle>
                   <mat-datepicker touchUi #picker14></mat-datepicker>
                 </mat-form-field>
               </div>
               <div class="col-3">
                 <mat-form-field color="warn" style="font-size: 12px;">
-                  <input disabled matInput (click)="picker15.open()" [value]="experiencia.fechaFinalizacion" [matDatepicker]="picker15" placeholder="Fecha Finalizacion">
+                  <input disabled matInput (click)="picker15.open()" [value]="experiencia.fechaFinalizacion"
+                    [matDatepicker]="picker15" placeholder="Fecha Finalizacion">
                   <mat-datepicker-toggle matSuffix [for]="picker15"></mat-datepicker-toggle>
                   <mat-datepicker touchUi #picker15></mat-datepicker>
                 </mat-form-field>
               </div>
               <div class="col-2">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input disabled matInput [value]="experiencia.renglonPresupuestario" class="textos" type="text" 
+                  <input disabled matInput [value]="experiencia.renglonPresupuestario" class="textos" type="text"
                     placeholder="Renglón Presupuestario">
                 </mat-form-field>
               </div>
@@ -1164,7 +1170,7 @@
               </div>
               <div class="col-3">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input disabled matInput [value]="experiencia.jefeInmediato" class="textos" type="text" 
+                  <input disabled matInput [value]="experiencia.jefeInmediato" class="textos" type="text"
                     placeholder="Jefe Inmediato">
                 </mat-form-field>
               </div>
@@ -1212,13 +1218,14 @@
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input matInput formControlName="institucionEmpresaExperienciaLaboral" type="text" maxlength="300"
                     placeholder="Institución o Empresa">
-                    <mat-hint align="end">{{f8.institucionEmpresaExperienciaLaboral.value.length}} / 300</mat-hint>
+                  <mat-hint align="end">{{f8.institucionEmpresaExperienciaLaboral.value.length}} / 300</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-2">
                 <mat-form-field color="warn" style="font-size: 12px;">
                   <input matInput (click)="picker16.open()" formControlName="fechaInicioExperienciaLaboral"
-                    (ngModelChange)="parseDateExperienciaLaboral($event)" [matDatepicker]="picker16" placeholder="Fecha Inicio">
+                    (ngModelChange)="parseDateExperienciaLaboral($event)" [matDatepicker]="picker16"
+                    placeholder="Fecha Inicio">
                   <mat-datepicker-toggle matSuffix [for]="picker16"></mat-datepicker-toggle>
                   <mat-datepicker touchUi #picker16></mat-datepicker>
                 </mat-form-field>
@@ -1226,7 +1233,8 @@
               <div class="col-2">
                 <mat-form-field color="warn" style="font-size: 12px;">
                   <input matInput (click)="picker17.open()" formControlName="fechaFinalizacionExperienciaLaboral"
-                    (ngModelChange)="parseDateExperienciaLaboral($event)" [matDatepicker]="picker17" placeholder="Fecha Finalización">
+                    (ngModelChange)="parseDateExperienciaLaboral($event)" [matDatepicker]="picker17"
+                    placeholder="Fecha Finalización">
                   <mat-datepicker-toggle matSuffix [for]="picker17"></mat-datepicker-toggle>
                   <mat-datepicker touchUi #picker17></mat-datepicker>
                 </mat-form-field>
@@ -1235,7 +1243,7 @@
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input matInput formControlName="renglonPresupuestarioExperienciaLaboral" class="textos" type="text"
                     maxlength="100" placeholder="Renglón Presupuestario">
-                    <mat-hint align="end">{{f8.renglonPresupuestarioExperienciaLaboral.value.length}} / 100</mat-hint>
+                  <mat-hint align="end">{{f8.renglonPresupuestarioExperienciaLaboral.value.length}} / 100</mat-hint>
                 </mat-form-field>
               </div>
             </div>
@@ -1244,21 +1252,21 @@
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input matInput formControlName="puestoExperienciaLaboral" class="textos" type="text" maxlength="300"
                     placeholder="Puesto">
-                    <mat-hint align="end">{{f8.puestoExperienciaLaboral.value.length}} / 300</mat-hint>
+                  <mat-hint align="end">{{f8.puestoExperienciaLaboral.value.length}} / 300</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-3">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input matInput formControlName="jefeInmediatoExperienciaLaboral" class="textos" type="text"
                     maxlength="250" placeholder="Jefe Inmediato">
-                    <mat-hint align="end">{{f8.jefeInmediatoExperienciaLaboral.value.length}} / 250</mat-hint>
+                  <mat-hint align="end">{{f8.jefeInmediatoExperienciaLaboral.value.length}} / 250</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-3">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input matInput formControlName="telefonoExperienciaLaboral" class="textos" type="text" maxlength="10"
                     placeholder="Telefono">
-                    <mat-hint align="end">{{f8.telefonoExperienciaLaboral.value.length}} / 10</mat-hint>
+                  <mat-hint align="end">{{f8.telefonoExperienciaLaboral.value.length}} / 10</mat-hint>
                 </mat-form-field>
               </div>
             </div>
@@ -1267,7 +1275,7 @@
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input matInput formControlName="motivoFinRelacionLaboralExperienciaLaboral" class="textos"
                     type="text" maxlength="300" placeholder="Motivo Finalización Relación Laboral">
-                    <mat-hint align="end">{{f8.motivoFinRelacionLaboralExperienciaLaboral.value.length}} / 300</mat-hint>
+                  <mat-hint align="end">{{f8.motivoFinRelacionLaboralExperienciaLaboral.value.length}} / 300</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-2">
@@ -1293,21 +1301,23 @@
               </div>
               <div class="col-2">
                 <mat-form-field color="warn" style="font-size: 12px;">
-                  <input disabled matInput (click)="picker18.open()" [value]="experiencia.fechaInicio" [matDatepicker]="picker18" placeholder="Fecha Inicio">
+                  <input disabled matInput (click)="picker18.open()" [value]="experiencia.fechaInicio"
+                    [matDatepicker]="picker18" placeholder="Fecha Inicio">
                   <mat-datepicker-toggle matSuffix [for]="picker18"></mat-datepicker-toggle>
                   <mat-datepicker touchUi #picker18></mat-datepicker>
                 </mat-form-field>
               </div>
               <div class="col-2">
                 <mat-form-field color="warn" style="font-size: 12px;">
-                  <input disabled matInput (click)="picker19.open()" [value]="experiencia.fechaFinalizacion" [matDatepicker]="picker19" placeholder="Fecha Finalización">
+                  <input disabled matInput (click)="picker19.open()" [value]="experiencia.fechaFinalizacion"
+                    [matDatepicker]="picker19" placeholder="Fecha Finalización">
                   <mat-datepicker-toggle matSuffix [for]="picker19"></mat-datepicker-toggle>
                   <mat-datepicker touchUi #picker19></mat-datepicker>
                 </mat-form-field>
               </div>
               <div class="col-2">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input disabled matInput [value]="experiencia.renglonPresupuestario" class="textos" type="text" 
+                  <input disabled matInput [value]="experiencia.renglonPresupuestario" class="textos" type="text"
                     placeholder="Renglón Presupuestario">
                 </mat-form-field>
               </div>
@@ -1315,19 +1325,18 @@
             <div class="row">
               <div class="col-4">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input disabled matInput [value]="experiencia.puesto" class="textos" type="text" 
-                    placeholder="Puesto">
+                  <input disabled matInput [value]="experiencia.puesto" class="textos" type="text" placeholder="Puesto">
                 </mat-form-field>
               </div>
               <div class="col-3">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input disabled  matInput [value]="experiencia.jefeInmediato" class="textos" type="text"
+                  <input disabled matInput [value]="experiencia.jefeInmediato" class="textos" type="text"
                     placeholder="Jefe Inmediato">
                 </mat-form-field>
               </div>
               <div class="col-3">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input disabled matInput [value]="experiencia.telefono" class="textos" type="text" 
+                  <input disabled matInput [value]="experiencia.telefono" class="textos" type="text"
                     placeholder="Telefono">
                 </mat-form-field>
               </div>
@@ -1335,7 +1344,7 @@
             <div class="row">
               <div class="col-10">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input disabled matInput [value]="motivoFinRelacionLaboral" class="textos" type="text" 
+                  <input disabled matInput [value]="experiencia.motivoFinRelacionLaboral" class="textos" type="text"
                     placeholder="Motivo Finalización Relación Laboral">
                 </mat-form-field>
               </div>
@@ -1369,7 +1378,8 @@
               <tr>
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                    <input matInput formControlName="nombreReferenciaPersonal" type="text" placeholder="Nombre" maxlength="250">
+                    <input matInput formControlName="nombreReferenciaPersonal" type="text" placeholder="Nombre"
+                      maxlength="250">
                     <mat-hint align="end">{{f9.nombreReferenciaPersonal.value.length}} / 250</mat-hint>
                   </mat-form-field>
                 </td>
@@ -1381,17 +1391,19 @@
                 </td>
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" class="textos">
-                    <input matInput formControlName="aniosConocerloReferenciaPersonal" type="number" placeholder="Años de conocerlo">
+                    <input matInput formControlName="aniosConocerloReferenciaPersonal" type="number"
+                      placeholder="Años de conocerlo">
                   </mat-form-field>
                 </td>
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                    <input matInput formControlName="telefonoReferenciaPersonal" type="text" placeholder="Telefono" maxlength="10">
+                    <input matInput formControlName="telefonoReferenciaPersonal" type="text" placeholder="Telefono"
+                      maxlength="10">
                     <mat-hint align="end">{{f9.nombreReferenciaPersonal.value.length}} / 10</mat-hint>
                   </mat-form-field>
                 </td>
                 <td style="width: 50px;"> <button mat-raised-button class="btn btn-primary"
-                    (click)="agregarReferenciaPersonal()" style="font-size: 10px;" title=" Agregar Referencia Personal" >
+                    (click)="agregarReferenciaPersonal()" style="font-size: 10px;" title=" Agregar Referencia Personal">
                     <i class="fa fa-plus"></i>
                     &nbsp;&nbsp; Agregar
                   </button>
@@ -1402,7 +1414,7 @@
               <tr *ngFor="let referencia of referenciasPersonales; let index = index">
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                    <input disabled  matInput [value]="referencia.nombre" type="text" placeholder="Nombre">
+                    <input disabled matInput [value]="referencia.nombre" type="text" placeholder="Nombre">
                   </mat-form-field>
                 </td>
                 <td class="text-center" style="width: 200px;">
@@ -1413,7 +1425,8 @@
                 </td>
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" class="textos">
-                    <input disabled matInput [value]="referencia.aniosConocerlo" type="number" placeholder="Años de conocerlo">
+                    <input disabled matInput [value]="referencia.aniosConocerlo" type="number"
+                      placeholder="Años de conocerlo">
                   </mat-form-field>
                 </td>
                 <td class="text-center" style="width: 150px;">
@@ -1443,58 +1456,119 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Resumen</ng-template>
-    <p>Resumen Perfil Solicutud Empleo</p>
+    <mat-label style="font-size: 24px; "> <b>Resumen Perfil Solicitud Empleo</b></mat-label>
     <br />
     <div class="table-responsive">
       <table class="table">
+
         <head>
-         <tr>
-          <td style="width:50%"></td>
-          <td style="width:50%"></td>
-         </tr>
+          <tr>
+            <td style="width:50%"></td>
+            <td style="width:50%"></td>
+          </tr>
         </head>
+
         <body>
           <tr>
             <td style="width:50%">
               <mat-list>
-                <mat-list-item> <strong>Nombre:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.nombres }}</mat-list-item>
-                <mat-list-item> <strong>Primer apellido:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.primerApellido }}</mat-list-item>
-                <mat-list-item> <strong>Segundo apellido:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.segundoApellido }}</mat-list-item>
-                <mat-list-item> <strong>Fecha Nacimiento:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.fechaNac }}</mat-list-item>
+                <mat-list-item> <strong>Nombre:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.nombres
+                  }}</mat-list-item>
+                <mat-list-item> <strong>Primer apellido:</strong> &nbsp;&nbsp;{{
+                  this.firstFormGroup.value.primerApellido }}</mat-list-item>
+                <mat-list-item> <strong>Segundo apellido:</strong> &nbsp;&nbsp;{{
+                  this.firstFormGroup.value.segundoApellido }}</mat-list-item>
+                <mat-list-item> <strong>Fecha Nacimiento:</strong> &nbsp;&nbsp;{{ parseDate(this.firstFormGroup.value.fechaNac)
+                  }}</mat-list-item>
                 <mat-list-item> <strong>Edad:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.edad }}</mat-list-item>
-                <mat-list-item> <strong>Sexo:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.sexo == 0 ? 'Femenino': 'Masculino' }}</mat-list-item>
-                <mat-list-item> <strong>Estado Civil:</strong> &nbsp;&nbsp;{{buscarEstadoCivil(this.firstFormGroup.value.estadoCivilAspirante)}}</mat-list-item>
-                <mat-list-item> <strong>Nacionalidad:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.nacionalidad }}</mat-list-item>
-                <mat-list-item> <strong>Profesion:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.profesion }}</mat-list-item>
-                <mat-list-item> <strong>Direccion:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.direccion }}</mat-list-item>
-                <mat-list-item> <strong>Departamento:</strong> &nbsp;&nbsp;{{ buscarDepartamento(this.firstFormGroup.value.selDepartamento) }}</mat-list-item>
-                <mat-list-item> <strong>Municipio:</strong> &nbsp;&nbsp;{{ buscarMunicipio(this.firstFormGroup.value.selMunicipio) }}</mat-list-item>
-                <mat-list-item> <strong>Correo:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.correo }}</mat-list-item>
-                <mat-list-item> <strong>Telefono Casa:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.telefonoCasa }}</mat-list-item>
-                <mat-list-item> <strong>Telefono Celular:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.telefonoCelular }}</mat-list-item>
+                <mat-list-item> <strong>Sexo:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.sexo == 0 ? 'Femenino':
+                  'Masculino' }}</mat-list-item>
+                <mat-list-item> <strong>Estado Civil:</strong>
+                  &nbsp;&nbsp;{{buscarEstadoCivil(this.firstFormGroup.value.estadoCivilAspirante)}}</mat-list-item>
+                <mat-list-item> <strong>Nacionalidad:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.nacionalidad
+                  }}</mat-list-item>
+                <mat-list-item> <strong>Profesion:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.profesion
+                  }}</mat-list-item>
+                <mat-list-item> <strong>Direccion:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.direccion
+                  }}</mat-list-item>
+                <mat-list-item> <strong>Departamento:</strong> &nbsp;&nbsp;{{
+                  buscarDepartamento(this.firstFormGroup.value.selDepartamento) }}</mat-list-item>
+                <mat-list-item> <strong>Municipio:</strong> &nbsp;&nbsp;{{
+                  buscarMunicipio(this.firstFormGroup.value.selMunicipio) }}</mat-list-item>
+                <mat-list-item> <strong>Correo:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.correo
+                  }}</mat-list-item>
+                <mat-list-item> <strong>Telefono Casa:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.telefonoCasa
+                  }}</mat-list-item>
+                <mat-list-item> <strong>Telefono Celular:</strong> &nbsp;&nbsp;{{
+                  this.firstFormGroup.value.telefonoCelular }}</mat-list-item>
                 <mat-list-item> <strong>DPI:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.dpi }}</mat-list-item>
-                <mat-list-item> <strong>Fecha Vencimiento DPI:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.fechaVencDPI }}</mat-list-item>
+                <mat-list-item> <strong>Fecha Vencimiento DPI:</strong> &nbsp;&nbsp;{{
+                  parseDate(this.firstFormGroup.value.fechaVencDPI) }}</mat-list-item>
                 <mat-list-item> <strong>NIT:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.nit }}</mat-list-item>
-                <mat-list-item> <strong>Numero Licencia:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.numeroLicencia }}</mat-list-item>
-                <mat-list-item> <strong>Clase Licencia:</strong> &nbsp;&nbsp;{{ buscarClaseLicencia(this.firstFormGroup.value.nombreClase) }}</mat-list-item>
-                <mat-list-item> <strong>Discapacidad:</strong> &nbsp;&nbsp;{{ buscarDiscapacidad(this.firstFormGroup.value.discapacidad) }}</mat-list-item>
+                <mat-list-item> <strong>Numero Licencia:</strong> &nbsp;&nbsp;{{
+                  this.firstFormGroup.value.numeroLicencia }}</mat-list-item>
+                <mat-list-item> <strong>Clase Licencia:</strong> &nbsp;&nbsp;{{
+                  buscarClaseLicencia(this.firstFormGroup.value.nombreClase) }}</mat-list-item>
+                <mat-list-item> <strong>Discapacidad:</strong> &nbsp;&nbsp;{{
+                  buscarDiscapacidad(this.firstFormGroup.value.discapacidad) }}</mat-list-item>
               </mat-list>
             </td>
             <td style="width:50%">
               <mat-list>
-                <mat-list-item> <strong>Etnia:</strong> &nbsp;&nbsp;{{buscarEtnia(this.secondFormGroup.value.etnia)}}</mat-list-item>
-                <mat-list-item> <strong>Comunidad Linguistica:</strong> &nbsp;&nbsp;{{buscarComunidadLinguistica(this.secondFormGroup.value.comunidadLinguistica)}}</mat-list-item>
-                <mat-list-item *ngFor="let idioma of idiomas"> <strong>Idioma:</strong>&nbsp;&nbsp; {{ idioma.idioma }}</mat-list-item>
-                <mat-list-item> <strong>Hijos:</strong> &nbsp;&nbsp;{{this.thirdFormGroup.value.hijos == 0 ? 'No': 'Si' }}</mat-list-item>
-                <mat-list-item> <strong>Numero de hijos:</strong> &nbsp;&nbsp;{{this.thirdFormGroup.value.noHijo}}</mat-list-item>
-                <mat-list-item *ngFor="let idioma of idiomas"> <strong>Idioma:</strong>&nbsp;&nbsp; {{ idioma.idioma }}</mat-list-item>
+                <mat-list-item> <strong>Etnia:</strong>
+                  &nbsp;&nbsp;{{buscarEtnia(this.secondFormGroup.value.etnia)}}</mat-list-item>
+                <mat-list-item> <strong>Comunidad Linguistica:</strong>
+                  &nbsp;&nbsp;{{buscarComunidadLinguistica(this.secondFormGroup.value.comunidadLinguistica)}}</mat-list-item>
+                <mat-list-item *ngFor="let idioma of idiomas"> <strong>Idioma:</strong>&nbsp;&nbsp; {{ idioma.idioma
+                  }}</mat-list-item>
+                <mat-list-item> <strong>Hijos:</strong> &nbsp;&nbsp;{{this.thirdFormGroup.value.hijos == 0 ? 'No': 'Si'
+                  }}</mat-list-item>
+                <mat-list-item> <strong>Numero de hijos:</strong>
+                  &nbsp;&nbsp;{{this.thirdFormGroup.value.noHijo}}</mat-list-item>
+                <mat-list-item *ngFor="let dependiente of listaDependientes"> <strong>Dependiente:</strong>&nbsp;&nbsp;
+                  {{ buscarDependientes(dependiente) }}</mat-list-item>
+                <mat-list-item *ngFor="let familiar of familiares"> <strong>Familiar:</strong>&nbsp;&nbsp; {{
+                  buscarParentezco(familiar.parentezco) + ' : ' + familiar.nombreFamiliar }}</mat-list-item>
+                <mat-list-item *ngFor="let familiarOJ of familiaresLaborandoOJ"> <strong>Familiar Laborando en el
+                    OJ:</strong>&nbsp;&nbsp; {{ buscarParentezco(familiarOJ.parentezco) + ' : ' +
+                  familiarOJ.nombreCompleto + ' Dependencia: '+ familiarOJ.dependencia }}</mat-list-item>
+                <mat-list-item> <strong>Grado Aprobado Primaria:</strong>
+                  &nbsp;&nbsp;{{this.fifthFormGroup.value.gradoAprobadoPrimaria + ' Institución Estudios:
+                  '+this.fifthFormGroup.value.institucionEstudiosPrimaria}}</mat-list-item>
+                <mat-list-item> <strong>Grado Aprobado Basicos:</strong>
+                  &nbsp;&nbsp;{{this.fifthFormGroup.value.gradoAprobadoBasicos + ' Institución Estudios:
+                  '+this.fifthFormGroup.value.institucionEstudiosBasicos}}</mat-list-item>
+                <mat-list-item> <strong>Grado Aprobado Diversificado:</strong>
+                  &nbsp;&nbsp;{{this.fifthFormGroup.value.gradoAprobadoDiversificado + ' Institución Estudios:
+                  '+this.fifthFormGroup.value.institucionEstudiosDiversificado}}</mat-list-item>
+                <mat-list-item> <strong>Universidad:</strong>
+                  &nbsp;&nbsp;{{this.fifthFormGroup.value.carreraU + ' Universidad:
+                  '+this.fifthFormGroup.value.universidad+ ' Semestre Aprobado:
+                  '+this.fifthFormGroup.value.semestreA}}</mat-list-item>
+                <mat-list-item> <strong>Posgrado:</strong>
+                  &nbsp;&nbsp;{{this.fifthFormGroup.value.carreraPosgrado + ' Universidad:
+                  '+this.fifthFormGroup.value.universidadPosgrado }}</mat-list-item>
+                <mat-list-item *ngFor="let pasantia of pasantiasOJ"> <strong>Pasantia OJ:</strong>&nbsp;&nbsp;
+                  {{ pasantia.dependencia + ', del ' + parseDate(pasantia.fechaInicio) + ' al '+
+                  parseDate(pasantia.fechaFinalizacion)}}</mat-list-item>
+                <mat-list-item *ngFor="let exp of experienciaLaboralOJ"> <strong>Experiencia Laboral
+                    OJ:</strong>&nbsp;&nbsp;
+                  {{ exp.puesto + ', del ' + parseDate(exp.fechaInicio) + ' al '+ parseDate(exp.fechaFinalizacion)}}</mat-list-item>
+                <mat-list-item *ngFor="let experiencia of experienciaLaboral"> <strong>Experiencia
+                    Laboral:</strong>&nbsp;&nbsp;
+                  {{ 'Institucion/Empresa: '+ experiencia.institucionEmpresa + ', Puesto: '+ experiencia.puesto + ' del '
+                  + parseDate(experiencia.fechaInicio) + ' al '+ parseDate(experiencia.fechaFinalizacion)}}</mat-list-item>
+                <mat-list-item *ngFor="let referencia of referenciasPersonales"> <strong>Referencia
+                    Personal:</strong>&nbsp;&nbsp;
+                  {{ referencia.nombre + ', tipo de relacion: '+ referencia.tipoRelacion + ', años de conocerlo: ' +
+                  referencia.aniosConocerlo}}</mat-list-item>
               </mat-list>
             </td>
           </tr>
         </body>
       </table>
-    </div>  
-   
+    </div>
+
 
     <div>
       <button mat-button matStepperPrevious>Atrás</button>
