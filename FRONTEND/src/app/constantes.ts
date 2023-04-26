@@ -1,5 +1,4 @@
 export interface Idioma {
-    id_idioma: number,
     idioma: string,
     habla: string,
     escribe: string,
@@ -8,7 +7,7 @@ export interface Idioma {
 
 export interface Familiar {
     nombreFamiliar: string,
-    parentezco: string,
+    parentesco: string,
     fechaNacimiento: string,
     telefono: string,
     vive: string,
@@ -19,7 +18,7 @@ export interface Familiar {
 
 export interface FamiliarLaborandoOJ {
     nombreCompleto: string,
-    parentezco: string,
+    parentesco: string,
     dependencia: string,
     puesto: string
 }
@@ -28,7 +27,8 @@ export interface PasantiaOJ {
     dependencia: string,
     fechaInicio: string,    
     fechaFinalizacion: string,
-    secretarioJuez: string
+    secretarioJuez: string,
+    registrada: string
 }
 
 export interface ExperienciaLaboralOJ {

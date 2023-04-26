@@ -238,7 +238,7 @@
         </div>
       </div>
       <div>
-        <button mat-button matStepperNext (click)="guardarData()">Siguiente</button>
+        <button mat-button matStepperNext>Siguiente</button>
       </div>
     </form>
   </mat-step>
@@ -250,8 +250,8 @@
         <div class="form-group col">
           <mat-form-field>
             <mat-select placeholder="ETNIA" formControlName="etnia" required>
-              <mat-option *ngFor="let etnia of etnias" [value]="etnia.ID" style="font-size: 12px;">
-                {{etnia.DESCRIPCION}}</mat-option>
+              <mat-option *ngFor="let etnia of listaEtnias" [value]="etnia.ID_ETNIA" style="font-size: 12px;">
+                {{etnia.ETNIA}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -399,16 +399,16 @@
                 <mat-label style="font-size: 18px; "> SELECCIONE DEPENDIENTES ECONÓMICOS DE USTED </mat-label>
                 <mat-selection-list color="primary" (selectionChange)="cambioListaDependientes($event)">
                   <mat-list-option checkboxPosition="before" [value]="0">
-                    Hijos
+                    HIJO/A
                   </mat-list-option>
                   <mat-list-option checkboxPosition="before" [value]="1">
-                    Padre
+                    PADRE
                   </mat-list-option>
                   <mat-list-option checkboxPosition="before" [value]="2">
-                    Madre
+                    MADRE
                   </mat-list-option>
                   <mat-list-option checkboxPosition="before" [value]="3">
-                    Otro
+                    OTRO
                   </mat-list-option>
                 </mat-selection-list>
               </div>
@@ -444,13 +444,13 @@
             </div>
             <div class="col-2">
               <mat-form-field [floatLabel]="floatLabelControl.value">
-                <mat-label style="font-size: 14px;">PARENTEZCO</mat-label>
-                <mat-select formControlName="parentezco">
-                  <mat-option [value]="0" style="font-size: 12px;">PADRE</mat-option>
-                  <mat-option [value]="1" style="font-size: 12px;">MADRE</mat-option>
-                  <mat-option [value]="2" style="font-size: 12px;">HERMANO(A)</mat-option>
-                  <mat-option [value]="3" style="font-size: 12px;">CONYUGE</mat-option>
+                <mat-label style="font-size: 14px;">PARENTESCO</mat-label>
+                <mat-select formControlName="parentesco">
+                  <mat-option *ngFor="let parentesco of listaParentescos" [value]="parentesco.ID"
+                    style="font-size: 12px;">
+                    {{parentesco.PARENTEZCO}}</mat-option>
                 </mat-select>
+
               </mat-form-field>
             </div>
           </div>
@@ -522,12 +522,11 @@
               </div>
               <div class="col-2">
                 <mat-form-field [floatLabel]="floatLabelControl.value">
-                  <mat-label style="font-size: 14px;">PARENTEZCO</mat-label>
-                  <mat-select disabled [value]="familiar.parentezco">
-                    <mat-option [value]="0" style="font-size: 12px;">PADRE</mat-option>
-                    <mat-option [value]="1" style="font-size: 12px;">MADRE</mat-option>
-                    <mat-option [value]="2" style="font-size: 12px;">HERMANO(A)</mat-option>
-                    <mat-option [value]="3" style="font-size: 12px;">CONYUGE</mat-option>
+                  <mat-label style="font-size: 14px;">PARENTESCO</mat-label>
+                  <mat-select disabled [value]="familiar.parentesco">
+                    <mat-option *ngFor="let parentesco of listaParentescos" [value]="parentesco.ID"
+                    style="font-size: 12px;">
+                    {{parentesco.PARENTEZCO}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -599,12 +598,11 @@
               </div>
               <div class="col-3">
                 <mat-form-field [floatLabel]="floatLabelControl.value">
-                  <mat-label style="font-size: 14px;">PARENTEZCO</mat-label>
+                  <mat-label style="font-size: 14px;">PARENTESCO</mat-label>
                   <mat-select formControlName="parentescoFOJ">
-                    <mat-option [value]="0" style="font-size: 12px;">PADRE</mat-option>
-                    <mat-option [value]="1" style="font-size: 12px;">MADRE</mat-option>
-                    <mat-option [value]="2" style="font-size: 12px;">HERMANO(A)</mat-option>
-                    <mat-option [value]="3" style="font-size: 12px;">CONYUGE</mat-option>
+                    <mat-option *ngFor="let parentesco of listaParentescos" [value]="parentesco.ID"
+                    style="font-size: 12px;">
+                    {{parentesco.PARENTEZCO}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -650,12 +648,11 @@
               </div>
               <div class="col-3">
                 <mat-form-field [floatLabel]="floatLabelControl.value">
-                  <mat-label style="font-size: 14px;">PARENTEZCO</mat-label>
-                  <mat-select disabled [value]="familiar.parentezco">
-                    <mat-option [value]="0" style="font-size: 12px;">PADRE</mat-option>
-                    <mat-option [value]="1" style="font-size: 12px;">MADRE</mat-option>
-                    <mat-option [value]="2" style="font-size: 12px;">HERMANO(A)</mat-option>
-                    <mat-option [value]="3" style="font-size: 12px;">CONYUGE</mat-option>
+                  <mat-label style="font-size: 14px;">PARENTESCO</mat-label>
+                  <mat-select disabled [value]="familiar.parentesco">
+                    <mat-option *ngFor="let parentesco of listaParentescos" [value]="parentesco.ID"
+                    style="font-size: 12px;">
+                    {{parentesco.PARENTEZCO}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -968,7 +965,7 @@
                     <mat-hint align="end">{{f6.dependenciaPasantia.value.length}} / 250</mat-hint>
                   </mat-form-field>
                 </td>
-                <td class="text-center" style="width: 150px;">
+                <td class="text-center" style="width: 100px;">
                   <mat-form-field color="warn" style="font-size: 12px;">
                     <input matInput (click)="picker8.open()" formControlName="inicioPasantia"
                       (ngModelChange)="parseDatePasantias($event)" [matDatepicker]="picker8" placeholder="Fecha Inicio">
@@ -976,7 +973,7 @@
                     <mat-datepicker touchUi #picker8></mat-datepicker>
                   </mat-form-field>
                 </td>
-                <td class="text-center" style="width: 150px;">
+                <td class="text-center" style="width: 100px;">
                   <mat-form-field color="warn" style="font-size: 12px;">
                     <input matInput (click)="picker9.open()" formControlName="finPasantia"
                       (ngModelChange)="parseDatePasantias($event)" [matDatepicker]="picker9"
@@ -991,6 +988,13 @@
                       placeholder="Nombre del Secretario y/o Juez">
                     <mat-hint align="end">{{f6.secrectarioJuezPasantia.value.length}} / 250</mat-hint>
                   </mat-form-field>
+                </td>
+                <td style="width: 150px;">
+                  <mat-label style="font-size: 14px;">Pasantía Registrada en Unidad de Dotación</mat-label>
+                  <mat-select formControlName="registrada">
+                    <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
+                    <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
+                  </mat-select>
                 </td>
                 <td style="width: 50px;"> <button mat-raised-button class="btn btn-primary" (click)="agregarPasantia()"
                     style="font-size: 10px;">
@@ -1007,7 +1011,7 @@
                   </mat-form-field>
                 </td>
 
-                <td class="text-center" style="width: 150px;">
+                <td class="text-center" style="width: 100px;">
                   <mat-form-field color="warn" style="font-size: 12px;">
                     <input matInput (click)="picker10.open()" [value]="d.fechaInicio" [matDatepicker]="picker10"
                       placeholder="Fecha Inicio" disabled>
@@ -1015,7 +1019,7 @@
                     <mat-datepicker touchUi #picker10></mat-datepicker>
                   </mat-form-field>
                 </td>
-                <td class="text-center" style="width: 150px;">
+                <td class="text-center" style="width: 100px;">
                   <mat-form-field color="warn" style="font-size: 12px;">
                     <input matInput (click)="picker11.open()" [value]="d.fechaFinalizacion" [matDatepicker]="picker11"
                       placeholder="Fecha Finalizacion" disabled>
@@ -1027,6 +1031,13 @@
                   <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                     <input matInput [value]="d.secretarioJuez" type="text" placeholder="Secretario y/o Juez" disabled>
                   </mat-form-field>
+                </td>
+                <td style="width: 150px;">
+                  <mat-label style="font-size: 14px;">Pasantía Registrada en Unidad de Dotación</mat-label>
+                  <mat-select  [value]="d.registrada">
+                    <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
+                    <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
+                  </mat-select>
                 </td>
                 <td style="width: 50px; text-align: left;">
                   <button type="button" class="btn btn-danger" (click)="eliminarPasantiaOJ(index)"
@@ -1478,7 +1489,8 @@
                   this.firstFormGroup.value.primerApellido }}</mat-list-item>
                 <mat-list-item> <strong>Segundo apellido:</strong> &nbsp;&nbsp;{{
                   this.firstFormGroup.value.segundoApellido }}</mat-list-item>
-                <mat-list-item> <strong>Fecha Nacimiento:</strong> &nbsp;&nbsp;{{ parseDate(this.firstFormGroup.value.fechaNac)
+                <mat-list-item> <strong>Fecha Nacimiento:</strong> &nbsp;&nbsp;{{
+                  parseDate(this.firstFormGroup.value.fechaNac)
                   }}</mat-list-item>
                 <mat-list-item> <strong>Edad:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.edad }}</mat-list-item>
                 <mat-list-item> <strong>Sexo:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.sexo == 0 ? 'Femenino':
@@ -1528,9 +1540,9 @@
                 <mat-list-item *ngFor="let dependiente of listaDependientes"> <strong>Dependiente:</strong>&nbsp;&nbsp;
                   {{ buscarDependientes(dependiente) }}</mat-list-item>
                 <mat-list-item *ngFor="let familiar of familiares"> <strong>Familiar:</strong>&nbsp;&nbsp; {{
-                  buscarParentezco(familiar.parentezco) + ' : ' + familiar.nombreFamiliar }}</mat-list-item>
+                  buscarparentesco(familiar.parentesco) + ' : ' + familiar.nombreFamiliar }}</mat-list-item>
                 <mat-list-item *ngFor="let familiarOJ of familiaresLaborandoOJ"> <strong>Familiar Laborando en el
-                    OJ:</strong>&nbsp;&nbsp; {{ buscarParentezco(familiarOJ.parentezco) + ' : ' +
+                    OJ:</strong>&nbsp;&nbsp; {{ buscarparentesco(familiarOJ.parentesco) + ' : ' +
                   familiarOJ.nombreCompleto + ' Dependencia: '+ familiarOJ.dependencia }}</mat-list-item>
                 <mat-list-item> <strong>Grado Aprobado Primaria:</strong>
                   &nbsp;&nbsp;{{this.fifthFormGroup.value.gradoAprobadoPrimaria + ' Institución Estudios:
@@ -1553,11 +1565,14 @@
                   parseDate(pasantia.fechaFinalizacion)}}</mat-list-item>
                 <mat-list-item *ngFor="let exp of experienciaLaboralOJ"> <strong>Experiencia Laboral
                     OJ:</strong>&nbsp;&nbsp;
-                  {{ exp.puesto + ', del ' + parseDate(exp.fechaInicio) + ' al '+ parseDate(exp.fechaFinalizacion)}}</mat-list-item>
+                  {{ exp.puesto + ', del ' + parseDate(exp.fechaInicio) + ' al '+
+                  parseDate(exp.fechaFinalizacion)}}</mat-list-item>
                 <mat-list-item *ngFor="let experiencia of experienciaLaboral"> <strong>Experiencia
                     Laboral:</strong>&nbsp;&nbsp;
-                  {{ 'Institucion/Empresa: '+ experiencia.institucionEmpresa + ', Puesto: '+ experiencia.puesto + ' del '
-                  + parseDate(experiencia.fechaInicio) + ' al '+ parseDate(experiencia.fechaFinalizacion)}}</mat-list-item>
+                  {{ 'Institucion/Empresa: '+ experiencia.institucionEmpresa + ', Puesto: '+ experiencia.puesto + ' del
+                  '
+                  + parseDate(experiencia.fechaInicio) + ' al '+
+                  parseDate(experiencia.fechaFinalizacion)}}</mat-list-item>
                 <mat-list-item *ngFor="let referencia of referenciasPersonales"> <strong>Referencia
                     Personal:</strong>&nbsp;&nbsp;
                   {{ referencia.nombre + ', tipo de relacion: '+ referencia.tipoRelacion + ', años de conocerlo: ' +
@@ -1573,7 +1588,7 @@
     <div>
       <button mat-button matStepperPrevious>Atrás</button>
       <button mat-button (click)="stepper.reset()">Reiniciar</button>
-      <button mat-button (click)="submit()">Enviar</button>
+      <button mat-button (click)="guardarData()">Enviar</button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>

@@ -36,6 +36,8 @@ export class PerfilwizardComponent implements OnInit {
   checked = false;
   listaDepartamentos;
   listaComunidadLinguistica;
+  listaParentescos;
+  listaEtnias;
   municipios;
   selMunicipio;
   selDepartamento;
@@ -72,7 +74,7 @@ export class PerfilwizardComponent implements OnInit {
   profesionPadre;
   trabajaPadre;
   lugarTrabajoPadre;
-  parentezco;
+  parentesco;
   familiar;
   fechaNacFamiliar;
   telFamiliar;
@@ -99,13 +101,13 @@ export class PerfilwizardComponent implements OnInit {
   inicioPasantia;
   finPasantia;
   secrectarioJuezPasantia;
+  registrada;
   listaDependientes = [];
   listarazaPerfil;
   listaComunidadesLinguisticas;
   hijos;
   noHijo;
   dependientes;
-  parentesco;
   nombreFamiliar;
   dependencia;
   puesto;
@@ -130,7 +132,6 @@ export class PerfilwizardComponent implements OnInit {
   carreraU;
   universidad;
   constanciaUniversidad;
-  constancia3;
   semestreA;
   cierre;
   graduadoTecnico;
@@ -223,7 +224,7 @@ export class PerfilwizardComponent implements OnInit {
       hijos: [''],
       noHijo: [''],
       dependientes: [''],
-      parentezco: [''],
+      parentesco: [''],
       familiar: [''],
       fechaNacFamiliar: [''],
       telFamiliar: [''],
@@ -257,7 +258,6 @@ export class PerfilwizardComponent implements OnInit {
       carreraDiversificado: [''],
       carreraU: [''],
       universidad: [''],
-      constancia3: [''],
       constanciaUniversidad: [''],
       semestreA: [''],
       cierre: [''],
@@ -279,7 +279,8 @@ export class PerfilwizardComponent implements OnInit {
       dependenciaPasantia: [''],
       inicioPasantia: [''],
       finPasantia: [''],
-      secrectarioJuezPasantia: ['']
+      secrectarioJuezPasantia: [''],
+      registrada: ['']
     });
 
     this.seventhFormGroup = this.fb.group({
@@ -312,9 +313,9 @@ export class PerfilwizardComponent implements OnInit {
 
     this.obtenerDepartamentos();
     this.obtenerComunidadesLinguisticas();
+    this.obtenerParentescos();
+    this.obtenerEtnias();
   }
-
-
 
   obtenerDepartamentos() {
     this.convocatoriasService
@@ -334,10 +335,27 @@ export class PerfilwizardComponent implements OnInit {
         });
   }
 
+  obtenerEtnias() {
+    this.convocatoriasService
+      .getListaEtniasConv()
+      .subscribe(
+        data => {
+          this.listaEtnias = data;
+        });
+  }
+
+  obtenerParentescos() {
+    this.convocatoriasService
+      .getListaParentescoConv()
+      .subscribe(
+        data => {
+          this.listaParentescos = data;
+        });
+  }
+
   agregarIdioma() {
     if (this.secondFormGroup.value.idioma1 !== '' && this.secondFormGroup.value.idioma1 !== undefined && this.secondFormGroup.value.idioma1 !== null) {
       this.nuevoIdioma = {
-        id_idioma: 0,
         idioma: this.secondFormGroup.value.idioma1,
         habla: this.secondFormGroup.value.habla1,
         lee: this.secondFormGroup.value.lee1,
@@ -358,29 +376,23 @@ export class PerfilwizardComponent implements OnInit {
   }
 
   agregarFamiliar() {
-    console.log("Agregar familiar");
-    console.log(this.thirdFormGroup.value.familiar);
     if (this.thirdFormGroup.value.familiar !== '' && this.thirdFormGroup.value.familiar !== undefined && this.thirdFormGroup.value.familiar !== null) {
-      console.log("es distinto de undefined");
-
       this.nuevoFamiliar = {
         nombreFamiliar: this.thirdFormGroup.value.familiar,
-        parentezco: this.thirdFormGroup.value.parentezco,
-        fechaNacimiento: this.thirdFormGroup.value.fechaNacFamiliar,
+        parentesco: this.thirdFormGroup.value.parentesco,
+        fechaNacimiento: this.parseDate(this.thirdFormGroup.value.fechaNacFamiliar),
         telefono: this.thirdFormGroup.value.telFamiliar,
         vive: this.thirdFormGroup.value.viveFamiliar,
         profesion: this.thirdFormGroup.value.profesionFamiliar,
         trabaja: this.thirdFormGroup.value.trabajaFamiliar,
         lugarTrabajo: this.thirdFormGroup.value.lugarTrabajoFamiliar
       };
-      console.log(this.nuevoFamiliar);
       this.familiares.push(this.nuevoFamiliar);
-
       this.thirdFormGroup = this.fb.group({
         hijos: [this.thirdFormGroup.value.hijos],
         noHijo: [this.thirdFormGroup.value.noHijo],
         dependientes: [''],
-        parentezco: [''],
+        parentesco: [''],
         familiar: [''],
         fechaNacFamiliar: [''],
         telFamiliar: [''],
@@ -389,26 +401,20 @@ export class PerfilwizardComponent implements OnInit {
         trabajaFamiliar: [''],
         lugarTrabajoFamiliar: ['']
       });
-      console.log(this.familiares);
     }
 
   }
 
   agregarFamiliarLaborandoOJ() {
-    console.log("Agregar familiar Laborando OJ");
-    console.log(this.thirdFormGroup.value.familiar);
     if (this.fourthFormGroup.value.nombreFOJ !== '' && this.fourthFormGroup.value.nombreFOJ !== undefined && this.fourthFormGroup.value.nombreFOJ !== null) {
-      console.log("es distinto de undefined");
 
       this.nuevoFamiliarLaborandoOJ = {
         nombreCompleto: this.fourthFormGroup.value.nombreFOJ,
-        parentezco: this.fourthFormGroup.value.parentescoFOJ,
+        parentesco: this.fourthFormGroup.value.parentescoFOJ,
         dependencia: this.fourthFormGroup.value.dependenciaFOJ,
         puesto: this.fourthFormGroup.value.puestoFOJ
       };
-      console.log(this.nuevoFamiliarLaborandoOJ);
       this.familiaresLaborandoOJ.push(this.nuevoFamiliarLaborandoOJ);
-
       this.fourthFormGroup = this.fb.group({
         parentescoFOJ: [''],
         nombreFOJ: [''],
@@ -416,55 +422,45 @@ export class PerfilwizardComponent implements OnInit {
         puestoFOJ: ['']
       });
 
-      console.log(this.familiaresLaborandoOJ);
     }
 
   }
 
   agregarPasantia() {
-    console.log("Agregar pasantia OJ");
-    console.log(this.sixthFormGroup.value.dependenciaPasantia);
     if (this.sixthFormGroup.value.dependenciaPasantia !== '' && this.sixthFormGroup.value.dependenciaPasantia !== undefined && this.sixthFormGroup.value.dependenciaPasantia !== null) {
-      console.log("es distinto de undefined");
 
       this.nuevaPasantiaOJ = {
         dependencia: this.sixthFormGroup.value.dependenciaPasantia,
-        fechaInicio: this.sixthFormGroup.value.inicioPasantia,
-        fechaFinalizacion: this.sixthFormGroup.value.finPasantia,
-        secretarioJuez: this.sixthFormGroup.value.secrectarioJuezPasantia
+        fechaInicio: this.parseDate(this.sixthFormGroup.value.inicioPasantia),
+        fechaFinalizacion: this.parseDate(this.sixthFormGroup.value.finPasantia),
+        secretarioJuez: this.sixthFormGroup.value.secrectarioJuezPasantia,
+        registrada: this.sixthFormGroup.value.registrada
       };
-      console.log(this.nuevaPasantiaOJ);
       this.pasantiasOJ.push(this.nuevaPasantiaOJ);
-
       this.sixthFormGroup = this.fb.group({
         dependenciaPasantia: [''],
         inicioPasantia: [''],
         finPasantia: [''],
-        secrectarioJuezPasantia: ['']
+        secrectarioJuezPasantia: [''],
+        registrada: ['']
       });
 
-      console.log(this.pasantiasOJ);
     }
 
   }
 
   agregarExperienciaLaboralOJ() {
-    console.log("Agregar Experiencia laboral OJ");
-    console.log(this.seventhFormGroup.value.puestoExperienciaOJ);
     if (this.seventhFormGroup.value.puestoExperienciaOJ !== '' && this.seventhFormGroup.value.puestoExperienciaOJ !== undefined && this.seventhFormGroup.value.puestoExperienciaOJ !== null) {
-      console.log("es distinto de undefined");
       this.nuevaExperienciaLaboralOJ = {
         dependencia: this.seventhFormGroup.value.dependenciaExperienciaOJ,
-        fechaInicio: this.seventhFormGroup.value.fechaFinalizacionExperienciaOJ,
-        fechaFinalizacion: this.seventhFormGroup.value.fechaInicioExperienciaOJ,
+        fechaInicio: this.parseDate(this.seventhFormGroup.value.fechaInicioExperienciaOJ),
+        fechaFinalizacion: this.parseDate(this.seventhFormGroup.value.fechaFinalizacionExperienciaOJ),
         jefeInmediato: this.seventhFormGroup.value.jefeInmediatoExperienciaOJ,
         puesto: this.seventhFormGroup.value.puestoExperienciaOJ,
         renglonPresupuestario: this.seventhFormGroup.value.renglonPresupuestarioExperienciaOJ,
         motivoFinRelacionLaboral: this.seventhFormGroup.value.motivoFinRelacionLaboralExperienciaOJ
       };
-      console.log(this.nuevaExperienciaLaboralOJ);
       this.experienciaLaboralOJ.push(this.nuevaExperienciaLaboralOJ);
-
       this.seventhFormGroup = this.fb.group({
         dependenciaExperienciaOJ: [''],
         fechaInicioExperienciaOJ: [''],
@@ -474,30 +470,23 @@ export class PerfilwizardComponent implements OnInit {
         renglonPresupuestarioExperienciaOJ: [''],
         motivoFinRelacionLaboralExperienciaOJ: ['']
       });
-
-      console.log(this.experienciaLaboralOJ);
     }
 
   }
 
   agregarExperienciaLaboral() {
-    console.log("Agregar Experiencia laboral ");
-    console.log(this.eighthFormGroup.value.institucionEmpresaExperienciaLaboral);
     if (this.eighthFormGroup.value.institucionEmpresaExperienciaLaboral !== '' && this.eighthFormGroup.value.institucionEmpresaExperienciaLaboral !== undefined && this.eighthFormGroup.value.institucionEmpresaExperienciaLaboral !== null) {
-      console.log("es distinto de undefined");
       this.nuevaExperienciaLaboral = {
         institucionEmpresa: this.eighthFormGroup.value.institucionEmpresaExperienciaLaboral,
-        fechaInicio: this.eighthFormGroup.value.fechaInicioExperienciaLaboral,
-        fechaFinalizacion: this.eighthFormGroup.value.fechaFinalizacionExperienciaLaboral,
+        fechaInicio: this.parseDate(this.eighthFormGroup.value.fechaInicioExperienciaLaboral),
+        fechaFinalizacion: this.parseDate(this.eighthFormGroup.value.fechaFinalizacionExperienciaLaboral),
         renglonPresupuestario: this.eighthFormGroup.value.renglonPresupuestarioExperienciaLaboral,
         puesto: this.eighthFormGroup.value.puestoExperienciaLaboral,
         jefeInmediato: this.eighthFormGroup.value.jefeInmediatoExperienciaLaboral,
         telefono: this.eighthFormGroup.value.telefonoExperienciaLaboral,
         motivoFinRelacionLaboral: this.eighthFormGroup.value.motivoFinRelacionLaboralExperienciaLaboral
       };
-      console.log(this.nuevaExperienciaLaboral);
       this.experienciaLaboral.push(this.nuevaExperienciaLaboral);
-
       this.eighthFormGroup = this.fb.group({
         institucionEmpresaExperienciaLaboral: [''],
         fechaInicioExperienciaLaboral: [''],
@@ -508,35 +497,25 @@ export class PerfilwizardComponent implements OnInit {
         telefonoExperienciaLaboral: [''],
         motivoFinRelacionLaboralExperienciaLaboral: ['']
       });
-
-      console.log(this.experienciaLaboral);
     }
 
   }
 
   agregarReferenciaPersonal() {
-    console.log("Agregar referencia");
-    console.log(this.nineFormGroup.value.nombreReferenciaPersonal);
     if (this.nineFormGroup.value.nombreReferenciaPersonal !== '' && this.nineFormGroup.value.nombreReferenciaPersonal !== undefined && this.nineFormGroup.value.nombreReferenciaPersonal !== null) {
-      console.log("es distinto de undefined");
-
       this.nuevaReferenciaPersonal = {
         nombre: this.nineFormGroup.value.nombreReferenciaPersonal,
         tipoRelacion: this.nineFormGroup.value.tipoRelacionReferenciaPersonal,
         aniosConocerlo: this.nineFormGroup.value.aniosConocerloReferenciaPersonal,
         telefono: this.nineFormGroup.value.telefonoReferenciaPersonal
       };
-      console.log(this.nuevaReferenciaPersonal);
       this.referenciasPersonales.push(this.nuevaReferenciaPersonal);
-
       this.nineFormGroup = this.fb.group({
         nombreReferenciaPersonal: [''],
         tipoRelacionReferenciaPersonal: [''],
         aniosConocerloReferenciaPersonal: [''],
         telefonoReferenciaPersonal: ['']
       });
-
-      console.log(this.referenciasPersonales);
     }
 
   }
@@ -572,17 +551,8 @@ export class PerfilwizardComponent implements OnInit {
     return encontrado != null ? encontrado.DESCRIPCION : '';
   }
 
-  buscarEtnia(id): string {
-    console.log(id);
-    if (this.etnias != null && this.etnias.length > 0) {
-      let encontrado = this.etnias.find(x => x.ID == id);
-      return encontrado != null ? encontrado.DESCRIPCION : '';
-    }
-    return '';
-  }
 
   buscarComunidadLinguistica(id): string {
-    console.log(id);
     if (this.listaComunidadLinguistica != null && this.listaComunidadLinguistica.length > 0) {
       let encontrado = this.listaComunidadLinguistica.find(x => x.ID_COMUNIDAD_LINGUISTICA == id);
       return encontrado != null ? encontrado.COMUNIDAD : '';
@@ -605,19 +575,20 @@ export class PerfilwizardComponent implements OnInit {
     }
   }
 
-  buscarParentezco(id): string {
-    switch (id) {
-      case 0:
-        return 'Padre'
-      case 1:
-        return 'Madre'
-      case 2:
-        return 'Hermano(a)'
-      case 3:
-        return 'Conyuge'
-      default:
-        return ''
+  buscarparentesco(id): string {
+    if (this.listaParentescos != null && this.listaParentescos.length > 0) {
+      let encontrado = this.listaParentescos.find(x => x.ID == id);
+      return encontrado != null ? encontrado.PARENTEZCO : '';
     }
+    return '';
+  }
+
+   buscarEtnia(id): string {
+    if (this.listaEtnias != null && this.listaEtnias.length > 0) {
+      let encontrado = this.listaEtnias.find(x => x.ID_ETNIA == id);
+      return encontrado != null ? encontrado.ETNIA : '';
+    }
+    return '';
   }
 
   crearPerfil() {
@@ -758,10 +729,8 @@ export class PerfilwizardComponent implements OnInit {
   }
   validaIdioma(): boolean {
     let valor = this.secondFormGroup.value.idioma1;
-
     if (valor !== null && valor !== undefined && valor !== "") {
       let encontrado = this.idiomas.find(x => x.idioma == valor);
-      console.log("idioma encontrado: " + encontrado);
       return encontrado != null ? true : false;
     }
 
@@ -770,31 +739,87 @@ export class PerfilwizardComponent implements OnInit {
 
   guardarData() {
     let PerfilUsuario = {
-      NOMBRES: this.firstFormGroup.value.nombres,
-      PRIMER_APELLDO: this.firstFormGroup.value.primerApellido,
-      SEGUNDO_APELLIDO: this.firstFormGroup.value.segundoApellido,
-      FECHA_NACIMIENTO: this.firstFormGroup.value.fechaNac,
+      NOMBRE: this.firstFormGroup.value.nombres.toUpperCase(),
+      PRIMER_APELLDO: this.firstFormGroup.value.primerApellido.toUpperCase(),
+      SEGUNDO_APELLIDO: this.firstFormGroup.value.segundoApellido.toUpperCase(),
+      FECHA_NACIMIENTO: this.parseDate(this.firstFormGroup.value.fechaNac),
       EDAD: this.firstFormGroup.value.edad,
       SEXO: this.firstFormGroup.value.sexo,
       ESTADO_CIVIL: this.firstFormGroup.value.estadoCivilAspirante,
-      NACIONALIDAD: this.firstFormGroup.value.nacionalidad,
-      PROFESION: this.firstFormGroup.value.profesion,
-      DIRECCION: this.firstFormGroup.value.direccion,
+      NACIONALIDAD: this.firstFormGroup.value.nacionalidad.toUpperCase(),
+      PROFESION: this.firstFormGroup.value.profesion.toUpperCase(),
+      DIRECCION: this.firstFormGroup.value.direccion.toUpperCase(),
       DEPARTAMENTO: this.firstFormGroup.value.selDepartamento,
       MUNICIPIO: this.firstFormGroup.value.selMunicipio,
       CORREO: this.firstFormGroup.value.correo,
       TELEFONO_CASA: this.firstFormGroup.value.telefonoCasa,
       TELEFONO_CELULAR: this.firstFormGroup.value.telefonoCelular,
       DPI: this.firstFormGroup.value.dpi,
-      FECHA_VENC_DPI: this.firstFormGroup.value.fechaVencDPI,
+      FECHA_VENC_DPI: this.parseDate(this.firstFormGroup.value.fechaVencDPI),
       NIT: this.firstFormGroup.value.nit,
       CLASE_LICENCIA: this.firstFormGroup.value.nombreClase,
       NUMERO_LICENCIA: this.firstFormGroup.value.numeroLicencia,
       DISCAPACIDAD: this.firstFormGroup.value.discapacidad,
+      ETNIA: this.secondFormGroup.value.etnia,
+      COMUNIDAD_LINGUISTICA: this.secondFormGroup.value.comunidadLinguistica,
+      TIENE_HIJOS: this.thirdFormGroup.value.hijos,
+      NO_HIJOS: this.thirdFormGroup.value.hijos,
+      NIVEL_APRIMARIA: this.fifthFormGroup.value.nivelAcademicoPrimaria.toUpperCase(),
+      NIVEL_ABASICOS: this.fifthFormGroup.value.nivelAcademicoBasicos.toUpperCase(),
+      NIVEL_ADIVERSIFICADO: this.fifthFormGroup.value.nivelAcademicoDiversificado.toUpperCase(),
+      GRADO_APRIMARIA: this.fifthFormGroup.value.gradoAprobadoPrimaria.toUpperCase(),
+      INSTITUCION_PRIMARIA: this.fifthFormGroup.value.institucionEstudiosPrimaria.toUpperCase(),
+      CONSTANCIA_PRIMARIA: this.fifthFormGroup.value.constanciaPrimaria.toUpperCase(),
+      GRADO_ABASICOS: this.fifthFormGroup.value.gradoAprobadoBasicos.toUpperCase(),
+      INSTITUCION_BASICOS: this.fifthFormGroup.value.institucionEstudiosBasicos.toUpperCase(),
+      CONSTANCIA_BASICOS: this.fifthFormGroup.value.constanciaBasicos.toUpperCase(),
+      GRADO_ADIVERSIFICADO: this.fifthFormGroup.value.gradoAprobadoDiversificado.toUpperCase(),
+      INSTITUCION_DIVERSIFICADO: this.fifthFormGroup.value.institucionEstudiosDiversificado.toUpperCase(),
+      CONSTANCIA_DIVERSIFICADO: this.fifthFormGroup.value.constanciaDiversificado.toUpperCase(),
+      ANIO_GRADUACION_DIVERSIFICADO: this.fifthFormGroup.value.anioGraduacionDiversificado.toUpperCase(),
+      CARRERA_DIVERSIFICADO: this.fifthFormGroup.value.carreraDiversificado.toUpperCase(),
+      CARRERA_U: this.fifthFormGroup.value.carreraU.toUpperCase(),
+      UNIVERSIDAD: this.fifthFormGroup.value.universidad.toUpperCase(),
+      CONSTANCIA_UNIVERSIDAD: this.fifthFormGroup.value.constanciaUniversidad.toUpperCase(),
+      SEMESTRE_APROBADO: this.fifthFormGroup.value.semestreA.toUpperCase(),
+      CIERRE: this.fifthFormGroup.value.cierre,
+      GRADO_TECNICO: this.fifthFormGroup.value.gradoTecnico.toUpperCase(),
+      GRADUADO_TECNICO: this.fifthFormGroup.value.graduadoTecnico,
+      GRADO_LICENCIATURA: this.fifthFormGroup.value.gradoLicenciatura,
+      COLEGIADO: this.fifthFormGroup.value.colegiado,
+      VIGENCIA_COLEGIADO: this.fifthFormGroup.value.vigenciaColegiado,
+      CARRERA_POSGRADO: this.fifthFormGroup.value.carreraPosgrado.toUpperCase(),
+      UNIVERSIDAD_POSGRADO: this.fifthFormGroup.value.universidadPosgrado.toUpperCase(),
+      CONSTANCIA_UNIVERSIDAD_POSGRADO: this.fifthFormGroup.value.constanciaUniversidadPosgrado.toUpperCase(),
+      SEMESTRE_APROBADO_POSGRADO: this.fifthFormGroup.value.semestreAprobadoPosgrado.toUpperCase(),
+      CIERRE_PENSUM_POSGRADO: this.fifthFormGroup.value.cierrePensumPosgrado,
+      GRADUADO_MAESTRIA: this.fifthFormGroup.value.graduadoMaestria,
+      GRADUADO_DOCTORADO: this.fifthFormGroup.value.graduadoDoctorado,
+      DEPENDIENTES: this.listaDependientes,
+      IDIOMAS: this.idiomas,
+      FAMILIARES: this.familiares,
+      FAMILIARES_LABORANDO_OJ: this.familiaresLaborandoOJ,
+      PASANTIAS: this.pasantiasOJ,
+      EXPERIENCIA_LABORAL_OJ: this.experienciaLaboralOJ,
+      EXPERIENCIA_LABORAL: this.experienciaLaboral,
+      REFERENCIAS_PERSONALES: this.referenciasPersonales
     }
     console.log("Perfil Usuario");
     console.log(PerfilUsuario);
+    this.creacionPerfilUsuario(PerfilUsuario);
 
+  }
+
+  creacionPerfilUsuario(perfilUsuario) {
+    this.convocatoriasService.insPerfilUsuario(perfilUsuario).subscribe(
+      data => {
+        if (data.result == 'OK') {
+          console.log("res: " + data.msj);
+          swal("Perfil Usuario Guardado", data.msj, "success");
+        } else {
+          swal("Error", data.msj, "error")
+        }
+      })
   }
 
   submit() {
@@ -803,51 +828,30 @@ export class PerfilwizardComponent implements OnInit {
   }
 
   eliminarIdioma(index: number) {
-    console.log("Se eliimnará el idioma: " + index);
     this.idiomas.splice(index, 1);
-    console.log("Despues de eliminar");
-    console.log(this.idiomas);
   }
 
   eliminarFamiliar(index: number) {
-    console.log("Se eliimnará el familiar: " + index);
     this.familiares.splice(index, 1);
-    console.log("Despues de eliminar");
-    console.log(this.familiares);
   }
 
   eliminarFamiliarLaborandoOJ(index: number) {
-    console.log("Se eliimnará el familiar: " + index);
     this.familiaresLaborandoOJ.splice(index, 1);
-    console.log("Despues de eliminar");
-    console.log(this.familiares);
   }
 
   eliminarPasantiaOJ(index: number) {
-    console.log("Se eliimnará pasantia: " + index);
     this.pasantiasOJ.splice(index, 1);
-    console.log("Despues de eliminar");
-    console.log(this.pasantiasOJ);
   }
 
   eliminarExperienciaOJ(index: number) {
-    console.log("Se eliimnará experiencia en oj: " + index);
     this.experienciaLaboralOJ.splice(index, 1);
-    console.log("Despues de eliminar");
-    console.log(this.experienciaLaboralOJ);
   }
 
   eliminarExperiencia(index: number) {
-    console.log("Se eliimnará experiencia : " + index);
     this.experienciaLaboral.splice(index, 1);
-    console.log("Despues de eliminar");
-    console.log(this.experienciaLaboral);
   }
 
   eliminarReferenciaPersonal(index: number) {
-    console.log("Se eliimnará referencia personal : " + index);
     this.referenciasPersonales.splice(index, 1);
-    console.log("Despues de eliminar");
-    console.log(this.referenciasPersonales);
   }
 }

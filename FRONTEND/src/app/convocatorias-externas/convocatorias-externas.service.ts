@@ -31,6 +31,28 @@ export class ConvocatoriasExternasService {
       );
   }
 
+  insPerfilUsuario(perfilUsuario): Observable<any> {
+    return this.http.post<any>(this.appSettings.restApiServiceBaseUri + 'Convocatorias-Externas/inPerfilSolicitudEmpleo', perfilUsuario)
+      .pipe(
+        catchError(this.handleError('insPerfilUsuario', []))
+      );
+  }
+
+  getListaParentescoConv(): Observable<any> {
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + 'Convocatorias-Externas/getParentesco')
+      .pipe(
+        catchError(this.handleError('getListaParentescoConv', []))
+      );
+  }
+
+  getListaEtniasConv(): Observable<any> {
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + 'Convocatorias-Externas/getEtnias')
+      .pipe(
+        catchError(this.handleError('getEtnias', []))
+      );
+  }
+
+
   constructor(private http: HttpClient, private appSettings: AppconfigService) { }
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
