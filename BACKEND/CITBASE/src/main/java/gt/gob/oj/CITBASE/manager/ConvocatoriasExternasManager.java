@@ -129,7 +129,7 @@ public class ConvocatoriasExternasManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 
-		CallableStatement call = conn.prepareCall("call " + "CIT_BASE" + ".PKG_TC_ETNIA.PROC_GET_ETNIAS(?,?)");
+		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE" + ".PKG_TC_ETNIA.PROC_GET_ETNIAS(?,?)");
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
 		call.registerOutParameter("P_MSJ", OracleTypes.VARCHAR);
 		call.execute();
@@ -258,6 +258,60 @@ public class ConvocatoriasExternasManager {
 		rset.close();
 		call.close();
 		conn.close();
+		return salida;
+	}
+	
+	public List<Map<String, Object>> getIdiomas() throws Exception {
+		List<Map<String,Object>> salida = new ArrayList<>();
+		ConnectionsPool c = new ConnectionsPool();
+		Connection conn = c.conectar();
+		CallableStatement call = conn
+				.prepareCall("call " + "C##CIT_BASE" + ".PKG_TC_IDIOMA.PROC_GET_IDIOMAS(?,?)");
+		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
+		call.registerOutParameter("P_MSJ", OracleTypes.VARCHAR);
+		call.execute();
+		ResultSet rset = (ResultSet) call.getObject("P_CUR_DATASET");
+		ResultSetMetaData meta = rset.getMetaData();
+		while (rset.next()) {
+			Map<String, Object> map = new HashMap<>();
+			for (int i = 1; i <= meta.getColumnCount(); i++) {
+				String key = meta.getColumnName(i).toString();
+				String value = Objects.toString(rset.getString(key), "");
+				map.put(key, value);
+			}
+			salida.add(map);
+		}
+		rset.close();
+		call.close();
+		conn.close();
+		
+		return salida;
+	}
+
+	public List<Map<String, Object>> getEstadoCivil() throws Exception {
+		List<Map<String,Object>> salida = new ArrayList<>();
+		ConnectionsPool c = new ConnectionsPool();
+		Connection conn = c.conectar();
+		CallableStatement call = conn
+				.prepareCall("call " + "C##CIT_BASE" + ".PKG_TC_ESTADO_CIVIL.PROC_MOSTRAR_TC_ESTADO_CIVIL(?,?)");
+		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
+		call.registerOutParameter("P_MSJ", OracleTypes.VARCHAR);
+		call.execute();
+		ResultSet rset = (ResultSet) call.getObject("P_CUR_DATASET");
+		ResultSetMetaData meta = rset.getMetaData();
+		while (rset.next()) {
+			Map<String, Object> map = new HashMap<>();
+			for (int i = 1; i <= meta.getColumnCount(); i++) {
+				String key = meta.getColumnName(i).toString();
+				String value = Objects.toString(rset.getString(key), "");
+				map.put(key, value);
+			}
+			salida.add(map);
+		}
+		rset.close();
+		call.close();
+		conn.close();
+		
 		return salida;
 	}
 }
