@@ -50,15 +50,15 @@ public class IdiomaUsuarioManager {
 		return salida;
 	}
 	
-	public jsonResult inIdiomaUsuario(IdiomasPerfilSE idiomasUsuario) throws Exception {
+	public jsonResult inIdiomaUsuario(IdiomasPerfilSE idiomasUsuario, Integer idioma, Integer usuario) throws Exception {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a insertar idioma usuario ......" + this.SCHEMA + "\n");
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_IDIOMA_USUARIO.PROC_AGREGAR_IDIOMA_USUARIO (?,?,?,?,?,?,?)");
-		call.setString("P_FK_TC_IDIOMA_USUARIO_REF_TC_IDIOMA", idiomasUsuario.idioma);
-		call.setString("P_FK_TC_IDIOMA_USUARIO_REF_TC_INFORMACION_PERSONAL_USUARIO", idiomasUsuario.usuario);
+		call.setInt("P_FK_TC_IDIOMA_USUARIO_REF_TC_IDIOMA", idioma);
+		call.setInt("P_FK_TC_IDIOMA_USUARIO_REF_TC_INFORMACION_PERSONAL_USUARIO", usuario);
 		call.setString("P_HABLA", idiomasUsuario.habla);
 		call.setString("P_LEE", idiomasUsuario.lee);
 		call.setString("P_ESCRIBE", idiomasUsuario.escribe);
@@ -74,15 +74,15 @@ public class IdiomaUsuarioManager {
 		return salida;
 	}
 	
-	public jsonResult modIdiomaUsuario(IdiomasPerfilSE idiomaUsuario) throws Exception {
+	public jsonResult modIdiomaUsuario(IdiomasPerfilSE idiomaUsuario, Integer idioma, Integer usuario) throws Exception {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a modificar idioma usuario ......" + this.SCHEMA + "\n");
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_IDIOMA_USUARIO.PROC_ACTUALIZAR_IDIOMA_USUARIO (?,?,?,?,?,?,?)");
-		call.setString("P_FK_TC_IDIOMA_USUARIO_REF_TC_IDIOMA", idiomaUsuario.idioma);
-		call.setString("P_FK_TC_IDIOMA_USUARIO_REF_TC_INFORMACION_PERSONAL_USUARIO", idiomaUsuario.usuario);
+		call.setInt("P_FK_TC_IDIOMA_USUARIO_REF_TC_IDIOMA", idioma);
+		call.setInt("P_FK_TC_IDIOMA_USUARIO_REF_TC_INFORMACION_PERSONAL_USUARIO", usuario);
 		call.setString("P_HABLA", idiomaUsuario.habla);
 		call.setString("P_LEE", idiomaUsuario.lee);
 		call.setString("P_ESCRIBE", idiomaUsuario.escribe);

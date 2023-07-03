@@ -20,7 +20,7 @@ public class FamiliarController {
 	FamiliarManager manager = new FamiliarManager();
 	
 	@GET
-	@Path("/getFamiliares/{usuario}")
+	@Path("/getFamiliares/usuario/{usuario}")
 	@Produces("application/json")
 	public Response getFamiliar(@PathParam("usuario") Integer usuario) {
 		try {
@@ -32,12 +32,12 @@ public class FamiliarController {
 	}
 	
 	@POST
-	@Path("/inFamiliar")
+	@Path("/inFamiliar/usuario/{usaurio}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response inFamiliar(@Context HttpServletRequest req, FamiliaPerfilSE familiar) {
+	public Response inFamiliar(@Context HttpServletRequest req, @PathParam("usuario") Integer usuario, FamiliaPerfilSE familiar) {
 		try {
-			return Response.ok(manager.inFamiliar(familiar)).build();
+			return Response.ok(manager.inFamiliar(familiar, usuario)).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.ok(new jsonResult(-1, "Error", e.getMessage())).build();
@@ -45,12 +45,12 @@ public class FamiliarController {
 	}
 
 	@POST
-	@Path("/modFamiliar")
+	@Path("/modFamiliar/id/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response modFamiliar(@Context HttpServletRequest req, FamiliaPerfilSE familiar) {
+	public Response modFamiliar(@Context HttpServletRequest req, @PathParam("id") Integer id,FamiliaPerfilSE familiar) {
 		try {
-			return Response.ok(manager.modFamiliar(familiar)).build();
+			return Response.ok(manager.modFamiliar(familiar, id)).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.ok(new jsonResult(-1, "Error", e.getMessage())).build();
@@ -58,11 +58,11 @@ public class FamiliarController {
 	}
 	
 	@GET
-	@Path("/borFamiliar/{familiar}")
+	@Path("/borFamiliar/id/{id}")
 	@Produces("application/json")
-	public Response borFamiliar(@PathParam("familiar") Integer familiar) {
+	public Response borFamiliar(@PathParam("id") Integer id) {
 		try {
-			return Response.ok(manager.borFamiliar(familiar)).build();
+			return Response.ok(manager.borFamiliar(id)).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.ok(new jsonResult(-1, "Error", e.getMessage())).build();

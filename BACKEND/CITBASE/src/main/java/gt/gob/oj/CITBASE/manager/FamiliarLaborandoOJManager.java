@@ -25,7 +25,7 @@ public class FamiliarLaborandoOJManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a insertar familiar laborando OJ ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_FAMILIAR_LABORANDO_OJ.PROC_AGREGAR_TC_FAMILIAR_LABORANDO_OJ (?,?,?,?,?,?,?)");
 		call.setString("P_NOMBRE_COMPLETO", familiarLaborandoOJ.nombreCompleto);
 		call.setString("P_PARENTESCO", familiarLaborandoOJ.parentesco);
@@ -49,7 +49,7 @@ public class FamiliarLaborandoOJManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
-				.prepareCall("call " + "C##CIT_BASE" +
+				.prepareCall("call " + "CIT_BASE" +
 						".PKG_TC_FAMILIAR_LABORANDO_OJ.PROC_MOSTRAR_TC_FAMILIARES_LABORANDO_OJ(?,?,?)");
 		call.setInt("P_ID_PERSONA", usuario);
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
@@ -78,7 +78,7 @@ public class FamiliarLaborandoOJManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a modificar informacion academica ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_FAMILIAR_LABORANDO_OJ.PROC_ACTUALIZAR_TC_FAMILIAR_LABORANDO_OJ (?,?,?,?,?,?,?)");
 		call.setInt("P_ID_FAMILIAR_LABORANDO_OJ", id);
 		call.setString("P_NOMBRE_COMPLETO", familiarLaborandoOJ.nombreCompleto);
@@ -102,7 +102,7 @@ public class FamiliarLaborandoOJManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a eliminar informacion academica ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_FAMILIAR_LABORANDO_OJ.PROC_BORRAR_TC_FAMILIAR_LABORANDO_OJ (?,?,?)");
 		call.setInt("P_ID_FAMILIAR_LABORANDO_OJ", id);
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);

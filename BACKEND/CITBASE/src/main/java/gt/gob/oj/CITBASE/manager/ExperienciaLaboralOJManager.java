@@ -25,7 +25,7 @@ public class ExperienciaLaboralOJManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a insertar informacion academica ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_EXPERIENCIA_LABORAL_OJ.PROC_AGREGAR_TC_EXPERIENCIA_LABORAL_OJ (?,?,?,?,?,?,?,?,?,?)");
 		call.setString("P_PUESTO", experienciaLaboralOJ.puesto);
 		call.setString("P_FECHA_INICIO", experienciaLaboralOJ.fechaInicio);
@@ -52,7 +52,7 @@ public class ExperienciaLaboralOJManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
-				.prepareCall("call " + "C##CIT_BASE" +
+				.prepareCall("call " + "CIT_BASE" +
 						".PKG_TC_EXPERIENCIA_LABORAL_OJ.PROC_MOSTRAR_TC_EXPERIENCIA_LABORAL_OJ(?,?,?)");
 		call.setInt("P_ID_PERSONA", usuario);
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
@@ -81,7 +81,7 @@ public class ExperienciaLaboralOJManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a modificar informacion academica ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_EXPERIENCIA_LABORAL_OJ.PROC_ACTUALIZAR_TC_EXPERIENCIA_LABORAL_OJ (?,?,?,?,?,?,?,?,?,?)");
 		call.setInt("P_ID_EXPERIENCIA_LABORAL_OJ", id);
 		call.setString("P_PUESTO", experienciaLaboralOJ.puesto);
@@ -108,7 +108,7 @@ public class ExperienciaLaboralOJManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a eliminar informacion academica ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_EXPERIENCIA_LABORAL_OJ.PROC_BORRAR_TC_EXPERIENCIA_LABORAL_OJ (?,?,?)");
 		call.setInt("P_ID_EXPERIENCIA_LABORAL_OJ", id);
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);

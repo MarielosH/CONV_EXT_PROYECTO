@@ -21,12 +21,12 @@ public class IdiomaPerfilController {
 
 	@POST
 	// @Authorize
-	@Path("/inIdiomaUsuario")
+	@Path("/inIdiomaUsuario/idioma/{idioma}/usuario/{usuario}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response inPerfilSolicitudEmpleo(@Context HttpServletRequest req, IdiomasPerfilSE idiomaUsuario) {
+	public Response inPerfilSolicitudEmpleo(@Context HttpServletRequest req, IdiomasPerfilSE idiomaUsuario, @PathParam("idioma") Integer idioma, @PathParam("usuario") Integer usuario) {
 		try {
-			return Response.ok(manager.inIdiomaUsuario(idiomaUsuario)).build();
+			return Response.ok(manager.inIdiomaUsuario(idiomaUsuario, idioma, usuario)).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.ok(new jsonResult(-1, "Error", e.getMessage())).build();
@@ -35,12 +35,12 @@ public class IdiomaPerfilController {
 
 	@POST
 	// @Authorize
-	@Path("/modIdiomaUsuario")
+	@Path("/modIdiomaUsuario/idioma/{idioma}/usuario/{usuario}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response modIdioma(@Context HttpServletRequest req, IdiomasPerfilSE idiomaUsuario) {
+	public Response modIdioma(@Context HttpServletRequest req, IdiomasPerfilSE idiomaUsuario, @PathParam("idioma") Integer idioma, @PathParam("usuario") Integer usuario) {
 		try {
-			return Response.ok(manager.modIdiomaUsuario(idiomaUsuario)).build();
+			return Response.ok(manager.modIdiomaUsuario(idiomaUsuario, idioma, usuario)).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.ok(new jsonResult(-1, "Error", e.getMessage())).build();
@@ -60,7 +60,7 @@ public class IdiomaPerfilController {
 	}
 	
 	@GET
-	@Path("/modIdiomasUsuario/{usuario}/{idioma}")
+	@Path("/modIdiomasUsuario/idioma/{idioma}/usuario/{usuario}")
 	@Produces("application/json")
 	public Response borIdioma(@PathParam("usuario") Integer usuario, @PathParam("idioma") Integer idioma) {
 		try {

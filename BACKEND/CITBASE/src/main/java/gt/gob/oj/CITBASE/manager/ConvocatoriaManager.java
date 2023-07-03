@@ -20,20 +20,19 @@ import oracle.jdbc.OracleTypes;
 public class ConvocatoriaManager {
 	String SCHEMA = new Config().getDBSchema();
 	
-	public jsonResult inConvocatoria(Convocatoria convocatoria, Integer usuario) throws Exception{
+	public jsonResult inConvocatoria(Convocatoria convocatoria) throws Exception{
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a insertar convocatoria ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
-				+ ".PKG_TC_CONVOCATORIA.PROC_AGREGAR_TC_CONVOCATORIA (?,?,?,?,?,?,?,?,?)");
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
+				+ ".PKG_TC_CONVOCATORIA.PROC_AGREGAR_TC_CONVOCATORIA (?,?,?,?,?,?,?,?)");
 		call.setString("p_titulo", convocatoria.titulo);
 		call.setString("p_descripcion", convocatoria.descripcion);
 		call.setString("p_fecha_inicio_vigencia", convocatoria.fechaInicioVigencia);
 		call.setString("p_fecha_fin_vigencia", convocatoria.fechaFinVigencia);
 		call.setString("p_objetivo", convocatoria.objetivo);
 		call.setString("p_experiencia", convocatoria.experiencia);
-		call.setInt("P_fk_tc_convocatoria_ref_tc_informacion_personal_usuario", usuario);
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
 		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
 	    call.execute();
@@ -46,12 +45,12 @@ public class ConvocatoriaManager {
 		return salida;
 	}
 	
-	public List<Map<String, Object>> getConvocatoria(Integer usuario) throws Exception {
+	public List<Map<String, Object>> getConvocatoria() throws Exception {
 		List<Map<String,Object>> salida = new ArrayList<>();
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
-				.prepareCall("call " + "C##CIT_BASE" +
+				.prepareCall("call " + "CIT_BASE" +
 						".PKG_TC_CONVOCATORIA.PROC_MOSTRAR_TC_CONVOCATORIA(?,?)");
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
 		call.registerOutParameter("P_MSJ", OracleTypes.VARCHAR);
@@ -79,7 +78,7 @@ public class ConvocatoriaManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a modificar convocatoria ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_CONVOCATORIA.PROC_ACTUALIZAR_TC_CONVOCATORIA (?,?,?,?,?,?,?,?,?)");
 		call.setInt("p_id_convocatoria", id);
 		call.setString("p_titulo", convocatoria.titulo);
@@ -105,7 +104,7 @@ public class ConvocatoriaManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a eliminar convocatoria ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_CONVOCATORIA.PROC_BORRAR_TC_CONVOCATORIA (?,?,?)");
 		call.setInt("p_id_convocatoria", id);
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);

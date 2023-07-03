@@ -25,7 +25,7 @@ String SCHEMA = new Config().getDBSchema();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a insertar referencia personal ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_REFERENCIA_PERSONAL.PROC_AGREGAR_TC_REFERENCIA_PERSONAL (?,?,?,?,?,?,?)");
 		call.setString("P_NOMBRE", referenciaPersonal.nombre);
 		call.setString("P_TIPO_RELACION", referenciaPersonal.tipoRelacion);
@@ -49,7 +49,7 @@ String SCHEMA = new Config().getDBSchema();
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
-				.prepareCall("call " + "C##CIT_BASE" +
+				.prepareCall("call " + "CIT_BASE" +
 						".PKG_TC_REFERENCIA_PERSONAL.PROC_MOSTRAR_TC_REFERENCIA_PERSONAL(?,?,?)");
 		call.setInt("P_ID_PERSONA", usuario);
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
@@ -78,7 +78,7 @@ String SCHEMA = new Config().getDBSchema();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a modificar referencia personal ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_REFERENCIA_PERSONAL.PROC_ACTUALIZAR_TC_REFERENCIA_PERSONAL (?,?,?,?,?,?,?)");
 		call.setInt("P_ID_REFERENCIA_PERSONAL", id);
 		call.setString("P_NOMBRE", referenciaPersonal.nombre);
@@ -102,7 +102,7 @@ String SCHEMA = new Config().getDBSchema();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a eliminar referencia personal ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_REFERENCIA_PERSONAL.PROC_BORRAR_TC_REFERENCIA_PERSONAL (?,?,?)");
 		call.setInt("P_ID_REFERENCIA_PERSONAL", id);
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);

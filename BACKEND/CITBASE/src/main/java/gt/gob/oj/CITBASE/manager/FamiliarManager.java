@@ -46,7 +46,7 @@ public class FamiliarManager {
 		return salida;
 	}
 
-	public jsonResult inFamiliar(FamiliaPerfilSE familiar) throws Exception {
+	public jsonResult inFamiliar(FamiliaPerfilSE familiar, Integer usuario) throws Exception {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
@@ -60,7 +60,7 @@ public class FamiliarManager {
 		call.setString("P_TRABAJA", familiar.trabaja);
 		call.setString("P_LUGAR_TRABAJO", familiar.lugarTrabajo);
 		call.setString("P_FK_TC_FAMILIAR_REF_TC_PARENTESCO", familiar.parentesco);
-		call.setString("P_FK_TC_FAMILIAR_REF_TC_INFORMACION_PERSONAL_USUARIO", familiar.usuario);
+		call.setInt("P_FK_TC_FAMILIAR_REF_TC_INFORMACION_PERSONAL_USUARIO", usuario);
 		call.setString("P_DEPENDE_ECONOMICAMENTE", familiar.dependeEconomicamente);
 		call.setString("P_NOMBRE", familiar.nombreFamiliar);
 		call.registerOutParameter("P_ID_SALIDA", OracleTypes.NUMBER);
@@ -75,14 +75,14 @@ public class FamiliarManager {
 		return salida;
 	}
 
-	public jsonResult modFamiliar(FamiliaPerfilSE familiar) throws Exception {
+	public jsonResult modFamiliar(FamiliaPerfilSE familiar, Integer id) throws Exception {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a modificar familiar usuario ......" + this.SCHEMA + "\n");
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE" 
 				+ ".PKG_TC_FAMILIAR.PROC_ACTUALIZAR_TC_FAMILIAR(?,?,?,?,?,?,?,?,?,?,?,?)");
-		call.setString("P_ID_FAMILIAR", familiar.usuario);
+		call.setInt("P_ID_FAMILIAR", id);
 		call.setString("P_PROFESION", familiar.profesion);
 		call.setString("P_FECHA_NACIMIENTO", familiar.fechaNacimiento);
 		call.setString("P_TELEFONO", familiar.telefono);

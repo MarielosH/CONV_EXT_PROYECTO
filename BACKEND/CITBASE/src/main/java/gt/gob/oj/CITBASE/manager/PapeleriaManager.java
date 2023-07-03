@@ -25,7 +25,7 @@ public class PapeleriaManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a insertar papeleria tecnica conv......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_PAPELERIA_REQUERIDA_CONV.PROC_AGREGAR_TC_PAPELERIA_REQUERIDA_CONV (?,?,?,?)");
 		call.setString("p_papeleria", papeleria.papeleria);
 		call.setInt("p_fk_tc_papeleria_requerida_conv_ref_tc_convocatoria", convocatoria);
@@ -46,7 +46,7 @@ public class PapeleriaManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
-				.prepareCall("call " + "C##CIT_BASE" +
+				.prepareCall("call " + "CIT_BASE" +
 						".PKG_TC_PAPELERIA_REQUERIDA_CONV.PROC_MOSTRAR_TC_PAPELERIA_REQUERIDA_CONV(?,?,?)");
 		call.setInt("p_id_conv", convocatoria);
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
@@ -75,7 +75,7 @@ public class PapeleriaManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a modificar papeleria tecnica conv......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_PAPELERIA_REQUERIDA_CONV.PROC_ACTUALIZAR_TC_PAPELERIA_REQUERIDA_CONV (?,?,?,?)");
 		call.setInt("p_id_papeleria_requerida_conv", id);
 		call.setString("p_papeleria", papeleria.papeleria);
@@ -96,7 +96,7 @@ public class PapeleriaManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a eliminar papeleria tecnica conv......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_PAPELERIA_REQUERIDA_CONV.PROC_BORRAR_TC_PAPELERIA_REQUERIDA_CONV (?,?,?)");
 		call.setInt("p_id_papeleria_requerida_conv", id);
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);

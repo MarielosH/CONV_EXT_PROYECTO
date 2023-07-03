@@ -19,7 +19,7 @@ public class ExperienciaLaboralController {
 	ExperienciaLaboralManager manager = new ExperienciaLaboralManager();
 	
 	@POST
-	@Path("/inExperienciaLaboral/{usuario}")
+	@Path("/inExperienciaLaboral/usuario/{usuario}")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response inExperienciaLaboral(@Context HttpServletRequest req, ExperienciaLaboral experienciaLaboral, @PathParam("usuario") Integer usuario) {

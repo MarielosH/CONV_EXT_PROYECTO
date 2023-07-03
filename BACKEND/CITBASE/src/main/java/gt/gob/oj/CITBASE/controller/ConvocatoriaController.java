@@ -19,12 +19,12 @@ public class ConvocatoriaController {
 	ConvocatoriaManager manager = new ConvocatoriaManager();
 	
 	@POST
-	@Path("/inConvocatoria/usuario/{usuario}")
+	@Path("/inConvocatoria")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response inConvocatoria(@Context HttpServletRequest req, Convocatoria convocatoria, @PathParam("usuario") Integer usuario) {
+	public Response inConvocatoria(@Context HttpServletRequest req, Convocatoria convocatoria) {
 		try {
-			return Response.ok(manager.inConvocatoria(convocatoria, usuario)).build();
+			return Response.ok(manager.inConvocatoria(convocatoria)).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.ok(new jsonResult(-1, "Error", e.getMessage())).build();
@@ -45,11 +45,11 @@ public class ConvocatoriaController {
 	}
 	
 	@GET
-	@Path("/getConvocatoria/usuario/{usuario}")
+	@Path("/getConvocatorias")
 	@Produces("application/json")
-	public Response getConvocatoria(@PathParam("usuario") Integer usuario) {
+	public Response getConvocatoria() {
 		try {
-			return Response.ok(manager.getConvocatoria(usuario)).build();
+			return Response.ok(manager.getConvocatoria()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.ok(new jsonResult(-1, "Error", e.getMessage())).build();

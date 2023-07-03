@@ -11,25 +11,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import gt.gob.oj.CITBASE.model.OtroConv;
+import gt.gob.oj.CITBASE.model.EstadoAplicacionConv;
 import gt.gob.oj.utils.Config;
 import gt.gob.oj.utils.ConnectionsPool;
 import gt.gob.oj.utils.jsonResult;
 import oracle.jdbc.OracleTypes;
 
-public class OtroConvManager {
+
+public class EstadoAplicacionConvManager {
 	String SCHEMA = new Config().getDBSchema();
 	
-	public jsonResult inOtroConv(OtroConv otroConv, Integer convocatoria) throws Exception{
+	public jsonResult inEstadoAplicacionConv(EstadoAplicacionConv estadoAplicacionConv, Integer usuario, Integer convocatoria) throws Exception{
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a insertar otro conv......" + this.SCHEMA + "\n");
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
-				+ ".PKG_TC_OTRO_CONV.PROC_AGREGAR_TC_OTRO_CONV (?,?,?,?)");
-		call.setString("p_otro", otroConv.otro);
-		call.setInt("p_fk_tc_otro_conv_ref_tc_convocatoria", convocatoria);
+				+ ".PKG_TC_ESTADO_APLICACION_CONV.PROC_AGREGAR_TC_ESTADO_APLICACION_CONV (?,?,?,?,?)");
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
+		call.setInt("P_FK_TC_ESTADO_APLICACION_CONV_REF_TC_INFORMACION_PERSONAL_USUARIO", usuario);
+		call.setInt("P_FK_TC_ESTADO_APLICACION_CONV_REF_TC_CONV", convocatoria);
+		call.setString("P_ESTADO", estadoAplicacionConv.estado);
 		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
 	    call.execute();
 	    salida.id = call.getInt("p_id_salida");
@@ -41,18 +43,18 @@ public class OtroConvManager {
 		return salida;
 	}
 	
-	public List<Map<String, Object>> getOtroConv(Integer convocatoria) throws Exception {
+	public List<Map<String, Object>> getEstadoAplicacionConv(Integer usuario) throws Exception {
 		List<Map<String,Object>> salida = new ArrayList<>();
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
 				.prepareCall("call " + "CIT_BASE" +
-						".PKG_TC_OTRO_CONV.PROC_MOSTRAR_TC_OTRO_CONV(?,?,?)");
-		call.setInt("p_id_conv", convocatoria);
-		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
-		call.registerOutParameter("P_MSJ", OracleTypes.VARCHAR);
+						".PKG_TC_ESTADO_APLICACION_CONV.PROC_MOSTRAR_TC_ESTADO_APLICACION_CONV_FILTER_USUARIO(?,?,?)");
+		call.setInt("p_id_usuario", usuario);
+		call.registerOutParameter("p_cur_dataset", OracleTypes.CURSOR);
+		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
 		call.execute();
-		ResultSet rset = (ResultSet) call.getObject("P_CUR_DATASET");
+		ResultSet rset = (ResultSet) call.getObject("p_cur_dataset");
 		ResultSetMetaData meta = rset.getMetaData();
 		while (rset.next()) {
 			Map<String, Object> map = new HashMap<>();
@@ -70,16 +72,16 @@ public class OtroConvManager {
 		return salida;
 	}
 	
-	public jsonResult modOtroConv(OtroConv otroConv, Integer id) throws Exception {
+	public jsonResult modEstadoAplicacionConv(EstadoAplicacionConv estadoAplicacionConv, Integer id) throws Exception {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a modificar otro conv......" + this.SCHEMA + "\n");
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
-				+ ".PKG_TC_OTRO_CONV.PROC_ACTUALIZAR_TC_OTRO_CONV (?,?,?,?)");
-		call.setInt("p_id_otro_conv", id);
-		call.setString("p_otro", otroConv.otro);
+				+ ".PKG_TC_ESTADO_APLICACION_CONV.PROC_ACTUALIZAR_TC_ESTADO_APLICACION_CONV (?,?,?,?)");
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
+		call.setInt("P_ID_APLICACION_CONVOCATORIA", id);
+		call.setString("P_ESTADO", estadoAplicacionConv.estado);
 		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
 	    call.execute();
 	    salida.id = call.getInt("p_id_salida");
@@ -91,14 +93,14 @@ public class OtroConvManager {
 		return salida;
 	}
 	
-	public jsonResult modVisibilidadOtroConv(Integer id) throws Exception {
+	public jsonResult modVisibilidadEstadoAplicacionConv(Integer id) throws Exception {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a eliminar otro conv......" + this.SCHEMA + "\n");
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
-				+ ".PKG_TC_OTRO_CONV.PROC_BORRAR_TC_OTRO_CONV (?,?,?)");
-		call.setInt("p_id_otro_conv", id);
+				+ ".PKG_TC_ESTADO_APLICACION_CONV.PROC_BORRAR_TC_ESTADO_APLICACION_CONV (?,?,?)");
+		call.setInt("P_ID_APLICACION_CONVOCATORIA", id);
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
 		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
 	    call.execute();

@@ -26,7 +26,7 @@ public class HabilidadHumanaManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a insertar habilidad humana conv......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_HABILIDAD_HUMANA_CONV.PROC_AGREGAR_TC_HABILIDAD_HUMANA_CONV (?,?,?,?)");
 		call.setString("p_habilidad_humana", habilidadHumana.habilidadHumana);
 		call.setInt("p_fk_tc_habilidad_humana_conv_ref_tc_convocatoria", convocatoria);
@@ -47,7 +47,7 @@ public class HabilidadHumanaManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
-				.prepareCall("call " + "C##CIT_BASE" +
+				.prepareCall("call " + "CIT_BASE" +
 						".PKG_TC_HABILIDAD_HUMANA_CONV.PROC_MOSTRAR_TC_HABILIDAD_HUMANA_CONV(?,?,?)");
 		call.setInt("p_id_conv", convocatoria);
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
@@ -76,7 +76,7 @@ public class HabilidadHumanaManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a modificar habilidad humana conv......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_HABILIDAD_HUMANA_CONV.PROC_ACTUALIZAR_TC_HABILIDAD_HUMANA_CONV (?,?,?,?)");
 		call.setInt("p_id_habilidad_humana_conv", id);
 		call.setString("p_habilidad_humana", habilidadHumana.habilidadHumana);
@@ -97,7 +97,7 @@ public class HabilidadHumanaManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a eliminar habilidad humana conv......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_HABILIDAD_HUMANA_CONV.PROC_BORRAR_TC_HABILIDAD_HUMANA_CONV (?,?,?)");
 		call.setInt("p_id_habilidad_humana_conv", id);
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);

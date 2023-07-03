@@ -21,12 +21,12 @@ import oracle.jdbc.OracleTypes;
 public class InformacionAcademicaManager {
 	String SCHEMA = new Config().getDBSchema();
 
-	public jsonResult inInformacionAcademica(InformacionAcademica informacionAcademica) throws Exception{
+	public jsonResult inInformacionAcademica(InformacionAcademica informacionAcademica, Integer usuario) throws Exception{
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a insertar informacion academica ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_INFORMACION_ACADEMICA.PROC_AGREGAR_TC_INFORMACION_ACADEMICA (?,?,?,?,?,?,?,?,?)");
 		call.setString("P_NIVEL_ACADEMICO", informacionAcademica.nivelAcademico);
 		call.setString("P_GRADO_APROBADO", informacionAcademica.gradoAprobado);
@@ -34,7 +34,7 @@ public class InformacionAcademicaManager {
 		call.setString("P_CONTANCIA", informacionAcademica.constancia);
 		call.setString("P_ANIO_GRADUACION", informacionAcademica.anioGraduacion);
 		call.setString("P_CARRERA", informacionAcademica.carrera);
-		call.setString("P_FK_TC_INFORMACION_ACADEMICA_REF_TC_INFORMACION_PERSONAL_USUARIO", informacionAcademica.usuario);
+		call.setInt("P_FK_TC_INFORMACION_ACADEMICA_REF_TC_INFORMACION_PERSONAL_USUARIO", usuario);
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
 		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
 	    call.execute();
@@ -52,7 +52,7 @@ public class InformacionAcademicaManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
-				.prepareCall("call " + "C##CIT_BASE" +
+				.prepareCall("call " + "CIT_BASE" +
 						".PKG_TC_INFORMACION_ACADEMICA.PROC_MOSTRAR_TC_INFORMACION_ACADEMICA(?,?,?)");
 		call.setInt("P_ID_PERSONA", Usuario);
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
@@ -76,14 +76,14 @@ public class InformacionAcademicaManager {
 		return salida;
 	}
 	
-	public jsonResult modInformacionAcademica(InformacionAcademica informacionAcademica) throws Exception {
+	public jsonResult modInformacionAcademica(InformacionAcademica informacionAcademica, Integer id) throws Exception {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a modificar informacion academica ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_INFORMACION_ACADEMICA.PROC_ACTUALIZAR_TC_INFORMACION_ACADEMICA (?,?,?,?,?,?,?,?,?)");
-		call.setString("P_ID_INFORMACION_ACADEMICA", informacionAcademica.informacionAcademica);
+		call.setInt("P_ID_INFORMACION_ACADEMICA", id);
 		call.setString("P_NIVEL_ACADEMICO", informacionAcademica.nivelAcademico);
 		call.setString("P_GRADO_APROBADO", informacionAcademica.gradoAprobado);
 		call.setString("P_INSTITUCION_ESTUDIO", informacionAcademica.institucionEstudio);
@@ -102,14 +102,14 @@ public class InformacionAcademicaManager {
 		return salida;
 	}
 	
-	public jsonResult modVisibilidadInformacionAcademica(Integer usuario) throws Exception {
+	public jsonResult modVisibilidadInformacionAcademica(Integer id) throws Exception {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a eliminar informacion academica ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_INFORMACION_ACADEMICA.PROC_BORRAR_TC_INFORMACION_ACADEMICA (?,?,?)");
-		call.setInt("P_ID_INFORMACION_ACADEMICA", usuario);
+		call.setInt("P_ID_INFORMACION_ACADEMICA", id);
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
 		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
 	    call.execute();
