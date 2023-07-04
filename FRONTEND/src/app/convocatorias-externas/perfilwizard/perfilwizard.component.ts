@@ -351,6 +351,8 @@ export class PerfilwizardComponent implements OnInit {
         data => {
           this.listaParentescos = data;
         });
+        console.log("parentescos");
+        console.log(this.listaParentescos);
   }
 
   agregarIdioma() {
@@ -578,7 +580,7 @@ export class PerfilwizardComponent implements OnInit {
   buscarparentesco(id): string {
     if (this.listaParentescos != null && this.listaParentescos.length > 0) {
       let encontrado = this.listaParentescos.find(x => x.ID == id);
-      return encontrado != null ? encontrado.PARENTEZCO : '';
+      return encontrado != null ? encontrado.PARENTESCO : '';
     }
     return '';
   }
@@ -619,7 +621,7 @@ export class PerfilwizardComponent implements OnInit {
       if (this.valDatesPasantias()) {
         swal("Fecha Inválida", "Fecha Finalización de Pasantía no puede ser anterior a Fecha de Inicio de Pasantía.", "info")
       }
-      return this.datePipe.transform(dateString, 'yyyy-MM-dd')
+      return this.datePipe.transform(dateString, 'dd/MM/yyyy')
     } else {
       return null;
     }
@@ -647,7 +649,7 @@ export class PerfilwizardComponent implements OnInit {
       if (this.valDatesExperienciaLaboralOJ()) {
         swal("Fecha Inválida", "Fecha Finalización Experiencia Laboral OJ no puede ser anterior a Fecha de Inicio Experiencia Laboral OJ.", "info")
       }
-      return this.datePipe.transform(dateString, 'yyyy-MM-dd')
+      return this.datePipe.transform(dateString, 'dd/MM/yyyy')
     } else {
       return null;
     }
@@ -675,7 +677,7 @@ export class PerfilwizardComponent implements OnInit {
       if (this.valDatesExperienciaLaboral()) {
         swal("Fecha Inválida", "Fecha Finalización Experiencia Laboral no puede ser anterior a Fecha de Inicio Experiencia Laboral.", "info")
       }
-      return this.datePipe.transform(dateString, 'yyyy-MM-dd')
+      return this.datePipe.transform(dateString, 'dd/MM/yyyy')
     } else {
       return null;
     }
@@ -700,7 +702,7 @@ export class PerfilwizardComponent implements OnInit {
 
   parseDate(dateString: any): any {
     if (dateString) {
-      return this.datePipe.transform(dateString, 'yyyy-MM-dd')
+      return this.datePipe.transform(dateString, 'dd/MM/yyyy')
     } else {
       return null;
     }
@@ -740,12 +742,13 @@ export class PerfilwizardComponent implements OnInit {
   guardarData() {
     let PerfilUsuario = {
       NOMBRE: this.firstFormGroup.value.nombres.toUpperCase(),
-      PRIMER_APELLDO: this.firstFormGroup.value.primerApellido.toUpperCase(),
+      PRIMER_APELLIDO: this.firstFormGroup.value.primerApellido.toUpperCase(),
       SEGUNDO_APELLIDO: this.firstFormGroup.value.segundoApellido.toUpperCase(),
       FECHA_NACIMIENTO: this.parseDate(this.firstFormGroup.value.fechaNac),
       EDAD: this.firstFormGroup.value.edad,
       SEXO: this.firstFormGroup.value.sexo,
-      ESTADO_CIVIL: this.firstFormGroup.value.estadoCivilAspirante,
+      //ESTADO_CIVIL: this.firstFormGroup.value.estadoCivilAspirante,
+      ESTADO_CIVIL: 1,
       NACIONALIDAD: this.firstFormGroup.value.nacionalidad.toUpperCase(),
       PROFESION: this.firstFormGroup.value.profesion.toUpperCase(),
       DIRECCION: this.firstFormGroup.value.direccion.toUpperCase(),
