@@ -13,7 +13,8 @@ export interface Familiar {
     vive: string,
     profesion: string, 
     trabaja: string,
-    lugarTrabajo: string
+    lugarTrabajo: string,
+    dependeEconomicamente: string
 }
 
 export interface FamiliarLaborandoOJ {

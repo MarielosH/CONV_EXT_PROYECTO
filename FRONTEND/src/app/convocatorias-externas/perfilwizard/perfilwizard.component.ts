@@ -82,6 +82,7 @@ export class PerfilwizardComponent implements OnInit {
   profesionFamiliar;
   trabajaFamiliar;
   lugarTrabajoFamiliar;
+  dependeEconomicamente;
   isLinear = true;
   idiomas: Idioma[] = [];
   nuevoIdioma: Idioma;
@@ -105,7 +106,6 @@ export class PerfilwizardComponent implements OnInit {
   listaDependientes = [];
   listarazaPerfil;
   listaComunidadesLinguisticas;
-  hijos;
   noHijo;
   dependientes;
   nombreFamiliar;
@@ -221,7 +221,6 @@ export class PerfilwizardComponent implements OnInit {
     });
 
     this.thirdFormGroup = this.fb.group({
-      hijos: [''],
       noHijo: [''],
       dependientes: [''],
       parentesco: [''],
@@ -231,7 +230,8 @@ export class PerfilwizardComponent implements OnInit {
       viveFamiliar: [''],
       profesionFamiliar: [''],
       trabajaFamiliar: [''],
-      lugarTrabajoFamiliar: ['']
+      lugarTrabajoFamiliar: [''],
+      dependeEconomicamente: ['']
     });
 
     this.fourthFormGroup = this.fb.group({
@@ -387,11 +387,12 @@ export class PerfilwizardComponent implements OnInit {
         vive: this.thirdFormGroup.value.viveFamiliar,
         profesion: this.thirdFormGroup.value.profesionFamiliar,
         trabaja: this.thirdFormGroup.value.trabajaFamiliar,
-        lugarTrabajo: this.thirdFormGroup.value.lugarTrabajoFamiliar
+        lugarTrabajo: this.thirdFormGroup.value.lugarTrabajoFamiliar,
+        dependeEconomicamente: this.thirdFormGroup.value.dependeEconomicamente
       };
+
       this.familiares.push(this.nuevoFamiliar);
       this.thirdFormGroup = this.fb.group({
-        hijos: [this.thirdFormGroup.value.hijos],
         noHijo: [this.thirdFormGroup.value.noHijo],
         dependientes: [''],
         parentesco: [''],
@@ -401,7 +402,8 @@ export class PerfilwizardComponent implements OnInit {
         viveFamiliar: [''],
         profesionFamiliar: [''],
         trabajaFamiliar: [''],
-        lugarTrabajoFamiliar: ['']
+        lugarTrabajoFamiliar: [''],
+        dependeEconomicamente: ['']
       });
     }
 
@@ -560,21 +562,6 @@ export class PerfilwizardComponent implements OnInit {
       return encontrado != null ? encontrado.COMUNIDAD : '';
     }
     return '';
-  }
-
-  buscarDependientes(id): string {
-    switch (id) {
-      case 0:
-        return 'Hijos'
-      case 1:
-        return 'Padre'
-      case 2:
-        return 'Madre'
-      case 3:
-        return 'Otro'
-      default:
-        return ''
-    }
   }
 
   buscarparentesco(id): string {
@@ -765,8 +752,7 @@ export class PerfilwizardComponent implements OnInit {
       DISCAPACIDAD: this.firstFormGroup.value.discapacidad,
       ETNIA: this.secondFormGroup.value.etnia,
       COMUNIDAD_LINGUISTICA: this.secondFormGroup.value.comunidadLinguistica,
-      TIENE_HIJOS: this.thirdFormGroup.value.hijos,
-      NO_HIJOS: this.thirdFormGroup.value.hijos,
+      NO_HIJOS: this.thirdFormGroup.value.no_hijo,
       NIVEL_APRIMARIA: this.fifthFormGroup.value.nivelAcademicoPrimaria.toUpperCase(),
       NIVEL_ABASICOS: this.fifthFormGroup.value.nivelAcademicoBasicos.toUpperCase(),
       NIVEL_ADIVERSIFICADO: this.fifthFormGroup.value.nivelAcademicoDiversificado.toUpperCase(),
