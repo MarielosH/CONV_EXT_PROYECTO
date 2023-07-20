@@ -84,6 +84,19 @@ public class ConvocatoriasExternasController {
 	}
 	
 	@GET
+	@Path("/getPerfilSolicitudDpi/{dpi}")
+	@Produces("application/json")
+	public Response getPerfilSolicitudDpi(@PathParam("dpi") String dpi) {
+		try {
+			return Response.ok(manager.getPerfilSolicitudDpi(dpi)).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.ok(new jsonResult(-1, "Error", e.getMessage())).build();
+		}
+	}
+	
+	
+	@GET
 	@Path("/getParentesco")
 	@Produces("application/json")
 	public Response getParentesco() {
