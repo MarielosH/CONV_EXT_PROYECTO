@@ -107,4 +107,28 @@ public class ConvocatoriasExternasController {
 		}
 	}
 
+	@GET
+	@Path("/getIdiomas")
+	@Produces("application/json")
+	public Response getIdiomas() {
+		try {
+			return Response.ok(manager.getIdiomas()).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.ok(new jsonResult(-1, "Error", e.getMessage())).build();
+		}
+	}
+
+	@GET
+	@Path("/getEstadoCivil")
+	@Produces("application/json")
+	public Response getEstadoCivil() {
+		try {
+			return Response.ok(manager.getEstadoCivil()).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.ok(new jsonResult(-1, "Error", e.getMessage())).build();
+		}
+	}
+
 }
