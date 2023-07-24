@@ -19,7 +19,7 @@ public class HabilidadTecnicaController {
 	HabilidadTecnicaManager manager = new HabilidadTecnicaManager();
 	
 	@POST
-	@Path("/inHabilidadTecnica/convocatoria/{convocatoria}")
+	@Path("/in/convocatoria/{convocatoria}")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response inHabilidadTecnica(@Context HttpServletRequest req, HabilidadTecnica HabilidadTecnica, @PathParam("convocatoria") Integer convocatoria) {
@@ -32,7 +32,7 @@ public class HabilidadTecnicaController {
 	}
 	
 	@POST
-	@Path("/modHabilidadTecnica/id/{id}")
+	@Path("/mod/id/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response modHabilidadTecnica(@Context HttpServletRequest req, HabilidadTecnica HabilidadTecnica, @PathParam("id") Integer id) {
@@ -45,7 +45,7 @@ public class HabilidadTecnicaController {
 	}
 	
 	@GET
-	@Path("/getHabilidadTecnica/convocatoria/{convocatoria}")
+	@Path("/get/convocatoria/{convocatoria}")
 	@Produces("application/json")
 	public Response getHabilidadTecnica(@PathParam("convocatoria") Integer convocatoria) {
 		try {
@@ -57,7 +57,7 @@ public class HabilidadTecnicaController {
 	}
 	
 	@GET
-	@Path("/borHabilidadTecnica/id/{id}")
+	@Path("/bor/id/{id}")
 	@Produces("application/json")
 	public Response borHabilidadTecnica(@PathParam("id") Integer id) {
 		try {

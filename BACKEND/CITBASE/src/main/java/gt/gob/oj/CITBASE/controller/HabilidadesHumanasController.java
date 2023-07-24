@@ -19,7 +19,7 @@ public class HabilidadesHumanasController {
 	HabilidadHumanaManager manager = new HabilidadHumanaManager();
 	
 	@POST
-	@Path("/inHabilidadHumana/convocatoria/{convocatoria}")
+	@Path("/in/convocatoria/{convocatoria}")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response inHabilidadesHumanas(@Context HttpServletRequest req, HabilidadesHumanas habilidadesHumanas, @PathParam("convocatoria") Integer convocatoria) {
@@ -32,7 +32,7 @@ public class HabilidadesHumanasController {
 	}
 	
 	@POST
-	@Path("/modHabilidadHumana/id/{id}")
+	@Path("/mod/id/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response modHabilidadesHumanas(@Context HttpServletRequest req, HabilidadesHumanas habilidadesHumanas, @PathParam("id") Integer id) {
@@ -45,7 +45,7 @@ public class HabilidadesHumanasController {
 	}
 	
 	@GET
-	@Path("/getHabilidadHumana/convocatoria/{convocatoria}")
+	@Path("/get/convocatoria/{convocatoria}")
 	@Produces("application/json")
 	public Response getHabilidadesHumanas(@PathParam("convocatoria") Integer convocatoria) {
 		try {
@@ -57,7 +57,7 @@ public class HabilidadesHumanasController {
 	}
 	
 	@GET
-	@Path("/borHabilidadHumana/id/{id}")
+	@Path("/bor/id/{id}")
 	@Produces("application/json")
 	public Response borHabilidadesHumanas(@PathParam("id") Integer id) {
 		try {

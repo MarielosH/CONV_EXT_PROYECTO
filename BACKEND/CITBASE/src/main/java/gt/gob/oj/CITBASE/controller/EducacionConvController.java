@@ -19,7 +19,7 @@ public class EducacionConvController {
 	EducacionConvManager manager = new EducacionConvManager();
 	
 	@POST
-	@Path("/inEducacionConv/convocatoria/{convocatoria}")
+	@Path("/in/convocatoria/{convocatoria}")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response inEducacionConv(@Context HttpServletRequest req, EducacionConv educacionConv, @PathParam("convocatoria") Integer convocatoria) {
@@ -32,7 +32,7 @@ public class EducacionConvController {
 	}
 	
 	@POST
-	@Path("/modEducacionConv/id/{id}")
+	@Path("/mod/id/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response modEducacionConv(@Context HttpServletRequest req, EducacionConv educacionConv, @PathParam("id") Integer id) {
@@ -45,7 +45,7 @@ public class EducacionConvController {
 	}
 	
 	@GET
-	@Path("/getEducacionConv/convocatoria/{convocatoria}")
+	@Path("/get/convocatoria/{convocatoria}")
 	@Produces("application/json")
 	public Response getEducacionConv(@PathParam("convocatoria") Integer convocatoria) {
 		try {
@@ -57,7 +57,7 @@ public class EducacionConvController {
 	}
 	
 	@GET
-	@Path("/borEducacionConv/id/{id}")
+	@Path("/bor/id/{id}")
 	@Produces("application/json")
 	public Response borEducacionConv(@PathParam("id") Integer id) {
 		try {

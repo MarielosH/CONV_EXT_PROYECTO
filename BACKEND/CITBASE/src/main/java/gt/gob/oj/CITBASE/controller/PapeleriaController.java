@@ -19,7 +19,7 @@ public class PapeleriaController {
 	PapeleriaManager manager = new PapeleriaManager();
 	
 	@POST
-	@Path("/inPapeleria/convocatoria/{convocatoria}")
+	@Path("/in/convocatoria/{convocatoria}")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response inPapeleria(@Context HttpServletRequest req, Papeleria papeleria, @PathParam("convocatoria") Integer convocatoria) {
@@ -32,7 +32,7 @@ public class PapeleriaController {
 	}
 	
 	@POST
-	@Path("/modPapeleria/id/{id}")
+	@Path("/mod/id/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response modPapeleria(@Context HttpServletRequest req, Papeleria papeleria, @PathParam("id") Integer id) {
@@ -45,7 +45,7 @@ public class PapeleriaController {
 	}
 	
 	@GET
-	@Path("/getPapeleria/convocatoria/{convocatoria}")
+	@Path("/get/convocatoria/{convocatoria}")
 	@Produces("application/json")
 	public Response getPapeleria(@PathParam("convocatoria") Integer convocatoria) {
 		try {
@@ -57,7 +57,7 @@ public class PapeleriaController {
 	}
 	
 	@GET
-	@Path("/borPapeleria/id/{id}")
+	@Path("/bor/id/{id}")
 	@Produces("application/json")
 	public Response borPapeleria(@PathParam("id") Integer id) {
 		try {

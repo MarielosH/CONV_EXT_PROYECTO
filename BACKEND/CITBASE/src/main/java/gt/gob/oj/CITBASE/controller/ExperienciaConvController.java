@@ -19,7 +19,7 @@ public class ExperienciaConvController {
 	ExperienciaConvManager manager = new ExperienciaConvManager();
 	
 	@POST
-	@Path("/inExperienciaConv/convocatoria/{convocatoria}")
+	@Path("/in/convocatoria/{convocatoria}")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response inExperienciaConv(@Context HttpServletRequest req, ExperienciaConv experienciaConv, @PathParam("convocatoria") Integer convocatoria) {
@@ -32,7 +32,7 @@ public class ExperienciaConvController {
 	}
 	
 	@POST
-	@Path("/modExperienciaConv/id/{id}")
+	@Path("/mod/id/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response modExperienciaConv(@Context HttpServletRequest req, ExperienciaConv experienciaConv, @PathParam("id") Integer id) {
@@ -45,7 +45,7 @@ public class ExperienciaConvController {
 	}
 	
 	@GET
-	@Path("/getExperienciaConv/convocatoria/{convocatoria}")
+	@Path("/get/convocatoria/{convocatoria}")
 	@Produces("application/json")
 	public Response getExperienciaConv(@PathParam("convocatoria") Integer convocatoria) {
 		try {
@@ -57,7 +57,7 @@ public class ExperienciaConvController {
 	}
 	
 	@GET
-	@Path("/borExperienciaConv/id/{id}")
+	@Path("/bor/id/{id}")
 	@Produces("application/json")
 	public Response borExperienciaConv(@PathParam("id") Integer id) {
 		try {

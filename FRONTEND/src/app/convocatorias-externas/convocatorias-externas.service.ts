@@ -52,6 +52,12 @@ export class ConvocatoriasExternasService {
       );
   }
 
+  insConvocatoria(convVal): Observable<any> {
+    return this.http.post<any>(this.appSettings.restApiServiceBaseUri + 'Convocatoria/inConvocatoria', convVal)
+      .pipe(
+        catchError(this.handleError('insConvocatoria', []))
+      );
+  }
 
   constructor(private http: HttpClient, private appSettings: AppconfigService) { }
   private handleError<T>(operation = 'operation', result?: T) {

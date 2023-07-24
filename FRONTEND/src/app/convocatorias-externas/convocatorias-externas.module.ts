@@ -18,6 +18,7 @@ import { ListaJefevComponent } from './lista-jefev/lista-jefev.component';
 import { BandejaComponent } from './bandeja/bandeja.component';
 import { VerPerfilesComponent } from './ver-perfiles/ver-perfiles.component';
 import { PerfilwizardComponent } from './perfilwizard/perfilwizard.component';
+import { DetalleConvocatoriaComponent } from './detalle-convocatoria/detalle-convocatoria.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { PerfilwizardComponent } from './perfilwizard/perfilwizard.component';
   ListaJefevComponent,
   BandejaComponent,
   VerPerfilesComponent,
-  PerfilwizardComponent],
+  PerfilwizardComponent,
+  DetalleConvocatoriaComponent],
   imports: [
     CommonModule,
     ConvocatoriasExternasRoutingModule,
