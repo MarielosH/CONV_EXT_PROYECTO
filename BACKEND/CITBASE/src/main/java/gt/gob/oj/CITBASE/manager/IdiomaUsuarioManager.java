@@ -50,6 +50,22 @@ public class IdiomaUsuarioManager {
 		return salida;
 	}
 	
+	public String calificacionIdioma(Integer id) {
+		switch (id) {
+		case 0:
+			return "E";
+		case 1:
+			return "MB";
+		case 2:
+			return "B";
+		case 3:
+			return "R";
+
+		default:
+			return "B";
+		}
+	}
+	
 	public jsonResult inIdiomaUsuario(IdiomasPerfilSE idiomasUsuario, Integer idioma, Integer usuario) throws Exception {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
@@ -59,9 +75,9 @@ public class IdiomaUsuarioManager {
 				+ ".PKG_TC_IDIOMA_USUARIO.PROC_AGREGAR_IDIOMA_USUARIO (?,?,?,?,?,?,?)");
 		call.setInt("P_FK_TC_IDIOMA_USUARIO_REF_TC_IDIOMA", idioma);
 		call.setInt("P_FK_TC_IDIOMA_USUARIO_REF_TC_INFORMACION_PERSONAL_USUARIO", usuario);
-		call.setString("P_HABLA", idiomasUsuario.habla);
-		call.setString("P_LEE", idiomasUsuario.lee);
-		call.setString("P_ESCRIBE", idiomasUsuario.escribe);
+		call.setString("P_HABLA", calificacionIdioma(idiomasUsuario.habla));
+		call.setString("P_LEE", calificacionIdioma(idiomasUsuario.lee));
+		call.setString("P_ESCRIBE", calificacionIdioma(idiomasUsuario.escribe));
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
 		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
 	    call.execute();
@@ -69,7 +85,7 @@ public class IdiomaUsuarioManager {
 	    salida.msj = call.getString("p_msj");
 	    if (salida.id > 0)
 		      salida.result = "OK"; 
-			  System. out. println("todo ok......"+this.SCHEMA+"\n");
+			  System. out. println("todo ok idioma usuario ......"+this.SCHEMA+"\n");
 		    call.close();
 		return salida;
 	}
@@ -83,9 +99,9 @@ public class IdiomaUsuarioManager {
 				+ ".PKG_TC_IDIOMA_USUARIO.PROC_ACTUALIZAR_IDIOMA_USUARIO (?,?,?,?,?,?,?)");
 		call.setInt("P_FK_TC_IDIOMA_USUARIO_REF_TC_IDIOMA", idioma);
 		call.setInt("P_FK_TC_IDIOMA_USUARIO_REF_TC_INFORMACION_PERSONAL_USUARIO", usuario);
-		call.setString("P_HABLA", idiomaUsuario.habla);
-		call.setString("P_LEE", idiomaUsuario.lee);
-		call.setString("P_ESCRIBE", idiomaUsuario.escribe);
+		call.setString("P_HABLA", calificacionIdioma(idiomaUsuario.habla));
+		call.setString("P_LEE", calificacionIdioma(idiomaUsuario.lee));
+		call.setString("P_ESCRIBE", calificacionIdioma(idiomaUsuario.escribe));
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
 		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
 	    call.execute();

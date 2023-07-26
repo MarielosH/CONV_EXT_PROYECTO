@@ -82,7 +82,7 @@ public class ExperienciaLaboralManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
-		System.out.println("dentro de llamar a modificar informacion academica ......" + this.SCHEMA + "\n");
+		System.out.println("dentro de llamar a modificar experiencia laboral......" + this.SCHEMA + "\n");
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_EXPERIENCIA_LABORAL.PROC_ACTUALIZAR_TC_EXPERIENCIA_LABORAL (?,?,?,?,?,?,?,?,?,?,?)");
 		call.setInt("P_ID_EXPERIENCIA_LABORAL", id);

@@ -276,10 +276,15 @@
             <thead>
               <tr>
                 <td class="text-center" style="width: 250px;">
-                  <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                    <input matInput formControlName="idioma1" type="text" placeholder="Idioma">
+                  <mat-form-field>                   
+                    <mat-select placeholder="IDIOMA" formControlName="idioma1" >
+                      <mat-option *ngFor="let idiomaE of listaIdiomasExtranjeros"
+                        [value]="idiomaE.ID_IDIOMA" style="font-size: 12px;">
+                        {{idiomaE.IDIOMA}}</mat-option>
+                    </mat-select>
                     <mat-hint style="color:red;" *ngIf="validaIdioma()"> Error Idioma ya Existente </mat-hint>
                   </mat-form-field>
+
                 </td>
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field>
@@ -321,9 +326,14 @@
             <tbody *ngIf="idiomas.length>0">
               <tr *ngFor="let d of idiomas; let index = index" disabled>
                 <td class="text-center" style="width: 250px;">
-                  <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                    <input matInput [value]="d.idioma" type="text" placeholder="Idioma" disabled>
-                  </mat-form-field>
+                    <mat-form-field [floatLabel]="floatLabelControl.value">
+                      <mat-label style="font-size: 14px;">IDIOMA</mat-label>
+                      <mat-select disabled [value]="d.idiomaId">
+                        <mat-option *ngFor="let idiomaE of listaIdiomasExtranjeros" [value]="idiomaE.ID_IDIOMA"
+                          style="font-size: 12px;">
+                          {{idiomaE.IDIOMA}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
                 </td>
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field>

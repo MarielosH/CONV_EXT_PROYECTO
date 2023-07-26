@@ -20,6 +20,7 @@ import gt.gob.oj.CITBASE.model.PasantiasOJ;
 import gt.gob.oj.CITBASE.model.PerfilSolicitudEmpleo;
 import gt.gob.oj.CITBASE.model.ReferenciasPersonales;
 import gt.gob.oj.CITBASE.model.Usuario;
+import gt.gob.oj.CITBASE.manager.*;
 //import gt.gob.oj.SIGMA.model.Vinculacion;
 import gt.gob.oj.utils.Config;
 import gt.gob.oj.utils.ConnectionsPool;
@@ -28,6 +29,14 @@ import oracle.jdbc.OracleTypes;
 
 public class ConvocatoriasExternasManager {
 	String SCHEMA = new Config().getDBSchema();
+	IdiomaUsuarioManager idiomaUsuarioManager = new IdiomaUsuarioManager();
+	FamiliarManager familiarManager = new FamiliarManager();
+	FamiliarLaborandoOJManager familiarLaborandoManager = new FamiliarLaborandoOJManager();
+	PasantiaOJManager pasantiaManager = new PasantiaOJManager();
+	ExperienciaLaboralManager experienciaLaboralManager = new ExperienciaLaboralManager();
+	ExperienciaLaboralOJManager experienciaLaboralOJManager = new ExperienciaLaboralOJManager();
+	ReferenciaPersonalManager referenciaPersonalManager = new ReferenciaPersonalManager();
+	
 
 	public Map<String, Object> getConvocatoriasExternas() throws Exception {
 		Map<String, Object> salida = new HashMap<String, Object>();
@@ -158,202 +167,221 @@ public class ConvocatoriasExternasManager {
 		return salida;
 	}
 
+
+	
 	public jsonResult inPerfilSolicitudEmpleo(PerfilSolicitudEmpleo perfil) throws Exception {
-		//verificar existencia de usuario por dpi
+		// verificar existencia de usuario por dpi
 		jsonResult salida = new jsonResult();
 		List<Map<String, Object>> perfilExistente = getPerfilSolicitudDpi(perfil.DPI);
 		System.out.println("dentro get usuario ......" + perfilExistente.get(0) + "\n");
-		
+
 		Integer idUsuario = Integer.parseInt(perfilExistente.get(0).get("ID_INFORMACION_PERSONAL_USUARIO").toString());
 		System.out.println("ID PERFIL USUARIO ......" + idUsuario + "\n");
-		
+
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
-		
-		//insertar familiar
-		for (FamiliaPerfilSE familiar : perfil.FAMILIARES) {
-			CallableStatement call = conn.prepareCall("call " + this.SCHEMA + ".PKG_TC_FAMILIAR.PROC_AGREGAR_TC_FAMILIAR (?,?,?,?,?,?,?,?,?,?,?,?)");
-			call.setString("P_PROFESION", familiar.profesion);
-			call.setString("P_FECHA_NACIMIENTO", familiar.fechaNacimiento);
-			call.setString("P_TELEFONO", familiar.telefono);
-			call.setString("P_VIVE", familiar.vive);			
-			call.setString("P_TRABAJA", familiar.trabaja);
-			call.setString("P_LUGAR_TRABAJO", familiar.lugarTrabajo);
-			call.setString("P_FK_TC_FAMILIAR_REF_TC_PARENTESCO", familiar.parentesco);
-			call.setInt("P_FK_TC_FAMILIAR_REF_TC_INFORMACION_PERSONAL_USUARIO",idUsuario);
-			call.setString("P_DEPENDE_ECONOMICAMENTE", "1");
-			call.setString("P_NOMBRE", familiar.nombreFamiliar);
+
+		// usuario nuevo
+		if (perfilExistente.size() == 0) {
+			System.out.println("dentro de llamar a insertar perfil usuario ......" + this.SCHEMA + "\n");
+			CallableStatement call = conn.prepareCall("call " + this.SCHEMA
+					+ ".PKG_TC_INFORMACION_PERSONAL_USUARIO.PROC_AGREGAR_INFORMACION_PERSONAL (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+
+			call.setString("P_NOMBRE", perfil.NOMBRE);
+			call.setString("P_PRIMER_APELLIDO", perfil.PRIMER_APELLIDO);
+			call.setString("P_SEGUNDO_APELLIDO", perfil.SEGUNDO_APELLIDO);
+			call.setString("P_FECHA_NACIMIENTO", perfil.FECHA_NACIMIENTO);
+			call.setInt("P_EDAD", perfil.EDAD);
+			call.setString("P_SEXO", perfil.SEXO);
+			call.setString("P_PROFESION", perfil.PROFESION);
+			call.setInt("P_ID_ESTADO_CIVIL", perfil.ESTADO_CIVIL);
+			call.setString("P_NACIONALIDAD", perfil.NACIONALIDAD);
+			call.setString("P_DIRECCION", perfil.DIRECCION);
+			call.setInt("P_ID_MUNICIPIO", perfil.MUNICIPIO);
+			call.setInt("P_ID_DEPARTAMENTO", perfil.DEPARTAMENTO);
+			call.setString("P_CORREO", perfil.CORREO);
+			call.setString("P_TELEFONO_CASA", perfil.TELEFONO_CASA);
+			call.setString("P_TELEFONO_CELULAR", perfil.TELEFONO_CELULAR);
+			call.setString("P_DPI", perfil.DPI);
+			call.setString("P_FECHA_VENCIMIENTO_DPI", perfil.FECHA_VENC_DPI);
+			call.setString("P_NIT", perfil.NIT);
+			call.setString("P_NUMERO_LICENCIA", perfil.NUMERO_LICENCIA);
+			call.setString("P_CLASE_LICENCIA", perfil.CLASE_LICENCIA);
+			call.setString("P_FECHA_VENCIMIENTO_LICENCIA", perfil.FECHA_VENC_DPI);
+			call.setInt("P_DOSIS_VACUNAS_COVID", 2);
+			call.setInt("P_ID_TIPO_VACUNA_COVID", 1);
+			call.setInt("P_ID_DISCAPACIDAD", Integer.parseInt(perfil.DISCAPACIDAD));
+			call.setInt("P_FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_ESTADO_CIVIL", perfil.ESTADO_CIVIL);
+			call.setString("P_FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_ETNIA", perfil.ETNIA);
+			call.setString("P_FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_COMUNIDAD_LINGUISTICA",
+					perfil.COMUNIDAD_LINGUISTICA);
+			call.setInt("P_NO_HIJO", perfil.NO_HIJOS);
 			call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
-		    call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
-		    call.execute();
-		    salida.id = call.getInt("p_id_salida");
-		    salida.msj = call.getString("p_msj");
-		    if (salida.id > 0) {
-		      salida.result = "OK"; 
-			  System. out. println("todo ok familiar......"+ salida.id + " ... "+this.SCHEMA+"\n");
-		    }
-		    call.close();
-		}
-		
-		//insertar familiares laborando OJ 
-		for (FamiliaresLaborandoOJ familiarLaborandoOJ : perfil.FAMILIARES_LABORANDO_OJ) {
-			CallableStatement call = conn.prepareCall("call " + this.SCHEMA + ".PKG_TC_FAMILIAR_LABORANDO_OJ.PROC_AGREGAR_TC_FAMILIAR_LABORANDO_OJ (?,?,?,?,?,?,?)");
-			call.setString("P_NOMBRE_COMPLETO", familiarLaborandoOJ.nombreCompleto);
-			call.setString("P_PARENTESCO", familiarLaborandoOJ.parentesco);
-			call.setString("P_DEPENDENCIA", familiarLaborandoOJ.dependencia);
-			call.setString("P_PUESTO", familiarLaborandoOJ.puesto);			
-			call.setInt("P_FK_TC_FAMILIAR_LABORANDO_OJ_REF_TC_INFORMACION_PERSONAL_USUARIO", idUsuario);
-			call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
-		    call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
-		    call.execute();
-		    salida.id = call.getInt("p_id_salida");
-		    salida.msj = call.getString("p_msj");
-		    if (salida.id > 0) {
-		      salida.result = "OK"; 
-			  System. out. println("todo ok. familiar laborando oj....."+ salida.id + " ... "+this.SCHEMA+"\n");
-		    }
-		    call.close();
+			call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
+			call.execute();
+			salida.id = call.getInt("p_id_salida");
+			salida.msj = call.getString("p_msj");
+			if (salida.id > 0)
+				salida.result = "OK";
+			System.out.println("todo ok perfil usuario......" + this.SCHEMA + "\n");
+			call.close();
+
+			// insertar idioma usuario
+
+			for (IdiomasPerfilSE idioma : perfil.IDIOMAS) {
+				idiomaUsuarioManager.inIdiomaUsuario(idioma, idioma.idiomaId, idUsuario);
+			}
+
+			// insertar familiar
+			for (FamiliaPerfilSE familiar : perfil.FAMILIARES) {
+				familiarManager.inFamiliar(familiar, idUsuario);
+			}
+
+			// insertar familiares laborando OJ
+			for (FamiliaresLaborandoOJ familiarLaborandoOJ : perfil.FAMILIARES_LABORANDO_OJ) {
+				familiarLaborandoManager.inFamiliarLaborandoOJ(familiarLaborandoOJ, idUsuario);
+			}
+
+			// insertar pasantias
+			for (PasantiasOJ pasantia : perfil.PASANTIAS) {
+				pasantiaManager.inPasantiaOJ(pasantia, idUsuario);
+			}
+
+			// insertar experiencia laboral
+			for (ExperienciaLaboral experiencia : perfil.EXPERIENCIA_LABORAL) {
+				experienciaLaboralManager.inExperienciaLaboral(experiencia, idUsuario);
+			}
+
+			// insertar experiencia laboral OJ
+			for (ExperienciaLaboralOJ experiencia : perfil.EXPERIENCIA_LABORAL_OJ) {
+				experienciaLaboralOJManager.inExperienciaLaboralOJ(experiencia, idUsuario);
+			}
+
+			// insertar referencias personales
+			for (ReferenciasPersonales referencia : perfil.REFERENCIAS_PERSONALES) {
+				referenciaPersonalManager.inReferenciaPersonal(referencia, idUsuario);
+			}
+
 		}
 
-		// insertar pasantias
-		for (PasantiasOJ pasantia : perfil.PASANTIAS) {
-			CallableStatement call = conn.prepareCall("call " + this.SCHEMA
-					+ ".PKG_TC_PASANTIA_OJ.PROC_AGREGAR_TC_PASANTIA_OJ (?,?,?,?,?,?,?,?)");
-			call.setString("P_FECHA_INICIO", pasantia.fechaInicio);
-			call.setString("P_FECHA_FIN", pasantia.fechaFinalizacion);
-			call.setString("P_DEPENDENCIA", pasantia.dependencia);
-			call.setString("P_SECRETARIO_O_JUEZ", pasantia.secretarioJuez);
-			call.setString("P_REGISTRO_PASANTIA", pasantia.registrada);
-			call.setInt("P_FK_TC_PASANTIA_OJ_REF_TC_INFORMACION_PERSONAL_USUARIO", idUsuario);			
-			call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
-			call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
-			call.execute();
-			salida.id = call.getInt("p_id_salida");
-			salida.msj = call.getString("p_msj");
-			if (salida.id > 0) {
-				salida.result = "OK";
-				System.out.println("todo ok. pasantias....." + salida.id + " ... " + this.SCHEMA + "\n");
-			}
-			call.close();
-		}
+		salida.result = "OK";
+		return salida;
 
-		// insertar experiencia laboral
-		for (ExperienciaLaboral experiencia : perfil.EXPERIENCIA_LABORAL) {
-			CallableStatement call = conn.prepareCall(
-					"call " + this.SCHEMA + ".PKG_TC_EXPERIENCIA_LABORAL.PROC_AGREGAR_TC_EXPERIENCIA_LABORAL (?,?,?,?,?,?,?,?,?,?,?)");
-			call.setString("P_INSTITUCION_EMPRESA", experiencia.institucionEmpresa);
-			call.setString("P_FECHA_INICIO", experiencia.fechaInicio);
-			call.setString("P_FECHA_FIN",experiencia.fechaFinalizacion);
-			call.setString("P_RENGLON_PRESUPUESTARIO", experiencia.renglonPresupuestario);
-			call.setString("P_PUESTO", experiencia.puesto);
-			call.setString("P_JEFE_INMEDIATO", experiencia.jefeInmediato);
-			call.setString("P_TELEFONO", experiencia.telefono);
-			call.setString("P_MOTIVO_FIN_RELACION", experiencia.motivoFinRelacionLaboral);
-			call.setInt("P_fk_tc_experiencia_laboral_ref_tc_informacion_personal_usuario", idUsuario);
-			call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
-			call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
-			call.execute();
-			salida.id = call.getInt("p_id_salida");
-			salida.msj = call.getString("p_msj");
-			if (salida.id > 0) {
-				salida.result = "OK";
-				System.out.println("todo ok. experiencia laboral ....." + salida.id + " ... " + this.SCHEMA + "\n");
-			}
-			call.close();
-		}
-		
-		// insertar experiencia laboral OJ
-		for (ExperienciaLaboralOJ experiencia : perfil.EXPERIENCIA_LABORAL_OJ) {
-			CallableStatement call = conn.prepareCall("call " + this.SCHEMA
-					+ ".PKG_TC_EXPERIENCIA_LABORAL_OJ.PROC_AGREGAR_TC_EXPERIENCIA_LABORAL_OJ (?,?,?,?,?,?,?,?,?,?,?)");
-			call.setString("P_PUESTO", experiencia.puesto);
-			call.setString("P_FECHA_INICIO", experiencia.fechaInicio);
-			call.setString("P_FECHA_FIN", experiencia.fechaFinalizacion);
-			call.setString("P_RENGLON_PRESUPUESTARIO", experiencia.renglonPresupuestario);
-			call.setString("P_DEPENDENCIA", experiencia.dependencia);	
-			call.setString("P_JEFE_INMEDIATO", experiencia.jefeInmediato);
-			call.setString("P_MOTIVO_FIN", experiencia.motivoFinRelacionLaboral);
-			call.setInt("P_FK_TC_EXPERIENCIA_LABORAL_OJ_REF_TC_INFORMACION_PERSONAL_USUARIO", idUsuario);
-			call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
-			call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
-			call.execute();
-			salida.id = call.getInt("p_id_salida");
-			salida.msj = call.getString("p_msj");
-			if (salida.id > 0) {
-				salida.result = "OK";
-				System.out.println("todo ok experiencia laboral oj......" + salida.id + " ... " + this.SCHEMA + "\n");
-			}
-			call.close();
-		}
-				
-		// insertar referencias personales
-		for (ReferenciasPersonales referencia : perfil.REFERENCIAS_PERSONALES) {
-			CallableStatement call = conn.prepareCall("call " + this.SCHEMA
-					+ ".PKG_TC_REFERENCIA_PERSONAL.PROC_AGREGAR_TC_REFERENCIA_PERSONAL (?,?,?,?,?,?,?)");
-			call.setString("P_NOMBRE", referencia.nombre);
-			call.setString("P_TIPO_RELACION", referencia.tipoRelacion);
-			call.setString("P_ANIO_CONOCERLO", referencia.aniosConocerlo);
-			call.setString("P_TELEFONO", referencia.telefono);
-			call.setInt("P_FK_TC_REFERENCIA_PERSONAL_REF_TC_INFORMACION_PERSONAL_USUARIO", idUsuario);
-			call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
-			call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
-			call.execute();
-			salida.id = call.getInt("p_id_salida");
-			salida.msj = call.getString("p_msj");
-			if (salida.id > 0) {
-				salida.result = "OK";
-				System.out.println("todo ok referencia personal......" + salida.id + " ... " + this.SCHEMA + "\n");
-			}
-			call.close();
-		}
-		/*ConnectionsPool c = new ConnectionsPool();
+	}
+
+
+	public jsonResult ModPerfilSolicitudEmpleo(PerfilSolicitudEmpleo perfil) throws Exception {
+		// verificar existencia de usuario por dpi
+		jsonResult salida = new jsonResult();
+		List<Map<String, Object>> perfilExistente = getPerfilSolicitudDpi(perfil.DPI);
+		System.out.println("dentro get usuario ......" + perfilExistente.get(0) + "\n");
+
+		Integer idUsuario = Integer.parseInt(perfilExistente.get(0).get("ID_INFORMACION_PERSONAL_USUARIO").toString());
+		System.out.println("ID PERFIL USUARIO ......" + idUsuario + "\n");
+
+		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
-		
-		System.out.println("dentro de llamar a insertar perfil usuario ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + this.SCHEMA
-				+ ".PKG_TC_INFORMACION_PERSONAL_USUARIO.PROC_AGREGAR_INFORMACION_PERSONAL (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-		call.setString("P_NOMBRE", perfil.NOMBRE);
-		call.setString("P_PRIMER_APELLIDO", perfil.PRIMER_APELLIDO);
-		call.setString("P_SEGUNDO_APELLIDO", perfil.SEGUNDO_APELLIDO);
-		call.setString("P_FECHA_NACIMIENTO", perfil.FECHA_NACIMIENTO);
-		call.setInt("P_EDAD", perfil.EDAD);
-		call.setString("P_SEXO", perfil.SEXO);
-		call.setString("P_PROFESION", perfil.PROFESION);
-		call.setInt("P_ID_ESTADO_CIVIL", perfil.ESTADO_CIVIL);
-		call.setString("P_NACIONALIDAD", perfil.NACIONALIDAD);
-		call.setString("P_DIRECCION", perfil.DIRECCION);
-		call.setInt("P_ID_MUNICIPIO", perfil.MUNICIPIO);
-		call.setInt("P_ID_DEPARTAMENTO", perfil.DEPARTAMENTO);
-		call.setString("P_CORREO", perfil.CORREO);
-		call.setString("P_TELEFONO_CASA", perfil.TELEFONO_CASA);
-		call.setString("P_TELEFONO_CELULAR", perfil.TELEFONO_CELULAR);
-		call.setString("P_DPI", perfil.DPI);
-		call.setString("P_FECHA_VENCIMIENTO_DPI",perfil.FECHA_VENC_DPI);
-		call.setString("P_NIT", perfil.NIT);
-		call.setString("P_NUMERO_LICENCIA", perfil.NUMERO_LICENCIA);
-		call.setString("P_CLASE_LICENCIA", perfil.CLASE_LICENCIA);
-		call.setString("P_FECHA_VENCIMIENTO_LICENCIA", perfil.FECHA_VENC_DPI);
-		call.setInt("P_DOSIS_VACUNAS_COVID", 2);
-		call.setInt("P_ID_TIPO_VACUNA_COVID", 1);		
-		call.setInt("P_ID_DISCAPACIDAD", Integer.parseInt(perfil.DISCAPACIDAD));
-		call.setInt("P_FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_ESTADO_CIVIL", perfil.ESTADO_CIVIL);
-		call.setString("P_FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_ETNIA", perfil.ETNIA);
-		call.setString("P_FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_COMUNIDAD_LINGUISTICA", perfil.COMUNIDAD_LINGUISTICA);
-		call.setInt("P_NO_HIJO", perfil.NO_HIJOS);
-		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
-	    call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
-	    call.execute();
-	    salida.id = call.getInt("p_id_salida");
-	    salida.msj = call.getString("p_msj");
-	    if (salida.id > 0)
-	      salida.result = "OK"; 
-		  System. out. println("todo ok......"+this.SCHEMA+"\n");
-	    call.close();*/
-		
-		//call.close();
-		salida.result = "OK"; 
-	    return salida;
+		// usuario nuevo
+		if (perfilExistente.size() == 0) {
+			System.out.println("dentro de llamar a insertar perfil usuario ......" + this.SCHEMA + "\n");
+			CallableStatement call = conn.prepareCall("call " + this.SCHEMA
+					+ ".PKG_TC_INFORMACION_PERSONAL_USUARIO.PROC_ACTUALIZAR_TC_INFORMACION_PERSONAL_USUARIO (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			call.setInt("P_ID_INFORMACION_PERSONAL_USUARIO", idUsuario);
+			call.setString("P_NOMBRE", perfil.NOMBRE);
+			call.setString("P_PRIMER_APELLIDO", perfil.PRIMER_APELLIDO);
+			call.setString("P_SEGUNDO_APELLIDO", perfil.SEGUNDO_APELLIDO);
+			call.setString("P_FECHA_NACIMIENTO", perfil.FECHA_NACIMIENTO);
+			call.setInt("P_EDAD", perfil.EDAD);
+			call.setString("P_SEXO", perfil.SEXO);
+			call.setString("P_PROFESION", perfil.PROFESION);
+			call.setInt("P_ID_ESTADO_CIVIL", perfil.ESTADO_CIVIL);
+			call.setString("P_NACIONALIDAD", perfil.NACIONALIDAD);
+			call.setString("P_DIRECCION", perfil.DIRECCION);
+			call.setInt("P_ID_MUNICIPIO", perfil.MUNICIPIO);
+			call.setInt("P_ID_DEPARTAMENTO", perfil.DEPARTAMENTO);
+			call.setString("P_CORREO", perfil.CORREO);
+			call.setString("P_TELEFONO_CASA", perfil.TELEFONO_CASA);
+			call.setString("P_TELEFONO_CELULAR", perfil.TELEFONO_CELULAR);
+			call.setString("P_DPI", perfil.DPI);
+			call.setString("P_FECHA_VENCIMIENTO_DPI", perfil.FECHA_VENC_DPI);
+			call.setString("P_NIT", perfil.NIT);
+			call.setString("P_NUMERO_LICENCIA", perfil.NUMERO_LICENCIA);
+			call.setString("P_CLASE_LICENCIA", perfil.CLASE_LICENCIA);
+			call.setString("P_FECHA_VENCIMIENTO_LICENCIA", perfil.FECHA_VENC_DPI);
+			call.setInt("P_DOSIS_VACUNAS_COVID", 2);
+			call.setInt("P_ID_TIPO_VACUNA_COVID", 1);
+			call.setInt("P_ID_DISCAPACIDAD", Integer.parseInt(perfil.DISCAPACIDAD));
+			call.setInt("P_FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_ESTADO_CIVIL", perfil.ESTADO_CIVIL);
+			call.setString("P_FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_ETNIA", perfil.ETNIA);
+			call.setString("P_FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_COMUNIDAD_LINGUISTICA",
+					perfil.COMUNIDAD_LINGUISTICA);
+			call.setInt("P_NO_HIJO", perfil.NO_HIJOS);
+			call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
+			call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
+			call.execute();
+			salida.id = call.getInt("p_id_salida");
+			salida.msj = call.getString("p_msj");
+			if (salida.id > 0)
+				salida.result = "OK";
+			System.out.println("todo ok actualizar perfil usuario......" + this.SCHEMA + "\n");
+			call.close();
+
+			// actualizar idioma usuario
+
+			/*List<Map<String, Object>> idiomasUsuario = idiomaUsuarioManager.getIdiomasUsuario(idUsuario);
+			if (idiomasUsuario.size() == perfil.IDIOMAS.size()) {
+				for (IdiomasPerfilSE idioma : perfil.IDIOMAS) {
+					idiomaUsuarioManager.modIdiomaUsuario(idioma, idUsuario, idUsuario);
+				}
+			} else if(idiomasUsuario.size() > perfil.IDIOMAS.size() ) {
+				//si hay mas significa que se eliminino uno 
+				
+			} else if( perfil.IDIOMAS.size() > idiomasUsuario.size() ) {
+				
+			}*/
+			
+			// insertar idioma usuario
+
+			for (IdiomasPerfilSE idioma : perfil.IDIOMAS) {
+				idiomaUsuarioManager.inIdiomaUsuario(idioma, idioma.idiomaId, idUsuario);
+				//IdiomasPerfilSE encontrado = idiomasUsuario.stream().filter(x-> x.get(idiomasUsuario));
+			}
+
+			// actualizar familiar
+			for (FamiliaPerfilSE familiar : perfil.FAMILIARES) {
+				familiarManager.modFamiliar(familiar, idUsuario);
+			}
+
+			// actualizar familiares laborando OJ
+			for (FamiliaresLaborandoOJ familiarLaborandoOJ : perfil.FAMILIARES_LABORANDO_OJ) {
+				familiarLaborandoManager.modFamiliarLaborandoOJ(familiarLaborandoOJ, idUsuario);
+			}
+
+			// actualizar pasantias
+			for (PasantiasOJ pasantia : perfil.PASANTIAS) {
+				pasantiaManager.modPasantiaOJ(pasantia, idUsuario);
+			}
+
+			// actualizar experiencia laboral
+			for (ExperienciaLaboral experiencia : perfil.EXPERIENCIA_LABORAL) {
+				experienciaLaboralManager.modExperienciaLaboral(experiencia, idUsuario);
+			}
+
+			// actualizar experiencia laboral OJ
+			for (ExperienciaLaboralOJ experiencia : perfil.EXPERIENCIA_LABORAL_OJ) {
+				experienciaLaboralOJManager.modExperienciaLaboralOJ(experiencia, idUsuario);
+			}
+
+			// actualizar referencias personales
+			for (ReferenciasPersonales referencia : perfil.REFERENCIAS_PERSONALES) {
+				referenciaPersonalManager.modReferenciaPersonal(referencia, idUsuario);
+			}
+
+		}
+
+		salida.result = "OK";
+		return salida;
 
 	}
 

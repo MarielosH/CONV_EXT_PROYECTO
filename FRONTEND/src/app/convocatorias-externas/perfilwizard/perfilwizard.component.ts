@@ -36,6 +36,7 @@ export class PerfilwizardComponent implements OnInit {
   checked = false;
   listaDepartamentos;
   listaComunidadLinguistica;
+  listaIdiomasExtranjeros;
   listaParentescos;
   listaEtnias;
   municipios;
@@ -221,7 +222,7 @@ export class PerfilwizardComponent implements OnInit {
     });
 
     this.thirdFormGroup = this.fb.group({
-      noHijo: [''],
+      noHijo: ['', Validators.required],
       dependientes: [''],
       parentesco: [''],
       familiar: [''],
@@ -315,6 +316,7 @@ export class PerfilwizardComponent implements OnInit {
     this.obtenerComunidadesLinguisticas();
     this.obtenerParentescos();
     this.obtenerEtnias();
+    this.obtenerIdiomasExtranjeros();
   }
 
   obtenerDepartamentos() {
@@ -344,6 +346,15 @@ export class PerfilwizardComponent implements OnInit {
         });
   }
 
+  obtenerIdiomasExtranjeros() {
+    this.convocatoriasService
+      .getListaIdiomasExtranjeros()
+      .subscribe(
+        data => {
+          this.listaIdiomasExtranjeros = data;
+        });
+  }
+
   obtenerParentescos() {
     this.convocatoriasService
       .getListaParentescoConv()
@@ -351,14 +362,13 @@ export class PerfilwizardComponent implements OnInit {
         data => {
           this.listaParentescos = data;
         });
-        console.log("parentescos");
-        console.log(this.listaParentescos);
+
   }
 
   agregarIdioma() {
     if (this.secondFormGroup.value.idioma1 !== '' && this.secondFormGroup.value.idioma1 !== undefined && this.secondFormGroup.value.idioma1 !== null) {
       this.nuevoIdioma = {
-        idioma: this.secondFormGroup.value.idioma1,
+        idiomaId: this.secondFormGroup.value.idioma1,
         habla: this.secondFormGroup.value.habla1,
         lee: this.secondFormGroup.value.lee1,
         escribe: this.secondFormGroup.value.escribe1
@@ -379,9 +389,11 @@ export class PerfilwizardComponent implements OnInit {
 
   agregarFamiliar() {
     if (this.thirdFormGroup.value.familiar !== '' && this.thirdFormGroup.value.familiar !== undefined && this.thirdFormGroup.value.familiar !== null) {
+      console.log("familiar nuevo");
+      console.log(this.thirdFormGroup.value.fechaNacFamiliar);
       this.nuevoFamiliar = {
         nombreFamiliar: this.thirdFormGroup.value.familiar,
-        parentesco: this.thirdFormGroup.value.parentesco,
+        parentesco: this.thirdFormGroup.value.parentesco,       
         fechaNacimiento: this.parseDate(this.thirdFormGroup.value.fechaNacFamiliar),
         telefono: this.thirdFormGroup.value.telFamiliar,
         vive: this.thirdFormGroup.value.viveFamiliar,
@@ -392,6 +404,7 @@ export class PerfilwizardComponent implements OnInit {
       };
 
       this.familiares.push(this.nuevoFamiliar);
+      console.log(this.familiares);
       this.thirdFormGroup = this.fb.group({
         noHijo: [this.thirdFormGroup.value.noHijo],
         dependientes: [''],
@@ -608,7 +621,7 @@ export class PerfilwizardComponent implements OnInit {
       if (this.valDatesPasantias()) {
         swal("Fecha Inválida", "Fecha Finalización de Pasantía no puede ser anterior a Fecha de Inicio de Pasantía.", "info")
       }
-      return this.datePipe.transform(dateString, 'dd/MM/yyyy')
+      return this.datePipe.transform(dateString, 'yyyy-MM-dd')
     } else {
       return null;
     }
@@ -636,7 +649,7 @@ export class PerfilwizardComponent implements OnInit {
       if (this.valDatesExperienciaLaboralOJ()) {
         swal("Fecha Inválida", "Fecha Finalización Experiencia Laboral OJ no puede ser anterior a Fecha de Inicio Experiencia Laboral OJ.", "info")
       }
-      return this.datePipe.transform(dateString, 'dd/MM/yyyy')
+      return this.datePipe.transform(dateString, 'yyyy-MM-dd')
     } else {
       return null;
     }
@@ -664,7 +677,7 @@ export class PerfilwizardComponent implements OnInit {
       if (this.valDatesExperienciaLaboral()) {
         swal("Fecha Inválida", "Fecha Finalización Experiencia Laboral no puede ser anterior a Fecha de Inicio Experiencia Laboral.", "info")
       }
-      return this.datePipe.transform(dateString, 'dd/MM/yyyy')
+      return this.datePipe.transform(dateString, 'yyyy-MM-dd')
     } else {
       return null;
     }
@@ -689,7 +702,8 @@ export class PerfilwizardComponent implements OnInit {
 
   parseDate(dateString: any): any {
     if (dateString) {
-      return this.datePipe.transform(dateString, 'dd/MM/yyyy')
+      let date = this.datePipe.transform(dateString, 'yyyy-MM-dd', '+0430','en-ES');
+      return date;
     } else {
       return null;
     }
@@ -719,7 +733,7 @@ export class PerfilwizardComponent implements OnInit {
   validaIdioma(): boolean {
     let valor = this.secondFormGroup.value.idioma1;
     if (valor !== null && valor !== undefined && valor !== "") {
-      let encontrado = this.idiomas.find(x => x.idioma == valor);
+      let encontrado = this.idiomas.find(x => x.idiomaId == valor);
       return encontrado != null ? true : false;
     }
 

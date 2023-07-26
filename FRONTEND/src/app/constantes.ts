@@ -1,5 +1,5 @@
 export interface Idioma {
-    idioma: string,
+    idiomaId: number,
     habla: string,
     escribe: string,
     lee: string
