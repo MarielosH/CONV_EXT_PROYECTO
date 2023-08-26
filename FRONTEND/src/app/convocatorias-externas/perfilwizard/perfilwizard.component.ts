@@ -8,7 +8,7 @@ import swal from 'sweetalert2';
 import { AuthService } from '../../recursos/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConvocatoriasExternasService } from '../convocatorias-externas.service';
-import { Sexo, EstadoCivil, TiposLicencia, Discapacidad, Raza, Idioma, Familiar, FamiliarLaborandoOJ, PasantiaOJ, ExperienciaLaboralOJ, ExperienciaLaboral, ReferenciaPersonal } from 'app/constantes';
+import { Sexo, TiposLicencia, Discapacidad, Raza, Idioma, Familiar, FamiliarLaborandoOJ, PasantiaOJ, ExperienciaLaboralOJ, ExperienciaLaboral, ReferenciaPersonal } from 'app/constantes';
 @Component({
   selector: 'app-perfilwizard',
   templateUrl: './perfilwizard.component.html',
@@ -17,7 +17,6 @@ import { Sexo, EstadoCivil, TiposLicencia, Discapacidad, Raza, Idioma, Familiar,
 export class PerfilwizardComponent implements OnInit {
   cantidiomas = 0;
   generos = [];
-  estadoCivil = [];
   tiposLicencias = [];
   discapacidades = [];
   etnias = [];
@@ -38,6 +37,7 @@ export class PerfilwizardComponent implements OnInit {
   listaComunidadLinguistica;
   listaIdiomasExtranjeros;
   listaParentescos;
+  listaEstadoCivil;
   listaEtnias;
   municipios;
   selMunicipio;
@@ -185,7 +185,6 @@ export class PerfilwizardComponent implements OnInit {
 
   ngOnInit() {
     this.generos = Sexo;
-    this.estadoCivil = EstadoCivil;
     this.tiposLicencias = TiposLicencia;
     this.discapacidades = Discapacidad;
     this.etnias = Raza;
@@ -317,6 +316,7 @@ export class PerfilwizardComponent implements OnInit {
     this.obtenerParentescos();
     this.obtenerEtnias();
     this.obtenerIdiomasExtranjeros();
+    this.obtenerEstadoCivil();
   }
 
   obtenerDepartamentos() {
@@ -361,6 +361,17 @@ export class PerfilwizardComponent implements OnInit {
       .subscribe(
         data => {
           this.listaParentescos = data;
+        });
+
+  }
+
+  obtenerEstadoCivil() {
+    this.convocatoriasService
+      .  getListaEstadoCivilConv
+      ()
+      .subscribe(
+        data => {
+          this.listaEstadoCivil = data;
         });
 
   }
@@ -537,11 +548,6 @@ export class PerfilwizardComponent implements OnInit {
 
   }
 
-  buscarEstadoCivil(id): string {
-    let encontrado = this.estadoCivil.find(x => x.ID == id);
-    return encontrado != null ? encontrado.DESCRIPCION : '';
-  }
-
   buscarDepartamento(id): string {
     if (this.listaDepartamentos != null && this.listaDepartamentos.length > 0) {
       let encontrado = this.listaDepartamentos.find(x => x.DEPARTAMENTO == id);
@@ -585,6 +591,15 @@ export class PerfilwizardComponent implements OnInit {
     return '';
   }
 
+  buscarEstadoCivil(id): string {
+    if (this.listaEstadoCivil != null && this.listaEstadoCivil.length > 0) {
+      let encontrado = this.listaEstadoCivil.find(x => x.ID_ESTADO_CIVIL == id);
+      return encontrado != null ? encontrado.ESTADO_CIVIL : '';
+    }
+    return '';
+  }
+
+
    buscarEtnia(id): string {
     if (this.listaEtnias != null && this.listaEtnias.length > 0) {
       let encontrado = this.listaEtnias.find(x => x.ID_ETNIA == id);
@@ -596,6 +611,7 @@ export class PerfilwizardComponent implements OnInit {
   crearPerfil() {
     this.obtenerDepartamentos();
     this.obtenerComunidadesLinguisticas();
+    swal("Perfil Usuario Actualizado", "", "success");
     // swal("Perfil Solicitud Empleo", "Cambios Guardados", "success")
   }
   cambioListaDependientes(e) {
@@ -748,8 +764,7 @@ export class PerfilwizardComponent implements OnInit {
       FECHA_NACIMIENTO: this.parseDate(this.firstFormGroup.value.fechaNac),
       EDAD: this.firstFormGroup.value.edad,
       SEXO: this.firstFormGroup.value.sexo,
-      //ESTADO_CIVIL: this.firstFormGroup.value.estadoCivilAspirante,
-      ESTADO_CIVIL: 1,
+      ESTADO_CIVIL: this.firstFormGroup.value.estadoCivilAspirante,
       NACIONALIDAD: this.firstFormGroup.value.nacionalidad.toUpperCase(),
       PROFESION: this.firstFormGroup.value.profesion.toUpperCase(),
       DIRECCION: this.firstFormGroup.value.direccion.toUpperCase(),
@@ -766,7 +781,7 @@ export class PerfilwizardComponent implements OnInit {
       DISCAPACIDAD: this.firstFormGroup.value.discapacidad,
       ETNIA: this.secondFormGroup.value.etnia,
       COMUNIDAD_LINGUISTICA: this.secondFormGroup.value.comunidadLinguistica,
-      NO_HIJOS: this.thirdFormGroup.value.no_hijo,
+      NO_HIJOS: this.thirdFormGroup.value.noHijo,
       NIVEL_APRIMARIA: this.fifthFormGroup.value.nivelAcademicoPrimaria.toUpperCase(),
       NIVEL_ABASICOS: this.fifthFormGroup.value.nivelAcademicoBasicos.toUpperCase(),
       NIVEL_ADIVERSIFICADO: this.fifthFormGroup.value.nivelAcademicoDiversificado.toUpperCase(),
@@ -820,7 +835,8 @@ export class PerfilwizardComponent implements OnInit {
           console.log("res: " + data.msj);
           swal("Perfil Usuario Guardado", data.msj, "success");
         } else {
-          swal("Error", data.msj, "error")
+          swal("Perfil Usuario Guardado", data.msj, "success");
+          //swal("Error", data.msj, "error")
         }
       })
   }

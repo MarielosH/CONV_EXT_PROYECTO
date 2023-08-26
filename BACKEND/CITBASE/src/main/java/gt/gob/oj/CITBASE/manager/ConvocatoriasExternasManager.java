@@ -182,87 +182,82 @@ public class ConvocatoriasExternasManager {
 		Connection conn = c.conectar();
 
 		// usuario nuevo
-		if (perfilExistente.size() == 0) {
-			System.out.println("dentro de llamar a insertar perfil usuario ......" + this.SCHEMA + "\n");
-			CallableStatement call = conn.prepareCall("call " + this.SCHEMA
-					+ ".PKG_TC_INFORMACION_PERSONAL_USUARIO.PROC_AGREGAR_INFORMACION_PERSONAL (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+		// if (perfilExistente.size() == 0) {
+		System.out.println("dentro de llamar a insertar perfil usuario ......" + this.SCHEMA + "\n");
+		CallableStatement call = conn.prepareCall("call " + this.SCHEMA
+				+ ".PKG_TC_INFORMACION_PERSONAL_USUARIO.PROC_AGREGAR_INFORMACION_PERSONAL (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-			call.setString("P_NOMBRE", perfil.NOMBRE);
-			call.setString("P_PRIMER_APELLIDO", perfil.PRIMER_APELLIDO);
-			call.setString("P_SEGUNDO_APELLIDO", perfil.SEGUNDO_APELLIDO);
-			call.setString("P_FECHA_NACIMIENTO", perfil.FECHA_NACIMIENTO);
-			call.setInt("P_EDAD", perfil.EDAD);
-			call.setString("P_SEXO", perfil.SEXO);
-			call.setString("P_PROFESION", perfil.PROFESION);
-			call.setInt("P_ID_ESTADO_CIVIL", perfil.ESTADO_CIVIL);
-			call.setString("P_NACIONALIDAD", perfil.NACIONALIDAD);
-			call.setString("P_DIRECCION", perfil.DIRECCION);
-			call.setInt("P_ID_MUNICIPIO", perfil.MUNICIPIO);
-			call.setInt("P_ID_DEPARTAMENTO", perfil.DEPARTAMENTO);
-			call.setString("P_CORREO", perfil.CORREO);
-			call.setString("P_TELEFONO_CASA", perfil.TELEFONO_CASA);
-			call.setString("P_TELEFONO_CELULAR", perfil.TELEFONO_CELULAR);
-			call.setString("P_DPI", perfil.DPI);
-			call.setString("P_FECHA_VENCIMIENTO_DPI", perfil.FECHA_VENC_DPI);
-			call.setString("P_NIT", perfil.NIT);
-			call.setString("P_NUMERO_LICENCIA", perfil.NUMERO_LICENCIA);
-			call.setString("P_CLASE_LICENCIA", perfil.CLASE_LICENCIA);
-			call.setString("P_FECHA_VENCIMIENTO_LICENCIA", perfil.FECHA_VENC_DPI);
-			call.setInt("P_DOSIS_VACUNAS_COVID", 2);
-			call.setInt("P_ID_TIPO_VACUNA_COVID", 1);
-			call.setInt("P_ID_DISCAPACIDAD", Integer.parseInt(perfil.DISCAPACIDAD));
-			call.setInt("P_FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_ESTADO_CIVIL", perfil.ESTADO_CIVIL);
-			call.setString("P_FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_ETNIA", perfil.ETNIA);
-			call.setString("P_FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_COMUNIDAD_LINGUISTICA",
-					perfil.COMUNIDAD_LINGUISTICA);
-			call.setInt("P_NO_HIJO", perfil.NO_HIJOS);
-			call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
-			call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
-			call.execute();
-			salida.id = call.getInt("p_id_salida");
-			salida.msj = call.getString("p_msj");
-			if (salida.id > 0)
-				salida.result = "OK";
-			System.out.println("todo ok perfil usuario......" + this.SCHEMA + "\n");
-			call.close();
+		System.out.println(" SEXO DEL PERFIL  ......" + perfil.SEXO + "\n");
+		call.setString("P_NOMBRE", perfil.NOMBRE);
+		call.setString("P_PRIMER_APELLIDO", perfil.PRIMER_APELLIDO);
+		call.setString("P_SEGUNDO_APELLIDO", perfil.SEGUNDO_APELLIDO);
+		call.setString("P_FECHA_NACIMIENTO", perfil.FECHA_NACIMIENTO);
+		call.setInt("P_EDAD", perfil.EDAD);
+		call.setString("P_SEXO", perfil.SEXO);
+		call.setString("P_PROFESION", perfil.PROFESION);
+		call.setInt("P_ID_ESTADO_CIVIL", perfil.ESTADO_CIVIL);
+		call.setString("P_NACIONALIDAD", perfil.NACIONALIDAD);
+		call.setString("P_DIRECCION", perfil.DIRECCION);
+		call.setInt("P_ID_MUNICIPIO", perfil.MUNICIPIO);
+		call.setInt("P_ID_DEPARTAMENTO", perfil.DEPARTAMENTO);
+		call.setString("P_CORREO", perfil.CORREO);
+		call.setString("P_TELEFONO_CASA", perfil.TELEFONO_CASA);
+		call.setString("P_TELEFONO_CELULAR", perfil.TELEFONO_CELULAR);
+		call.setString("P_DPI", perfil.DPI);
+		call.setString("P_FECHA_VENCIMIENTO_DPI", perfil.FECHA_VENC_DPI);
+		call.setString("P_NIT", perfil.NIT);
+		call.setString("P_NUMERO_LICENCIA", perfil.NUMERO_LICENCIA);
+		call.setString("P_CLASE_LICENCIA", perfil.CLASE_LICENCIA);
+		call.setString("P_FECHA_VENCIMIENTO_LICENCIA", perfil.FECHA_VENC_DPI);
+		call.setInt("P_DOSIS_VACUNAS_COVID", 2);
+		call.setInt("P_ID_TIPO_VACUNA_COVID", 1);
+		call.setInt("P_ID_DISCAPACIDAD", Integer.parseInt(perfil.DISCAPACIDAD));
+		call.setInt("P_FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_ESTADO_CIVIL", perfil.ESTADO_CIVIL);
+		call.setString("P_FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_ETNIA", perfil.ETNIA);
+		call.setString("P_FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_COMUNIDAD_LINGUISTICA",
+				perfil.COMUNIDAD_LINGUISTICA);
+		call.setInt("P_NO_HIJO", perfil.NO_HIJOS);
+		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
+		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
+		call.execute();
+		salida.id = call.getInt("p_id_salida");
+		salida.msj = call.getString("p_msj");
+		if (salida.id > 0)
+			salida.result = "OK";
+		System.out.println("todo ok perfil usuario......" + this.SCHEMA + "\n");
+		call.close();
 
-			// insertar idioma usuario
+		// insertar idioma usuario
 
-			for (IdiomasPerfilSE idioma : perfil.IDIOMAS) {
-				idiomaUsuarioManager.inIdiomaUsuario(idioma, idioma.idiomaId, idUsuario);
-			}
-
-			// insertar familiar
-			for (FamiliaPerfilSE familiar : perfil.FAMILIARES) {
-				familiarManager.inFamiliar(familiar, idUsuario);
-			}
-
-			// insertar familiares laborando OJ
-			for (FamiliaresLaborandoOJ familiarLaborandoOJ : perfil.FAMILIARES_LABORANDO_OJ) {
-				familiarLaborandoManager.inFamiliarLaborandoOJ(familiarLaborandoOJ, idUsuario);
-			}
-
-			// insertar pasantias
-			for (PasantiasOJ pasantia : perfil.PASANTIAS) {
-				pasantiaManager.inPasantiaOJ(pasantia, idUsuario);
-			}
-
-			// insertar experiencia laboral
-			for (ExperienciaLaboral experiencia : perfil.EXPERIENCIA_LABORAL) {
-				experienciaLaboralManager.inExperienciaLaboral(experiencia, idUsuario);
-			}
-
-			// insertar experiencia laboral OJ
-			for (ExperienciaLaboralOJ experiencia : perfil.EXPERIENCIA_LABORAL_OJ) {
-				experienciaLaboralOJManager.inExperienciaLaboralOJ(experiencia, idUsuario);
-			}
-
-			// insertar referencias personales
-			for (ReferenciasPersonales referencia : perfil.REFERENCIAS_PERSONALES) {
-				referenciaPersonalManager.inReferenciaPersonal(referencia, idUsuario);
-			}
-
-		}
+		/*
+		 * for (IdiomasPerfilSE idioma : perfil.IDIOMAS) {
+		 * idiomaUsuarioManager.inIdiomaUsuario(idioma, idioma.idiomaId, idUsuario); }
+		 * 
+		 * // insertar familiar for (FamiliaPerfilSE familiar : perfil.FAMILIARES) {
+		 * familiarManager.inFamiliar(familiar, idUsuario); }
+		 * 
+		 * // insertar familiares laborando OJ for (FamiliaresLaborandoOJ
+		 * familiarLaborandoOJ : perfil.FAMILIARES_LABORANDO_OJ) {
+		 * familiarLaborandoManager.inFamiliarLaborandoOJ(familiarLaborandoOJ,
+		 * idUsuario); }
+		 * 
+		 * // insertar pasantias for (PasantiasOJ pasantia : perfil.PASANTIAS) {
+		 * pasantiaManager.inPasantiaOJ(pasantia, idUsuario); }
+		 * 
+		 * // insertar experiencia laboral for (ExperienciaLaboral experiencia :
+		 * perfil.EXPERIENCIA_LABORAL) {
+		 * experienciaLaboralManager.inExperienciaLaboral(experiencia, idUsuario); }
+		 * 
+		 * // insertar experiencia laboral OJ for (ExperienciaLaboralOJ experiencia :
+		 * perfil.EXPERIENCIA_LABORAL_OJ) {
+		 * experienciaLaboralOJManager.inExperienciaLaboralOJ(experiencia, idUsuario); }
+		 * 
+		 * // insertar referencias personales for (ReferenciasPersonales referencia :
+		 * perfil.REFERENCIAS_PERSONALES) {
+		 * referenciaPersonalManager.inReferenciaPersonal(referencia, idUsuario); }
+		 * 
+		 * //}
+		 */
 
 		salida.result = "OK";
 		return salida;
@@ -396,6 +391,11 @@ public class ConvocatoriasExternasManager {
 		call.registerOutParameter("p_cur_dataset", OracleTypes.CURSOR);
 		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
 		call.execute();
+
+	    //int  id = call.getInt("p_id_salida");
+	    String  msj = call.getString("p_msj");
+	    System.out.println("mensaje:  ......" + msj  + "\n");
+	    
 		ResultSet rset = (ResultSet) call.getObject("p_cur_dataset");
 		ResultSetMetaData meta = rset.getMetaData();
 		while (rset.next()) {

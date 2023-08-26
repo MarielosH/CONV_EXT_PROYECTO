@@ -52,6 +52,13 @@ export class ConvocatoriasExternasService {
       );
   }
 
+  getListaEstadoCivilConv(): Observable<any> {
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + 'Convocatorias-Externas/getEstadoCivil')
+      .pipe(
+        catchError(this.handleError('getListaEstadoCivilConv', []))
+      );
+  }
+
   getListaEtniasConv(): Observable<any> {
     return this.http.get<any>(this.appSettings.restApiServiceBaseUri + 'Convocatorias-Externas/getEtnias')
       .pipe(

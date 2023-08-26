@@ -6,7 +6,7 @@
   <div class="col-2">
     <div class="button-group">
       <button mat-raised-button class="btn btn-primary btn-block" (click)="crearPerfil()"
-        style="font-size: 12px;">Guardar</button>
+        style="font-size: 12px;">Actualizar</button>
     </div>
   </div>
 </div>
@@ -94,8 +94,8 @@
         <div class="form-group col">
           <mat-form-field>
             <mat-select placeholder="ESTADO CIVIL" formControlName="estadoCivilAspirante" required>
-              <mat-option *ngFor="let estados of estadoCivil" [value]="estados.ID" style="font-size: 12px;">
-                {{estados.DESCRIPCION}}</mat-option>
+              <mat-option *ngFor="let estados of listaEstadoCivil" [value]="estados.ID_ESTADO_CIVIL" style="font-size: 12px;">
+                {{estados.ESTADO_CIVIL}}</mat-option>
             </mat-select>
             <mat-error *ngIf="this.firstFormGroup.controls.estadoCivilAspirante.errors?.required">
               Estado Civil Requerido
