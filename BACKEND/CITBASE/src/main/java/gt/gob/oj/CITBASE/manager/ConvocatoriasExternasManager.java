@@ -171,18 +171,18 @@ public class ConvocatoriasExternasManager {
 	
 	public jsonResult inPerfilSolicitudEmpleo(PerfilSolicitudEmpleo perfil) throws Exception {
 		// verificar existencia de usuario por dpi
-		jsonResult salida = new jsonResult();
-		List<Map<String, Object>> perfilExistente = getPerfilSolicitudDpi(perfil.DPI);
-		System.out.println("dentro get usuario ......" + perfilExistente.get(0) + "\n");
 
-		Integer idUsuario = Integer.parseInt(perfilExistente.get(0).get("ID_INFORMACION_PERSONAL_USUARIO").toString());
-		System.out.println("ID PERFIL USUARIO ......" + idUsuario + "\n");
+		jsonResult salida = new jsonResult();
+		if (existePerfilSolicitudDpi(perfil.DPI)) {
+			salida.result = "El usuario ya existe";
+			System.out.println("El usuario ya existe");
+			return salida;
+		}
 
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 
 		// usuario nuevo
-		// if (perfilExistente.size() == 0) {
 		System.out.println("dentro de llamar a insertar perfil usuario ......" + this.SCHEMA + "\n");
 		CallableStatement call = conn.prepareCall("call " + this.SCHEMA
 				+ ".PKG_TC_INFORMACION_PERSONAL_USUARIO.PROC_AGREGAR_INFORMACION_PERSONAL (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -222,44 +222,49 @@ public class ConvocatoriasExternasManager {
 		call.execute();
 		salida.id = call.getInt("p_id_salida");
 		salida.msj = call.getString("p_msj");
+		System.out.println("mensaje al insertar:  ......" + salida.msj + "\n");
+		System.out.println("id al insertar:  ......" + salida.id + "\n");
+
+		// insertar idioma usuario
+		for (IdiomasPerfilSE idioma : perfil.IDIOMAS) {
+			idiomaUsuarioManager.inIdiomaUsuario(idioma, idioma.idiomaId, salida.id);
+		}
+
+		// insertar familiar
+		for (FamiliaPerfilSE familiar : perfil.FAMILIARES) {
+			familiarManager.inFamiliar(familiar, salida.id);
+		}
+
+		// insertar familiares laborando OJ
+		for (FamiliaresLaborandoOJ familiarLaborandoOJ : perfil.FAMILIARES_LABORANDO_OJ) {
+			familiarLaborandoManager.inFamiliarLaborandoOJ(familiarLaborandoOJ, salida.id);
+		}
+
+		// insertar pasantias
+		for (PasantiasOJ pasantia : perfil.PASANTIAS) {
+			pasantiaManager.inPasantiaOJ(pasantia, salida.id);
+		}
+
+		// insertar experiencia laboral
+		for (ExperienciaLaboral experiencia : perfil.EXPERIENCIA_LABORAL) {
+			experienciaLaboralManager.inExperienciaLaboral(experiencia, salida.id);
+		}
+
+		// insertar experiencia laboral OJ
+		for (ExperienciaLaboralOJ experiencia : perfil.EXPERIENCIA_LABORAL_OJ) {
+			experienciaLaboralOJManager.inExperienciaLaboralOJ(experiencia, salida.id);
+		}
+
+		// insertar referencias personales
+		for (ReferenciasPersonales referencia : perfil.REFERENCIAS_PERSONALES) {
+			referenciaPersonalManager.inReferenciaPersonal(referencia, salida.id);
+		}
+
 		if (salida.id > 0)
 			salida.result = "OK";
 		System.out.println("todo ok perfil usuario......" + this.SCHEMA + "\n");
 		call.close();
 
-		// insertar idioma usuario
-
-		/*
-		 * for (IdiomasPerfilSE idioma : perfil.IDIOMAS) {
-		 * idiomaUsuarioManager.inIdiomaUsuario(idioma, idioma.idiomaId, idUsuario); }
-		 * 
-		 * // insertar familiar for (FamiliaPerfilSE familiar : perfil.FAMILIARES) {
-		 * familiarManager.inFamiliar(familiar, idUsuario); }
-		 * 
-		 * // insertar familiares laborando OJ for (FamiliaresLaborandoOJ
-		 * familiarLaborandoOJ : perfil.FAMILIARES_LABORANDO_OJ) {
-		 * familiarLaborandoManager.inFamiliarLaborandoOJ(familiarLaborandoOJ,
-		 * idUsuario); }
-		 * 
-		 * // insertar pasantias for (PasantiasOJ pasantia : perfil.PASANTIAS) {
-		 * pasantiaManager.inPasantiaOJ(pasantia, idUsuario); }
-		 * 
-		 * // insertar experiencia laboral for (ExperienciaLaboral experiencia :
-		 * perfil.EXPERIENCIA_LABORAL) {
-		 * experienciaLaboralManager.inExperienciaLaboral(experiencia, idUsuario); }
-		 * 
-		 * // insertar experiencia laboral OJ for (ExperienciaLaboralOJ experiencia :
-		 * perfil.EXPERIENCIA_LABORAL_OJ) {
-		 * experienciaLaboralOJManager.inExperienciaLaboralOJ(experiencia, idUsuario); }
-		 * 
-		 * // insertar referencias personales for (ReferenciasPersonales referencia :
-		 * perfil.REFERENCIAS_PERSONALES) {
-		 * referenciaPersonalManager.inReferenciaPersonal(referencia, idUsuario); }
-		 * 
-		 * //}
-		 */
-
-		salida.result = "OK";
 		return salida;
 
 	}
@@ -380,22 +385,47 @@ public class ConvocatoriasExternasManager {
 
 	}
 
+	public boolean existePerfilSolicitudDpi(String dpi) throws Exception {
+		ConnectionsPool c = new ConnectionsPool();
+		Connection conn = c.conectar();
+		System.out.println("dentro de llamar a existe perfil usuario dpi  ......" + dpi + "\n");
+		CallableStatement call = conn.prepareCall("call " + this.SCHEMA
+				+ ".PKG_TC_INFORMACION_PERSONAL_USUARIO.PROC_MOSTRAR_TC_INFORMACION_PERSONAL_USUARIO_DPI(?,?,?)");
+		call.setString("P_DPI", dpi);
+		call.registerOutParameter("p_cur_dataset", OracleTypes.CURSOR);
+		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
+		call.execute();
+
+		String msj = call.getString("p_msj");
+		System.out.println("mensaje:  ......" + msj + "\n");
+
+		if (msj == null) {
+			return true;
+		} else {
+			return msj.compareTo("No existe el usuario con el DPI especificado") == 0 ? false : true;
+		}
+
+	}
 
 	public List<Map<String, Object>> getPerfilSolicitudDpi(String dpi) throws Exception {
 		List<Map<String, Object>> salida = new ArrayList<>();
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		System.out.println("dentro de llamar a obtener perfil usuario dpi  ......" + dpi + "\n");
-		CallableStatement call = conn.prepareCall("call " +  this.SCHEMA + ".PKG_TC_INFORMACION_PERSONAL_USUARIO.PROC_MOSTRAR_TC_INFORMACION_PERSONAL_USUARIO_DPI(?,?,?)");
+		CallableStatement call = conn.prepareCall("call " + this.SCHEMA
+				+ ".PKG_TC_INFORMACION_PERSONAL_USUARIO.PROC_MOSTRAR_TC_INFORMACION_PERSONAL_USUARIO_DPI(?,?,?)");
 		call.setString("P_DPI", dpi);
 		call.registerOutParameter("p_cur_dataset", OracleTypes.CURSOR);
 		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
 		call.execute();
 
-	    //int  id = call.getInt("p_id_salida");
-	    String  msj = call.getString("p_msj");
-	    System.out.println("mensaje:  ......" + msj  + "\n");
-	    
+		String msj = call.getString("p_msj");
+		System.out.println("mensaje:  ......" + msj + "\n");
+
+		if (msj.compareTo("No existe el usuario con el DPI especificado") == 0) {
+			return salida;
+		}
+
 		ResultSet rset = (ResultSet) call.getObject("p_cur_dataset");
 		ResultSetMetaData meta = rset.getMetaData();
 		while (rset.next()) {
@@ -403,7 +433,7 @@ public class ConvocatoriasExternasManager {
 			for (int i = 1; i <= meta.getColumnCount(); i++) {
 				String key = meta.getColumnName(i).toString();
 				String value = Objects.toString(rset.getString(key), "");
-				System. out. println("todo ok......"+this.SCHEMA+"\n");
+				System.out.println("todo ok......" + this.SCHEMA + "\n");
 				map.put(key, value);
 			}
 			salida.add(map);
@@ -413,7 +443,6 @@ public class ConvocatoriasExternasManager {
 		conn.close();
 		return salida;
 	}
-
 	
 	public List<Map<String, Object>> getParentesco() throws Exception {
 		List<Map<String, Object>> salida = new ArrayList<>();
