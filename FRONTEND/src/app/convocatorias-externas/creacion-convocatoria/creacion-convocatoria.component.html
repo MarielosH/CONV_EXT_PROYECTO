@@ -47,7 +47,7 @@
           <button mat-raised-button class="btn btn-warning btn-lg" (click)="actualizarConvocatoria()"
             style="font-size: 12px;" *ngIf="validaCreate">Actualizar</button>
           <button mat-raised-button class="btn btn-danger btn-lg" ui-sref="login" (click)="borrarConvocatoria();"
-            style="font-size: 12px;" *ngIf="validaCreate">Cancelar</button>
+            style="font-size: 12px;" *ngIf="validaCreate">Borrar</button>
         </div>
       </div>
       <div class="col-md-7">
@@ -102,7 +102,7 @@
                 </div> -->
                 <div class="form-group">
                   <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                    <input matInput formControlName="titulo" type="text" placeholder="Titulo" [readonly]="validaCreate"
+                    <input matInput formControlName="titulo" type="text" placeholder="Titulo" 
                       (ngModelChange)="valCodDep($event)" ng-autocomplete="off" autocomplete="off">
                     <mat-error *ngIf="this.creation.controls.titulo.errors?.required">
                       Titulo de Convocatoria Requerido
@@ -115,7 +115,7 @@
                 <div class="form-group">
                   <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                     <textarea matInput formControlName="descripcion" type="text" placeholder="Descripción Corta"
-                      [readonly]="validaCreate" (ngModelChange)="valCodPres($event)" ng-autocomplete="off"
+                       (ngModelChange)="valCodPres($event)" ng-autocomplete="off"
                       autocomplete="off" rows="2">
                     </textarea>
                     <mat-error *ngIf="this.creation.controls.descripcion.errors?.required">
@@ -130,7 +130,7 @@
                   <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                     <textarea matInput formControlName="objetivo" class="textos" type="text" maxlength="2048"
                       placeholder="Objetivo" (ngModelChange)="asignaNombreDoc($event)" ng-autocomplete="off"
-                      autocomplete="off" rows="3" [readonly]="validaCreate">
+                      autocomplete="off" rows="3" >
                     </textarea>
                     <mat-error *ngIf="this.creation.controls.objetivo.errors?.required">
                       Objetivo Requerido
@@ -142,7 +142,7 @@
                   <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                     <textarea matInput formControlName="experiencia" class="textos" type="text" maxlength="2048"
                       placeholder="Experiencia" ng-autocomplete="off" autocomplete="off" rows="2"
-                      [readonly]="validaCreate">
+                      >
                     </textarea>
                     <mat-error *ngIf="this.creation.controls.experiencia.errors?.required">
                       Experiencia Requerida
@@ -419,13 +419,13 @@
             <ng-container matColumnDef="TITULO">
               <th mat-header-cell *matHeaderCellDef class="encabezado"> TÍTULO </th>
               <td mat-cell style="text-align: center;" *matCellDef="let element"><span>
-                  {{element.titulo}} </span> </td>
+                  {{element.TITULO}} </span> </td>
             </ng-container>
 
             <ng-container matColumnDef="DESCRIPCION">
               <th mat-header-cell *matHeaderCellDef class="encabezado"> DESCRIPCION </th>
               <td mat-cell style="text-align: justify;" *matCellDef="let element">
-                {{element.data}} </td>
+                {{element.DATA}} </td>
             </ng-container>
 
             <ng-container matColumnDef="OPCIONES">
@@ -448,8 +448,14 @@
     </div>
     <div class="row">
       <div style="width: 100%; text-align: right;">
-        <button mat-raised-button class="btn btn-success btn-lg" ui-sref="login" (click)="clean();"
-        style="font-size: 12px; float: right;">Terminar y limpiar</button>
+        <div class="col">
+          <button mat-raised-button class="btn btn-primary btn-lg" ui-sref="login" (click)="cancelar();"
+          style="font-size: 12px; float: right;">Regresar</button>
+        </div>
+        <div class="col">
+          <button mat-raised-button class="btn btn-success btn-lg" ui-sref="login" (click)="clean();"
+          style="font-size: 12px; float: right;">Terminar y limpiar</button>
+        </div>
       </div>
     </div>
   </div>

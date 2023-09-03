@@ -52,6 +52,12 @@ export class ConvocatoriaService {
       )
   }
 
+  getDetalleConv(uri, idConv): Observable<any> {
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + uri + `/get/convocatoria/${idConv}`)
+      .pipe(
+        catchError(this.handleError('getDetalleConv', []))
+      )
+  }
 
   constructor(private http: HttpClient, private appSettings: AppconfigService) { }
   private handleError<T>(operation = 'operation', result?: T) {

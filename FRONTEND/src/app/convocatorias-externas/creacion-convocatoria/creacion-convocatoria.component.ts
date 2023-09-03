@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef  } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, Input } from '@angular/core';
 import { MatDatepickerModule, MatSelect, MatInput, MatButton, MatAutocomplete, MatChipInputEvent, MatAutocompleteSelectedEvent, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, ValidationErrors, FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
 import { Observable, Subscription, BehaviorSubject } from '../../../../node_modules/rxjs';
@@ -41,6 +41,7 @@ export class CreacionConvocatoriaComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @Input() idConvoctoria_in: number;
 
   creation: FormGroup;
   dtConv: FormGroup;
@@ -65,7 +66,7 @@ export class CreacionConvocatoriaComponent implements OnInit {
   id;
   convDetalles;
   dataSource = new MatTableDataSource<any>();
-  tmp_id = 0;
+  tmp_id = '';
   
 /* Controles */
   titulo;
@@ -97,27 +98,15 @@ export class CreacionConvocatoriaComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    const conv = JSON.parse(localStorage.getItem('convocatoria'));
     this.creation = this.fb.group({
       floatLabel: this.floatLabelControl,
       titulo: ['', Validators.required],      
       descripcion: ['', Validators.required],      
       objetivo: ['', Validators.required],      
       experiencia: ['', Validators.required],      
-      cortoDep: ['', Validators.required],      
-      gafeteDep: ['', Validators.required],      
-      documentoDep: ['', Validators.required],      
-      selConector: ['', Validators.required],      
-      selFuncionalidad: ['', Validators.required],      
-      selArea: ['', Validators.required],      
       fechaInicioVigencia: ['', Validators.required],      
-      inicioVigencia: ['', Validators.required],      
-      selDepartamento: ['', Validators.required],      
-      selMunicipio: ['', Validators.required],      
-      referencia: ['', Validators.required],
       fechaFinVigencia: ['', Validators.required],      
-      inicioVigRef: [''],
-      chkRefVigencia:['']      
     });
 
     this.dtConv = this.fb.group({
@@ -126,16 +115,35 @@ export class CreacionConvocatoriaComponent implements OnInit {
       descripcion: ['',Validators.required],
     });
 
-    this.creation.get('titulo').valueChanges.subscribe((v)=> {if(v.length > 3){this.iniciaValDep = true }else{this.iniciaValDep = false}} );
-    this.creation.get('descripcion').valueChanges.subscribe((v)=> {if(v.length > 3){this.iniciaValPres = true }else{this.iniciaValPres = false}});
+    // this.creation.get('titulo').valueChanges.subscribe((v)=> {if(v.length > 3){this.iniciaValDep = true }else{this.iniciaValDep = false}} );
+    // this.creation.get('descripcion').valueChanges.subscribe((v)=> {if(v.length > 3){this.iniciaValPres = true }else{this.iniciaValPres = false}});
 
     this.dependencia = this.fb.group({
       floatLabel: this.floatLabelControl,
       busqueda: [''],      
       selEstados: ['']      
     });
-
     this.convDetalles = []
+    this.loadDetalles();
+
+    if (conv) {
+        console.log(conv)
+        this.creation.setValue({
+          floatLabel: this.floatLabelControl,
+          titulo: conv.TITULO,
+          descripcion: conv.DESCRIPCION,
+          objetivo: conv.OBJETIVO,
+          experiencia: conv.EXPERIENCIA,
+          fechaInicioVigencia: conv.FECHA_INICIO_VIGENCIA,
+          fechaFinVigencia: conv.FECHA_FIN_VIGENCIA,
+        })
+        this.id = parseInt(conv.ID_CONVOCATORIA)
+        this.validaCreate = !this.validaCreate;
+        // recolectar todas los detalles de la conv
+        this.cargarDetalles(parseInt(conv.ID_CONVOCATORIA))
+      }
+    
+    
     //  this.convDetalles.push({
     //   "habilidadTecnica": "Saber que estas haciendo ",
     //   "data": "Saber que estas haciendo ",
@@ -164,7 +172,7 @@ export class CreacionConvocatoriaComponent implements OnInit {
     //   "titulo": "Papeleria"
     // })
     // console.log(this.convDetalles)
-    // this.loadDetalles();
+    //
     /*this.mantenimientoDependenciaService.getListaDepartamento().subscribe(
       data => {
         this.departamentos = data;
@@ -174,8 +182,23 @@ export class CreacionConvocatoriaComponent implements OnInit {
       data => {
         this.listArea = data;
       });*/
-      console.log(this.dataSource)
+
   }
+
+  cargarDetalles(id){
+    for (const key in Detalle) {
+      this.convocatoriasService.getDetalleConv(Detalle[key][1], id).subscribe(
+        data => {
+          if (data.length > 0) {
+            console.log(data)
+            this.dataSource.data = [...data, ...this.dataSource.data];
+          } 
+        }
+      )
+    }
+    
+  }
+  
 
   listFuncionalidad: Funcionalidad[] = [
     { value: 'T', viewValue: 'TURNO' },
@@ -423,6 +446,7 @@ export class CreacionConvocatoriaComponent implements OnInit {
   /* fin upload file*/
 
   cancelar(){
+    this.clean()
     this.router.navigate(['/mantenimientos/gestiones/1']);
   }
 
@@ -504,21 +528,24 @@ export class CreacionConvocatoriaComponent implements OnInit {
     dtC[key[0]] = this.dtConv.value.descripcion;
 
 
-    if(this.tmp_id > 0){
+    if(this.tmp_id != ''){
       this.convocatoriasService.modDetalleConv(dtC, key[1], this.tmp_id).subscribe(
         data => {
           if (data.result == 'OK') {
+            console.log(this.dataSource.data)
+            console.log(conv_id)
             this.dataSource.data = this.dataSource.data.filter(function (item) {
-              return item.id_detalle !== conv_id
+              return item.ID_DETALLE !== conv_id
             })
             console.log(this.dataSource.data)
-            tmp['key'] = this.dtConv.value.tipoDetalle;
-            tmp['titulo'] = key[2];
-            tmp['id_convocatoria'] = this.id;
-            tmp['id_detalle'] = data.id;
-            tmp['data'] = this.dtConv.value.descripcion;
+            tmp['KEY'] = this.dtConv.value.tipoDetalle;
+            tmp['TITULO'] = key[2];
+            tmp['ID_CONVOCATORIA'] = this.id.toString();
+            tmp['ID_DETALLE'] = data.id.toString();
+            tmp['DATA'] = this.dtConv.value.descripcion;
             this.dataSource.data = [tmp, ...this.dataSource.data];
             this.clearDetalleForm()
+            this.tmp_id = ''
           } else {
             swal("Error", data.msj, "error");
           }
@@ -528,11 +555,11 @@ export class CreacionConvocatoriaComponent implements OnInit {
       this.convocatoriasService.insDetalleConv(dtC, key[1], this.id).subscribe(
         data => {
           if (data.result == 'OK') {
-            tmp['key'] = this.dtConv.value.tipoDetalle;
-            tmp['titulo'] = key[2];
-            tmp['id_convocatoria'] = this.id;
-            tmp['id_detalle'] = data.id;
-            tmp['data'] = this.dtConv.value.descripcion;
+            tmp['KEY'] = this.dtConv.value.tipoDetalle;
+            tmp['TITULO'] = key[2];
+            tmp['ID_CONVOCATORIA'] = this.id.toString();
+            tmp['ID_DETALLE'] = data.id.toString();
+            tmp['DATA'] = this.dtConv.value.descripcion;
             this.dataSource.data = [tmp, ...this.dataSource.data];
             this.clearDetalleForm()
           } else {
@@ -545,11 +572,11 @@ export class CreacionConvocatoriaComponent implements OnInit {
 
   borrar(row){
     let key = Detalle[row.key];
-    this.convocatoriasService.borDetalleConv(key[1], row.id_detalle).subscribe(
+    this.convocatoriasService.borDetalleConv(key[1], row.ID_DETALLE).subscribe(
       data => {
         if (data.result == 'OK') {
           this.dataSource.data = this.dataSource.data.filter(function (item) {
-            return item.id_detalle !== row.id_detalle
+            return item.ID_DETALLE !== row.ID_DETALLE
           })
           this.dataSource.data = [...this.dataSource.data]
         } else {
@@ -563,18 +590,20 @@ export class CreacionConvocatoriaComponent implements OnInit {
 
   editar(row){
     console.log(row)
-    this.tmp_id = row.id_detalle;
+    this.tmp_id = row.ID_DETALLE;
     this.dtConv.setValue({
       floatLabelC: this.convFloatLabelCtrl,
-      tipoDetalle: row.key,
-      descripcion: row.data,
+      tipoDetalle: parseInt(row.KEY),
+      descripcion: row.DATA,
     })
   }
 
   clean(){
     this.id = NaN;
     this.validaCreate = false;
-    this.tmp_id = NaN;
+    this.tmp_id = '';
+    this.dataSource.data = [...[]]
+    localStorage.removeItem('convocatoria');
     this.creation = this.fb.group({
       floatLabel: this.floatLabelControl,
       titulo: ['', Validators.required],      

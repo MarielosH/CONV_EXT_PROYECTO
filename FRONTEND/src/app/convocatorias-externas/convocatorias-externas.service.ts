@@ -59,6 +59,13 @@ export class ConvocatoriasExternasService {
       );
   }
 
+  getConvocatorias(): Observable<any> {
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + 'Convocatoria/getConvocatorias' )
+    .pipe(
+      catchError(this.handleError('Mostrar Convocatorias', []))
+    );
+  }
+
   constructor(private http: HttpClient, private appSettings: AppconfigService) { }
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
