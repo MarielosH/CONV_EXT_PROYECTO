@@ -31,6 +31,13 @@ export class ConvocatoriasExternasService {
       );
   }
 
+  getListaIdiomasExtranjeros(): Observable<any> {
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + 'Convocatorias-Externas/getIdiomas')
+      .pipe(
+        catchError(this.handleError('getListaIdiomasExtranjeros', []))
+      );
+  }
+
   insPerfilUsuario(perfilUsuario): Observable<any> {
     return this.http.post<any>(this.appSettings.restApiServiceBaseUri + 'Convocatorias-Externas/inPerfilSolicitudEmpleo', perfilUsuario)
       .pipe(
@@ -42,6 +49,13 @@ export class ConvocatoriasExternasService {
     return this.http.get<any>(this.appSettings.restApiServiceBaseUri + 'Convocatorias-Externas/getParentesco')
       .pipe(
         catchError(this.handleError('getListaParentescoConv', []))
+      );
+  }
+
+  getListaEstadoCivilConv(): Observable<any> {
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + 'Convocatorias-Externas/getEstadoCivil')
+      .pipe(
+        catchError(this.handleError('getListaEstadoCivilConv', []))
       );
   }
 

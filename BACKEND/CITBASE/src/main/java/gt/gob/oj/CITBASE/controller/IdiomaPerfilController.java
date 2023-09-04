@@ -24,7 +24,7 @@ public class IdiomaPerfilController {
 	@Path("/inIdiomaUsuario/idioma/{idioma}/usuario/{usuario}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response inPerfilSolicitudEmpleo(@Context HttpServletRequest req, IdiomasPerfilSE idiomaUsuario, @PathParam("idioma") Integer idioma, @PathParam("usuario") Integer usuario) {
+	public Response inIdiomaUsuario(@Context HttpServletRequest req, IdiomasPerfilSE idiomaUsuario, @PathParam("idioma") Integer idioma, @PathParam("usuario") Integer usuario) {
 		try {
 			return Response.ok(manager.inIdiomaUsuario(idiomaUsuario, idioma, usuario)).build();
 		} catch (Exception e) {

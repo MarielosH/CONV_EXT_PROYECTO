@@ -25,7 +25,7 @@ public class ExperienciaLaboralManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
-		System.out.println("dentro de llamar a insertar informacion academica ......" + this.SCHEMA + "\n");
+		System.out.println("dentro de llamar a insertar experiencia laboral ......" + this.SCHEMA + "\n");
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_EXPERIENCIA_LABORAL.PROC_AGREGAR_TC_EXPERIENCIA_LABORAL (?,?,?,?,?,?,?,?,?,?,?)");
 		call.setString("P_INSTITUCION_EMPRESA", experienciaLaboral.institucionEmpresa);
@@ -82,7 +82,7 @@ public class ExperienciaLaboralManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
-		System.out.println("dentro de llamar a modificar informacion academica ......" + this.SCHEMA + "\n");
+		System.out.println("dentro de llamar a modificar experiencia laboral......" + this.SCHEMA + "\n");
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_EXPERIENCIA_LABORAL.PROC_ACTUALIZAR_TC_EXPERIENCIA_LABORAL (?,?,?,?,?,?,?,?,?,?,?)");
 		call.setInt("P_ID_EXPERIENCIA_LABORAL", id);
@@ -110,7 +110,7 @@ public class ExperienciaLaboralManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
-		System.out.println("dentro de llamar a eliminar informacion academica ......" + this.SCHEMA + "\n");
+		System.out.println("dentro de llamar a eliminar experiencia laboral ......" + this.SCHEMA + "\n");
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_EXPERIENCIA_LABORAL.PROC_BORRAR_TC_EXPERIENCIA_LABORAL (?,?,?)");
 		call.setInt("P_ID_EXPERIENCIA_LABORAL", id);

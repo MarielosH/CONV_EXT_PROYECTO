@@ -61,12 +61,12 @@ public class PerfilSolicitudEmpleo {
 	public String CIERRE_PENSUM_POSGRADO;
 	public String GRADUADO_MAESTRIA;
 	public String GRADUADO_DOCTORADO;
-	List<IdiomasPerfilSE> IDIOMAS = new ArrayList <IdiomasPerfilSE>();
-	List<FamiliaPerfilSE> FAMILIARES = new ArrayList <FamiliaPerfilSE>();
-	List<FamiliaresLaborandoOJ> FAMILIARES_LABORANDO_OJ = new ArrayList <FamiliaresLaborandoOJ>();
-	List<PasantiasOJ> PASANTIAS = new ArrayList <PasantiasOJ>();
-	List<ExperienciaLaboralOJ> EXPERIENCIA_LABORAL_OJ = new ArrayList <ExperienciaLaboralOJ>();
-	List<ExperienciaLaboral> EXPERIENCIA_LABORAL = new ArrayList <ExperienciaLaboral>();
-	List<ReferenciasPersonales> REFERENCIAS_PERSONALES = new ArrayList <ReferenciasPersonales>();
+	public List<IdiomasPerfilSE> IDIOMAS = new ArrayList <IdiomasPerfilSE>();
+	public List<FamiliaPerfilSE> FAMILIARES = new ArrayList <FamiliaPerfilSE>();
+	public List<FamiliaresLaborandoOJ> FAMILIARES_LABORANDO_OJ = new ArrayList <FamiliaresLaborandoOJ>();
+	public List<PasantiasOJ> PASANTIAS = new ArrayList <PasantiasOJ>();
+	public List<ExperienciaLaboral> EXPERIENCIA_LABORAL = new ArrayList <ExperienciaLaboral>();
+	public List<ExperienciaLaboralOJ> EXPERIENCIA_LABORAL_OJ = new ArrayList <ExperienciaLaboralOJ>();
+	public List<ReferenciasPersonales> REFERENCIAS_PERSONALES = new ArrayList <ReferenciasPersonales>();
 	
 }

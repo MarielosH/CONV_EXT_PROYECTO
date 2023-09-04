@@ -24,12 +24,14 @@ public class ExperienciaLaboralOJManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
-		System.out.println("dentro de llamar a insertar informacion academica ......" + this.SCHEMA + "\n");
+		System.out.println("dentro de llamar a insertar experiencia laboral OJ  ......" + this.SCHEMA + "\n");
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_EXPERIENCIA_LABORAL_OJ.PROC_AGREGAR_TC_EXPERIENCIA_LABORAL_OJ (?,?,?,?,?,?,?,?,?,?)");
 		call.setString("P_PUESTO", experienciaLaboralOJ.puesto);
 		call.setString("P_FECHA_INICIO", experienciaLaboralOJ.fechaInicio);
-		call.setString("P_FECHA_FIN", experienciaLaboralOJ.fechaFin);
+		call.setString("P_FECHA_FIN", experienciaLaboralOJ.fechaFinalizacion);
+		System.out.println("fecha inicio experiencia laboral OJ ......" + experienciaLaboralOJ.fechaInicio + "\n");
+		System.out.println("fecha fin experiencia laboral OJ ......" + experienciaLaboralOJ.fechaFinalizacion + "\n");
 		call.setString("P_RENGLON", experienciaLaboralOJ.renglonPresupuestario);
 		call.setString("P_DEPENDENCIA", experienciaLaboralOJ.dependencia);
 		call.setString("P_JEFE_INMEDIATO", experienciaLaboralOJ.jefeInmediato);
@@ -80,13 +82,13 @@ public class ExperienciaLaboralOJManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
-		System.out.println("dentro de llamar a modificar informacion academica ......" + this.SCHEMA + "\n");
+		System.out.println("dentro de llamar a modificar experiencia laboral OJ ......" + this.SCHEMA + "\n");
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_EXPERIENCIA_LABORAL_OJ.PROC_ACTUALIZAR_TC_EXPERIENCIA_LABORAL_OJ (?,?,?,?,?,?,?,?,?,?)");
 		call.setInt("P_ID_EXPERIENCIA_LABORAL_OJ", id);
 		call.setString("P_PUESTO", experienciaLaboralOJ.puesto);
 		call.setString("P_FECHA_INICIO", experienciaLaboralOJ.fechaInicio);
-		call.setString("P_FECHA_FIN", experienciaLaboralOJ.fechaFin);
+		call.setString("P_FECHA_FIN", experienciaLaboralOJ.fechaFinalizacion);
 		call.setString("P_RENGLON", experienciaLaboralOJ.renglonPresupuestario);
 		call.setString("P_DEPENDENCIA", experienciaLaboralOJ.dependencia);
 		call.setString("P_JEFE_INMEDIATO", experienciaLaboralOJ.jefeInmediato);
@@ -107,7 +109,7 @@ public class ExperienciaLaboralOJManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
-		System.out.println("dentro de llamar a eliminar informacion academica ......" + this.SCHEMA + "\n");
+		System.out.println("dentro de llamar a eliminar experiencia laboral OJ ......" + this.SCHEMA + "\n");
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_EXPERIENCIA_LABORAL_OJ.PROC_BORRAR_TC_EXPERIENCIA_LABORAL_OJ (?,?,?)");
 		call.setInt("P_ID_EXPERIENCIA_LABORAL_OJ", id);

@@ -108,7 +108,7 @@ public class FamiliarManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
-		System.out.println("dentro de llamar a modificar visibilidad familiar usuario ......" + this.SCHEMA + "\n");
+		System.out.println("dentro de llamar a eliminar familiar usuario ......" + this.SCHEMA + "\n");
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_FAMILIAR.PROC_BORRAR_TC_FAMILIAR (?,?,?)");
 		call.setInt("P_ID_FAMILIAR", familiar);

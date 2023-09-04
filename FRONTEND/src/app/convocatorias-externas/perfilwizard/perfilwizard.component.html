@@ -6,7 +6,7 @@
   <div class="col-2">
     <div class="button-group">
       <button mat-raised-button class="btn btn-primary btn-block" (click)="crearPerfil()"
-        style="font-size: 12px;">Guardar</button>
+        style="font-size: 12px;">Actualizar</button>
     </div>
   </div>
 </div>
@@ -94,8 +94,8 @@
         <div class="form-group col">
           <mat-form-field>
             <mat-select placeholder="ESTADO CIVIL" formControlName="estadoCivilAspirante" required>
-              <mat-option *ngFor="let estados of estadoCivil" [value]="estados.ID" style="font-size: 12px;">
-                {{estados.DESCRIPCION}}</mat-option>
+              <mat-option *ngFor="let estados of listaEstadoCivil" [value]="estados.ID_ESTADO_CIVIL" style="font-size: 12px;">
+                {{estados.ESTADO_CIVIL}}</mat-option>
             </mat-select>
             <mat-error *ngIf="this.firstFormGroup.controls.estadoCivilAspirante.errors?.required">
               Estado Civil Requerido
@@ -276,10 +276,15 @@
             <thead>
               <tr>
                 <td class="text-center" style="width: 250px;">
-                  <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                    <input matInput formControlName="idioma1" type="text" placeholder="Idioma">
+                  <mat-form-field>                   
+                    <mat-select placeholder="IDIOMA" formControlName="idioma1" >
+                      <mat-option *ngFor="let idiomaE of listaIdiomasExtranjeros"
+                        [value]="idiomaE.ID_IDIOMA" style="font-size: 12px;">
+                        {{idiomaE.IDIOMA}}</mat-option>
+                    </mat-select>
                     <mat-hint style="color:red;" *ngIf="validaIdioma()"> Error Idioma ya Existente </mat-hint>
                   </mat-form-field>
+
                 </td>
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field>
@@ -321,9 +326,14 @@
             <tbody *ngIf="idiomas.length>0">
               <tr *ngFor="let d of idiomas; let index = index" disabled>
                 <td class="text-center" style="width: 250px;">
-                  <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                    <input matInput [value]="d.idioma" type="text" placeholder="Idioma" disabled>
-                  </mat-form-field>
+                    <mat-form-field [floatLabel]="floatLabelControl.value">
+                      <mat-label style="font-size: 14px;">IDIOMA</mat-label>
+                      <mat-select disabled [value]="d.idiomaId">
+                        <mat-option *ngFor="let idiomaE of listaIdiomasExtranjeros" [value]="idiomaE.ID_IDIOMA"
+                          style="font-size: 12px;">
+                          {{idiomaE.IDIOMA}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
                 </td>
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field>
@@ -379,43 +389,13 @@
       <mat-label style="font-size: 24px; "> <b>Información Familiar</b></mat-label>
       <br />
       <div>
-        <mat-card>
-          <mat-card-content>
-            <div class="row">
-              <div class="col-2">
-                <mat-form-field>
-                  <mat-select placeholder="HIJOS" formControlName="hijos" required>
-                    <mat-option [value]="0" style="font-size: 12px;"> NO</mat-option>
-                    <mat-option [value]="1" style="font-size: 12px;"> SI</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-              <div class="col-3">
-                <mat-form-field color="warn" class="textos">
-                  <input matInput formControlName="noHijo" class="textos" type="number" placeholder="NUMERO DE HIJOS">
-                </mat-form-field>
-              </div>
-              <div class="col-4">
-                <mat-label style="font-size: 18px; "> SELECCIONE DEPENDIENTES ECONÓMICOS DE USTED </mat-label>
-                <mat-selection-list color="primary" (selectionChange)="cambioListaDependientes($event)">
-                  <mat-list-option checkboxPosition="before" [value]="0">
-                    HIJO/A
-                  </mat-list-option>
-                  <mat-list-option checkboxPosition="before" [value]="1">
-                    PADRE
-                  </mat-list-option>
-                  <mat-list-option checkboxPosition="before" [value]="2">
-                    MADRE
-                  </mat-list-option>
-                  <mat-list-option checkboxPosition="before" [value]="3">
-                    OTRO
-                  </mat-list-option>
-                </mat-selection-list>
-              </div>
-            </div>
-          </mat-card-content>
-        </mat-card>
-
+        <div class="row">
+          <div class="col-3">
+            <mat-form-field color="warn" class="textos">
+              <input matInput formControlName="noHijo" class="textos" type="number" placeholder="NUMERO DE HIJOS">
+            </mat-form-field>
+          </div>
+        </div>
       </div>
       <br />
       <br />
@@ -423,7 +403,7 @@
         <mat-card-title> FAMILIAR </mat-card-title>
         <mat-card-content>
           <div class="row">
-            <div class="col-5">
+            <div class="col-4">
               <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                 <input matInput formControlName="familiar" type="text" placeholder="NOMBRE">
               </mat-form-field>
@@ -437,12 +417,6 @@
               </mat-form-field>
             </div>
             <div class="col-2">
-              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                <input matInput formControlName="telFamiliar" class="textos" type="text" maxlength="10"
-                  placeholder="TELEFONO">
-              </mat-form-field>
-            </div>
-            <div class="col-2">
               <mat-form-field [floatLabel]="floatLabelControl.value">
                 <mat-label style="font-size: 14px;">PARENTESCO</mat-label>
                 <mat-select formControlName="parentesco">
@@ -453,10 +427,7 @@
 
               </mat-form-field>
             </div>
-          </div>
-
-          <div class="row">
-            <div class="col-1">
+            <div class="col-2">
               <mat-form-field [floatLabel]="floatLabelControl.value">
                 <mat-label style="font-size: 14px;">VIVE</mat-label>
                 <mat-select formControlName="viveFamiliar">
@@ -465,6 +436,10 @@
                 </mat-select>
               </mat-form-field>
             </div>
+
+          </div>
+
+          <div class="row">
             <div class="col-4">
               <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                 <input matInput formControlName="profesionFamiliar" type="text" placeholder="PROFESIÓN U OFICIO">
@@ -479,13 +454,26 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="col-3">
+            <div class="col-4">
+              <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                <input matInput formControlName="telFamiliar" class="textos" type="text" maxlength="10"
+                  placeholder="TELEFONO">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
               <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                 <input matInput formControlName="lugarTrabajoFamiliar" class="textos" type="text" maxlength="200"
                   placeholder="LUGAR DE TRABAJO">
                 <mat-hint align="end">{{f3.lugarTrabajoFamiliar.value.length}} / 200</mat-hint>
               </mat-form-field>
             </div>
+            <div class="col-4 mt-4">
+              <mat-checkbox color="primary" formControlName="dependeEconomicamente" [disabled]="false"> <b>DEPENDE
+                  ECONOMICAMENTE DE USTED </b></mat-checkbox>
+            </div>
+            <div class="col-2"></div>
             <div class="col-2">
               <button mat-raised-button class="btn btn-primary" (click)="agregarFamiliar()" style="font-size: 10px;">
                 <i class="fa fa-plus"></i>
@@ -501,7 +489,7 @@
         <mat-card *ngFor="let familiar of familiares">
           <mat-card-content>
             <div class="row">
-              <div class="col-5">
+              <div class="col-4">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input disabled matInput [value]="familiar.nombreFamiliar" type="text" placeholder="NOMBRE">
                 </mat-form-field>
@@ -515,25 +503,16 @@
                 </mat-form-field>
               </div>
               <div class="col-2">
-                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
-                  <input disabled matInput [value]="familiar.telefono" class="textos" type="text" maxlength="10"
-                    placeholder="TELEFONO">
-                </mat-form-field>
-              </div>
-              <div class="col-2">
                 <mat-form-field [floatLabel]="floatLabelControl.value">
                   <mat-label style="font-size: 14px;">PARENTESCO</mat-label>
                   <mat-select disabled [value]="familiar.parentesco">
                     <mat-option *ngFor="let parentesco of listaParentescos" [value]="parentesco.ID"
-                    style="font-size: 12px;">
-                    {{parentesco.PARENTESCO}}</mat-option>
+                      style="font-size: 12px;">
+                      {{parentesco.PARENTESCO}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
-            </div>
-
-            <div class="row">
-              <div class="col-1">
+              <div class="col-2">
                 <mat-form-field [floatLabel]="floatLabelControl.value">
                   <mat-label style="font-size: 14px;">VIVE</mat-label>
                   <mat-select disabled [value]="familiar.vive">
@@ -542,6 +521,10 @@
                   </mat-select>
                 </mat-form-field>
               </div>
+            </div>
+
+            <div class="row">
+
               <div class="col-4">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input disabled matInput [value]="familiar.profesion" type="text" placeholder="PROFESION U OFICIO">
@@ -556,12 +539,26 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-              <div class="col-3">
+              <div class="col-4">
+                <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
+                  <input disabled matInput [value]="familiar.telefono" class="textos" type="text" maxlength="10"
+                    placeholder="TELEFONO">
+                </mat-form-field>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-4">
                 <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                   <input disabled matInput [value]="familiar.lugarTrabajo" class="textos" type="text" maxlength="2048"
                     placeholder="LUGAR DE TRABAJO">
                 </mat-form-field>
               </div>
+              <div class="col-4 mt-4">
+                <mat-checkbox color="primary" [checked]="familiar.dependeEconomicamente == '1' ? true : false" disabled> <b>DEPENDE
+                    ECONOMICAMENTE DE USTED </b></mat-checkbox>
+              </div>
+              <div class="col-2"></div>
               <div class="col-2">
                 <button type="button" class="btn btn-danger" (click)="eliminarFamiliar(index)"
                   title="Eliminar Familiar">
@@ -601,8 +598,8 @@
                   <mat-label style="font-size: 14px;">PARENTESCO</mat-label>
                   <mat-select formControlName="parentescoFOJ">
                     <mat-option *ngFor="let parentesco of listaParentescos" [value]="parentesco.ID"
-                    style="font-size: 12px;">
-                    {{parentesco.PARENTESCO}}</mat-option>
+                      style="font-size: 12px;">
+                      {{parentesco.PARENTESCO}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -651,8 +648,8 @@
                   <mat-label style="font-size: 14px;">PARENTESCO</mat-label>
                   <mat-select disabled [value]="familiar.parentesco">
                     <mat-option *ngFor="let parentesco of listaParentescos" [value]="parentesco.ID"
-                    style="font-size: 12px;">
-                    {{parentesco.PARENTESCO}}</mat-option>
+                      style="font-size: 12px;">
+                      {{parentesco.PARENTESCO}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -1034,7 +1031,7 @@
                 </td>
                 <td style="width: 150px;">
                   <mat-label style="font-size: 14px;">Pasantía Registrada en Unidad de Dotación</mat-label>
-                  <mat-select  [value]="d.registrada">
+                  <mat-select [value]="d.registrada">
                     <mat-option [value]="1" style="font-size: 12px;">SI</mat-option>
                     <mat-option [value]="0" style="font-size: 12px;">NO</mat-option>
                   </mat-select>
