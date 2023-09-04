@@ -19,7 +19,7 @@ public class OtroConvController {
 	OtroConvManager manager = new OtroConvManager();
 	
 	@POST
-	@Path("/inOtroConv/convocatoria/{convocatoria}")
+	@Path("/in/convocatoria/{convocatoria}")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response inOtroConv(@Context HttpServletRequest req, OtroConv otroConv, @PathParam("convocatoria") Integer convocatoria) {
@@ -32,7 +32,7 @@ public class OtroConvController {
 	}
 	
 	@POST
-	@Path("/modOtroConv/id/{id}")
+	@Path("/mod/id/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response modOtroConv(@Context HttpServletRequest req, OtroConv otroConv, @PathParam("id") Integer id) {
@@ -45,7 +45,7 @@ public class OtroConvController {
 	}
 	
 	@GET
-	@Path("/getOtroConv/convocatoria/{convocatoria}")
+	@Path("/get/convocatoria/{convocatoria}")
 	@Produces("application/json")
 	public Response getOtroConv(@PathParam("convocatoria") Integer convocatoria) {
 		try {
@@ -57,7 +57,7 @@ public class OtroConvController {
 	}
 	
 	@GET
-	@Path("/borOtroConv/id/{id}")
+	@Path("/bor/id/{id}")
 	@Produces("application/json")
 	public Response borOtroConv(@PathParam("id") Integer id) {
 		try {

@@ -11,6 +11,9 @@ import { startWith, map } from 'rxjs/operators';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { Convocatorias } from 'app/constantes';
+import { ConvocatoriasExternasService } from '../convocatorias-externas.service'
+import { ConvocatoriaService } from '../convocatoria.service';
+import { data } from 'jquery';
 
 @Component({
   selector: 'app-gestion-coordinador',
@@ -37,7 +40,8 @@ export class GestionCoordinadorComponent implements OnInit {
     
   constructor(public authService: AuthService,
     public HttpClient: HttpClient,private fb: FormBuilder,  private _location: Location, private datePipe : DatePipe,
-    private router: Router,private route:ActivatedRoute,public dialog: MatDialog
+    private router: Router,private route:ActivatedRoute,public dialog: MatDialog, private convExternaService: ConvocatoriasExternasService,
+    private convocatoriasService: ConvocatoriaService,
   ) { 
     this.session = this.authService.getsession().SESSION;
     this.constantes = this.authService.getsession().CONSTANTES;
@@ -51,14 +55,39 @@ export class GestionCoordinadorComponent implements OnInit {
       selEstados: ['']      
     });
     
-    this.route.params.subscribe(
-      (params: Params) => {
-        this.loadDependencias();
-      }
-    );
+    // this.route.params.subscribe(
+    //   (params: Params) => {
+    //     this.loadDependencias();
+    //   }
+    // );
 
     this.valProfile();
+    this.getConvocatorias();
+  }
 
+  viewDependencia(row){
+    console.log(row);
+    const conv = {
+      titulo: '',
+      descripcion: '',
+      objetivo: '',
+
+    }
+    localStorage.setItem('convocatoria', JSON.stringify(row))
+    this.router.navigate(['convocatorias-externas/crear-convocatoria']);
+  }
+
+  getConvocatorias(){
+    this.convExternaService.getConvocatorias().subscribe(
+      data =>{
+        if (data) {
+          this.dataSource = new MatTableDataSource(data);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        } else {
+          swal("Error", data.msj, "error")
+        }
+    })
   }
 
   valProfile(){
@@ -104,23 +133,34 @@ export class GestionCoordinadorComponent implements OnInit {
   }
 
   eliminar(data) {
-    console.log(data);
-    swal({
-      title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this imaginary file!",
-      icon: "warning",
-      buttons: [true],
-      dangerMode: true,
-    })
-    .then((willDelete) => {
-      if (willDelete) {
-        swal("Poof! Your imaginary file has been deleted!", {
-          icon: "success",
-        });
-      } else {
-        swal("Your imaginary file is safe!");
+    const id = data.ID_CONVOCATORIA
+    this.convocatoriasService.borConvocatoria(id).subscribe(
+      data => {
+        if (data.result == 'OK') {
+          this.dataSource.data = this.dataSource.data.filter(function (item) {
+            return item.ID_CONVOCATORIA !== id 
+          })
+        } else {
+          swal("Error", data.msj, "error")
+        }
       }
-    });
+    )
+    // swal({
+    //   title: "Are you sure?",
+    //   text: "Once deleted, you will not be able to recover this imaginary file!",
+    //   icon: "warning",
+    //   buttons: [true],
+    //   dangerMode: true,
+    // })
+    // .then((willDelete) => {
+    //   if (willDelete) {
+    //     swal("Poof! Your imaginary file has been deleted!", {
+    //       icon: "success",
+    //     });
+    //   } else {
+    //     swal("Your imaginary file is safe!");
+    //   }
+    // });
   }
 
   modalCorreo(dataDep){

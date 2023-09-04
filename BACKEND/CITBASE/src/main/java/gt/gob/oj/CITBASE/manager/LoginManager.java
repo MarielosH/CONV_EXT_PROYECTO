@@ -28,7 +28,7 @@ public class LoginManager {
 		Connection conn=c.conectar();
 		 // Prepare a PL/SQL call
 	    CallableStatement call =
-	    conn.prepareCall ("{? = call "+SCHEMA+".PKG_CONSTANTES.VERSION_SISTEMA()}");
+	    conn.prepareCall ("{? = call " + SCHEMA + ".PKG_CONSTANTES.VERSION_SISTEMA()}");
 
 	    // Parametros
 	    call.registerOutParameter (1, OracleTypes.FLOAT);

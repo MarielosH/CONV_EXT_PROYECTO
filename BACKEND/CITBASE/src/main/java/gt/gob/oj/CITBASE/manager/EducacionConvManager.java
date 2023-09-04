@@ -48,7 +48,7 @@ public class EducacionConvManager {
 		CallableStatement call = conn
 				.prepareCall("call " + "CIT_BASE" +
 						".PKG_TC_EDUCACION_CONVOCATORIA.PROC_MOSTRAR_TC_EDUCACION_CONVOCATORIA(?,?,?)");
-		call.setInt("p_id_convocatoria", convocatoria);
+		call.setInt("p_id_educacion_convocatoria", convocatoria);
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
 		call.registerOutParameter("P_MSJ", OracleTypes.VARCHAR);
 		call.execute();

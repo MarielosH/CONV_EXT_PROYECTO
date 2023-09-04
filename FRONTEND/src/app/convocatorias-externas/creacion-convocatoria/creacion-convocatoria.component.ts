@@ -1,13 +1,18 @@
-import { Component, OnInit, Injector } from '@angular/core';
-import { MatDatepickerModule, MatSelect, MatInput, MatButton, MatAutocomplete, MatChipInputEvent, MatAutocompleteSelectedEvent, MatTableDataSource, MatPaginator } from '@angular/material';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, Input } from '@angular/core';
+import { MatDatepickerModule, MatSelect, MatInput, MatButton, MatAutocomplete, MatChipInputEvent, MatAutocompleteSelectedEvent, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, ValidationErrors, FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
 import { Observable, Subscription, BehaviorSubject } from '../../../../node_modules/rxjs';
 import { HttpEvent, HttpRequest, HttpClient, HttpResponse } from '../../../../node_modules/@angular/common/http';
 import { ngf } from "angular-file"
-import { DatePipe, Location } from '@angular/common';
+import { DatePipe, Location, CommonModule } from '@angular/common';
 import swal from 'sweetalert2';
 import { AuthService } from '../../recursos/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { ConvocatoriaService } from '../convocatoria.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import Detalle  from '../detallesConv'
+import * as $ from 'jquery';
 
 interface Funcionalidad {
   value: string;
@@ -34,15 +39,23 @@ interface Filex extends Blob {
 })
 export class CreacionConvocatoriaComponent implements OnInit {
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @Input() idConvoctoria_in: number;
+
   creation: FormGroup;
+  dtConv: FormGroup;
+  dependencia: FormGroup;
   //hideRequiredControl = new FormControl(false);
   floatLabelControl = new FormControl('none');
+  convFloatLabelCtrl = new FormControl('none');
   departamentos;
   listArea;
   municipios;
   ngf: ngf;
   validaCodDep=false;
   validaCodPres=false;
+  validaCreate=false;
   valDepto;
   session;
   iniciaValDep = false;
@@ -50,59 +63,116 @@ export class CreacionConvocatoriaComponent implements OnInit {
   validaFecha = false;
   validaFechaPublica = false;
   checked = false;
+  id;
+  convDetalles;
+  dataSource = new MatTableDataSource<any>();
+  tmp_id = '';
   
 /* Controles */
-  codDependencia;
-  codPresupuestario;
-  nombreDep;
-  cortoDep;
+  titulo;
+  descripcion;
+  objetivo;
+  experiencia;
   gafeteDep;
   documentoDep;
   selConector;
   selFuncionalidad;
   selArea;
-  fechaAcuerdo;
-  fechaPublicacion;
+  fechaInicioVigencia;
+  fechaFinVigencia;
   inicioVigencia;
   selMunicipio;
   selDepartamento;
   referencia;
   inicioVigRef;
   chkRefVigencia;
-    
+
+  detalleOption = new Map<number, any>();
+
   constructor(public authService: AuthService,
     public HttpClient: HttpClient,private fb: FormBuilder,  private _location: Location, private datePipe : DatePipe,
-    private router: Router,private route:ActivatedRoute
+    private router: Router,private route:ActivatedRoute, public dialog: MatDialog,
+    private convocatoriasService: ConvocatoriaService, private changeDetectorRef: ChangeDetectorRef,
   ) { 
     this.session=this.authService.getsession().SESSION;
   }
 
   ngOnInit() {
-
+    const conv = JSON.parse(localStorage.getItem('convocatoria'));
     this.creation = this.fb.group({
       floatLabel: this.floatLabelControl,
-      codDependencia: ['', Validators.required],      
-      codPresupuestario: ['', Validators.required],      
-      nombreDep: ['', Validators.required],      
-      cortoDep: ['', Validators.required],      
-      gafeteDep: ['', Validators.required],      
-      documentoDep: ['', Validators.required],      
-      selConector: ['', Validators.required],      
-      selFuncionalidad: ['', Validators.required],      
-      selArea: ['', Validators.required],      
-      fechaAcuerdo: ['', Validators.required],      
-      inicioVigencia: ['', Validators.required],      
-      selDepartamento: ['', Validators.required],      
-      selMunicipio: ['', Validators.required],      
-      referencia: ['', Validators.required],
-      fechaPublicacion: [''],      
-      inicioVigRef: [''],
-      chkRefVigencia:['']      
+      titulo: ['', Validators.required],      
+      descripcion: ['', Validators.required],      
+      objetivo: ['', Validators.required],      
+      experiencia: ['', Validators.required],      
+      fechaInicioVigencia: ['', Validators.required],      
+      fechaFinVigencia: ['', Validators.required],      
     });
 
-    this.creation.get('codDependencia').valueChanges.subscribe((v)=> {if(v.length > 3){this.iniciaValDep = true }else{this.iniciaValDep = false}} );
-    this.creation.get('codPresupuestario').valueChanges.subscribe((v)=> {if(v.length > 3){this.iniciaValPres = true }else{this.iniciaValPres = false}});
+    this.dtConv = this.fb.group({
+      floatLabelC: this.convFloatLabelCtrl,
+      tipoDetalle: ['',Validators.required],
+      descripcion: ['',Validators.required],
+    });
 
+    // this.creation.get('titulo').valueChanges.subscribe((v)=> {if(v.length > 3){this.iniciaValDep = true }else{this.iniciaValDep = false}} );
+    // this.creation.get('descripcion').valueChanges.subscribe((v)=> {if(v.length > 3){this.iniciaValPres = true }else{this.iniciaValPres = false}});
+
+    this.dependencia = this.fb.group({
+      floatLabel: this.floatLabelControl,
+      busqueda: [''],      
+      selEstados: ['']      
+    });
+    this.convDetalles = []
+    this.loadDetalles();
+
+    if (conv) {
+        console.log(conv)
+        this.creation.setValue({
+          floatLabel: this.floatLabelControl,
+          titulo: conv.TITULO,
+          descripcion: conv.DESCRIPCION,
+          objetivo: conv.OBJETIVO,
+          experiencia: conv.EXPERIENCIA,
+          fechaInicioVigencia: conv.FECHA_INICIO_VIGENCIA,
+          fechaFinVigencia: conv.FECHA_FIN_VIGENCIA,
+        })
+        this.id = parseInt(conv.ID_CONVOCATORIA)
+        this.validaCreate = !this.validaCreate;
+        // recolectar todas los detalles de la conv
+        this.cargarDetalles(parseInt(conv.ID_CONVOCATORIA))
+      }
+    
+    
+    //  this.convDetalles.push({
+    //   "habilidadTecnica": "Saber que estas haciendo ",
+    //   "data": "Saber que estas haciendo ",
+    //   "ID_USUARIO": "27815",
+    //   "type": 2,
+    //   "id": 182,
+    //   "id_detalle": 21,
+    //   "titulo": "Habilidad tecnica"
+    // })
+    // this.convDetalles.push({
+    //   "requisitoEducacion": "Computación aplicada",
+    //   "data": "Computación aplicada",
+    //   "ID_USUARIO": "27815",
+    //   "type": 4,
+    //   "id": 182,
+    //   "id_detalle": 21,
+    //   "titulo": "Educacion"
+    // })
+    // this.convDetalles.push({
+    //   "papeleria": "Antecedentes",
+    //   "data": "Antecedentes",
+    //   "ID_USUARIO": "27815",
+    //   "type": 5,
+    //   "id": 182,
+    //   "id_detalle": 21,
+    //   "titulo": "Papeleria"
+    // })
+    // console.log(this.convDetalles)
+    //
     /*this.mantenimientoDependenciaService.getListaDepartamento().subscribe(
       data => {
         this.departamentos = data;
@@ -115,6 +185,21 @@ export class CreacionConvocatoriaComponent implements OnInit {
 
   }
 
+  cargarDetalles(id){
+    for (const key in Detalle) {
+      this.convocatoriasService.getDetalleConv(Detalle[key][1], id).subscribe(
+        data => {
+          if (data.length > 0) {
+            console.log(data)
+            this.dataSource.data = [...data, ...this.dataSource.data];
+          } 
+        }
+      )
+    }
+    
+  }
+  
+
   listFuncionalidad: Funcionalidad[] = [
     { value: 'T', viewValue: 'TURNO' },
     { value: 'N', viewValue: 'JORNADA' }
@@ -126,6 +211,15 @@ export class CreacionConvocatoriaComponent implements OnInit {
     { value: 'DE LA', viewValue: 'DE LA' }
   ];
 
+  loadDetalles(){
+    this.dataSource = new MatTableDataSource(this.convDetalles);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  filterMatTable(filterValue: any){
+    this.dataSource.filter = filterValue;
+   }
 
   getMunicipio(event: any, valDepto: number) {
    /* this.creation.controls.selMunicipio.setValue(0);
@@ -192,17 +286,17 @@ export class CreacionConvocatoriaComponent implements OnInit {
 
     let dependencia={
      
-     CODIGO_DEPENDENCIA:this.creation.value.codDependencia,
-     CODIGO_PRESUPUESTARIO:this.creation.value.codPresupuestario,
-     NOMBRE_DEPENDENCIA:this.creation.value.nombreDep.toUpperCase(),
+     CODIGO_DEPENDENCIA:this.creation.value.titulo,
+     CODIGO_PRESUPUESTARIO:this.creation.value.descripcion,
+     NOMBRE_DEPENDENCIA:this.creation.value.objetivo.toUpperCase(),
      NOMBRE_GAFETE:this.creation.value.gafeteDep.toUpperCase(),
      NOMBRE_ABREVIADO:this.creation.value.cortoDep.toUpperCase(),
      NOMBRE_DOCUMENTO:this.creation.value.documentoDep.toUpperCase(),
      CONECTOR:this.creation.value.selConector,
-     FECHA_DEL_ACUERDO:this.datePipe.transform(this.creation.value.fechaAcuerdo, 'dd/MM/yyyy'),
+     FECHA_DEL_ACUERDO:this.datePipe.transform(this.creation.value.fechaInicioVigencia, 'dd/MM/yyyy'),
      FECHA_ENTRA_VIGENCIA:this.datePipe.transform(this.creation.value.inicioVigencia, 'dd/MM/yyyy'),     
      FECHA_ANULACION:"",
-     FECHA_PUBLICACION:this.datePipe.transform(this.creation.value.fechaPublicacion, 'dd/MM/yyyy'),
+     FECHA_PUBLICACION:this.datePipe.transform(this.creation.value.fechaFinVigencia, 'dd/MM/yyyy'),
      OBS_FECHA_VIGENCIA:this.creation.value.inicioVigRef.toUpperCase(),
      REFERENCIA:this.creation.value.referencia.toUpperCase(),
      FUNCION_UNIDAD:this.creation.value.selFuncionalidad,
@@ -273,7 +367,7 @@ export class CreacionConvocatoriaComponent implements OnInit {
 
 
   valDates(){
-    let acuerdo = new Date(this.creation.value.fechaAcuerdo);
+    let acuerdo = new Date(this.creation.value.fechaInicioVigencia);
     let vigencia = new Date(this.creation.value.inicioVigencia);
     
    this.validaFecha = false;
@@ -290,8 +384,8 @@ export class CreacionConvocatoriaComponent implements OnInit {
   }
 
   valDatesPublicacion(){
-    let acuerdo = new Date(this.creation.value.fechaAcuerdo);
-    let publicacion = new Date(this.creation.value.fechaPublicacion);
+    let acuerdo = new Date(this.creation.value.fechaInicioVigencia);
+    let publicacion = new Date(this.creation.value.fechaFinVigencia);
     
    this.validaFechaPublica = false;
    
@@ -352,11 +446,198 @@ export class CreacionConvocatoriaComponent implements OnInit {
   /* fin upload file*/
 
   cancelar(){
+    this.clean()
     this.router.navigate(['/mantenimientos/gestiones/1']);
   }
 
   crearConvocatoria(){
-    swal("Convocaria Externa", "Convocatoria Creada", "success")
+    let convocatoria = {
+      titulo:this.creation.value.titulo,
+      descripcion:this.creation.value.descripcion,
+      objetivo:this.creation.value.objetivo,
+      experiencia:this.creation.value.experiencia,
+      fechaInicioVigencia:this.datePipe.transform(this.creation.value.fechaInicioVigencia, 'dd/MM/yyyy'),
+      fechaFinVigencia:this.datePipe.transform(this.creation.value.fechaFinVigencia, 'dd/MM/yyyy'),
+    }
+    this.convocatoriasService.insConvocatoria(convocatoria).subscribe(
+      data => {
+        if (data.result == 'OK') {
+          this.id = data.id;
+          this.validaCreate = true;
+          swal("Convocaria Guardada", '', "success")
+        } else {
+          swal("Error", data.msj, "error")
+        }
+      }
+    )
   }
-  
+
+  actualizarConvocatoria(){
+    if (this.validaCreate) {
+      let convocatoria = {
+        titulo:this.creation.value.titulo,
+        descripcion:this.creation.value.descripcion,
+        objetivo:this.creation.value.objetivo,
+        experiencia:this.creation.value.experiencia,
+        fechaInicioVigencia:this.datePipe.transform(this.creation.value.fechaInicioVigencia, 'dd/MM/yyyy'),
+        fechaFinVigencia:this.datePipe.transform(this.creation.value.fechaFinVigencia, 'dd/MM/yyyy'),
+      }
+      this.convocatoriasService.modConvocatoria(convocatoria, this.id).subscribe(
+        data => {
+          if (data.result == 'OK') {
+            swal("Convocaria Actualizada", '', "success")
+          } else {
+            swal("Error", data.msj, "error")
+          }
+        }
+      )
+    } 
+    swal("Error", 'No se a creado ninguna convocatoria', "warning");
+  }
+
+  borrarConvocatoria(){
+    this.convocatoriasService.borConvocatoria(this.id).subscribe(
+      data => {
+        if (data.result == 'OK') {
+          this.clean()
+        } else {
+          swal("Error", data.msj, "error")
+        }
+      }
+    )
+  }
+
+  clearDetalleForm(){
+    this.dtConv = this.fb.group({
+      floatLabelC: this.convFloatLabelCtrl,
+      tipoDetalle: ['',Validators.required],
+      descripcion: ['',Validators.required],
+    });
+  }
+
+  crearDetalleConvocatoria(){
+    if (!this.validaCreate) {
+      swal("Error", 'No se a creado ninguna convocatoria', "warning");
+      return;
+    }
+
+    const dtC: any = {};
+    const tmp: any = {};
+    const conv_id = this.tmp_id;
+    let key = Detalle[this.dtConv.value.tipoDetalle];
+    dtC[key[0]] = this.dtConv.value.descripcion;
+
+
+    if(this.tmp_id != ''){
+      this.convocatoriasService.modDetalleConv(dtC, key[1], this.tmp_id).subscribe(
+        data => {
+          if (data.result == 'OK') {
+            console.log(this.dataSource.data)
+            console.log(conv_id)
+            this.dataSource.data = this.dataSource.data.filter(function (item) {
+              return item.ID_DETALLE !== conv_id
+            })
+            console.log(this.dataSource.data)
+            tmp['KEY'] = this.dtConv.value.tipoDetalle;
+            tmp['TITULO'] = key[2];
+            tmp['ID_CONVOCATORIA'] = this.id.toString();
+            tmp['ID_DETALLE'] = data.id.toString();
+            tmp['DATA'] = this.dtConv.value.descripcion;
+            this.dataSource.data = [tmp, ...this.dataSource.data];
+            this.clearDetalleForm()
+            this.tmp_id = ''
+          } else {
+            swal("Error", data.msj, "error");
+          }
+        }
+      )
+    } else {
+      this.convocatoriasService.insDetalleConv(dtC, key[1], this.id).subscribe(
+        data => {
+          if (data.result == 'OK') {
+            tmp['KEY'] = this.dtConv.value.tipoDetalle;
+            tmp['TITULO'] = key[2];
+            tmp['ID_CONVOCATORIA'] = this.id.toString();
+            tmp['ID_DETALLE'] = data.id.toString();
+            tmp['DATA'] = this.dtConv.value.descripcion;
+            this.dataSource.data = [tmp, ...this.dataSource.data];
+            this.clearDetalleForm()
+          } else {
+            swal("Error", data.msj, "error");
+          }
+        }
+      );
+    }
+  }
+
+  borrar(row){
+    let key = Detalle[row.key];
+    this.convocatoriasService.borDetalleConv(key[1], row.ID_DETALLE).subscribe(
+      data => {
+        if (data.result == 'OK') {
+          this.dataSource.data = this.dataSource.data.filter(function (item) {
+            return item.ID_DETALLE !== row.ID_DETALLE
+          })
+          this.dataSource.data = [...this.dataSource.data]
+        } else {
+          swal("Error", data.msj, "error");
+        }
+      }
+    )
+
+
+  }
+
+  editar(row){
+    console.log(row)
+    this.tmp_id = row.ID_DETALLE;
+    this.dtConv.setValue({
+      floatLabelC: this.convFloatLabelCtrl,
+      tipoDetalle: parseInt(row.KEY),
+      descripcion: row.DATA,
+    })
+  }
+
+  clean(){
+    this.id = NaN;
+    this.validaCreate = false;
+    this.tmp_id = '';
+    this.dataSource.data = [...[]]
+    localStorage.removeItem('convocatoria');
+    this.creation = this.fb.group({
+      floatLabel: this.floatLabelControl,
+      titulo: ['', Validators.required],      
+      descripcion: ['', Validators.required],      
+      objetivo: ['', Validators.required],      
+      experiencia: ['', Validators.required],      
+      cortoDep: ['', Validators.required],      
+      gafeteDep: ['', Validators.required],      
+      documentoDep: ['', Validators.required],      
+      selConector: ['', Validators.required],      
+      selFuncionalidad: ['', Validators.required],      
+      selArea: ['', Validators.required],      
+      fechaInicioVigencia: ['', Validators.required],      
+      inicioVigencia: ['', Validators.required],      
+      selDepartamento: ['', Validators.required],      
+      selMunicipio: ['', Validators.required],      
+      referencia: ['', Validators.required],
+      fechaFinVigencia: ['', Validators.required],      
+      inicioVigRef: [''],
+      chkRefVigencia:['']      
+    });
+
+    this.dtConv = this.fb.group({
+      floatLabelC: this.convFloatLabelCtrl,
+      tipoDetalle: ['',Validators.required],
+      descripcion: ['',Validators.required],
+    });
+
+    this.dependencia = this.fb.group({
+      floatLabel: this.floatLabelControl,
+      busqueda: [''],      
+      selEstados: ['']      
+    });
+  }
 }
+
+
