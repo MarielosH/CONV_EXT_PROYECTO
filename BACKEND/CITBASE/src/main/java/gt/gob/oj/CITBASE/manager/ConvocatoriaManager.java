@@ -25,7 +25,7 @@ public class ConvocatoriaManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a insertar convocatoria ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_CONVOCATORIA.PROC_AGREGAR_TC_CONVOCATORIA (?,?,?,?,?,?,?,?)");
 		call.setString("p_titulo", convocatoria.titulo);
 		call.setString("p_descripcion", convocatoria.descripcion);
@@ -50,7 +50,7 @@ public class ConvocatoriaManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
-				.prepareCall("call " + "C##CIT_BASE" +
+				.prepareCall("call " + "CIT_BASE" +
 						".PKG_TC_CONVOCATORIA.PROC_MOSTRAR_TC_CONVOCATORIA(?,?)");
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
 		call.registerOutParameter("P_MSJ", OracleTypes.VARCHAR);
@@ -78,7 +78,7 @@ public class ConvocatoriaManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a modificar convocatoria ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_CONVOCATORIA.PROC_ACTUALIZAR_TC_CONVOCATORIA (?,?,?,?,?,?,?,?,?)");
 		call.setInt("p_id_convocatoria", id);
 		call.setString("p_titulo", convocatoria.titulo);
@@ -104,7 +104,7 @@ public class ConvocatoriaManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a eliminar convocatoria ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_CONVOCATORIA.PROC_BORRAR_TC_CONVOCATORIA (?,?,?)");
 		call.setInt("p_id_convocatoria", id);
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);

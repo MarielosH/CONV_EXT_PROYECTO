@@ -102,7 +102,7 @@ public class ConvocatoriasExternasManager {
 		Connection conn = c.conectar();
 
 		CallableStatement call = conn.prepareCall(
-				"call " + "C##CIT_BASE" + ".PKG_TC_COMUNIDAD_LINGUISTICA.PROC_GET_COMUNIDAD_LINGUISTICA(?,?)");
+				"call " + "CIT_BASE" + ".PKG_TC_COMUNIDAD_LINGUISTICA.PROC_GET_COMUNIDAD_LINGUISTICA(?,?)");
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
 		call.registerOutParameter("P_MSJ", OracleTypes.VARCHAR);
 		call.execute();
@@ -129,7 +129,7 @@ public class ConvocatoriasExternasManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE" + ".PKG_TC_ETNIA.PROC_GET_ETNIAS(?,?)");
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE" + ".PKG_TC_ETNIA.PROC_GET_ETNIAS(?,?)");
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
 		call.registerOutParameter("P_MSJ", OracleTypes.VARCHAR);
 		call.execute();
@@ -240,7 +240,7 @@ public class ConvocatoriasExternasManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
-				.prepareCall("call " + "C##CIT_BASE" + ".PKG_TC_PARENTESCO.PROC_MOSTRAR_TC_PARENTESCO(?,?)");
+				.prepareCall("call " + "CIT_BASE" + ".PKG_TC_PARENTESCO.PROC_MOSTRAR_TC_PARENTESCO(?,?)");
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
 		call.registerOutParameter("P_MSJ", OracleTypes.VARCHAR);
 		call.execute();
@@ -266,7 +266,7 @@ public class ConvocatoriasExternasManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
-				.prepareCall("call " + "C##CIT_BASE" + ".PKG_TC_IDIOMA.PROC_GET_IDIOMAS(?,?)");
+				.prepareCall("call " + "CIT_BASE" + ".PKG_TC_IDIOMA.PROC_GET_IDIOMAS(?,?)");
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
 		call.registerOutParameter("P_MSJ", OracleTypes.VARCHAR);
 		call.execute();
@@ -293,7 +293,7 @@ public class ConvocatoriasExternasManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
-				.prepareCall("call " + "C##CIT_BASE" + ".PKG_TC_ESTADO_CIVIL.PROC_MOSTRAR_TC_ESTADO_CIVIL(?,?)");
+				.prepareCall("call " + "CIT_BASE" + ".PKG_TC_ESTADO_CIVIL.PROC_MOSTRAR_TC_ESTADO_CIVIL(?,?)");
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
 		call.registerOutParameter("P_MSJ", OracleTypes.VARCHAR);
 		call.execute();

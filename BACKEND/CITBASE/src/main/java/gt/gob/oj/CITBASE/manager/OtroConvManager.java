@@ -25,7 +25,7 @@ public class OtroConvManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a insertar otro conv......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_OTRO_CONV.PROC_AGREGAR_TC_OTRO_CONV (?,?,?,?)");
 		call.setString("p_otro", otroConv.otro);
 		call.setInt("p_fk_tc_otro_conv_ref_tc_convocatoria", convocatoria);
@@ -46,7 +46,7 @@ public class OtroConvManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
-				.prepareCall("call " + "C##CIT_BASE" +
+				.prepareCall("call " + "CIT_BASE" +
 						".PKG_TC_OTRO_CONV.PROC_MOSTRAR_TC_OTRO_CONV(?,?,?)");
 		call.setInt("p_id_conv", convocatoria);
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
@@ -75,7 +75,7 @@ public class OtroConvManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a modificar otro conv......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_OTRO_CONV.PROC_ACTUALIZAR_TC_OTRO_CONV (?,?,?,?)");
 		call.setInt("p_id_otro_conv", id);
 		call.setString("p_otro", otroConv.otro);
@@ -96,7 +96,7 @@ public class OtroConvManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a eliminar otro conv......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_OTRO_CONV.PROC_BORRAR_TC_OTRO_CONV (?,?,?)");
 		call.setInt("p_id_otro_conv", id);
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);

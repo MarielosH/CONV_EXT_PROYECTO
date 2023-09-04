@@ -26,7 +26,7 @@ public class InformacionAcademicaManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a insertar informacion academica ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_INFORMACION_ACADEMICA.PROC_AGREGAR_TC_INFORMACION_ACADEMICA (?,?,?,?,?,?,?,?,?)");
 		call.setString("P_NIVEL_ACADEMICO", informacionAcademica.nivelAcademico);
 		call.setString("P_GRADO_APROBADO", informacionAcademica.gradoAprobado);
@@ -52,7 +52,7 @@ public class InformacionAcademicaManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
-				.prepareCall("call " + "C##CIT_BASE" +
+				.prepareCall("call " + "CIT_BASE" +
 						".PKG_TC_INFORMACION_ACADEMICA.PROC_MOSTRAR_TC_INFORMACION_ACADEMICA(?,?,?)");
 		call.setInt("P_ID_PERSONA", Usuario);
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
@@ -81,7 +81,7 @@ public class InformacionAcademicaManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a modificar informacion academica ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_INFORMACION_ACADEMICA.PROC_ACTUALIZAR_TC_INFORMACION_ACADEMICA (?,?,?,?,?,?,?,?,?)");
 		call.setInt("P_ID_INFORMACION_ACADEMICA", id);
 		call.setString("P_NIVEL_ACADEMICO", informacionAcademica.nivelAcademico);
@@ -107,7 +107,7 @@ public class InformacionAcademicaManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a eliminar informacion academica ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_INFORMACION_ACADEMICA.PROC_BORRAR_TC_INFORMACION_ACADEMICA (?,?,?)");
 		call.setInt("P_ID_INFORMACION_ACADEMICA", id);
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);

@@ -28,7 +28,7 @@ public class LoginManager {
 		Connection conn=c.conectar();
 		 // Prepare a PL/SQL call
 	    CallableStatement call =
-	    conn.prepareCall ("{? = call "+"C##CIT_BASE"+".PKG_CONSTANTES.VERSION_SISTEMA()}");
+	    conn.prepareCall ("{? = call " + SCHEMA + ".PKG_CONSTANTES.VERSION_SISTEMA()}");
 
 	    // Parametros
 	    call.registerOutParameter (1, OracleTypes.FLOAT);
@@ -77,7 +77,7 @@ public class LoginManager {
 		Connection conn=c.conectar();
 		 // Prepare a PL/SQL call
 	    CallableStatement call =
-	    conn.prepareCall ("call "+"C##CIT_BASE"+".PKG_UTILS.PROC_GET_CONSTANTES(?)");
+	    conn.prepareCall ("call "+SCHEMA+".PKG_UTILS.PROC_GET_CONSTANTES(?)");
 
 	    // Parametros
 	    call.registerOutParameter ("p_cur_dataset", OracleTypes.CURSOR);
@@ -107,7 +107,7 @@ public class LoginManager {
 		Connection conn=c.conectar();
 		 // Prepare a PL/SQL call
 	    CallableStatement call =
-	    conn.prepareCall ("call "+"C##CIT_BASE"+".PKG_UTILS.PROC_INS_USUARIO (?,?,?,?,?,?,?)");
+	    conn.prepareCall ("call "+SCHEMA+".PKG_UTILS.PROC_INS_USUARIO (?,?,?,?,?,?,?)");
 
 	    // Parametros
 	   

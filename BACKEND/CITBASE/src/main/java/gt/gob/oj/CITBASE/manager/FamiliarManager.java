@@ -24,7 +24,7 @@ public class FamiliarManager {
 		List<Map<String, Object>> salida = new ArrayList<>();
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE" + ".PKG_TC_FAMILIAR.PROC_MOSTRAR_TC_FAMILIARES(?,?,?)");
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE" + ".PKG_TC_FAMILIAR.PROC_MOSTRAR_TC_FAMILIARES(?,?,?)");
 		call.setInt("P_ID_PERSONA", usuario);
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
 		call.registerOutParameter("P_MSJ", OracleTypes.VARCHAR);
@@ -51,7 +51,7 @@ public class FamiliarManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a insertar familiar usuario ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE" 
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE" 
 				+ ".PKG_TC_FAMILIAR.PROC_AGREGAR_TC_FAMILIAR(?,?,?,?,?,?,?,?,?,?,?,?)");
 		call.setString("P_PROFESION", familiar.profesion);
 		call.setString("P_FECHA_NACIMIENTO", familiar.fechaNacimiento);
@@ -80,7 +80,7 @@ public class FamiliarManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a modificar familiar usuario ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE" 
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE" 
 				+ ".PKG_TC_FAMILIAR.PROC_ACTUALIZAR_TC_FAMILIAR(?,?,?,?,?,?,?,?,?,?,?,?)");
 		call.setInt("P_ID_FAMILIAR", id);
 		call.setString("P_PROFESION", familiar.profesion);
@@ -109,7 +109,7 @@ public class FamiliarManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a modificar visibilidad familiar usuario ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_FAMILIAR.PROC_BORRAR_TC_FAMILIAR (?,?,?)");
 		call.setInt("P_ID_FAMILIAR", familiar);
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);

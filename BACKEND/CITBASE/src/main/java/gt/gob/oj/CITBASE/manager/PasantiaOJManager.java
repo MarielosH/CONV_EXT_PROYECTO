@@ -25,7 +25,7 @@ public class PasantiaOJManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a insertar pasantia OJ ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_PASANTIA_OJ.PROC_AGREGAR_TC_PASANTIA_OJ (?,?,?,?,?,?,?,?)");
 		call.setString("P_FECHA_INICIO", pasantiaOJ.fechaInicio);
 		call.setString("P_FECHA_FIN", pasantiaOJ.fechaFinalizacion);
@@ -50,7 +50,7 @@ public class PasantiaOJManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
-				.prepareCall("call " + "C##CIT_BASE" +
+				.prepareCall("call " + "CIT_BASE" +
 						".PKG_TC_PASANTIA_OJ.PROC_MOSTRAR_TC_PASANTIA_OJ(?,?,?)");
 		call.setInt("P_ID_PERSONA", usuario);
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
@@ -79,7 +79,7 @@ public class PasantiaOJManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a modificar pasantia OJ ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_PASANTIA_OJ.PROC_ACTUALIZAR_TC_PASANTIA_OJ (?,?,?,?,?,?,?,?)");
 		call.setInt("P_ID_PASANTIA_OJ", id);
 		call.setString("P_FECHA_INICIO", pasantiaOJ.fechaInicio);
@@ -104,7 +104,7 @@ public class PasantiaOJManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a eliminar pasantia OJ ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_PASANTIA_OJ.PROC_BORRAR_TC_PASANTIA_OJ (?,?,?)");
 		call.setInt("P_ID_PASANTIA_OJ", id);
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);

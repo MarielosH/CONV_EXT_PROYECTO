@@ -7,7 +7,7 @@
   	<host>localhost</host>
   	<port>1521</port>
   	<service>XE</service>
-  	<user>C##CIT_BASE</user>
+  	<user>CIT_BASE</user>
   	<pass>admin</pass>
   	<schema>CIT_BASE</schema>
   	<version>1.0.0.0</version>

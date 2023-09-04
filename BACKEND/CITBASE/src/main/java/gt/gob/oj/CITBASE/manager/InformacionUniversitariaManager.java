@@ -25,7 +25,7 @@ public class InformacionUniversitariaManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a insertar informacion universitaria ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_INFORMACION_UNIVERSITARIA.PROC_AGREGAR_TC_INFORMACION_UNIVERSITARIA (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 		call.setString("P_CARRERA", informacionUniversitaria.carrera);
 		call.setString("P_UNIVERSIDAD", informacionUniversitaria.universidad);
@@ -56,7 +56,7 @@ public class InformacionUniversitariaManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
-				.prepareCall("call " + "C##CIT_BASE" +
+				.prepareCall("call " + "CIT_BASE" +
 						".PKG_TC_INFORMACION_UNIVERSITARIA.PROC_MOSTRAR_TC_INFORMACION_UNIVERSITARIA(?,?,?)");
 		call.setInt("P_ID_PERSONA", usuario);
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
@@ -85,7 +85,7 @@ public class InformacionUniversitariaManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a modificar informacion universitaria ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_INFORMACION_UNIVERSITARIA.PROC_ACTUALIAR_TC_INFORMACION_UNIVERSITARIA (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 		call.setInt("P_ID_INFORMACION_UNIVERSITARIA", id);
 		call.setString("P_CARRERA", informacionUniversitaria.carrera);
@@ -116,7 +116,7 @@ public class InformacionUniversitariaManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a eliminar informacion universitaria ......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_INFORMACION_UNIVERSITARIA.PROC_BORRAR_TC_INFORMACION_UNIVERSITARIA (?,?,?)");
 		call.setInt("P_ID_INFORMACION_UNIVERSITARIA", id);
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);

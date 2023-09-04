@@ -26,7 +26,7 @@ public class EstadoAplicacionConvManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a insertar otro conv......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_ESTADO_APLICACION_CONV.PROC_AGREGAR_TC_ESTADO_APLICACION_CONV (?,?,?,?,?)");
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
 		call.setInt("P_FK_TC_ESTADO_APLICACION_CONV_REF_TC_INFORMACION_PERSONAL_USUARIO", usuario);
@@ -48,7 +48,7 @@ public class EstadoAplicacionConvManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
-				.prepareCall("call " + "C##CIT_BASE" +
+				.prepareCall("call " + "CIT_BASE" +
 						".PKG_TC_ESTADO_APLICACION_CONV.PROC_MOSTRAR_TC_ESTADO_APLICACION_CONV_FILTER_USUARIO(?,?,?)");
 		call.setInt("p_id_usuario", usuario);
 		call.registerOutParameter("p_cur_dataset", OracleTypes.CURSOR);
@@ -77,7 +77,7 @@ public class EstadoAplicacionConvManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a modificar otro conv......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_ESTADO_APLICACION_CONV.PROC_ACTUALIZAR_TC_ESTADO_APLICACION_CONV (?,?,?,?)");
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
 		call.setInt("P_ID_APLICACION_CONVOCATORIA", id);
@@ -98,7 +98,7 @@ public class EstadoAplicacionConvManager {
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a eliminar otro conv......" + this.SCHEMA + "\n");
-		CallableStatement call = conn.prepareCall("call " + "C##CIT_BASE"
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_ESTADO_APLICACION_CONV.PROC_BORRAR_TC_ESTADO_APLICACION_CONV (?,?,?)");
 		call.setInt("P_ID_APLICACION_CONVOCATORIA", id);
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
