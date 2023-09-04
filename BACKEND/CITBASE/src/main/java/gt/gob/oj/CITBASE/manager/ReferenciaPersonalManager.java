@@ -27,6 +27,7 @@ String SCHEMA = new Config().getDBSchema();
 		System.out.println("dentro de llamar a insertar referencia personal ......" + this.SCHEMA + "\n");
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_REFERENCIA_PERSONAL.PROC_AGREGAR_TC_REFERENCIA_PERSONAL (?,?,?,?,?,?,?)");
+		System.out.println("nombre referencia personal ......" + referenciaPersonal.nombre + "\n");
 		call.setString("P_NOMBRE", referenciaPersonal.nombre);
 		call.setString("P_TIPO_RELACION", referenciaPersonal.tipoRelacion);
 		call.setString("P_ANIO_CONOCERLO", referenciaPersonal.aniosConocerlo);
@@ -39,7 +40,7 @@ String SCHEMA = new Config().getDBSchema();
 	    salida.msj = call.getString("p_msj");
 	    if (salida.id > 0)
 		      salida.result = "OK"; 
-			  System. out. println("todo ok......"+this.SCHEMA+"\n");
+			  System. out. println("todo ok referencia personal ......"+this.SCHEMA+"\n");
 		    call.close();
 		return salida;
 	}

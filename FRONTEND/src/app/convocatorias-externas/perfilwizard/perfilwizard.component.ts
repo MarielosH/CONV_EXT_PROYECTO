@@ -398,10 +398,12 @@ export class PerfilwizardComponent implements OnInit {
 
   }
 
+
   agregarFamiliar() {
     if (this.thirdFormGroup.value.familiar !== '' && this.thirdFormGroup.value.familiar !== undefined && this.thirdFormGroup.value.familiar !== null) {
       console.log("familiar nuevo");
       console.log(this.thirdFormGroup.value.fechaNacFamiliar);
+      console.log(this.thirdFormGroup.value.viveFamiliar);
       this.nuevoFamiliar = {
         nombreFamiliar: this.thirdFormGroup.value.familiar,
         parentesco: this.thirdFormGroup.value.parentesco,       
@@ -411,7 +413,7 @@ export class PerfilwizardComponent implements OnInit {
         profesion: this.thirdFormGroup.value.profesionFamiliar,
         trabaja: this.thirdFormGroup.value.trabajaFamiliar,
         lugarTrabajo: this.thirdFormGroup.value.lugarTrabajoFamiliar,
-        dependeEconomicamente: this.thirdFormGroup.value.dependeEconomicamente
+        dependeEconomicamente: this.thirdFormGroup.value.dependeEconomicamente == true ? '1' : '0'
       };
 
       this.familiares.push(this.nuevoFamiliar);
@@ -537,6 +539,8 @@ export class PerfilwizardComponent implements OnInit {
         aniosConocerlo: this.nineFormGroup.value.aniosConocerloReferenciaPersonal,
         telefono: this.nineFormGroup.value.telefonoReferenciaPersonal
       };
+      console.log(this.nuevaReferenciaPersonal);
+      console.log(this.referenciasPersonales);
       this.referenciasPersonales.push(this.nuevaReferenciaPersonal);
       this.nineFormGroup = this.fb.group({
         nombreReferenciaPersonal: [''],

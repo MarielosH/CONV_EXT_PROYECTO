@@ -5,7 +5,7 @@ public class ExperienciaLaboralOJ {
 	public String puesto;
 	public String dependencia;
 	public String fechaInicio;
-	public String fechaFin;
+	public String fechaFinalizacion;
 	public String jefeInmediato;
 	public String renglonPresupuestario;
 	public String motivoFinRelacionLaboral;

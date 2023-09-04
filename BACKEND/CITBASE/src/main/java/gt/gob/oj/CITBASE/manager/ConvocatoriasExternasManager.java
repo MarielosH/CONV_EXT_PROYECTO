@@ -174,9 +174,9 @@ public class ConvocatoriasExternasManager {
 
 		jsonResult salida = new jsonResult();
 		if (existePerfilSolicitudDpi(perfil.DPI)) {
-			salida.result = "El usuario ya existe";
-			System.out.println("El usuario ya existe");
-			return salida;
+			//salida.result = "El usuario ya existe";
+			System.out.println("El usuario ya existe, se va a modificar. ");
+			return ModPerfilSolicitudEmpleo(perfil);
 		}
 
 		ConnectionsPool c = new ConnectionsPool();
@@ -412,6 +412,9 @@ public class ConvocatoriasExternasManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		System.out.println("dentro de llamar a obtener perfil usuario dpi  ......" + dpi + "\n");
+		
+		PerfilSolicitudEmpleo perfil = new PerfilSolicitudEmpleo();
+		
 		CallableStatement call = conn.prepareCall("call " + this.SCHEMA
 				+ ".PKG_TC_INFORMACION_PERSONAL_USUARIO.PROC_MOSTRAR_TC_INFORMACION_PERSONAL_USUARIO_DPI(?,?,?)");
 		call.setString("P_DPI", dpi);

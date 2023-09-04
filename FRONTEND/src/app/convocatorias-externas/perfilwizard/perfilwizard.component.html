@@ -555,7 +555,7 @@
                 </mat-form-field>
               </div>
               <div class="col-4 mt-4">
-                <mat-checkbox color="primary" [checked]="familiar.dependeEconomicamente" disabled> <b>DEPENDE
+                <mat-checkbox color="primary" [checked]="familiar.dependeEconomicamente == '1' ? true : false" disabled> <b>DEPENDE
                     ECONOMICAMENTE DE USTED </b></mat-checkbox>
               </div>
               <div class="col-2"></div>

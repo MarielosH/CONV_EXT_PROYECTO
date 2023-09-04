@@ -118,7 +118,7 @@ public class IdiomaUsuarioManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
-		System.out.println("dentro de llamar a modificar idioma usuario ......" + this.SCHEMA + "\n");
+		System.out.println("dentro de llamar a eliminar idioma usuario ......" + this.SCHEMA + "\n");
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_IDIOMA_USUARIO.PROC_BORRRAR_IDIOMA_USUARIO (?,?,?,?)");
 		call.setInt("P_FK_TC_IDIOMA_USUARIO_REF_TC_IDIOMA", idioma);
