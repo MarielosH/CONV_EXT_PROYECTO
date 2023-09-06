@@ -42,23 +42,26 @@ public class EducacionConvManager {
 	}
 	
 	public List<Map<String, Object>> getEducacionConv(Integer convocatoria) throws Exception {
-		List<Map<String,Object>> salida = new ArrayList<>();
+		List<Map<String, Object>> salida = new ArrayList<>();
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
-		CallableStatement call = conn
-				.prepareCall("call " + "CIT_BASE" +
-						".PKG_TC_EDUCACION_CONVOCATORIA.PROC_MOSTRAR_TC_EDUCACION_CONVOCATORIA(?,?,?)");
+		System. out. println("entró a obtener educación convocatoria ... "+ convocatoria +"\n");
+		CallableStatement call = conn.prepareCall(
+				"call " + "CIT_BASE" + ".PKG_TC_EDUCACION_CONVOCATORIA.PROC_MOSTRAR_TC_EDUCACION_CONVOCATORIA(?,?,?)");
 		call.setInt("p_id_educacion_convocatoria", convocatoria);
-		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
-		call.registerOutParameter("P_MSJ", OracleTypes.VARCHAR);
+		call.registerOutParameter("p_cur_dataset", OracleTypes.CURSOR);
+		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
 		call.execute();
-		ResultSet rset = (ResultSet) call.getObject("P_CUR_DATASET");
+		ResultSet rset = (ResultSet) call.getObject("p_cur_dataset");
 		ResultSetMetaData meta = rset.getMetaData();
 		while (rset.next()) {
+			System.out.println(" convocatoria numero " + convocatoria + "\n");
 			Map<String, Object> map = new HashMap<>();
 			for (int i = 1; i <= meta.getColumnCount(); i++) {
 				String key = meta.getColumnName(i).toString();
+				System.out.println(" llave " + key + "\n");
 				String value = Objects.toString(rset.getString(key), "");
+				System.out.println(" valor " + value + "\n");
 				map.put(key, value);
 			}
 			salida.add(map);
@@ -66,7 +69,7 @@ public class EducacionConvManager {
 		rset.close();
 		call.close();
 		conn.close();
-		
+
 		return salida;
 	}
 	
