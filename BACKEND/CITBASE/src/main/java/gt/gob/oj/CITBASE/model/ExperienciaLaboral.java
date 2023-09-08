@@ -10,4 +10,5 @@ public class ExperienciaLaboral {
 	public String jefeInmediato;	
 	public String telefono;
 	public String motivoFinRelacionLaboral;
+	public String mostrar;
 }

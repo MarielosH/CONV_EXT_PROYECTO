@@ -20,8 +20,9 @@ import oracle.jdbc.OracleTypes;
 public class FamiliarManager {
 	String SCHEMA = new Config().getDBSchema();
 
-	public List<Map<String, Object>> getFamiliares(Integer usuario) throws Exception {
-		List<Map<String, Object>> salida = new ArrayList<>();
+	public List<FamiliaPerfilSE> getFamiliares(Integer usuario) throws Exception {
+
+		List<FamiliaPerfilSE> listaFamiliares = new ArrayList<>();
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE" + ".PKG_TC_FAMILIAR.PROC_MOSTRAR_TC_FAMILIARES(?,?,?)");
@@ -32,18 +33,49 @@ public class FamiliarManager {
 		ResultSet rset = (ResultSet) call.getObject("P_CUR_DATASET");
 		ResultSetMetaData meta = rset.getMetaData();
 		while (rset.next()) {
-			Map<String, Object> map = new HashMap<>();
+			FamiliaPerfilSE nuevoFamiliar = new FamiliaPerfilSE();
 			for (int i = 1; i <= meta.getColumnCount(); i++) {
 				String key = meta.getColumnName(i).toString();
 				String value = Objects.toString(rset.getString(key), "");
-				map.put(key, value);
+				switch (key) {
+				case "NOMBRE":
+					nuevoFamiliar.nombreFamiliar = value;
+					break;
+				case "PROFESION":
+					nuevoFamiliar.profesion = value;					
+					break;
+				case "FECHA_NACIMIENTO":
+					nuevoFamiliar.fechaNacimiento = value;					
+					break;
+				case "TELEFONO":
+					nuevoFamiliar.telefono = value;	
+					break;
+				case "VIVE":
+					nuevoFamiliar.vive = value;	
+					break;
+				case "TRABAJA":
+					nuevoFamiliar.trabaja = value;	
+					break;
+				case "LUGAR_TRABAJO":
+					nuevoFamiliar.lugarTrabajo = value;	
+					break;
+				case "ID_PARENTESCO":
+					nuevoFamiliar.parentesco = value;	
+					break;
+				case "DEPENDE_ECONOMICAMENTE":
+					nuevoFamiliar.dependeEconomicamente = value;	
+					break;
+				case "MOSTRAR":
+					nuevoFamiliar.mostrar = value;
+					break;
+				}
 			}
-			salida.add(map);
+			listaFamiliares.add(nuevoFamiliar);
 		}
 		rset.close();
 		call.close();
 		conn.close();
-		return salida;
+		return listaFamiliares;
 	}
 
 	public jsonResult inFamiliar(FamiliaPerfilSE familiar, Integer usuario) throws Exception {

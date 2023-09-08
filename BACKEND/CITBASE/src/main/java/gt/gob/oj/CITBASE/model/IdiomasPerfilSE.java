@@ -5,4 +5,5 @@ public class IdiomasPerfilSE {
 	public Integer habla; 
 	public Integer lee; 
 	public Integer escribe; 
+	public String mostrar;
 }

@@ -6,4 +6,5 @@ public class ReferenciasPersonales {
 	public String tipoRelacion;
 	public String aniosConocerlo;
 	public String telefono;
+	public String mostrar;
 }

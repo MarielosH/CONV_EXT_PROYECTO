@@ -175,6 +175,7 @@ export class PerfilwizardComponent implements OnInit {
   seventhFormGroup: FormGroup;
   eighthFormGroup: FormGroup;
   nineFormGroup: FormGroup;
+  startDate = new Date(1950, 0, 1);
 
   constructor(private convocatoriasService: ConvocatoriasExternasService, public authService: AuthService,
     public HttpClient: HttpClient, private fb: FormBuilder, private _location: Location, private datePipe: DatePipe,
@@ -786,9 +787,9 @@ export class PerfilwizardComponent implements OnInit {
       ETNIA: this.secondFormGroup.value.etnia,
       COMUNIDAD_LINGUISTICA: this.secondFormGroup.value.comunidadLinguistica,
       NO_HIJOS: this.thirdFormGroup.value.noHijo,
-      NIVEL_APRIMARIA: this.fifthFormGroup.value.nivelAcademicoPrimaria.toUpperCase(),
-      NIVEL_ABASICOS: this.fifthFormGroup.value.nivelAcademicoBasicos.toUpperCase(),
-      NIVEL_ADIVERSIFICADO: this.fifthFormGroup.value.nivelAcademicoDiversificado.toUpperCase(),
+      NIVEL_APRIMARIA: 'PRIMARIA',
+      NIVEL_ABASICOS: 'BASICOS',
+      NIVEL_ADIVERSIFICADO: 'DIVERSIFICADO',
       GRADO_APRIMARIA: this.fifthFormGroup.value.gradoAprobadoPrimaria.toUpperCase(),
       INSTITUCION_PRIMARIA: this.fifthFormGroup.value.institucionEstudiosPrimaria.toUpperCase(),
       CONSTANCIA_PRIMARIA: this.fifthFormGroup.value.constanciaPrimaria.toUpperCase(),

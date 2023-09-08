@@ -22,8 +22,8 @@ import oracle.jdbc.OracleTypes;
 public class IdiomaUsuarioManager {
 	String SCHEMA = new Config().getDBSchema();
 
-	public List<Map<String, Object>> getIdiomasUsuario(Integer Usuario) throws Exception {
-		List<Map<String,Object>> salida = new ArrayList<>();
+	public List<IdiomasPerfilSE> getIdiomasUsuario(Integer Usuario) throws Exception {
+		List<IdiomasPerfilSE> listaIdiomas = new ArrayList<>();
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
@@ -35,19 +35,35 @@ public class IdiomaUsuarioManager {
 		ResultSet rset = (ResultSet) call.getObject("P_CUR_DATASET");
 		ResultSetMetaData meta = rset.getMetaData();
 		while (rset.next()) {
-			Map<String, Object> map = new HashMap<>();
+			IdiomasPerfilSE nuevoIdioma = new IdiomasPerfilSE();
 			for (int i = 1; i <= meta.getColumnCount(); i++) {
 				String key = meta.getColumnName(i).toString();
 				String value = Objects.toString(rset.getString(key), "");
-				map.put(key, value);
+				switch (key) {
+				case "ID_IDIOMA":
+					nuevoIdioma.idiomaId = Integer.parseInt(value);
+					break;
+				case "ESCRIBE":
+					nuevoIdioma.escribe = calificacionIdiomaInt(value);
+					break;
+				case "HABLA":
+					nuevoIdioma.habla = calificacionIdiomaInt(value);
+					break;
+				case "LEE":
+					nuevoIdioma.lee = calificacionIdiomaInt(value);
+					break;
+				case "MOSTRAR":
+					nuevoIdioma.mostrar = value;
+					break;
+				}
 			}
-			salida.add(map);
+			listaIdiomas.add(nuevoIdioma);
 		}
 		rset.close();
 		call.close();
 		conn.close();
-		
-		return salida;
+
+		return listaIdiomas;
 	}
 	
 	public String calificacionIdioma(Integer id) {
@@ -65,7 +81,23 @@ public class IdiomaUsuarioManager {
 			return "B";
 		}
 	}
-	
+
+	public Integer calificacionIdiomaInt(String nota) {
+		switch (nota) {
+		case "E":
+			return 0;
+		case "MB":
+			return 1;
+		case "B":
+			return 2;
+		case "R":
+			return 3;
+
+		default:
+			return 2;
+		}
+	}
+
 	public jsonResult inIdiomaUsuario(IdiomasPerfilSE idiomasUsuario, Integer idioma, Integer usuario) throws Exception {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();

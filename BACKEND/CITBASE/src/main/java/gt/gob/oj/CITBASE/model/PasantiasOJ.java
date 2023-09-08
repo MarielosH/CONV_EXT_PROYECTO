@@ -6,4 +6,5 @@ public class PasantiasOJ {
 	public String fechaFinalizacion;
 	public String secretarioJuez;
 	public String registrada;
+	public String mostrar;
 }

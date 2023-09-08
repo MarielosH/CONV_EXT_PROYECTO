@@ -54,7 +54,7 @@
             <input matInput (click)="picker4.open()" formControlName="fechaNac" [matDatepicker]="picker4"
               (ngModelChange)="parseDate($event)" placeholder="FECHA NACIMIENTO">
             <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
-            <mat-datepicker touchUi #picker4></mat-datepicker>
+            <mat-datepicker startView="multi-year" [startAt]="startDate" touchUi #picker4></mat-datepicker>
             <mat-error *ngIf="this.firstFormGroup.controls.fechaNac.errors?.required">
               FECHA NACIMIENTO REQUERIDO
             </mat-error>
@@ -94,7 +94,8 @@
         <div class="form-group col">
           <mat-form-field>
             <mat-select placeholder="ESTADO CIVIL" formControlName="estadoCivilAspirante" required>
-              <mat-option *ngFor="let estados of listaEstadoCivil" [value]="estados.ID_ESTADO_CIVIL" style="font-size: 12px;">
+              <mat-option *ngFor="let estados of listaEstadoCivil" [value]="estados.ID_ESTADO_CIVIL"
+                style="font-size: 12px;">
                 {{estados.ESTADO_CIVIL}}</mat-option>
             </mat-select>
             <mat-error *ngIf="this.firstFormGroup.controls.estadoCivilAspirante.errors?.required">
@@ -194,7 +195,7 @@
             <input matInput (click)="picker5.open()" formControlName="fechaVencDPI" [matDatepicker]="picker5"
               (ngModelChange)="parseDate($event)" placeholder="FECHA VENCIMIENTO DPI">
             <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
-            <mat-datepicker touchUi #picker5></mat-datepicker>
+            <mat-datepicker startView="year" touchUi #picker5></mat-datepicker>
             <mat-error *ngIf="this.firstFormGroup.controls.fechaVencDPI.errors?.required">
               FECHA VENCIMIENTO DPI REQUERIDO
             </mat-error>
@@ -276,10 +277,10 @@
             <thead>
               <tr>
                 <td class="text-center" style="width: 250px;">
-                  <mat-form-field>                   
-                    <mat-select placeholder="IDIOMA" formControlName="idioma1" >
-                      <mat-option *ngFor="let idiomaE of listaIdiomasExtranjeros"
-                        [value]="idiomaE.ID_IDIOMA" style="font-size: 12px;">
+                  <mat-form-field>
+                    <mat-select placeholder="IDIOMA" formControlName="idioma1">
+                      <mat-option *ngFor="let idiomaE of listaIdiomasExtranjeros" [value]="idiomaE.ID_IDIOMA"
+                        style="font-size: 12px;">
                         {{idiomaE.IDIOMA}}</mat-option>
                     </mat-select>
                     <mat-hint style="color:red;" *ngIf="validaIdioma()"> Error Idioma ya Existente </mat-hint>
@@ -326,14 +327,14 @@
             <tbody *ngIf="idiomas.length>0">
               <tr *ngFor="let d of idiomas; let index = index" disabled>
                 <td class="text-center" style="width: 250px;">
-                    <mat-form-field [floatLabel]="floatLabelControl.value">
-                      <mat-label style="font-size: 14px;">IDIOMA</mat-label>
-                      <mat-select disabled [value]="d.idiomaId">
-                        <mat-option *ngFor="let idiomaE of listaIdiomasExtranjeros" [value]="idiomaE.ID_IDIOMA"
-                          style="font-size: 12px;">
-                          {{idiomaE.IDIOMA}}</mat-option>
-                      </mat-select>
-                    </mat-form-field>
+                  <mat-form-field [floatLabel]="floatLabelControl.value">
+                    <mat-label style="font-size: 14px;">IDIOMA</mat-label>
+                    <mat-select disabled [value]="d.idiomaId">
+                      <mat-option *ngFor="let idiomaE of listaIdiomasExtranjeros" [value]="idiomaE.ID_IDIOMA"
+                        style="font-size: 12px;">
+                        {{idiomaE.IDIOMA}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </td>
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field>
@@ -413,7 +414,7 @@
                 <input matInput (click)="picker6.open()" formControlName="fechaNacFamiliar" [matDatepicker]="picker6"
                   (ngModelChange)="parseDate($event)" placeholder="FECHA NACIMIENTO">
                 <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
-                <mat-datepicker touchUi #picker6></mat-datepicker>
+                <mat-datepicker startView="multi-year" [startAt]="startDate" touchUi #picker6></mat-datepicker>
               </mat-form-field>
             </div>
             <div class="col-2">
@@ -555,7 +556,8 @@
                 </mat-form-field>
               </div>
               <div class="col-4 mt-4">
-                <mat-checkbox color="primary" [checked]="familiar.dependeEconomicamente == '1' ? true : false" disabled> <b>DEPENDE
+                <mat-checkbox color="primary" [checked]="familiar.dependeEconomicamente == '1' ? true : false" disabled>
+                  <b>DEPENDE
                     ECONOMICAMENTE DE USTED </b></mat-checkbox>
               </div>
               <div class="col-2"></div>
@@ -862,10 +864,11 @@
           </mat-form-field>
         </div>
         <div class="col-3">
-          <mat-form-field color="warn" class="textos">
-            <input matInput formControlName="vigenciaColegiado" class="textos" type="text" maxlength="250"
-              placeholder="VIGENCIA COLEGIADO">
-            <mat-hint align="end">{{f5.vigenciaColegiado.value.length}} / 250</mat-hint>
+          <mat-form-field color="warn" style="font-size: 12px;">
+            <input matInput (click)="picker20.open()" formControlName="vigenciaColegiado"
+              (ngModelChange)="parseDate($event)" [matDatepicker]="picker20" placeholder="Fecha Vigencia Colegiado">
+            <mat-datepicker-toggle matSuffix [for]="picker20"></mat-datepicker-toggle>
+            <mat-datepicker startView="year" touchUi #picker20></mat-datepicker>
           </mat-form-field>
         </div>
       </div>
@@ -967,7 +970,7 @@
                     <input matInput (click)="picker8.open()" formControlName="inicioPasantia"
                       (ngModelChange)="parseDatePasantias($event)" [matDatepicker]="picker8" placeholder="Fecha Inicio">
                     <mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
-                    <mat-datepicker touchUi #picker8></mat-datepicker>
+                    <mat-datepicker startView="year" touchUi #picker8></mat-datepicker>
                   </mat-form-field>
                 </td>
                 <td class="text-center" style="width: 100px;">
@@ -976,7 +979,7 @@
                       (ngModelChange)="parseDatePasantias($event)" [matDatepicker]="picker9"
                       placeholder="Fecha Finalizacion">
                     <mat-datepicker-toggle matSuffix [for]="picker9"></mat-datepicker-toggle>
-                    <mat-datepicker touchUi #picker9></mat-datepicker>
+                    <mat-datepicker startView="year" touchUi #picker9></mat-datepicker>
                   </mat-form-field>
                 </td>
                 <td class="text-center" style="width: 150px;">
@@ -1078,7 +1081,7 @@
                     (ngModelChange)="parseDateExperienciaLaboralOJ($event)" [matDatepicker]="picker12"
                     placeholder="Fecha Inicio">
                   <mat-datepicker-toggle matSuffix [for]="picker12"></mat-datepicker-toggle>
-                  <mat-datepicker touchUi #picker12></mat-datepicker>
+                  <mat-datepicker startView="year" touchUi #picker12></mat-datepicker>
                 </mat-form-field>
               </div>
               <div class="col-2">
@@ -1087,7 +1090,7 @@
                     (ngModelChange)="parseDateExperienciaLaboralOJ($event)" [matDatepicker]="picker13"
                     placeholder="Fecha Finalización">
                   <mat-datepicker-toggle matSuffix [for]="picker13"></mat-datepicker-toggle>
-                  <mat-datepicker touchUi #picker13></mat-datepicker>
+                  <mat-datepicker startView="year" touchUi #picker13></mat-datepicker>
                 </mat-form-field>
               </div>
               <div class="col-2">
@@ -1235,7 +1238,7 @@
                     (ngModelChange)="parseDateExperienciaLaboral($event)" [matDatepicker]="picker16"
                     placeholder="Fecha Inicio">
                   <mat-datepicker-toggle matSuffix [for]="picker16"></mat-datepicker-toggle>
-                  <mat-datepicker touchUi #picker16></mat-datepicker>
+                  <mat-datepicker startView="year" touchUi #picker16></mat-datepicker>
                 </mat-form-field>
               </div>
               <div class="col-2">
@@ -1244,7 +1247,7 @@
                     (ngModelChange)="parseDateExperienciaLaboral($event)" [matDatepicker]="picker17"
                     placeholder="Fecha Finalización">
                   <mat-datepicker-toggle matSuffix [for]="picker17"></mat-datepicker-toggle>
-                  <mat-datepicker touchUi #picker17></mat-datepicker>
+                  <mat-datepicker startView="year" touchUi #picker17></mat-datepicker>
                 </mat-form-field>
               </div>
               <div class="col-2">

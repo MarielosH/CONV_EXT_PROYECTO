@@ -45,13 +45,12 @@ String SCHEMA = new Config().getDBSchema();
 		return salida;
 	}
 	
-	public List<Map<String, Object>> getReferenciaPersonal(Integer usuario) throws Exception {
-		List<Map<String,Object>> salida = new ArrayList<>();
+	public List<ReferenciasPersonales> getReferenciaPersonal(Integer usuario) throws Exception {
+		List<ReferenciasPersonales> listaReferencias = new ArrayList<>();
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
-		CallableStatement call = conn
-				.prepareCall("call " + "CIT_BASE" +
-						".PKG_TC_REFERENCIA_PERSONAL.PROC_MOSTRAR_TC_REFERENCIA_PERSONAL(?,?,?)");
+		CallableStatement call = conn.prepareCall(
+				"call " + "CIT_BASE" + ".PKG_TC_REFERENCIA_PERSONAL.PROC_MOSTRAR_TC_REFERENCIA_PERSONAL(?,?,?)");
 		call.setInt("P_ID_PERSONA", usuario);
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
 		call.registerOutParameter("P_MSJ", OracleTypes.VARCHAR);
@@ -59,19 +58,36 @@ String SCHEMA = new Config().getDBSchema();
 		ResultSet rset = (ResultSet) call.getObject("P_CUR_DATASET");
 		ResultSetMetaData meta = rset.getMetaData();
 		while (rset.next()) {
-			Map<String, Object> map = new HashMap<>();
+			ReferenciasPersonales nuevaReferencia = new ReferenciasPersonales();
 			for (int i = 1; i <= meta.getColumnCount(); i++) {
 				String key = meta.getColumnName(i).toString();
 				String value = Objects.toString(rset.getString(key), "");
-				map.put(key, value);
+				switch (key) {
+				case "NOMBRE":
+					nuevaReferencia.nombre = value;
+					break;
+				case "TIPO_RELACION":
+					nuevaReferencia.tipoRelacion = value;
+					break;
+				case "ANIO_CONOCERLO":
+					nuevaReferencia.aniosConocerlo = value;
+					break;
+				case "TELEFONO":
+					nuevaReferencia.telefono = value;
+					break;
+				case "MOSTRAR":
+					nuevaReferencia.mostrar = value;
+					break;
+				}
+
 			}
-			salida.add(map);
+			listaReferencias.add(nuevaReferencia);
 		}
 		rset.close();
 		call.close();
 		conn.close();
-		
-		return salida;
+
+		return listaReferencias;
 	}
 	
 	public jsonResult modReferenciaPersonal(ReferenciasPersonales referenciaPersonal, Integer id) throws Exception {

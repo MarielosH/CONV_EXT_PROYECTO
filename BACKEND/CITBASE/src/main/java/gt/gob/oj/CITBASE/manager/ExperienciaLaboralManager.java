@@ -49,13 +49,12 @@ public class ExperienciaLaboralManager {
 		return salida;
 	}
 	
-	public List<Map<String, Object>> getExperienciaLaboral(Integer Usuario) throws Exception {
-		List<Map<String,Object>> salida = new ArrayList<>();
+	public List<ExperienciaLaboral> getExperienciaLaboral(Integer Usuario) throws Exception {
+		List<ExperienciaLaboral> listaExperienciaLaboral = new ArrayList<>();
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
-		CallableStatement call = conn
-				.prepareCall("call " + "CIT_BASE" +
-						".PKG_TC_EXPERIENCIA_LABORAL.PROC_MOSTRAR_TC_EXPERIENCIA_LABORAL(?,?,?)");
+		CallableStatement call = conn.prepareCall(
+				"call " + "CIT_BASE" + ".PKG_TC_EXPERIENCIA_LABORAL.PROC_MOSTRAR_TC_EXPERIENCIA_LABORAL(?,?,?)");
 		call.setInt("P_ID_PERSONA", Usuario);
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
 		call.registerOutParameter("P_MSJ", OracleTypes.VARCHAR);
@@ -63,19 +62,48 @@ public class ExperienciaLaboralManager {
 		ResultSet rset = (ResultSet) call.getObject("P_CUR_DATASET");
 		ResultSetMetaData meta = rset.getMetaData();
 		while (rset.next()) {
-			Map<String, Object> map = new HashMap<>();
+			ExperienciaLaboral nuevaExperiencia = new ExperienciaLaboral();
 			for (int i = 1; i <= meta.getColumnCount(); i++) {
 				String key = meta.getColumnName(i).toString();
 				String value = Objects.toString(rset.getString(key), "");
-				map.put(key, value);
+				switch (key) {
+				case "INSTITUCION_EMPRESA":
+					nuevaExperiencia.institucionEmpresa = value;
+					break;
+				case "FECHA_INICIO":
+					nuevaExperiencia.fechaInicio = value;
+					break;
+				case "FECHA_FIN":
+					nuevaExperiencia.fechaFinalizacion = value;
+					break;
+				case "RENGLON_PRESUPUESTARIO":
+					nuevaExperiencia.renglonPresupuestario = value;
+					break;
+				case "PUESTO":
+					nuevaExperiencia.puesto = value;
+					break;
+				case "JEFE_INMEDIATO":
+					nuevaExperiencia.jefeInmediato = value;
+					break;
+				case "TELEFONO":
+					nuevaExperiencia.telefono = value;
+					break;
+				case "MOTIVO_FIN_RELACION":
+					nuevaExperiencia.motivoFinRelacionLaboral = value;
+					break;
+				case "MOSTRAR":
+					nuevaExperiencia.mostrar = value;
+					break;
+				}
+
 			}
-			salida.add(map);
+			listaExperienciaLaboral.add(nuevaExperiencia);
 		}
 		rset.close();
 		call.close();
 		conn.close();
-		
-		return salida;
+
+		return listaExperienciaLaboral;
 	}
 	
 	public jsonResult modExperienciaLaboral(ExperienciaLaboral experienciaLaboral, Integer id) throws Exception {

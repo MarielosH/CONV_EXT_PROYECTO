@@ -9,4 +9,5 @@ public class ExperienciaLaboralOJ {
 	public String jefeInmediato;
 	public String renglonPresupuestario;
 	public String motivoFinRelacionLaboral;
+	public String mostrar;
 }

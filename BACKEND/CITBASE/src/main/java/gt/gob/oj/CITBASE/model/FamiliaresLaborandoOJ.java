@@ -5,4 +5,5 @@ public class FamiliaresLaborandoOJ {
 	public String nombreCompleto;
 	public String dependencia;
 	public String puesto; 
+	public String mostrar;
 }

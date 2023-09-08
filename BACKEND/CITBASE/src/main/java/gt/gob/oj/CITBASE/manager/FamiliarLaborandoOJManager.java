@@ -44,8 +44,8 @@ public class FamiliarLaborandoOJManager {
 		return salida;
 	}
 	
-	public List<Map<String, Object>> getFamiliarLaborandoOJ(Integer usuario) throws Exception {
-		List<Map<String,Object>> salida = new ArrayList<>();
+	public List<FamiliaresLaborandoOJ> getFamiliarLaborandoOJ(Integer usuario) throws Exception {
+		List<FamiliaresLaborandoOJ> familiaresLaborandoOJ = new ArrayList<>();
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
@@ -58,19 +58,36 @@ public class FamiliarLaborandoOJManager {
 		ResultSet rset = (ResultSet) call.getObject("P_CUR_DATASET");
 		ResultSetMetaData meta = rset.getMetaData();
 		while (rset.next()) {
-			Map<String, Object> map = new HashMap<>();
+			FamiliaresLaborandoOJ nuevoFamiliarLaborandoOJ = new FamiliaresLaborandoOJ();
 			for (int i = 1; i <= meta.getColumnCount(); i++) {
 				String key = meta.getColumnName(i).toString();
 				String value = Objects.toString(rset.getString(key), "");
-				map.put(key, value);
+				switch (key) {
+				case "NOMBRE_COMPLETO":
+					nuevoFamiliarLaborandoOJ.nombreCompleto = value;
+					break;
+				case "PARENTESCO":
+					nuevoFamiliarLaborandoOJ.parentesco = value;					
+					break;
+				case "DEPENDENCIA":
+					nuevoFamiliarLaborandoOJ.dependencia = value;					
+					break;
+				case "PUESTO":
+					nuevoFamiliarLaborandoOJ.puesto = value;	
+					break;
+				case "MOSTRAR":
+					nuevoFamiliarLaborandoOJ.mostrar = value;	
+					break;
+				}
+
 			}
-			salida.add(map);
+			familiaresLaborandoOJ.add(nuevoFamiliarLaborandoOJ);
 		}
 		rset.close();
 		call.close();
 		conn.close();
 		
-		return salida;
+		return familiaresLaborandoOJ;
 	}
 	
 	public jsonResult modFamiliarLaborandoOJ(FamiliaresLaborandoOJ familiarLaborandoOJ, Integer id) throws Exception {

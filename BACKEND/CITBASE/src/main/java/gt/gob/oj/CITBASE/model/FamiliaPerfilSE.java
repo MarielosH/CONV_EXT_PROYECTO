@@ -11,5 +11,6 @@ public class FamiliaPerfilSE {
 	public String trabaja; 
 	public String lugarTrabajo;
 	public String dependeEconomicamente;
+	public String mostrar; 
 
 }

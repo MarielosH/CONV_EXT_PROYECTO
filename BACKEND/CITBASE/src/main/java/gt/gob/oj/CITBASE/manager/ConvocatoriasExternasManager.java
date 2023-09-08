@@ -4,7 +4,6 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,11 +15,11 @@ import gt.gob.oj.CITBASE.model.ExperienciaLaboralOJ;
 import gt.gob.oj.CITBASE.model.FamiliaPerfilSE;
 import gt.gob.oj.CITBASE.model.FamiliaresLaborandoOJ;
 import gt.gob.oj.CITBASE.model.IdiomasPerfilSE;
+import gt.gob.oj.CITBASE.model.InformacionAcademica;
+import gt.gob.oj.CITBASE.model.InformacionUniversitaria;
 import gt.gob.oj.CITBASE.model.PasantiasOJ;
 import gt.gob.oj.CITBASE.model.PerfilSolicitudEmpleo;
 import gt.gob.oj.CITBASE.model.ReferenciasPersonales;
-import gt.gob.oj.CITBASE.model.Usuario;
-import gt.gob.oj.CITBASE.manager.*;
 //import gt.gob.oj.SIGMA.model.Vinculacion;
 import gt.gob.oj.utils.Config;
 import gt.gob.oj.utils.ConnectionsPool;
@@ -36,7 +35,8 @@ public class ConvocatoriasExternasManager {
 	ExperienciaLaboralManager experienciaLaboralManager = new ExperienciaLaboralManager();
 	ExperienciaLaboralOJManager experienciaLaboralOJManager = new ExperienciaLaboralOJManager();
 	ReferenciaPersonalManager referenciaPersonalManager = new ReferenciaPersonalManager();
-	
+	InformacionAcademicaManager informacionAcademicaManager = new InformacionAcademicaManager();
+	InformacionUniversitariaManager informacionUniversitariaManager = new InformacionUniversitariaManager();
 
 	public Map<String, Object> getConvocatoriasExternas() throws Exception {
 		Map<String, Object> salida = new HashMap<String, Object>();
@@ -167,14 +167,12 @@ public class ConvocatoriasExternasManager {
 		return salida;
 	}
 
-
-	
 	public jsonResult inPerfilSolicitudEmpleo(PerfilSolicitudEmpleo perfil) throws Exception {
 		// verificar existencia de usuario por dpi
 
 		jsonResult salida = new jsonResult();
 		if (existePerfilSolicitudDpi(perfil.DPI)) {
-			//salida.result = "El usuario ya existe";
+			// salida.result = "El usuario ya existe";
 			System.out.println("El usuario ya existe, se va a modificar. ");
 			return ModPerfilSolicitudEmpleo(perfil);
 		}
@@ -260,6 +258,12 @@ public class ConvocatoriasExternasManager {
 			referenciaPersonalManager.inReferenciaPersonal(referencia, salida.id);
 		}
 
+		// insertar informacion academica
+		insertarInformacionAcademicaPerfil(perfil, salida.id);
+
+		// insertar informacion universitaria
+		insertarInformacionUniversitariaPerfil(perfil, salida.id);
+
 		if (salida.id > 0)
 			salida.result = "OK";
 		System.out.println("todo ok perfil usuario......" + this.SCHEMA + "\n");
@@ -269,21 +273,21 @@ public class ConvocatoriasExternasManager {
 
 	}
 
-
 	public jsonResult ModPerfilSolicitudEmpleo(PerfilSolicitudEmpleo perfil) throws Exception {
 		// verificar existencia de usuario por dpi
 		jsonResult salida = new jsonResult();
-		List<Map<String, Object>> perfilExistente = getPerfilSolicitudDpi(perfil.DPI);
-		System.out.println("dentro get usuario ......" + perfilExistente.get(0) + "\n");
+		PerfilSolicitudEmpleo perfilExistente = getPerfilSolicitudDpi(perfil.DPI);
+		// System.out.println("dentro get usuario ......" + perfilExistente.get(0) +
+		// "\n");
 
-		Integer idUsuario = Integer.parseInt(perfilExistente.get(0).get("ID_INFORMACION_PERSONAL_USUARIO").toString());
+		Integer idUsuario = perfilExistente.ID;
 		System.out.println("ID PERFIL USUARIO ......" + idUsuario + "\n");
 
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 
 		// usuario nuevo
-		if (perfilExistente.size() == 0) {
+		if (perfilExistente != null) {
 			System.out.println("dentro de llamar a insertar perfil usuario ......" + this.SCHEMA + "\n");
 			CallableStatement call = conn.prepareCall("call " + this.SCHEMA
 					+ ".PKG_TC_INFORMACION_PERSONAL_USUARIO.PROC_ACTUALIZAR_TC_INFORMACION_PERSONAL_USUARIO (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -329,23 +333,25 @@ public class ConvocatoriasExternasManager {
 
 			// actualizar idioma usuario
 
-			/*List<Map<String, Object>> idiomasUsuario = idiomaUsuarioManager.getIdiomasUsuario(idUsuario);
-			if (idiomasUsuario.size() == perfil.IDIOMAS.size()) {
-				for (IdiomasPerfilSE idioma : perfil.IDIOMAS) {
-					idiomaUsuarioManager.modIdiomaUsuario(idioma, idUsuario, idUsuario);
-				}
-			} else if(idiomasUsuario.size() > perfil.IDIOMAS.size() ) {
-				//si hay mas significa que se eliminino uno 
-				
-			} else if( perfil.IDIOMAS.size() > idiomasUsuario.size() ) {
-				
-			}*/
-			
+			/*
+			 * List<Map<String, Object>> idiomasUsuario =
+			 * idiomaUsuarioManager.getIdiomasUsuario(idUsuario); if (idiomasUsuario.size()
+			 * == perfil.IDIOMAS.size()) { for (IdiomasPerfilSE idioma : perfil.IDIOMAS) {
+			 * idiomaUsuarioManager.modIdiomaUsuario(idioma, idUsuario, idUsuario); } } else
+			 * if(idiomasUsuario.size() > perfil.IDIOMAS.size() ) { //si hay mas significa
+			 * que se eliminino uno
+			 * 
+			 * } else if( perfil.IDIOMAS.size() > idiomasUsuario.size() ) {
+			 * 
+			 * }
+			 */
+
 			// insertar idioma usuario
 
 			for (IdiomasPerfilSE idioma : perfil.IDIOMAS) {
 				idiomaUsuarioManager.inIdiomaUsuario(idioma, idioma.idiomaId, idUsuario);
-				//IdiomasPerfilSE encontrado = idiomasUsuario.stream().filter(x-> x.get(idiomasUsuario));
+				// IdiomasPerfilSE encontrado = idiomasUsuario.stream().filter(x->
+				// x.get(idiomasUsuario));
 			}
 
 			// actualizar familiar
@@ -385,6 +391,42 @@ public class ConvocatoriasExternasManager {
 
 	}
 
+	public void insertarInformacionAcademicaPerfil(PerfilSolicitudEmpleo perfil, Integer usuario) throws Exception {
+
+		List<InformacionAcademica> listaInfoAcademica = new ArrayList<InformacionAcademica>();
+		if (!perfil.NIVEL_APRIMARIA.equals("") && !perfil.GRADO_APRIMARIA.equals("")) {
+			InformacionAcademica nivelPrimario = new InformacionAcademica();
+			nivelPrimario.nivelAcademico = perfil.NIVEL_APRIMARIA;
+			nivelPrimario.gradoAprobado = perfil.GRADO_APRIMARIA;
+			nivelPrimario.institucionEstudio = perfil.INSTITUCION_PRIMARIA;
+			nivelPrimario.constancia = perfil.CONSTANCIA_PRIMARIA;
+			listaInfoAcademica.add(nivelPrimario);
+		}
+		if (!perfil.NIVEL_ABASICOS.equals("") && !perfil.GRADO_ABASICOS.equals("")) {
+			InformacionAcademica nivelBasico = new InformacionAcademica();
+			nivelBasico.nivelAcademico = perfil.NIVEL_ABASICOS;
+			nivelBasico.gradoAprobado = perfil.GRADO_ABASICOS;
+			nivelBasico.institucionEstudio = perfil.INSTITUCION_BASICOS;
+			nivelBasico.constancia = perfil.CONSTANCIA_BASICOS;
+			listaInfoAcademica.add(nivelBasico);
+		}
+		if (!perfil.NIVEL_ADIVERSIFICADO.equals("") && !perfil.GRADO_ADIVERSIFICADO.equals("")) {
+			InformacionAcademica nivelDiversificado = new InformacionAcademica();
+			nivelDiversificado.nivelAcademico = perfil.NIVEL_ADIVERSIFICADO;
+			nivelDiversificado.gradoAprobado = perfil.GRADO_ADIVERSIFICADO;
+			nivelDiversificado.institucionEstudio = perfil.INSTITUCION_DIVERSIFICADO;
+			nivelDiversificado.constancia = perfil.CONSTANCIA_DIVERSIFICADO;
+			nivelDiversificado.anioGraduacion = perfil.ANIO_GRADUACION_DIVERSIFICADO;
+			nivelDiversificado.carrera = perfil.CARRERA_DIVERSIFICADO;
+			listaInfoAcademica.add(nivelDiversificado);
+		}
+
+		for (InformacionAcademica info : listaInfoAcademica) {
+			System.out.println("Dentro de armar lista informacion académica  ......" + "\n");
+			informacionAcademicaManager.inInformacionAcademica(info, usuario);
+		}
+	}
+
 	public boolean existePerfilSolicitudDpi(String dpi) throws Exception {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
@@ -407,14 +449,48 @@ public class ConvocatoriasExternasManager {
 
 	}
 
-	public List<Map<String, Object>> getPerfilSolicitudDpi(String dpi) throws Exception {
-		List<Map<String, Object>> salida = new ArrayList<>();
+	public void insertarInformacionUniversitariaPerfil(PerfilSolicitudEmpleo perfil, Integer usuario) throws Exception {
+
+		List<InformacionUniversitaria> listaInfoUniversitaria = new ArrayList<InformacionUniversitaria>();
+
+		if (!perfil.CARRERA_U.equals("") && !perfil.UNIVERSIDAD.equals("")) {
+			InformacionUniversitaria carreraU = new InformacionUniversitaria();
+			carreraU.carrera = perfil.CARRERA_U;
+			carreraU.universidad = perfil.UNIVERSIDAD;
+			carreraU.constancia = perfil.CONSTANCIA_UNIVERSIDAD;
+			carreraU.semestreAprobado = perfil.SEMESTRE_APROBADO;
+			carreraU.cierrePensum = perfil.CIERRE;
+			carreraU.graduadoTecnicoUniversitario = perfil.GRADUADO_TECNICO;
+			carreraU.graduadoLicenciatura = perfil.GRADO_LICENCIATURA;
+			carreraU.noColegiado = perfil.COLEGIADO;
+			carreraU.vigenciaColegiado = perfil.VIGENCIA_COLEGIADO;
+			listaInfoUniversitaria.add(carreraU);
+		}
+		if (!perfil.CARRERA_POSGRADO.equals("") && !perfil.UNIVERSIDAD_POSGRADO.equals("")) {
+			InformacionUniversitaria posgrado = new InformacionUniversitaria();
+			posgrado.carrera = perfil.CARRERA_POSGRADO;
+			posgrado.universidad = perfil.UNIVERSIDAD_POSGRADO;
+			posgrado.constancia = perfil.CONSTANCIA_UNIVERSIDAD_POSGRADO;
+			posgrado.semestreAprobado = perfil.SEMESTRE_APROBADO_POSGRADO;
+			posgrado.cierrePensum = perfil.GRADUADO_MAESTRIA;
+			posgrado.graduadoDoctorado = perfil.GRADUADO_DOCTORADO;
+			listaInfoUniversitaria.add(posgrado);
+		}
+
+		for (InformacionUniversitaria info : listaInfoUniversitaria) {
+			System.out.println("Dentro de armar lista informacion universitaria ......" + "\n");
+			informacionUniversitariaManager.inInformacionUniversitaria(info, usuario);
+		}
+	}
+
+	public PerfilSolicitudEmpleo getPerfilSolicitudDpi(String dpi) throws Exception {
+
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		System.out.println("dentro de llamar a obtener perfil usuario dpi  ......" + dpi + "\n");
-		
+
 		PerfilSolicitudEmpleo perfil = new PerfilSolicitudEmpleo();
-		
+
 		CallableStatement call = conn.prepareCall("call " + this.SCHEMA
 				+ ".PKG_TC_INFORMACION_PERSONAL_USUARIO.PROC_MOSTRAR_TC_INFORMACION_PERSONAL_USUARIO_DPI(?,?,?)");
 		call.setString("P_DPI", dpi);
@@ -425,28 +501,129 @@ public class ConvocatoriasExternasManager {
 		String msj = call.getString("p_msj");
 		System.out.println("mensaje:  ......" + msj + "\n");
 
-		if (msj.compareTo("No existe el usuario con el DPI especificado") == 0) {
-			return salida;
+		if (msj != null) {
+			if (msj.compareTo("No existe el usuario con el DPI especificado") == 0) {
+				return null;
+			}
 		}
 
 		ResultSet rset = (ResultSet) call.getObject("p_cur_dataset");
+
 		ResultSetMetaData meta = rset.getMetaData();
 		while (rset.next()) {
-			Map<String, Object> map = new HashMap<>();
+			// System.out.println("construyendo perfil ......" + "\n");
 			for (int i = 1; i <= meta.getColumnCount(); i++) {
 				String key = meta.getColumnName(i).toString();
 				String value = Objects.toString(rset.getString(key), "");
-				System.out.println("todo ok......" + this.SCHEMA + "\n");
-				map.put(key, value);
+				switch (key) {
+				case "ID_INFORMACION_PERSONAL_USUARIO":
+					perfil.ID = Integer.parseInt(value);
+					System.out.println("ID INFORMACION PERSONAL USUARIO:  ......" + value + "\n");
+					break;
+				case "NOMBRE":
+					perfil.NOMBRE = value;
+					break;
+				case "PRIMER_APELLIDO":
+					System.out.println("PRIMER_APELLIDO:  ......" + value + "\n");
+					perfil.PRIMER_APELLIDO = value;
+					break;
+				case "SEGUNDO_APELLIDO":
+					perfil.SEGUNDO_APELLIDO = value;
+					break;
+				case "FECHA_NACIMIENTO":
+					perfil.FECHA_NACIMIENTO = value;
+					break;
+				case "EDAD":
+					perfil.EDAD = Integer.parseInt(value);
+					break;
+				case "SEXO":
+					perfil.SEXO = value;
+					System.out.println("SEXO:  ......" + value + "\n");
+					break;
+				case "PROFESION":
+					perfil.PROFESION = value;
+					break;
+				case "ID_ESTADO_CIVIL":
+					perfil.ESTADO_CIVIL = Integer.parseInt(value);
+					break;
+				case "NACIONALIDAD":
+					perfil.NACIONALIDAD = value;
+					break;
+				case "DIRECCION":
+					perfil.DIRECCION = value;
+					break;
+				case "ID_MUNICIPIO":
+					perfil.MUNICIPIO = Integer.parseInt(value);
+					break;
+				case "ID_DEPARTAMENTO":
+					perfil.DEPARTAMENTO = Integer.parseInt(value);
+					break;
+				case "CORREO":
+					perfil.CORREO = value;
+					break;
+				case "TELEFONO_CASA":
+					perfil.TELEFONO_CASA = value;
+					break;
+				case "TELEFONO_CELULAR":
+					perfil.TELEFONO_CELULAR = value;
+					break;
+				case "DPI":
+					perfil.DPI = value;
+					break;
+				case "FECHA_VENCIMIENTO_DPI":
+					System.out.println("FECHA_VENCIMIENTO_DPI:  ......" + value + "\n");
+					perfil.FECHA_VENC_DPI = value;
+					break;
+				case "NIT":
+					perfil.NIT = value;
+				case "NUMERO_LICENCIA":
+					perfil.NUMERO_LICENCIA = value;
+					break;
+				case "CLASE_LICENCIA":
+					perfil.CLASE_LICENCIA = value;
+					break;
+				case "ID_DISCAPACIDAD":
+					perfil.DISCAPACIDAD = value;
+					break;
+				case "FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_ETNIA":
+					System.out.println("ETNIA:  ......" + value + "\n");
+					perfil.ETNIA = value;
+					break;
+				case "FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_COMUNIDAD_LINGUISTICA":
+					perfil.COMUNIDAD_LINGUISTICA = value;
+					break;
+				case "NO_HIJO":
+					perfil.NO_HIJOS = Integer.parseInt(value);
+					break;
+
+				}
+
 			}
-			salida.add(map);
+
 		}
 		rset.close();
 		call.close();
 		conn.close();
-		return salida;
+
+		// detalles
+		System.out.println(" armando detalles  ......" + "idiomas" + "\n");
+		perfil.IDIOMAS = idiomaUsuarioManager.getIdiomasUsuario(perfil.ID);
+		System.out.println(" armando detalles  ......" + "familiares" + "\n");
+		perfil.FAMILIARES = familiarManager.getFamiliares(perfil.ID);
+		System.out.println(" armando detalles  ......" + "familiares LABORANDO OJ" + "\n");
+		perfil.FAMILIARES_LABORANDO_OJ = familiarLaborandoManager.getFamiliarLaborandoOJ(perfil.ID);
+		System.out.println(" armando detalles  ......" + "PASANTIA OJ" + "\n");
+		perfil.PASANTIAS = pasantiaManager.getPasantiaOJ(perfil.ID);
+		System.out.println(" armando detalles  ......" + "EXPERIENCIA LABORAL" + "\n");
+		perfil.EXPERIENCIA_LABORAL = experienciaLaboralManager.getExperienciaLaboral(perfil.ID);
+		System.out.println(" armando detalles  ......" + "EXPERIENCIA LABORAL OJ" + "\n");
+		perfil.EXPERIENCIA_LABORAL_OJ = experienciaLaboralOJManager.getExperienciaLaboralOJ(perfil.ID);
+		System.out.println(" armando detalles  ......" + "referencia personal" + "\n");
+		perfil.REFERENCIAS_PERSONALES = referenciaPersonalManager.getReferenciaPersonal(perfil.ID);
+
+		return perfil;
 	}
-	
+
 	public List<Map<String, Object>> getParentesco() throws Exception {
 		List<Map<String, Object>> salida = new ArrayList<>();
 		ConnectionsPool c = new ConnectionsPool();
@@ -473,13 +650,12 @@ public class ConvocatoriasExternasManager {
 		conn.close();
 		return salida;
 	}
-	
+
 	public List<Map<String, Object>> getIdiomas() throws Exception {
-		List<Map<String,Object>> salida = new ArrayList<>();
+		List<Map<String, Object>> salida = new ArrayList<>();
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
-		CallableStatement call = conn
-				.prepareCall("call " + "CIT_BASE" + ".PKG_TC_IDIOMA.PROC_GET_IDIOMAS(?,?)");
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE" + ".PKG_TC_IDIOMA.PROC_GET_IDIOMAS(?,?)");
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
 		call.registerOutParameter("P_MSJ", OracleTypes.VARCHAR);
 		call.execute();
@@ -497,12 +673,12 @@ public class ConvocatoriasExternasManager {
 		rset.close();
 		call.close();
 		conn.close();
-		
+
 		return salida;
 	}
 
 	public List<Map<String, Object>> getEstadoCivil() throws Exception {
-		List<Map<String,Object>> salida = new ArrayList<>();
+		List<Map<String, Object>> salida = new ArrayList<>();
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
@@ -524,7 +700,7 @@ public class ConvocatoriasExternasManager {
 		rset.close();
 		call.close();
 		conn.close();
-		
+
 		return salida;
 	}
 }

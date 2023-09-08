@@ -45,7 +45,6 @@ public class EducacionConvManager {
 		List<Map<String, Object>> salida = new ArrayList<>();
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
-		System. out. println("entró a obtener educación convocatoria ... "+ convocatoria +"\n");
 		CallableStatement call = conn.prepareCall(
 				"call " + "CIT_BASE" + ".PKG_TC_EDUCACION_CONVOCATORIA.PROC_MOSTRAR_TC_EDUCACION_CONVOCATORIA(?,?,?)");
 		call.setInt("p_id_educacion_convocatoria", convocatoria);
@@ -55,13 +54,10 @@ public class EducacionConvManager {
 		ResultSet rset = (ResultSet) call.getObject("p_cur_dataset");
 		ResultSetMetaData meta = rset.getMetaData();
 		while (rset.next()) {
-			System.out.println(" convocatoria numero " + convocatoria + "\n");
 			Map<String, Object> map = new HashMap<>();
 			for (int i = 1; i <= meta.getColumnCount(); i++) {
 				String key = meta.getColumnName(i).toString();
-				System.out.println(" llave " + key + "\n");
 				String value = Objects.toString(rset.getString(key), "");
-				System.out.println(" valor " + value + "\n");
 				map.put(key, value);
 			}
 			salida.add(map);

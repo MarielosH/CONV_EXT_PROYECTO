@@ -45,13 +45,12 @@ public class PasantiaOJManager {
 		return salida;
 	}
 	
-	public List<Map<String, Object>> getPasantiaOJ(Integer usuario) throws Exception {
-		List<Map<String,Object>> salida = new ArrayList<>();
+	public List<PasantiasOJ> getPasantiaOJ(Integer usuario) throws Exception {
+		List<PasantiasOJ> listaPasantias = new ArrayList<>();
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
-				.prepareCall("call " + "CIT_BASE" +
-						".PKG_TC_PASANTIA_OJ.PROC_MOSTRAR_TC_PASANTIA_OJ(?,?,?)");
+				.prepareCall("call " + "CIT_BASE" + ".PKG_TC_PASANTIA_OJ.PROC_MOSTRAR_TC_PASANTIA_OJ(?,?,?)");
 		call.setInt("P_ID_PERSONA", usuario);
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
 		call.registerOutParameter("P_MSJ", OracleTypes.VARCHAR);
@@ -59,19 +58,38 @@ public class PasantiaOJManager {
 		ResultSet rset = (ResultSet) call.getObject("P_CUR_DATASET");
 		ResultSetMetaData meta = rset.getMetaData();
 		while (rset.next()) {
-			Map<String, Object> map = new HashMap<>();
+			PasantiasOJ nuevaPasantia = new PasantiasOJ();
 			for (int i = 1; i <= meta.getColumnCount(); i++) {
 				String key = meta.getColumnName(i).toString();
 				String value = Objects.toString(rset.getString(key), "");
-				map.put(key, value);
+				switch (key) {
+				case "FECHA_INICIO":
+					nuevaPasantia.fechaInicio = value;
+					break;
+				case "FECHA_FIN":
+					nuevaPasantia.fechaFinalizacion = value;
+					break;
+				case "DEPENDENCIA":
+					nuevaPasantia.dependencia = value;
+					break;
+				case "SECRETARIO_O_JUEZ":
+					nuevaPasantia.secretarioJuez = value;
+					break;
+				case "REGISTRO_PASANTIA":
+					nuevaPasantia.registrada = value;
+					break;
+				case "MOSTRAR":
+					nuevaPasantia.mostrar = value;
+					break;
+				}
 			}
-			salida.add(map);
+			listaPasantias.add(nuevaPasantia);
 		}
 		rset.close();
 		call.close();
 		conn.close();
-		
-		return salida;
+
+		return listaPasantias;
 	}
 	
 	public jsonResult modPasantiaOJ(PasantiasOJ pasantiaOJ, Integer id) throws Exception {

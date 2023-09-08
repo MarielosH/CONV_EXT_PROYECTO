@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PerfilSolicitudEmpleo {
-
+	
+	public Integer ID;
 	public String NOMBRE;
 	public String PRIMER_APELLIDO;
 	public String SEGUNDO_APELLIDO;

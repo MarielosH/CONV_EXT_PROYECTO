@@ -49,13 +49,12 @@ public class ExperienciaLaboralOJManager {
 		return salida;
 	}
 	
-	public List<Map<String, Object>> getExperienciaLaboralOJ(Integer usuario) throws Exception {
-		List<Map<String,Object>> salida = new ArrayList<>();
+	public List<ExperienciaLaboralOJ> getExperienciaLaboralOJ(Integer usuario) throws Exception {
+		List<ExperienciaLaboralOJ> listaExperienciaLaboralOj = new ArrayList<>();
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
-		CallableStatement call = conn
-				.prepareCall("call " + "CIT_BASE" +
-						".PKG_TC_EXPERIENCIA_LABORAL_OJ.PROC_MOSTRAR_TC_EXPERIENCIA_LABORAL_OJ(?,?,?)");
+		CallableStatement call = conn.prepareCall(
+				"call " + "CIT_BASE" + ".PKG_TC_EXPERIENCIA_LABORAL_OJ.PROC_MOSTRAR_TC_EXPERIENCIA_LABORAL_OJ(?,?,?)");
 		call.setInt("P_ID_PERSONA", usuario);
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
 		call.registerOutParameter("P_MSJ", OracleTypes.VARCHAR);
@@ -63,19 +62,41 @@ public class ExperienciaLaboralOJManager {
 		ResultSet rset = (ResultSet) call.getObject("P_CUR_DATASET");
 		ResultSetMetaData meta = rset.getMetaData();
 		while (rset.next()) {
-			Map<String, Object> map = new HashMap<>();
+			ExperienciaLaboralOJ nuevaExperienciaOJ = new ExperienciaLaboralOJ();
 			for (int i = 1; i <= meta.getColumnCount(); i++) {
 				String key = meta.getColumnName(i).toString();
 				String value = Objects.toString(rset.getString(key), "");
-				map.put(key, value);
+				switch (key) {
+				case "PUESTO":
+					nuevaExperienciaOJ.puesto = value;
+					break;
+				case "FECHA_INICIO":
+					nuevaExperienciaOJ.fechaInicio = value;
+					break;
+				case "FECHA_FIN":
+					nuevaExperienciaOJ.fechaFinalizacion = value;
+					break;
+				case "RENGLON":
+					nuevaExperienciaOJ.renglonPresupuestario = value;
+				case "DEPENDENCIA":
+					nuevaExperienciaOJ.dependencia = value;
+				case "JEFE_INMEDIATO":
+					nuevaExperienciaOJ.jefeInmediato = value;
+				case "MOTIVO_FIN":
+					nuevaExperienciaOJ.motivoFinRelacionLaboral = value;
+					break;
+				case "MOSTRAR":
+					nuevaExperienciaOJ.mostrar = value;
+					break;
+				}
 			}
-			salida.add(map);
+			listaExperienciaLaboralOj.add(nuevaExperienciaOJ);
 		}
 		rset.close();
 		call.close();
 		conn.close();
-		
-		return salida;
+
+		return listaExperienciaLaboralOj;
 	}
 	
 	public jsonResult modExperienciaLaboralOJ(ExperienciaLaboralOJ experienciaLaboralOJ, Integer id) throws Exception {

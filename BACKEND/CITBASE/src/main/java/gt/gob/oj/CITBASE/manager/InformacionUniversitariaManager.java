@@ -4,7 +4,6 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,12 +18,14 @@ import oracle.jdbc.OracleTypes;
 
 public class InformacionUniversitariaManager {
 	String SCHEMA = new Config().getDBSchema();
-	
-	public jsonResult inInformacionUniversitaria(InformacionUniversitaria informacionUniversitaria, Integer usuario) throws Exception{
+
+	public jsonResult inInformacionUniversitaria(InformacionUniversitaria informacionUniversitaria, Integer usuario)
+			throws Exception {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
-		System.out.println("dentro de llamar a insertar informacion universitaria ......" + this.SCHEMA + "\n");
+		System.out.println("dentro de llamar a insertar informacion universitaria ......"
+				+ informacionUniversitaria.carrera + "\n");
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_INFORMACION_UNIVERSITARIA.PROC_AGREGAR_TC_INFORMACION_UNIVERSITARIA (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 		call.setString("P_CARRERA", informacionUniversitaria.carrera);
@@ -41,23 +42,22 @@ public class InformacionUniversitariaManager {
 		call.setInt("P_FK_TC_INFORMACION_UNIVERSITARIA_REF_TC_INFORMACION_PERSONAL_USUARIO", usuario);
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
 		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
-	    call.execute();
-	    salida.id = call.getInt("p_id_salida");
-	    salida.msj = call.getString("p_msj");
-	    if (salida.id > 0)
-		      salida.result = "OK"; 
-			  System. out. println("todo ok......"+this.SCHEMA+"\n");
-		    call.close();
+		call.execute();
+		salida.id = call.getInt("p_id_salida");
+		salida.msj = call.getString("p_msj");
+		if (salida.id > 0)
+			salida.result = "OK";
+		System.out.println("todo ok información universitaria ......" + this.SCHEMA + "\n");
+		call.close();
 		return salida;
 	}
-	
+
 	public List<Map<String, Object>> getInformacionUniversitaria(Integer usuario) throws Exception {
-		List<Map<String,Object>> salida = new ArrayList<>();
+		List<Map<String, Object>> salida = new ArrayList<>();
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
-		CallableStatement call = conn
-				.prepareCall("call " + "CIT_BASE" +
-						".PKG_TC_INFORMACION_UNIVERSITARIA.PROC_MOSTRAR_TC_INFORMACION_UNIVERSITARIA(?,?,?)");
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
+				+ ".PKG_TC_INFORMACION_UNIVERSITARIA.PROC_MOSTRAR_TC_INFORMACION_UNIVERSITARIA(?,?,?)");
 		call.setInt("P_ID_PERSONA", usuario);
 		call.registerOutParameter("P_CUR_DATASET", OracleTypes.CURSOR);
 		call.registerOutParameter("P_MSJ", OracleTypes.VARCHAR);
@@ -76,11 +76,12 @@ public class InformacionUniversitariaManager {
 		rset.close();
 		call.close();
 		conn.close();
-		
+
 		return salida;
 	}
-	
-	public jsonResult modInformacionUniversitaria(InformacionUniversitaria informacionUniversitaria, Integer id) throws Exception {
+
+	public jsonResult modInformacionUniversitaria(InformacionUniversitaria informacionUniversitaria, Integer id)
+			throws Exception {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
@@ -101,16 +102,16 @@ public class InformacionUniversitariaManager {
 		call.setString("P_VIGENCIA_COLEGIADO", informacionUniversitaria.vigenciaColegiado);
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
 		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
-	    call.execute();
-	    salida.id = call.getInt("p_id_salida");
-	    salida.msj = call.getString("p_msj");
-	    if (salida.id > 0)
-		      salida.result = "OK"; 
-			  System. out. println("todo ok......"+this.SCHEMA+"\n");
-		    call.close();		
+		call.execute();
+		salida.id = call.getInt("p_id_salida");
+		salida.msj = call.getString("p_msj");
+		if (salida.id > 0)
+			salida.result = "OK";
+		System.out.println("todo ok......" + this.SCHEMA + "\n");
+		call.close();
 		return salida;
 	}
-	
+
 	public jsonResult modVisibilidadInformacionUniversitaria(Integer id) throws Exception {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
@@ -121,13 +122,13 @@ public class InformacionUniversitariaManager {
 		call.setInt("P_ID_INFORMACION_UNIVERSITARIA", id);
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
 		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
-	    call.execute();
-	    salida.id = call.getInt("p_id_salida");
-	    salida.msj = call.getString("p_msj");
-	    if (salida.id > 0)
-		      salida.result = "OK"; 
-			  System. out. println("todo ok......"+this.SCHEMA+"\n");
-		    call.close();		
+		call.execute();
+		salida.id = call.getInt("p_id_salida");
+		salida.msj = call.getString("p_msj");
+		if (salida.id > 0)
+			salida.result = "OK";
+		System.out.println("todo ok......" + this.SCHEMA + "\n");
+		call.close();
 		return salida;
 	}
 }
