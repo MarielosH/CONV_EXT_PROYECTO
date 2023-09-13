@@ -646,7 +646,8 @@ public class ConvocatoriasExternasManager {
 				perfil.UNIVERSIDAD_POSGRADO = map.get("UNIVERSIDAD").toString();
 				perfil.CONSTANCIA_UNIVERSIDAD_POSGRADO = map.get("CONSTANCIA").toString();
 				perfil.SEMESTRE_APROBADO_POSGRADO = map.get("SEMESTRE_APROBADO").toString();
-				perfil.GRADUADO_MAESTRIA = map.get("GRADUADO_MAESTRIA").toString();
+				perfil.CIERRE_PENSUM_POSGRADO = map.get("CIERRE_PENSUM").toString();
+				perfil.GRADUADO_MAESTRIA = map.get("GRADUADO_MAESTRIA").toString();				
 				perfil.GRADUADO_DOCTORADO = map.get("GRADUADO_DOCTORADO").toString();
 			} else {
 				perfil.CARRERA_U = map.get("CARRERA").toString();

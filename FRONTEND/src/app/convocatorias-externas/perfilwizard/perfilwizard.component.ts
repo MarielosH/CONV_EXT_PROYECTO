@@ -324,99 +324,98 @@ export class PerfilwizardComponent implements OnInit {
       (data: any) => {
         if (data != null && data != undefined) {
           this.firstFormGroup.patchValue({
-            nombres: data.NOMBRE,
-            primerApellido: data.PRIMER_APELLIDO,
-            segundoApellido: data.SEGUNDO_APELLIDO,
-            fechaNac: this.datePipe.transform(data.FECHA_NACIMIENTO, 'yyyy-MM-dd'),
-            edad: data.EDAD,
-            sexo: Number(data.SEXO),
-            estadoCivilAspirante: data.ESTADO_CIVIL.toString(),
-            nacionalidad: data.NACIONALIDAD,
-            profesion: data.PROFESION,
-            direccion: data.DIRECCION,
-            selDepartamento: data.DEPARTAMENTO.toString(),
-            selMunicipio: data.MUNICIPIO.toString(),
-            correo: data.CORREO,
-            telefonoCasa: data.TELEFONO_CASA,
-            telefonoCelular: data.TELEFONO_CELULAR,
-            dpi: data.DPI,
-            fechaVencDPI: this.datePipe.transform(data.FECHA_VENC_DPI, 'yyyy-MM-dd'),
-            nit: data.NIT,
-            nombreClase: Number(data.CLASE_LICENCIA),
-            numeroLicencia: data.NUMERO_LICENCIA,
-            discapacidad: Number(data.DISCAPACIDAD)
+            nombres: (data.NOMBRE != undefined && data.NOMBRE != null) ? data.NOMBRE : '',
+            primerApellido: (data.PRIMER_APELLIDO != undefined && data.PRIMER_APELLIDO != null) ? data.PRIMER_APELLIDO : '',
+            segundoApellido: (data.SEGUNDO_APELLIDO != undefined && data.SEGUNDO_APELLIDO != null) ? data.SEGUNDO_APELLIDO : '',
+            fechaNac: (data.FECHA_NACIMIENTO != undefined && data.FECHA_NACIMIENTO != null) ? this.datePipe.transform(data.FECHA_NACIMIENTO, 'yyyy-MM-dd') : '',
+            edad: (data.EDAD != undefined && data.EDAD != null) ? data.EDAD : '',
+            sexo: (data.SEXO != undefined && data.SEXO != null) ? Number(data.SEXO) : '',
+            estadoCivilAspirante: (data.ESTADO_CIVIL != undefined && data.ESTADO_CIVIL != null) ? data.ESTADO_CIVIL.toString() : '',
+            nacionalidad: (data.NACIONALIDAD != undefined && data.NACIONALIDAD != null) ? data.NACIONALIDAD : '',
+            profesion: (data.PROFESION != undefined && data.PROFESION != null) ? data.PROFESION : '',
+            direccion: (data.DIRECCION != undefined && data.DIRECCION != null) ? data.DIRECCION : '',
+            selDepartamento: (data.DEPARTAMENTO != undefined && data.DEPARTAMENTO != null) ? data.DEPARTAMENTO.toString() : '',
+            selMunicipio: (data.MUNICIPIO != undefined && data.MUNICIPIO != null) ? data.MUNICIPIO.toString() : '',
+            correo: (data.CORREO != undefined && data.CORREO != null) ? data.CORREO : '',
+            telefonoCasa: (data.TELEFONO_CASA != undefined && data.TELEFONO_CASA != null) ? data.TELEFONO_CASA : '',
+            telefonoCelular: (data.TELEFONO_CELULAR != undefined && data.TELEFONO_CELULAR != null) ? data.TELEFONO_CELULAR : '',
+            dpi: (data.DPI != undefined && data.DPI != null) ? data.DPI : '',
+            fechaVencDPI: (data.FECHA_VENC_DPI != undefined && data.FECHA_VENC_DPI != null) ? this.datePipe.transform(data.FECHA_VENC_DPI, 'yyyy-MM-dd') : '',
+            nit: (data.NIT != undefined && data.NIT != null) ? data.NIT : '',
+            nombreClase: (data.CLASE_LICENCIA != undefined && data.CLASE_LICENCIA != null) ? Number(data.CLASE_LICENCIA) : '',
+            numeroLicencia: (data.NUMERO_LICENCIA != undefined && data.NUMERO_LICENCIA != null) ? data.NUMERO_LICENCIA : '',
+            discapacidad: (data.DISCAPACIDAD != undefined && data.DISCAPACIDAD != null) ? Number(data.DISCAPACIDAD) : ''
           })
         }
         this.secondFormGroup.patchValue({
-          etnia: data.ETNIA,
-          comunidadLinguistica: data.COMUNIDAD_LINGUISTICA
+          etnia: (data.ETNIA != undefined && data.ETNIA != null) ? data.ETNIA : '',
+          comunidadLinguistica: (data.COMUNIDAD_LINGUISTICA != undefined && data.COMUNIDAD_LINGUISTICA != null) ? data.COMUNIDAD_LINGUISTICA : ''
         });
 
         this.idiomas = data.IDIOMAS;
 
         this.thirdFormGroup.patchValue({
-          noHijo: data.NO_HIJOS
+          noHijo: (data.NO_HIJOS != undefined && data.NO_HIJOS != null) ? data.NO_HIJOS : ''
         });
 
         this.fifthFormGroup.patchValue({
-          gradoAprobadoPrimaria: data.GRADO_APRIMARIA,
-          institucionEstudiosPrimaria: data.INSTITUCION_PRIMARIA,
-          constanciaPrimaria: data.CONSTANCIA_PRIMARIA,
-          gradoAprobadoBasicos: data.GRADO_ABASICOS,
-          institucionEstudiosBasicos: data.INSTITUCION_BASICOS,
-          constanciaBasicos: data.CONSTANCIA_BASICOS,
-          gradoAprobadoDiversificado: data.GRADO_ADIVERSIFICADO,
-          institucionEstudiosDiversificado: data.INSTITUCION_DIVERSIFICADO,
-          constanciaDiversificado: data.CONSTANCIA_DIVERSIFICADO,
-          anioGraduacionDiversificado: data.ANIO_GRADUACION_DIVERSIFICADO,
-          carreraDiversificado: data.CARRERA_DIVERSIFICADO,
-          carreraU: data.CARRERA_U,
-          universidad: data.UNIVERSIDAD,
-          constanciaUniversidad: data.CONSTANCIA_UNIVERSIDAD,
-          semestreA: data.SEMESTRE_APROBADO,
-          cierre: data.CIERRE,
-          gradoTecnico: data.GRADUADO_TECNICO,
-          gradoLicenciatura: data.GRADO_LICENCIATURA,
-          colegiado: data.COLEGIADO,
-          vigenciaColegiado: data.VIGENCIA_COLEGIADO,
-          carreraPosgrado: data.CARRERA_POSGRADO,
-          universidadPosgrado: data.UNIVERSIDAD_POSGRADO,
-          constanciaUniversidadPosgrado: data.CONSTANCIA_UNIVERSIDAD_POSGRADO,
-          semestreAprobadoPosgrado: data.SEMESTRE_APROBADO_POSGRADO,
-          cierrePensumPosgrado: [''],
-          graduadoMaestria: [''],
-          graduadoDoctorado: ['']
+          gradoAprobadoPrimaria: (data.GRADO_APRIMARIA != undefined && data.GRADO_APRIMARIA != null) ? data.GRADO_APRIMARIA : '',
+          institucionEstudiosPrimaria: (data.INSTITUCION_PRIMARIA != undefined && data.INSTITUCION_PRIMARIA != null) ? data.INSTITUCION_PRIMARIA : '',
+          constanciaPrimaria: (data.CONSTANCIA_PRIMARIA != undefined && data.CONSTANCIA_PRIMARIA != null) ? data.CONSTANCIA_PRIMARIA : '',
+          gradoAprobadoBasicos: (data.GRADO_ABASICOS != undefined && data.GRADO_ABASICOS != null) ? data.GRADO_ABASICOS : '',
+          institucionEstudiosBasicos: (data.INSTITUCION_BASICOS != undefined && data.INSTITUCION_BASICOS != null) ? data.INSTITUCION_BASICOS : '',
+          constanciaBasicos: (data.CONSTANCIA_BASICOS != undefined && data.CONSTANCIA_BASICOS != null) ? data.CONSTANCIA_BASICOS : '',
+          gradoAprobadoDiversificado: (data.GRADO_ADIVERSIFICADO != undefined && data.GRADO_ADIVERSIFICADO != null) ? data.GRADO_ADIVERSIFICADO : '',
+          institucionEstudiosDiversificado: (data.INSTITUCION_DIVERSIFICADO != undefined && data.INSTITUCION_DIVERSIFICADO != null) ? data.INSTITUCION_DIVERSIFICADO : '',
+          constanciaDiversificado: (data.CONSTANCIA_DIVERSIFICADO != undefined && data.CONSTANCIA_DIVERSIFICADO != null) ? data.CONSTANCIA_DIVERSIFICADO : '',
+          anioGraduacionDiversificado: (data.ANIO_GRADUACION_DIVERSIFICADO != undefined && data.ANIO_GRADUACION_DIVERSIFICADO != null) ? data.ANIO_GRADUACION_DIVERSIFICADO : '',
+          carreraDiversificado: (data.CARRERA_DIVERSIFICADO != undefined && data.CARRERA_DIVERSIFICADO != null) ? data.CARRERA_DIVERSIFICADO : '',
+          carreraU: (data.CARRERA_U != undefined && data.CARRERA_U != null) ? data.CARRERA_U : '',
+          universidad: (data.UNIVERSIDAD != undefined && data.UNIVERSIDAD != null) ? data.UNIVERSIDAD : '',
+          constanciaUniversidad: (data.CONSTANCIA_UNIVERSIDAD != undefined && data.CONSTANCIA_UNIVERSIDAD != null) ? data.CONSTANCIA_UNIVERSIDAD : '',
+          semestreA: (data.SEMESTRE_APROBADO != undefined && data.SEMESTRE_APROBADO != null) ? data.SEMESTRE_APROBADO : '',
+          cierre: (data.CIERRE != undefined && data.CIERRE != null) ? Number(data.CIERRE) : '',
+          gradoTecnico: (data.GRADUADO_TECNICO != undefined && data.GRADUADO_TECNICO != null) ? Number(data.GRADUADO_TECNICO) : '',
+          gradoLicenciatura: (data.GRADO_LICENCIATURA != undefined && data.GRADO_LICENCIATURA != null) ? Number(data.GRADO_LICENCIATURA) : '',
+          colegiado: (data.COLEGIADO != undefined && data.COLEGIADO != null) ? data.COLEGIADO : '',
+          vigenciaColegiado: (data.VIGENCIA_COLEGIADO != undefined && data.VIGENCIA_COLEGIADO != null) ? this.datePipe.transform(data.VIGENCIA_COLEGIADO, 'yyyy-MM-dd') : '',
+          carreraPosgrado: (data.CARRERA_POSGRADO != undefined && data.CARRERA_POSGRADO != null) ? data.CARRERA_POSGRADO : '',
+          universidadPosgrado: (data.UNIVERSIDAD_POSGRADO != undefined && data.UNIVERSIDAD_POSGRADO != null) ? data.UNIVERSIDAD_POSGRADO : '',
+          constanciaUniversidadPosgrado: (data.CONSTANCIA_UNIVERSIDAD_POSGRADO != undefined && data.CONSTANCIA_UNIVERSIDAD_POSGRADO != null) ? data.CONSTANCIA_UNIVERSIDAD_POSGRADO : '',
+          semestreAprobadoPosgrado: (data.SEMESTRE_APROBADO_POSGRADO != undefined && data.SEMESTRE_APROBADO_POSGRADO != null) ? data.SEMESTRE_APROBADO_POSGRADO : '',
+          cierrePensumPosgrado: (data.CIERRE_PENSUM_POSGRADO != undefined && data.CIERRE_PENSUM_POSGRADO != null) ? Number(data.CIERRE_PENSUM_POSGRADO) : '',
+          graduadoMaestria: (data.GRADUADO_MAESTRIA != undefined && data.GRADUADO_MAESTRIA != null) ? Number(data.GRADUADO_MAESTRIA) : '',
+          graduadoDoctorado: (data.GRADUADO_DOCTORADO != undefined && data.GRADUADO_DOCTORADO != null) ? Number(data.GRADUADO_DOCTORADO) : ''
         });
-
-        this.familiaresLaborandoOJ = data.FAMILIARES_LABORANDO_OJ;
-        this.referenciasPersonales = data.REFERENCIAS_PERSONALES;
-        console.log(this.familiares);
 
         data.FAMILIARES.forEach(element => {
           element.fechaNacimiento = this.datePipe.transform(element.fechaNacimiento, 'yyyy-MM-dd');
           element.vive = Number(element.vive);
           element.trabaja = Number(element.trabaja);
         });
-        this.familiares = data.FAMILIARES;
 
         data.PASANTIAS.forEach(element => {
           element.fechaFinalizacion = this.datePipe.transform(element.fechaFinalizacion, 'yyyy-MM-dd');
           element.fechaInicio = this.datePipe.transform(element.fechaInicio, 'yyyy-MM-dd');
           element.registrada = Number(element.registrada);
         });
-        this.pasantiasOJ = data.PASANTIAS;
 
         data.EXPERIENCIA_LABORAL_OJ.forEach(element => {
           element.fechaFinalizacion = this.datePipe.transform(element.fechaFinalizacion, 'yyyy-MM-dd');
           element.fechaInicio = this.datePipe.transform(element.fechaInicio, 'yyyy-MM-dd');
           element.motivoFinRelacionLaboral = Number(element.motivoFinRelacionLaboral);
         });
-        this.experienciaLaboralOJ = data.EXPERIENCIA_LABORAL_OJ;
 
         data.EXPERIENCIA_LABORAL.forEach(element => {
           element.fechaFinalizacion = this.datePipe.transform(element.fechaFinalizacion, 'yyyy-MM-dd');
           element.fechaInicio = this.datePipe.transform(element.fechaInicio, 'yyyy-MM-dd');
         });
+
+        this.familiaresLaborandoOJ = data.FAMILIARES_LABORANDO_OJ;
+        this.referenciasPersonales = data.REFERENCIAS_PERSONALES;
+        this.familiares = data.FAMILIARES;
+        this.pasantiasOJ = data.PASANTIAS;
+        this.experienciaLaboralOJ = data.EXPERIENCIA_LABORAL_OJ;
         this.experienciaLaboral = data.EXPERIENCIA_LABORAL;
 
       });
@@ -505,9 +504,6 @@ export class PerfilwizardComponent implements OnInit {
 
   agregarFamiliar() {
     if (this.thirdFormGroup.value.familiar !== '' && this.thirdFormGroup.value.familiar !== undefined && this.thirdFormGroup.value.familiar !== null) {
-      console.log("familiar nuevo");
-      console.log(this.thirdFormGroup.value.fechaNacFamiliar);
-      console.log(this.thirdFormGroup.value.viveFamiliar);
       this.nuevoFamiliar = {
         nombreFamiliar: this.thirdFormGroup.value.familiar,
         parentesco: this.thirdFormGroup.value.parentesco,
@@ -521,7 +517,6 @@ export class PerfilwizardComponent implements OnInit {
       };
 
       this.familiares.push(this.nuevoFamiliar);
-      console.log(this.familiares);
       this.thirdFormGroup = this.fb.group({
         noHijo: [this.thirdFormGroup.value.noHijo],
         dependientes: [''],
@@ -643,8 +638,6 @@ export class PerfilwizardComponent implements OnInit {
         aniosConocerlo: this.nineFormGroup.value.aniosConocerloReferenciaPersonal,
         telefono: this.nineFormGroup.value.telefonoReferenciaPersonal
       };
-      console.log(this.nuevaReferenciaPersonal);
-      console.log(this.referenciasPersonales);
       this.referenciasPersonales.push(this.nuevaReferenciaPersonal);
       this.nineFormGroup = this.fb.group({
         nombreReferenciaPersonal: [''],
@@ -943,8 +936,7 @@ export class PerfilwizardComponent implements OnInit {
           console.log("res: " + data.msj);
           swal("Perfil Usuario Guardado", data.msj, "success");
         } else {
-          swal("Perfil Usuario Guardado", data.msj, "success");
-          //swal("Error", data.msj, "error")
+          swal("Error", data.msj, "error")
         }
       })
   }
