@@ -18,7 +18,7 @@ export class ConvocatoriasExternasService {
   }
 
   getListaMunicipioConv(depto): Observable<any> {
-    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + 'Convocatorias-Externas/getMunicipios/' + depto )
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + 'Convocatorias-Externas/getMunicipios/' + depto)
       .pipe(
         catchError(this.handleError('getListaMunicipioConv', []))
       );
@@ -74,10 +74,17 @@ export class ConvocatoriasExternasService {
   }
 
   getConvocatorias(): Observable<any> {
-    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + 'Convocatoria/getConvocatorias' )
-    .pipe(
-      catchError(this.handleError('Mostrar Convocatorias', []))
-    );
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + 'Convocatoria/getConvocatorias')
+      .pipe(
+        catchError(this.handleError('Mostrar Convocatorias', []))
+      );
+  }
+
+  getPerfilUsuarioByDPI(dpi): Observable<any> {
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + 'Convocatorias-Externas/getPerfilSolicitudDpi/' + dpi)
+      .pipe(
+        catchError(this.handleError('getPerfilUsuarioByDPI', []))
+      );
   }
 
   constructor(private http: HttpClient, private appSettings: AppconfigService) { }

@@ -8,7 +8,7 @@ import swal from 'sweetalert2';
 import { AuthService } from '../../recursos/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConvocatoriasExternasService } from '../convocatorias-externas.service';
-import { Sexo, TiposLicencia, Discapacidad, Raza, Idioma, Familiar, FamiliarLaborandoOJ, PasantiaOJ, ExperienciaLaboralOJ, ExperienciaLaboral, ReferenciaPersonal } from 'app/constantes';
+import { TiposLicencia, Discapacidad, Idioma, Familiar, FamiliarLaborandoOJ, PasantiaOJ, ExperienciaLaboralOJ, ExperienciaLaboral, ReferenciaPersonal, Sexo } from 'app/constantes';
 @Component({
   selector: 'app-perfilwizard',
   templateUrl: './perfilwizard.component.html',
@@ -16,10 +16,9 @@ import { Sexo, TiposLicencia, Discapacidad, Raza, Idioma, Familiar, FamiliarLabo
 })
 export class PerfilwizardComponent implements OnInit {
   cantidiomas = 0;
-  generos = [];
   tiposLicencias = [];
   discapacidades = [];
-  etnias = [];
+  generos = [];
   floatLabelControl = new FormControl('none');
   floatLabelControl2 = new FormControl('none');
   title = 'newMat';
@@ -166,6 +165,7 @@ export class PerfilwizardComponent implements OnInit {
   tipoRelacionReferenciaPersonal;
   aniosConocerloReferenciaPersonal;
   telefonoReferenciaPersonal;
+  perfilUsuarioExistente;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
@@ -185,10 +185,10 @@ export class PerfilwizardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.generos = Sexo;
     this.tiposLicencias = TiposLicencia;
     this.discapacidades = Discapacidad;
-    this.etnias = Raza;
+    this.generos = Sexo;
+
     this.firstFormGroup = this.fb.group({
       nombres: [localStorage.getItem('nombres'), Validators.required],
       primerApellido: [localStorage.getItem('primerApellido'), Validators.required],
@@ -212,6 +212,7 @@ export class PerfilwizardComponent implements OnInit {
       numeroLicencia: [''],
       discapacidad: ['', Validators.required]
     });
+
     this.secondFormGroup = this.fb.group({
       etnia: ['', Validators.required],
       comunidadLinguistica: ['', Validators.required],
@@ -318,6 +319,107 @@ export class PerfilwizardComponent implements OnInit {
     this.obtenerEtnias();
     this.obtenerIdiomasExtranjeros();
     this.obtenerEstadoCivil();
+
+    this.convocatoriasService.getPerfilUsuarioByDPI(localStorage.getItem('cui')).subscribe(
+      (data: any) => {
+        if (data != null && data != undefined) {
+          this.firstFormGroup.patchValue({
+            nombres: data.NOMBRE,
+            primerApellido: data.PRIMER_APELLIDO,
+            segundoApellido: data.SEGUNDO_APELLIDO,
+            fechaNac: this.datePipe.transform(data.FECHA_NACIMIENTO, 'yyyy-MM-dd'),
+            edad: data.EDAD,
+            sexo: Number(data.SEXO),
+            estadoCivilAspirante: data.ESTADO_CIVIL.toString(),
+            nacionalidad: data.NACIONALIDAD,
+            profesion: data.PROFESION,
+            direccion: data.DIRECCION,
+            selDepartamento: data.DEPARTAMENTO.toString(),
+            selMunicipio: data.MUNICIPIO.toString(),
+            correo: data.CORREO,
+            telefonoCasa: data.TELEFONO_CASA,
+            telefonoCelular: data.TELEFONO_CELULAR,
+            dpi: data.DPI,
+            fechaVencDPI: this.datePipe.transform(data.FECHA_VENC_DPI, 'yyyy-MM-dd'),
+            nit: data.NIT,
+            nombreClase: Number(data.CLASE_LICENCIA),
+            numeroLicencia: data.NUMERO_LICENCIA,
+            discapacidad: Number(data.DISCAPACIDAD)
+          })
+        }
+        this.secondFormGroup.patchValue({
+          etnia: data.ETNIA,
+          comunidadLinguistica: data.COMUNIDAD_LINGUISTICA
+        });
+
+        this.idiomas = data.IDIOMAS;
+
+        this.thirdFormGroup.patchValue({
+          noHijo: data.NO_HIJOS
+        });
+
+        this.fifthFormGroup.patchValue({
+          gradoAprobadoPrimaria: data.GRADO_APRIMARIA,
+          institucionEstudiosPrimaria: data.INSTITUCION_PRIMARIA,
+          constanciaPrimaria: data.CONSTANCIA_PRIMARIA,
+          gradoAprobadoBasicos: data.GRADO_ABASICOS,
+          institucionEstudiosBasicos: data.INSTITUCION_BASICOS,
+          constanciaBasicos: data.CONSTANCIA_BASICOS,
+          gradoAprobadoDiversificado: data.GRADO_ADIVERSIFICADO,
+          institucionEstudiosDiversificado: data.INSTITUCION_DIVERSIFICADO,
+          constanciaDiversificado: data.CONSTANCIA_DIVERSIFICADO,
+          anioGraduacionDiversificado: data.ANIO_GRADUACION_DIVERSIFICADO,
+          carreraDiversificado: data.CARRERA_DIVERSIFICADO,
+          carreraU: data.CARRERA_U,
+          universidad: data.UNIVERSIDAD,
+          constanciaUniversidad: data.CONSTANCIA_UNIVERSIDAD,
+          semestreA: data.SEMESTRE_APROBADO,
+          cierre: data.CIERRE,
+          gradoTecnico: data.GRADUADO_TECNICO,
+          gradoLicenciatura: data.GRADO_LICENCIATURA,
+          colegiado: data.COLEGIADO,
+          vigenciaColegiado: data.VIGENCIA_COLEGIADO,
+          carreraPosgrado: data.CARRERA_POSGRADO,
+          universidadPosgrado: data.UNIVERSIDAD_POSGRADO,
+          constanciaUniversidadPosgrado: data.CONSTANCIA_UNIVERSIDAD_POSGRADO,
+          semestreAprobadoPosgrado: data.SEMESTRE_APROBADO_POSGRADO,
+          cierrePensumPosgrado: [''],
+          graduadoMaestria: [''],
+          graduadoDoctorado: ['']
+        });
+
+        this.familiaresLaborandoOJ = data.FAMILIARES_LABORANDO_OJ;
+        this.referenciasPersonales = data.REFERENCIAS_PERSONALES;
+        console.log(this.familiares);
+
+        data.FAMILIARES.forEach(element => {
+          element.fechaNacimiento = this.datePipe.transform(element.fechaNacimiento, 'yyyy-MM-dd');
+          element.vive = Number(element.vive);
+          element.trabaja = Number(element.trabaja);
+        });
+        this.familiares = data.FAMILIARES;
+
+        data.PASANTIAS.forEach(element => {
+          element.fechaFinalizacion = this.datePipe.transform(element.fechaFinalizacion, 'yyyy-MM-dd');
+          element.fechaInicio = this.datePipe.transform(element.fechaInicio, 'yyyy-MM-dd');
+          element.registrada = Number(element.registrada);
+        });
+        this.pasantiasOJ = data.PASANTIAS;
+
+        data.EXPERIENCIA_LABORAL_OJ.forEach(element => {
+          element.fechaFinalizacion = this.datePipe.transform(element.fechaFinalizacion, 'yyyy-MM-dd');
+          element.fechaInicio = this.datePipe.transform(element.fechaInicio, 'yyyy-MM-dd');
+          element.motivoFinRelacionLaboral = Number(element.motivoFinRelacionLaboral);
+        });
+        this.experienciaLaboralOJ = data.EXPERIENCIA_LABORAL_OJ;
+
+        data.EXPERIENCIA_LABORAL.forEach(element => {
+          element.fechaFinalizacion = this.datePipe.transform(element.fechaFinalizacion, 'yyyy-MM-dd');
+          element.fechaInicio = this.datePipe.transform(element.fechaInicio, 'yyyy-MM-dd');
+        });
+        this.experienciaLaboral = data.EXPERIENCIA_LABORAL;
+
+      });
   }
 
   obtenerDepartamentos() {
@@ -368,7 +470,7 @@ export class PerfilwizardComponent implements OnInit {
 
   obtenerEstadoCivil() {
     this.convocatoriasService
-      .  getListaEstadoCivilConv
+      .getListaEstadoCivilConv
       ()
       .subscribe(
         data => {
@@ -383,7 +485,8 @@ export class PerfilwizardComponent implements OnInit {
         idiomaId: this.secondFormGroup.value.idioma1,
         habla: this.secondFormGroup.value.habla1,
         lee: this.secondFormGroup.value.lee1,
-        escribe: this.secondFormGroup.value.escribe1
+        escribe: this.secondFormGroup.value.escribe1,
+        mostrar: 'T'
       };
       this.idiomas.push(this.nuevoIdioma);
 
@@ -407,7 +510,7 @@ export class PerfilwizardComponent implements OnInit {
       console.log(this.thirdFormGroup.value.viveFamiliar);
       this.nuevoFamiliar = {
         nombreFamiliar: this.thirdFormGroup.value.familiar,
-        parentesco: this.thirdFormGroup.value.parentesco,       
+        parentesco: this.thirdFormGroup.value.parentesco,
         fechaNacimiento: this.parseDate(this.thirdFormGroup.value.fechaNacFamiliar),
         telefono: this.thirdFormGroup.value.telFamiliar,
         vive: this.thirdFormGroup.value.viveFamiliar,
@@ -605,7 +708,7 @@ export class PerfilwizardComponent implements OnInit {
   }
 
 
-   buscarEtnia(id): string {
+  buscarEtnia(id): string {
     if (this.listaEtnias != null && this.listaEtnias.length > 0) {
       let encontrado = this.listaEtnias.find(x => x.ID_ETNIA == id);
       return encontrado != null ? encontrado.ETNIA : '';
@@ -723,7 +826,7 @@ export class PerfilwizardComponent implements OnInit {
 
   parseDate(dateString: any): any {
     if (dateString) {
-      let date = this.datePipe.transform(dateString, 'yyyy-MM-dd', '+0430','en-ES');
+      let date = this.datePipe.transform(dateString, 'yyyy-MM-dd', '+0430', 'en-ES');
       return date;
     } else {
       return null;

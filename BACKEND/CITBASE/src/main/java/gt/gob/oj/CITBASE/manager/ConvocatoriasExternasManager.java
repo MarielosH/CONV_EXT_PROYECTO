@@ -605,6 +605,62 @@ public class ConvocatoriasExternasManager {
 		call.close();
 		conn.close();
 
+		// informacion academica
+		List<Map<String, Object>> infoAcademica = new ArrayList<>();
+		infoAcademica = informacionAcademicaManager.getInformacionAcademica(perfil.ID);
+		System.out.println("INFORMACION ACADEMICA:  ......" + infoAcademica.size() + "\n");
+		for (Map<String, Object> map : infoAcademica) {
+			if (map.get("NIVEL_ACADEMICO").toString().equals("PRIMARIA")) {
+				perfil.NIVEL_APRIMARIA = map.get("NIVEL_ACADEMICO").toString();
+				perfil.GRADO_APRIMARIA = map.get("GRADO_APROBADO").toString();
+				perfil.INSTITUCION_PRIMARIA = map.get("INSTITUCION_ESTUDIO").toString();
+				perfil.CONSTANCIA_PRIMARIA = map.get("CONTANCIA").toString();
+
+			} else if (map.get("NIVEL_ACADEMICO").toString().equals("BASICOS")) {
+				perfil.NIVEL_ABASICOS = map.get("NIVEL_ACADEMICO").toString();
+				perfil.GRADO_ABASICOS = map.get("GRADO_APROBADO").toString();
+				perfil.INSTITUCION_BASICOS = map.get("INSTITUCION_ESTUDIO").toString();
+				perfil.CONSTANCIA_BASICOS = map.get("CONTANCIA").toString();
+
+			} else if (map.get("NIVEL_ACADEMICO").toString().equals("DIVERSIFICADO")) {
+				perfil.NIVEL_ADIVERSIFICADO = map.get("NIVEL_ACADEMICO").toString();
+				perfil.GRADO_ADIVERSIFICADO = map.get("GRADO_APROBADO").toString();
+				perfil.INSTITUCION_DIVERSIFICADO = map.get("INSTITUCION_ESTUDIO").toString();
+				perfil.CONSTANCIA_DIVERSIFICADO = map.get("CONTANCIA").toString();
+				perfil.ANIO_GRADUACION_DIVERSIFICADO = map.get("ANIO_GRADUACION").toString();
+				perfil.CARRERA_DIVERSIFICADO = map.get("CARRERA").toString();
+
+			}
+		}
+
+		// informacion universitaria
+		List<Map<String, Object>> infoUniversitaria = new ArrayList<>();
+		infoUniversitaria = informacionUniversitariaManager.getInformacionUniversitaria(perfil.ID);
+		System.out.println("INFORMACION UNIVERSITARIA:  ......" + infoUniversitaria.size() + "\n");
+		for (Map<String, Object> map : infoUniversitaria) {
+			if (map.get("GRADUADO_MAESTRIA").toString().equals("0")
+					|| map.get("GRADUADO_DOCTORADO").toString().equals("0")) { // si esta graduado de maestria o
+																				// doctorado es de posgrado
+
+				perfil.CARRERA_POSGRADO = map.get("CARRERA").toString();
+				perfil.UNIVERSIDAD_POSGRADO = map.get("UNIVERSIDAD").toString();
+				perfil.CONSTANCIA_UNIVERSIDAD_POSGRADO = map.get("CONSTANCIA").toString();
+				perfil.SEMESTRE_APROBADO_POSGRADO = map.get("SEMESTRE_APROBADO").toString();
+				perfil.GRADUADO_MAESTRIA = map.get("GRADUADO_MAESTRIA").toString();
+				perfil.GRADUADO_DOCTORADO = map.get("GRADUADO_DOCTORADO").toString();
+			} else {
+				perfil.CARRERA_U = map.get("CARRERA").toString();
+				perfil.UNIVERSIDAD = map.get("UNIVERSIDAD").toString();
+				perfil.CONSTANCIA_UNIVERSIDAD = map.get("CONSTANCIA").toString();
+				perfil.SEMESTRE_APROBADO = map.get("SEMESTRE_APROBADO").toString();
+				perfil.CIERRE = map.get("CIERRE_PENSUM").toString();
+				perfil.GRADUADO_TECNICO = map.get("GRADUADO_TECNICO_UNIVERSITARIO").toString();
+				perfil.GRADO_LICENCIATURA = map.get("GRADUADO_LICENCIATURA").toString();
+				perfil.COLEGIADO = map.get("NO_COLEGIADO").toString();
+				perfil.VIGENCIA_COLEGIADO = map.get("VIGENCIA_COLEGIADO").toString();
+			}
+		}
+
 		// detalles
 		System.out.println(" armando detalles  ......" + "idiomas" + "\n");
 		perfil.IDIOMAS = idiomaUsuarioManager.getIdiomasUsuario(perfil.ID);
@@ -666,7 +722,12 @@ public class ConvocatoriasExternasManager {
 			for (int i = 1; i <= meta.getColumnCount(); i++) {
 				String key = meta.getColumnName(i).toString();
 				String value = Objects.toString(rset.getString(key), "");
-				map.put(key, value);
+				if (key.equals("ID_IDIOMA")) {
+					map.put(key, Integer.parseInt(value));
+				} else {
+					map.put(key, value);
+				}
+
 			}
 			salida.add(map);
 		}

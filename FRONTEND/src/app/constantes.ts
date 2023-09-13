@@ -1,8 +1,9 @@
 export interface Idioma {
-    idiomaId: number,
+    idiomaId: string,
     habla: string,
     escribe: string,
-    lee: string
+    lee: string,
+    mostrar: string
 }
 
 export interface Familiar {
@@ -235,32 +236,5 @@ export const Aplicaciones = [
     {
         TITULO: 'Convocatoria Externa No. 006-2022/lcdz',
         ESTADO: 'Aprobada'
-    }
-]
-
-export const Raza = [
-    {
-        ID: 0,
-        DESCRIPCION: 'MAYA'
-    },
-    {
-        ID: 1,
-        DESCRIPCION: 'GARIFUNA'
-    },
-    {
-        ID: 2,
-        DESCRIPCION: 'XINCA'
-    },
-    {
-        ID: 3,
-        DESCRIPCION: 'LADINO O MESTIZO'
-    }, 
-    {
-        ID: 4,
-        DESCRIPCION: 'AFRODESCENDIENTE'
-    },
-    {
-        ID: 5,
-        DESCRIPCION: 'OTRO'
     }
 ]
