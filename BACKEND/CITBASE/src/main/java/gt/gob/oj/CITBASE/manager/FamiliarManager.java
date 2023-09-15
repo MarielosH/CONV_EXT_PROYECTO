@@ -82,7 +82,7 @@ public class FamiliarManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
-		System.out.println("dentro de llamar a insertar familiar usuario ......" + this.SCHEMA + "\n");
+		System.out.println("dentro de llamar a insertar familiar usuario ......" + usuario + "\n");
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE" 
 				+ ".PKG_TC_FAMILIAR.PROC_AGREGAR_TC_FAMILIAR(?,?,?,?,?,?,?,?,?,?,?,?)");
 		call.setString("P_PROFESION", familiar.profesion);
@@ -95,6 +95,8 @@ public class FamiliarManager {
 		call.setInt("P_FK_TC_FAMILIAR_REF_TC_INFORMACION_PERSONAL_USUARIO", usuario);
 		call.setString("P_DEPENDE_ECONOMICAMENTE", familiar.dependeEconomicamente);
 		call.setString("P_NOMBRE", familiar.nombreFamiliar);
+		System.out.println("fecha NAC familiar  ......" + familiar.fechaNacimiento + "\n");
+		System.out.println("profesion  ......" + familiar.profesion + "\n");
 		call.registerOutParameter("P_ID_SALIDA", OracleTypes.NUMBER);
 		call.registerOutParameter("P_MSJ", OracleTypes.VARCHAR);
 		call.execute();
@@ -102,7 +104,7 @@ public class FamiliarManager {
 	    salida.msj = call.getString("p_msj");
 	    if (salida.id > 0)
 	      salida.result = "OK"; 
-		  System. out. println("todo ok......"+this.SCHEMA+"\n");
+		  System. out. println("todo ok familiar ......"+ salida.msj +"\n");
 	    call.close();
 		return salida;
 	}

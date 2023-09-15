@@ -174,7 +174,8 @@ public class ConvocatoriasExternasManager {
 		if (existePerfilSolicitudDpi(perfil.DPI)) {
 			// salida.result = "El usuario ya existe";
 			System.out.println("El usuario ya existe, se va a modificar. ");
-			return ModPerfilSolicitudEmpleo(perfil);
+			PerfilSolicitudEmpleo perfilExistente = getPerfilSolicitudDpi(perfil.DPI);
+			return ModPerfilSolicitudEmpleo(perfil, perfilExistente);
 		}
 
 		ConnectionsPool c = new ConnectionsPool();
@@ -206,7 +207,7 @@ public class ConvocatoriasExternasManager {
 		call.setString("P_NIT", perfil.NIT);
 		call.setString("P_NUMERO_LICENCIA", perfil.NUMERO_LICENCIA);
 		call.setString("P_CLASE_LICENCIA", perfil.CLASE_LICENCIA);
-		call.setString("P_FECHA_VENCIMIENTO_LICENCIA", perfil.FECHA_VENC_DPI);
+		call.setString("P_FECHA_VENCIMIENTO_LICENCIA", perfil.FECHA_VENC_LICENCIA);
 		call.setInt("P_DOSIS_VACUNAS_COVID", 2);
 		call.setInt("P_ID_TIPO_VACUNA_COVID", 1);
 		call.setInt("P_ID_DISCAPACIDAD", Integer.parseInt(perfil.DISCAPACIDAD));
@@ -273,124 +274,211 @@ public class ConvocatoriasExternasManager {
 
 	}
 
-	public jsonResult ModPerfilSolicitudEmpleo(PerfilSolicitudEmpleo perfil) throws Exception {
+	public jsonResult ModPerfilSolicitudEmpleo(PerfilSolicitudEmpleo perfil, PerfilSolicitudEmpleo perfilExistente)
+			throws Exception {
 		// verificar existencia de usuario por dpi
 		jsonResult salida = new jsonResult();
-		PerfilSolicitudEmpleo perfilExistente = getPerfilSolicitudDpi(perfil.DPI);
-		// System.out.println("dentro get usuario ......" + perfilExistente.get(0) +
-		// "\n");
-
-		Integer idUsuario = perfilExistente.ID;
-		System.out.println("ID PERFIL USUARIO ......" + idUsuario + "\n");
+		System.out.println("ID PERFIL USUARIO EN MOD  ......" + perfilExistente.ID + "\n");
 
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 
-		// usuario nuevo
-		if (perfilExistente != null) {
-			System.out.println("dentro de llamar a insertar perfil usuario ......" + this.SCHEMA + "\n");
-			CallableStatement call = conn.prepareCall("call " + this.SCHEMA
-					+ ".PKG_TC_INFORMACION_PERSONAL_USUARIO.PROC_ACTUALIZAR_TC_INFORMACION_PERSONAL_USUARIO (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-			call.setInt("P_ID_INFORMACION_PERSONAL_USUARIO", idUsuario);
-			call.setString("P_NOMBRE", perfil.NOMBRE);
-			call.setString("P_PRIMER_APELLIDO", perfil.PRIMER_APELLIDO);
-			call.setString("P_SEGUNDO_APELLIDO", perfil.SEGUNDO_APELLIDO);
-			call.setString("P_FECHA_NACIMIENTO", perfil.FECHA_NACIMIENTO);
-			call.setInt("P_EDAD", perfil.EDAD);
-			call.setString("P_SEXO", perfil.SEXO);
-			call.setString("P_PROFESION", perfil.PROFESION);
-			call.setInt("P_ID_ESTADO_CIVIL", perfil.ESTADO_CIVIL);
-			call.setString("P_NACIONALIDAD", perfil.NACIONALIDAD);
-			call.setString("P_DIRECCION", perfil.DIRECCION);
-			call.setInt("P_ID_MUNICIPIO", perfil.MUNICIPIO);
-			call.setInt("P_ID_DEPARTAMENTO", perfil.DEPARTAMENTO);
-			call.setString("P_CORREO", perfil.CORREO);
-			call.setString("P_TELEFONO_CASA", perfil.TELEFONO_CASA);
-			call.setString("P_TELEFONO_CELULAR", perfil.TELEFONO_CELULAR);
-			call.setString("P_DPI", perfil.DPI);
-			call.setString("P_FECHA_VENCIMIENTO_DPI", perfil.FECHA_VENC_DPI);
-			call.setString("P_NIT", perfil.NIT);
-			call.setString("P_NUMERO_LICENCIA", perfil.NUMERO_LICENCIA);
-			call.setString("P_CLASE_LICENCIA", perfil.CLASE_LICENCIA);
-			call.setString("P_FECHA_VENCIMIENTO_LICENCIA", perfil.FECHA_VENC_DPI);
-			call.setInt("P_DOSIS_VACUNAS_COVID", 2);
-			call.setInt("P_ID_TIPO_VACUNA_COVID", 1);
-			call.setInt("P_ID_DISCAPACIDAD", Integer.parseInt(perfil.DISCAPACIDAD));
-			call.setInt("P_FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_ESTADO_CIVIL", perfil.ESTADO_CIVIL);
-			call.setString("P_FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_ETNIA", perfil.ETNIA);
-			call.setString("P_FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_COMUNIDAD_LINGUISTICA",
-					perfil.COMUNIDAD_LINGUISTICA);
-			call.setInt("P_NO_HIJO", perfil.NO_HIJOS);
-			call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
-			call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
-			call.execute();
-			salida.id = call.getInt("p_id_salida");
-			salida.msj = call.getString("p_msj");
-			if (salida.id > 0)
-				salida.result = "OK";
-			System.out.println("todo ok actualizar perfil usuario......" + this.SCHEMA + "\n");
-			call.close();
+		System.out.println("dentro de llamar a modificar perfil usuario ......" + this.SCHEMA + "\n");
+		CallableStatement call = conn.prepareCall("call " + this.SCHEMA
+				+ ".PKG_TC_INFORMACION_PERSONAL_USUARIO.PROC_ACTUALIZAR_TC_INFORMACION_PERSONAL_USUARIO (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+		call.setInt("P_ID_INFORMACION_PERSONAL_USUARIO", perfilExistente.ID);
+		call.setString("P_NOMBRE", perfil.NOMBRE);
+		call.setString("P_PRIMER_APELLIDO", perfil.PRIMER_APELLIDO);
+		call.setString("P_SEGUNDO_APELLIDO", perfil.SEGUNDO_APELLIDO);
+		call.setString("P_FECHA_NACIMIENTO", perfil.FECHA_NACIMIENTO);
+		call.setInt("P_EDAD", perfil.EDAD);
+		call.setString("P_SEXO", perfil.SEXO);
+		call.setString("P_PROFESION", perfil.PROFESION);
+		call.setInt("P_ID_ESTADO_CIVIL", perfil.ESTADO_CIVIL);
+		call.setString("P_NACIONALIDAD", perfil.NACIONALIDAD);
+		call.setString("P_DIRECCION", perfil.DIRECCION);
+		call.setInt("P_ID_MUNICIPIO", perfil.MUNICIPIO);
+		call.setInt("P_ID_DEPARTAMENTO", perfil.DEPARTAMENTO);
+		call.setString("P_CORREO", perfil.CORREO);
+		call.setString("P_TELEFONO_CASA", perfil.TELEFONO_CASA);
+		call.setString("P_TELEFONO_CELULAR", perfil.TELEFONO_CELULAR);
+		call.setString("P_DPI", perfil.DPI);
+		call.setString("P_FECHA_VENCIMIENTO_DPI", perfil.FECHA_VENC_DPI);
+		call.setString("P_NIT", perfil.NIT);
+		call.setString("P_NUMERO_LICENCIA", perfil.NUMERO_LICENCIA);
+		call.setString("P_CLASE_LICENCIA", perfil.CLASE_LICENCIA);
+		call.setString("P_FECHA_VENCIMIENTO_LICENCIA", perfil.FECHA_VENC_LICENCIA);
+		call.setInt("P_DOSIS_VACUNAS_COVID", 2);
+		call.setInt("P_ID_TIPO_VACUNA_COVID", 1);
+		call.setInt("P_ID_DISCAPACIDAD", Integer.parseInt(perfil.DISCAPACIDAD));
+		call.setInt("P_FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_ESTADO_CIVIL", perfil.ESTADO_CIVIL);
+		call.setString("P_FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_ETNIA", perfil.ETNIA);
+		call.setString("P_FK_TC_INFORMACION_PERSONAL_USUARIO_REF_TC_COMUNIDAD_LINGUISTICA",
+				perfil.COMUNIDAD_LINGUISTICA);
+		call.setInt("P_NO_HIJO", perfil.NO_HIJOS);
+		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
+		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
+		call.execute();
+		salida.id = call.getInt("p_id_salida");
+		salida.msj = call.getString("p_msj");
+		if (salida.id > 0)
+			salida.result = "OK";
+		System.out.println("todo ok actualizar perfil usuario......" + this.SCHEMA + "\n");
+		call.close();
 
-			// actualizar idioma usuario
-
-			/*
-			 * List<Map<String, Object>> idiomasUsuario =
-			 * idiomaUsuarioManager.getIdiomasUsuario(idUsuario); if (idiomasUsuario.size()
-			 * == perfil.IDIOMAS.size()) { for (IdiomasPerfilSE idioma : perfil.IDIOMAS) {
-			 * idiomaUsuarioManager.modIdiomaUsuario(idioma, idUsuario, idUsuario); } } else
-			 * if(idiomasUsuario.size() > perfil.IDIOMAS.size() ) { //si hay mas significa
-			 * que se eliminino uno
-			 * 
-			 * } else if( perfil.IDIOMAS.size() > idiomasUsuario.size() ) {
-			 * 
-			 * }
-			 */
-
-			// insertar idioma usuario
-
-			for (IdiomasPerfilSE idioma : perfil.IDIOMAS) {
-				idiomaUsuarioManager.inIdiomaUsuario(idioma, idioma.idiomaId, idUsuario);
-				// IdiomasPerfilSE encontrado = idiomasUsuario.stream().filter(x->
-				// x.get(idiomasUsuario));
+		// actualizar idioma usuario
+		for (IdiomasPerfilSE idioma : perfil.IDIOMAS) {
+			if (perfilExistente.IDIOMAS.stream().filter(actual -> actual.idiomaId.equals(idioma.idiomaId)).findFirst()
+					.orElse(null) != null) {
+				System.out.println("encontró un idioma igual en el perfil existente ......" + idioma.idiomaId + "\n");
+				idiomaUsuarioManager.modIdiomaUsuario(idioma, idioma.idiomaId, perfilExistente.ID);
+			} else {
+				System.out
+						.println("No encontró un idioma igual en el perfil existente ......" + idioma.idiomaId + "\n");
+				idiomaUsuarioManager.inIdiomaUsuario(idioma, idioma.idiomaId, perfilExistente.ID);
 			}
-
-			// actualizar familiar
-			for (FamiliaPerfilSE familiar : perfil.FAMILIARES) {
-				familiarManager.modFamiliar(familiar, idUsuario);
-			}
-
-			// actualizar familiares laborando OJ
-			for (FamiliaresLaborandoOJ familiarLaborandoOJ : perfil.FAMILIARES_LABORANDO_OJ) {
-				familiarLaborandoManager.modFamiliarLaborandoOJ(familiarLaborandoOJ, idUsuario);
-			}
-
-			// actualizar pasantias
-			for (PasantiasOJ pasantia : perfil.PASANTIAS) {
-				pasantiaManager.modPasantiaOJ(pasantia, idUsuario);
-			}
-
-			// actualizar experiencia laboral
-			for (ExperienciaLaboral experiencia : perfil.EXPERIENCIA_LABORAL) {
-				experienciaLaboralManager.modExperienciaLaboral(experiencia, idUsuario);
-			}
-
-			// actualizar experiencia laboral OJ
-			for (ExperienciaLaboralOJ experiencia : perfil.EXPERIENCIA_LABORAL_OJ) {
-				experienciaLaboralOJManager.modExperienciaLaboralOJ(experiencia, idUsuario);
-			}
-
-			// actualizar referencias personales
-			for (ReferenciasPersonales referencia : perfil.REFERENCIAS_PERSONALES) {
-				referenciaPersonalManager.modReferenciaPersonal(referencia, idUsuario);
-			}
-
 		}
+
+		// actualizar familiares
+		for (FamiliaPerfilSE familiar : perfil.FAMILIARES) {
+			if (perfilExistente.FAMILIARES.stream().filter(fam -> fam.nombreFamiliar.equals(familiar.nombreFamiliar))
+					.findFirst().orElse(null) != null) {
+				System.out.println(
+						"encontró un familiar igual en el perfil existente ......" + familiar.nombreFamiliar + "\n");
+				familiarManager.modFamiliar(familiar, perfilExistente.ID);
+			} else {
+				System.out.println(
+						"No encontró un familiar igual en el perfil existente ......" + familiar.nombreFamiliar + "\n");
+				familiarManager.inFamiliar(familiar, perfilExistente.ID);
+			}
+		}
+
+		// actualizar familiares laborando OJ
+		for (FamiliaresLaborandoOJ familiarLaborandoOJ : perfil.FAMILIARES_LABORANDO_OJ) {
+			if (perfilExistente.FAMILIARES_LABORANDO_OJ.stream()
+					.filter(fam -> fam.nombreCompleto.equals(familiarLaborandoOJ.nombreCompleto)).findFirst()
+					.orElse(null) != null) {
+				System.out.println("encontró un familiar laborando OJ igual en el perfil existente ......"
+						+ familiarLaborandoOJ.nombreCompleto + "\n");
+				familiarLaborandoManager.modFamiliarLaborandoOJ(familiarLaborandoOJ, perfilExistente.ID);
+			} else {
+				System.out.println("No encontró un familiar laborando OJ igual en el perfil existente ......"
+						+ familiarLaborandoOJ.nombreCompleto + "\n");
+				familiarLaborandoManager.inFamiliarLaborandoOJ(familiarLaborandoOJ, perfilExistente.ID);
+			}
+		}
+
+		// actualizar pasantias
+		for (PasantiasOJ pasantia : perfil.PASANTIAS) {
+			if (perfilExistente.PASANTIAS.stream()
+					.filter(actual -> (actual.dependencia.equals(pasantia.dependencia)
+							&& actual.secretarioJuez.equals(pasantia.secretarioJuez)))
+					.findFirst().orElse(null) != null) {
+				System.out.println(
+						"encontró una pasantia igual en el perfil existente ......" + pasantia.dependencia + "\n");
+				pasantiaManager.modPasantiaOJ(pasantia, perfilExistente.ID);
+			} else {
+				System.out.println(
+						"No encontró una pasantia igual en el perfil existente ......" + pasantia.dependencia + "\n");
+				pasantiaManager.inPasantiaOJ(pasantia, perfilExistente.ID);
+			}
+		}
+
+		// actualizar experiencia laboral
+		for (ExperienciaLaboral experiencia : perfil.EXPERIENCIA_LABORAL) {
+			if (perfilExistente.EXPERIENCIA_LABORAL.stream()
+					.filter(actual -> (actual.institucionEmpresa.equals(experiencia.institucionEmpresa)
+							&& actual.jefeInmediato.equals(experiencia.jefeInmediato)
+							&& actual.puesto.equals(experiencia.puesto)))
+					.findFirst().orElse(null) != null) {
+				System.out.println("encontró una experiencia laboral igual en el perfil existente ......"
+						+ experiencia.institucionEmpresa + "\n");
+				experienciaLaboralManager.modExperienciaLaboral(experiencia, perfilExistente.ID);
+			} else {
+				System.out.println("No encontró una experiencia laboral igual en el perfil existente ......"
+						+ experiencia.institucionEmpresa + "\n");
+				experienciaLaboralManager.inExperienciaLaboral(experiencia, perfilExistente.ID);
+			}
+		}
+
+		// actualizar experiencia laboral OJ
+		for (ExperienciaLaboralOJ experiencia : perfil.EXPERIENCIA_LABORAL_OJ) {
+			if (perfilExistente.EXPERIENCIA_LABORAL_OJ.stream()
+					.filter(actual -> (actual.dependencia.equals(experiencia.dependencia)
+							&& actual.jefeInmediato.equals(experiencia.jefeInmediato)
+							&& actual.motivoFinRelacionLaboral.equals(experiencia.motivoFinRelacionLaboral)))
+					.findFirst().orElse(null) != null) {
+				System.out.println("encontró una experiencia laboral OJ igual en el perfil existente ......"
+						+ experiencia.dependencia + "\n");
+				experienciaLaboralOJManager.modExperienciaLaboralOJ(experiencia, perfilExistente.ID);
+			} else {
+				System.out.println("No encontró una experiencia laboral OJ igual en el perfil existente ......"
+						+ experiencia.dependencia + "\n");
+				experienciaLaboralOJManager.inExperienciaLaboralOJ(experiencia, perfilExistente.ID);
+			}
+		}
+
+		// actualizar referencias personales
+		for (ReferenciasPersonales referencia : perfil.REFERENCIAS_PERSONALES) {
+			if (perfilExistente.REFERENCIAS_PERSONALES.stream()
+					.filter(actual -> actual.nombre.equals(referencia.nombre)).findFirst().orElse(null) != null) {
+				System.out.println("encontró una referencia personal igual en el perfil existente ......"
+						+ referencia.nombre + "\n");
+				referenciaPersonalManager.modReferenciaPersonal(referencia, perfilExistente.ID);
+			} else {
+				System.out.println("No encontró una referencia personal igual en el perfil existente ......"
+						+ referencia.nombre + "\n");
+				referenciaPersonalManager.inReferenciaPersonal(referencia, perfilExistente.ID);
+			}
+		}
+
+		// actualizar informacion academica
+		modificarInformacionAcademicaPerfil(perfil, salida.id);
+
+		// actualizar informacion universitaria
+		modificarInformacionUniversitariaPerfil(perfil, salida.id);
 
 		salida.result = "OK";
 		return salida;
 
 	}
 
+	public void modificarInformacionAcademicaPerfil(PerfilSolicitudEmpleo perfil, Integer usuario) throws Exception {
+
+		List<InformacionAcademica> listaInfoAcademica = new ArrayList<InformacionAcademica>();
+		if (!perfil.NIVEL_APRIMARIA.equals("") && !perfil.GRADO_APRIMARIA.equals("")) {
+			InformacionAcademica nivelPrimario = new InformacionAcademica();
+			nivelPrimario.nivelAcademico = perfil.NIVEL_APRIMARIA;
+			nivelPrimario.gradoAprobado = perfil.GRADO_APRIMARIA;
+			nivelPrimario.institucionEstudio = perfil.INSTITUCION_PRIMARIA;
+			nivelPrimario.constancia = perfil.CONSTANCIA_PRIMARIA;
+			listaInfoAcademica.add(nivelPrimario);
+		}
+		if (!perfil.NIVEL_ABASICOS.equals("") && !perfil.GRADO_ABASICOS.equals("")) {
+			InformacionAcademica nivelBasico = new InformacionAcademica();
+			nivelBasico.nivelAcademico = perfil.NIVEL_ABASICOS;
+			nivelBasico.gradoAprobado = perfil.GRADO_ABASICOS;
+			nivelBasico.institucionEstudio = perfil.INSTITUCION_BASICOS;
+			nivelBasico.constancia = perfil.CONSTANCIA_BASICOS;
+			listaInfoAcademica.add(nivelBasico);
+		}
+		if (!perfil.NIVEL_ADIVERSIFICADO.equals("") && !perfil.GRADO_ADIVERSIFICADO.equals("")) {
+			InformacionAcademica nivelDiversificado = new InformacionAcademica();
+			nivelDiversificado.nivelAcademico = perfil.NIVEL_ADIVERSIFICADO;
+			nivelDiversificado.gradoAprobado = perfil.GRADO_ADIVERSIFICADO;
+			nivelDiversificado.institucionEstudio = perfil.INSTITUCION_DIVERSIFICADO;
+			nivelDiversificado.constancia = perfil.CONSTANCIA_DIVERSIFICADO;
+			nivelDiversificado.anioGraduacion = perfil.ANIO_GRADUACION_DIVERSIFICADO;
+			nivelDiversificado.carrera = perfil.CARRERA_DIVERSIFICADO;
+			listaInfoAcademica.add(nivelDiversificado);
+		}
+
+		for (InformacionAcademica info : listaInfoAcademica) {
+			System.out.println("Dentro de armar lista informacion académica  ......" + "\n");
+			informacionAcademicaManager.modInformacionAcademica(info, usuario);
+		}
+	}
+	
 	public void insertarInformacionAcademicaPerfil(PerfilSolicitudEmpleo perfil, Integer usuario) throws Exception {
 
 		List<InformacionAcademica> listaInfoAcademica = new ArrayList<InformacionAcademica>();
@@ -483,6 +571,40 @@ public class ConvocatoriasExternasManager {
 		}
 	}
 
+	public void modificarInformacionUniversitariaPerfil(PerfilSolicitudEmpleo perfil, Integer usuario) throws Exception {
+
+		List<InformacionUniversitaria> listaInfoUniversitaria = new ArrayList<InformacionUniversitaria>();
+
+		if (!perfil.CARRERA_U.equals("") && !perfil.UNIVERSIDAD.equals("")) {
+			InformacionUniversitaria carreraU = new InformacionUniversitaria();
+			carreraU.carrera = perfil.CARRERA_U;
+			carreraU.universidad = perfil.UNIVERSIDAD;
+			carreraU.constancia = perfil.CONSTANCIA_UNIVERSIDAD;
+			carreraU.semestreAprobado = perfil.SEMESTRE_APROBADO;
+			carreraU.cierrePensum = perfil.CIERRE;
+			carreraU.graduadoTecnicoUniversitario = perfil.GRADUADO_TECNICO;
+			carreraU.graduadoLicenciatura = perfil.GRADO_LICENCIATURA;
+			carreraU.noColegiado = perfil.COLEGIADO;
+			carreraU.vigenciaColegiado = perfil.VIGENCIA_COLEGIADO;
+			listaInfoUniversitaria.add(carreraU);
+		}
+		if (!perfil.CARRERA_POSGRADO.equals("") && !perfil.UNIVERSIDAD_POSGRADO.equals("")) {
+			InformacionUniversitaria posgrado = new InformacionUniversitaria();
+			posgrado.carrera = perfil.CARRERA_POSGRADO;
+			posgrado.universidad = perfil.UNIVERSIDAD_POSGRADO;
+			posgrado.constancia = perfil.CONSTANCIA_UNIVERSIDAD_POSGRADO;
+			posgrado.semestreAprobado = perfil.SEMESTRE_APROBADO_POSGRADO;
+			posgrado.cierrePensum = perfil.GRADUADO_MAESTRIA;
+			posgrado.graduadoDoctorado = perfil.GRADUADO_DOCTORADO;
+			listaInfoUniversitaria.add(posgrado);
+		}
+
+		for (InformacionUniversitaria info : listaInfoUniversitaria) {
+			System.out.println("Dentro de armar lista informacion universitaria ......" + "\n");
+			informacionUniversitariaManager.modInformacionUniversitaria(info, usuario);
+		}
+	}
+
 	public PerfilSolicitudEmpleo getPerfilSolicitudDpi(String dpi) throws Exception {
 
 		ConnectionsPool c = new ConnectionsPool();
@@ -524,7 +646,6 @@ public class ConvocatoriasExternasManager {
 					perfil.NOMBRE = value;
 					break;
 				case "PRIMER_APELLIDO":
-					System.out.println("PRIMER_APELLIDO:  ......" + value + "\n");
 					perfil.PRIMER_APELLIDO = value;
 					break;
 				case "SEGUNDO_APELLIDO":
@@ -538,7 +659,6 @@ public class ConvocatoriasExternasManager {
 					break;
 				case "SEXO":
 					perfil.SEXO = value;
-					System.out.println("SEXO:  ......" + value + "\n");
 					break;
 				case "PROFESION":
 					perfil.PROFESION = value;
@@ -571,7 +691,6 @@ public class ConvocatoriasExternasManager {
 					perfil.DPI = value;
 					break;
 				case "FECHA_VENCIMIENTO_DPI":
-					System.out.println("FECHA_VENCIMIENTO_DPI:  ......" + value + "\n");
 					perfil.FECHA_VENC_DPI = value;
 					break;
 				case "NIT":
@@ -581,6 +700,9 @@ public class ConvocatoriasExternasManager {
 					break;
 				case "CLASE_LICENCIA":
 					perfil.CLASE_LICENCIA = value;
+					break;
+				case "FECHA_VENCIMIENTO_LICENCIA":
+					perfil.FECHA_VENC_LICENCIA = value;
 					break;
 				case "ID_DISCAPACIDAD":
 					perfil.DISCAPACIDAD = value;

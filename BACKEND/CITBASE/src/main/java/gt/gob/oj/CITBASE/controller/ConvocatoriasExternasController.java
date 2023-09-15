@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 
 import gt.gob.oj.CITBASE.manager.ConvocatoriasExternasManager;
 import gt.gob.oj.CITBASE.manager.LoginManager;
+import gt.gob.oj.CITBASE.model.ExperienciaLaboralOJ;
 import gt.gob.oj.CITBASE.model.PerfilSolicitudEmpleo;
 import gt.gob.oj.CITBASE.model.Usuario;
 import gt.gob.oj.utils.jsonResult;
@@ -82,7 +83,7 @@ public class ConvocatoriasExternasController {
 			return Response.ok(new jsonResult(-1, "Error", e.getMessage())).build();
 		}
 	}
-	
+		
 	@GET
 	@Path("/getPerfilSolicitudDpi/{dpi}")
 	@Produces("application/json")

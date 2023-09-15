@@ -26,6 +26,7 @@ public class PerfilSolicitudEmpleo {
 	public String NIT;
 	public String NUMERO_LICENCIA;
 	public String CLASE_LICENCIA;
+	public String FECHA_VENC_LICENCIA;
 	public String DISCAPACIDAD;
 	public String ETNIA;
 	public String COMUNIDAD_LINGUISTICA;
