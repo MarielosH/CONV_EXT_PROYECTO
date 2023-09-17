@@ -22,8 +22,6 @@ export class ListaConvocatoriasAspirantesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
     
-  dependencia: FormGroup;
-  floatLabelControl = new FormControl('never');
   dependencias;
   idEstado=1;
   session;
@@ -43,12 +41,6 @@ export class ListaConvocatoriasAspirantesComponent implements OnInit {
       }
 
   ngOnInit() {
-    
-    this.dependencia = this.fb.group({
-      floatLabel: this.floatLabelControl,
-      busqueda: [''],      
-      selEstados: ['']      
-    });
     
     this.route.params.subscribe(
       (params: Params) => {
@@ -70,16 +62,7 @@ export class ListaConvocatoriasAspirantesComponent implements OnInit {
    }
   } 
 
-  loadDependencias(){/*
-    this.mantenimientoDependenciaService.getDepedenciasComplementos().subscribe(
-      data => {
-        if(data.length>0){
-        this.dependencias = data;
-      }else{ 
-          //swal("Dependencias Nominales", "No se han encontrado dependencias", "info")
-        }
-       
-      });*/
+  loadDependencias(){
       this.dependencias = Convocatorias;
       this.dataSource = new MatTableDataSource(this.dependencias);
       this.dataSource.paginator = this.paginator;
