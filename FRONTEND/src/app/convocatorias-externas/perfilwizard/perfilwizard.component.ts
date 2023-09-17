@@ -57,6 +57,7 @@ export class PerfilwizardComponent implements OnInit {
   telefonoCasa;
   telefonoCelular;
   fechaVencDPI;
+  fechaVencLicencia;
   nit;
   nombreClase;
   numeroLicencia;
@@ -207,6 +208,7 @@ export class PerfilwizardComponent implements OnInit {
       telefonoCelular: ['', Validators.required],
       dpi: [localStorage.getItem('cui'), Validators.required],
       fechaVencDPI: ['', Validators.required],
+      fechaVencLicencia : [''],
       nit: ['', Validators.required],
       nombreClase: ['', Validators.required],
       numeroLicencia: [''],
@@ -341,6 +343,7 @@ export class PerfilwizardComponent implements OnInit {
             telefonoCelular: (data.TELEFONO_CELULAR != undefined && data.TELEFONO_CELULAR != null) ? data.TELEFONO_CELULAR : '',
             dpi: (data.DPI != undefined && data.DPI != null) ? data.DPI : '',
             fechaVencDPI: (data.FECHA_VENC_DPI != undefined && data.FECHA_VENC_DPI != null) ? this.datePipe.transform(data.FECHA_VENC_DPI, 'yyyy-MM-dd') : '',
+            fechaVencLicencia: (data.FECHA_VENC_LICENCIA != undefined && data.FECHA_VENC_LICENCIA != null) ? this.datePipe.transform(data.FECHA_VENC_LICENCIA, 'yyyy-MM-dd') : '',
             nit: (data.NIT != undefined && data.NIT != null) ? data.NIT : '',
             nombreClase: (data.CLASE_LICENCIA != undefined && data.CLASE_LICENCIA != null) ? Number(data.CLASE_LICENCIA) : '',
             numeroLicencia: (data.NUMERO_LICENCIA != undefined && data.NUMERO_LICENCIA != null) ? data.NUMERO_LICENCIA : '',
@@ -375,7 +378,7 @@ export class PerfilwizardComponent implements OnInit {
           constanciaUniversidad: (data.CONSTANCIA_UNIVERSIDAD != undefined && data.CONSTANCIA_UNIVERSIDAD != null) ? data.CONSTANCIA_UNIVERSIDAD : '',
           semestreA: (data.SEMESTRE_APROBADO != undefined && data.SEMESTRE_APROBADO != null) ? data.SEMESTRE_APROBADO : '',
           cierre: (data.CIERRE != undefined && data.CIERRE != null) ? Number(data.CIERRE) : '',
-          gradoTecnico: (data.GRADUADO_TECNICO != undefined && data.GRADUADO_TECNICO != null) ? Number(data.GRADUADO_TECNICO) : '',
+          graduadoTecnico: (data.GRADUADO_TECNICO != undefined && data.GRADUADO_TECNICO != null) ? Number(data.GRADUADO_TECNICO) : '',
           gradoLicenciatura: (data.GRADO_LICENCIATURA != undefined && data.GRADO_LICENCIATURA != null) ? Number(data.GRADO_LICENCIATURA) : '',
           colegiado: (data.COLEGIADO != undefined && data.COLEGIADO != null) ? data.COLEGIADO : '',
           vigenciaColegiado: (data.VIGENCIA_COLEGIADO != undefined && data.VIGENCIA_COLEGIADO != null) ? this.datePipe.transform(data.VIGENCIA_COLEGIADO, 'yyyy-MM-dd') : '',
@@ -876,6 +879,7 @@ export class PerfilwizardComponent implements OnInit {
       TELEFONO_CELULAR: this.firstFormGroup.value.telefonoCelular,
       DPI: this.firstFormGroup.value.dpi,
       FECHA_VENC_DPI: this.parseDate(this.firstFormGroup.value.fechaVencDPI),
+      FECHA_VENC_LICENCIA : this.parseDate(this.firstFormGroup.value.fechaVencLicencia),
       NIT: this.firstFormGroup.value.nit,
       CLASE_LICENCIA: this.firstFormGroup.value.nombreClase,
       NUMERO_LICENCIA: this.firstFormGroup.value.numeroLicencia,
@@ -902,7 +906,7 @@ export class PerfilwizardComponent implements OnInit {
       CONSTANCIA_UNIVERSIDAD: this.fifthFormGroup.value.constanciaUniversidad.toUpperCase(),
       SEMESTRE_APROBADO: this.fifthFormGroup.value.semestreA.toUpperCase(),
       CIERRE: this.fifthFormGroup.value.cierre,
-      GRADO_TECNICO: this.fifthFormGroup.value.gradoTecnico.toUpperCase(),
+      GRADO_TECNICO: this.fifthFormGroup.value.gradoTecnico,
       GRADUADO_TECNICO: this.fifthFormGroup.value.graduadoTecnico,
       GRADO_LICENCIATURA: this.fifthFormGroup.value.gradoLicenciatura,
       COLEGIADO: this.fifthFormGroup.value.colegiado,

@@ -1,6 +1,7 @@
 package gt.gob.oj.CITBASE.model;
 
 public class PasantiasOJ {
+	public Integer id;
 	public String dependencia;
 	public String fechaInicio;
 	public String fechaFinalizacion;

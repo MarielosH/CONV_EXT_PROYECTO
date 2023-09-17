@@ -67,6 +67,9 @@ public class ExperienciaLaboralManager {
 				String key = meta.getColumnName(i).toString();
 				String value = Objects.toString(rset.getString(key), "");
 				switch (key) {
+				case "ID_EXPERIENCIA_LABORAL":
+					nuevaExperiencia.id = Integer.parseInt(value);
+					break;
 				case "INSTITUCION_EMPRESA":
 					nuevaExperiencia.institucionEmpresa = value;
 					break;

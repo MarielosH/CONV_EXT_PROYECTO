@@ -330,11 +330,8 @@ public class ConvocatoriasExternasManager {
 		for (IdiomasPerfilSE idioma : perfil.IDIOMAS) {
 			if (perfilExistente.IDIOMAS.stream().filter(actual -> actual.idiomaId.equals(idioma.idiomaId)).findFirst()
 					.orElse(null) != null) {
-				System.out.println("encontró un idioma igual en el perfil existente ......" + idioma.idiomaId + "\n");
 				idiomaUsuarioManager.modIdiomaUsuario(idioma, idioma.idiomaId, perfilExistente.ID);
 			} else {
-				System.out
-						.println("No encontró un idioma igual en el perfil existente ......" + idioma.idiomaId + "\n");
 				idiomaUsuarioManager.inIdiomaUsuario(idioma, idioma.idiomaId, perfilExistente.ID);
 			}
 		}
@@ -343,12 +340,8 @@ public class ConvocatoriasExternasManager {
 		for (FamiliaPerfilSE familiar : perfil.FAMILIARES) {
 			if (perfilExistente.FAMILIARES.stream().filter(fam -> fam.nombreFamiliar.equals(familiar.nombreFamiliar))
 					.findFirst().orElse(null) != null) {
-				System.out.println(
-						"encontró un familiar igual en el perfil existente ......" + familiar.nombreFamiliar + "\n");
-				familiarManager.modFamiliar(familiar, perfilExistente.ID);
+				familiarManager.modFamiliar(familiar, familiar.id);
 			} else {
-				System.out.println(
-						"No encontró un familiar igual en el perfil existente ......" + familiar.nombreFamiliar + "\n");
 				familiarManager.inFamiliar(familiar, perfilExistente.ID);
 			}
 		}
@@ -358,12 +351,10 @@ public class ConvocatoriasExternasManager {
 			if (perfilExistente.FAMILIARES_LABORANDO_OJ.stream()
 					.filter(fam -> fam.nombreCompleto.equals(familiarLaborandoOJ.nombreCompleto)).findFirst()
 					.orElse(null) != null) {
-				System.out.println("encontró un familiar laborando OJ igual en el perfil existente ......"
-						+ familiarLaborandoOJ.nombreCompleto + "\n");
-				familiarLaborandoManager.modFamiliarLaborandoOJ(familiarLaborandoOJ, perfilExistente.ID);
+				familiarLaborandoManager.modFamiliarLaborandoOJ(familiarLaborandoOJ, familiarLaborandoOJ.id);
 			} else {
-				System.out.println("No encontró un familiar laborando OJ igual en el perfil existente ......"
-						+ familiarLaborandoOJ.nombreCompleto + "\n");
+				//System.out.println("No encontró un familiar laborando OJ igual en el perfil existente ......"
+					//	+ familiarLaborandoOJ.nombreCompleto + "\n");
 				familiarLaborandoManager.inFamiliarLaborandoOJ(familiarLaborandoOJ, perfilExistente.ID);
 			}
 		}
@@ -374,12 +365,10 @@ public class ConvocatoriasExternasManager {
 					.filter(actual -> (actual.dependencia.equals(pasantia.dependencia)
 							&& actual.secretarioJuez.equals(pasantia.secretarioJuez)))
 					.findFirst().orElse(null) != null) {
-				System.out.println(
-						"encontró una pasantia igual en el perfil existente ......" + pasantia.dependencia + "\n");
-				pasantiaManager.modPasantiaOJ(pasantia, perfilExistente.ID);
+				pasantiaManager.modPasantiaOJ(pasantia, pasantia.id);
 			} else {
-				System.out.println(
-						"No encontró una pasantia igual en el perfil existente ......" + pasantia.dependencia + "\n");
+				//System.out.println(
+				//		"No encontró una pasantia igual en el perfil existente ......" + pasantia.dependencia + "\n");
 				pasantiaManager.inPasantiaOJ(pasantia, perfilExistente.ID);
 			}
 		}
@@ -391,12 +380,10 @@ public class ConvocatoriasExternasManager {
 							&& actual.jefeInmediato.equals(experiencia.jefeInmediato)
 							&& actual.puesto.equals(experiencia.puesto)))
 					.findFirst().orElse(null) != null) {
-				System.out.println("encontró una experiencia laboral igual en el perfil existente ......"
-						+ experiencia.institucionEmpresa + "\n");
-				experienciaLaboralManager.modExperienciaLaboral(experiencia, perfilExistente.ID);
+				experienciaLaboralManager.modExperienciaLaboral(experiencia, experiencia.id);
 			} else {
-				System.out.println("No encontró una experiencia laboral igual en el perfil existente ......"
-						+ experiencia.institucionEmpresa + "\n");
+				//System.out.println("No encontró una experiencia laboral igual en el perfil existente ......"
+					//	+ experiencia.institucionEmpresa + "\n");
 				experienciaLaboralManager.inExperienciaLaboral(experiencia, perfilExistente.ID);
 			}
 		}
@@ -408,12 +395,10 @@ public class ConvocatoriasExternasManager {
 							&& actual.jefeInmediato.equals(experiencia.jefeInmediato)
 							&& actual.motivoFinRelacionLaboral.equals(experiencia.motivoFinRelacionLaboral)))
 					.findFirst().orElse(null) != null) {
-				System.out.println("encontró una experiencia laboral OJ igual en el perfil existente ......"
-						+ experiencia.dependencia + "\n");
-				experienciaLaboralOJManager.modExperienciaLaboralOJ(experiencia, perfilExistente.ID);
+				experienciaLaboralOJManager.modExperienciaLaboralOJ(experiencia, experiencia.id);
 			} else {
-				System.out.println("No encontró una experiencia laboral OJ igual en el perfil existente ......"
-						+ experiencia.dependencia + "\n");
+				//System.out.println("No encontró una experiencia laboral OJ igual en el perfil existente ......"
+				//		+ experiencia.dependencia + "\n");
 				experienciaLaboralOJManager.inExperienciaLaboralOJ(experiencia, perfilExistente.ID);
 			}
 		}
@@ -422,12 +407,10 @@ public class ConvocatoriasExternasManager {
 		for (ReferenciasPersonales referencia : perfil.REFERENCIAS_PERSONALES) {
 			if (perfilExistente.REFERENCIAS_PERSONALES.stream()
 					.filter(actual -> actual.nombre.equals(referencia.nombre)).findFirst().orElse(null) != null) {
-				System.out.println("encontró una referencia personal igual en el perfil existente ......"
-						+ referencia.nombre + "\n");
-				referenciaPersonalManager.modReferenciaPersonal(referencia, perfilExistente.ID);
+				referenciaPersonalManager.modReferenciaPersonal(referencia, referencia.id);
 			} else {
-				System.out.println("No encontró una referencia personal igual en el perfil existente ......"
-						+ referencia.nombre + "\n");
+				//System.out.println("No encontró una referencia personal igual en el perfil existente ......"
+				//		+ referencia.nombre + "\n");
 				referenciaPersonalManager.inReferenciaPersonal(referencia, perfilExistente.ID);
 			}
 		}
@@ -447,6 +430,7 @@ public class ConvocatoriasExternasManager {
 
 		List<InformacionAcademica> listaInfoAcademica = new ArrayList<InformacionAcademica>();
 		if (!perfil.NIVEL_APRIMARIA.equals("") && !perfil.GRADO_APRIMARIA.equals("")) {
+			System.out.println("nivel primaria, grado ......" + perfil.GRADO_APRIMARIA + " institucion: " + perfil.INSTITUCION_PRIMARIA+ "\n");
 			InformacionAcademica nivelPrimario = new InformacionAcademica();
 			nivelPrimario.nivelAcademico = perfil.NIVEL_APRIMARIA;
 			nivelPrimario.gradoAprobado = perfil.GRADO_APRIMARIA;
@@ -455,6 +439,7 @@ public class ConvocatoriasExternasManager {
 			listaInfoAcademica.add(nivelPrimario);
 		}
 		if (!perfil.NIVEL_ABASICOS.equals("") && !perfil.GRADO_ABASICOS.equals("")) {
+			System.out.println("nivel primaria, grado ......" + perfil.GRADO_ABASICOS + " institucion: " + perfil.INSTITUCION_BASICOS+ "\n");
 			InformacionAcademica nivelBasico = new InformacionAcademica();
 			nivelBasico.nivelAcademico = perfil.NIVEL_ABASICOS;
 			nivelBasico.gradoAprobado = perfil.GRADO_ABASICOS;
@@ -463,6 +448,7 @@ public class ConvocatoriasExternasManager {
 			listaInfoAcademica.add(nivelBasico);
 		}
 		if (!perfil.NIVEL_ADIVERSIFICADO.equals("") && !perfil.GRADO_ADIVERSIFICADO.equals("")) {
+			System.out.println("nivel primaria, grado ......" + perfil.GRADO_ADIVERSIFICADO + " institucion: " + perfil.INSTITUCION_DIVERSIFICADO+ "\n");
 			InformacionAcademica nivelDiversificado = new InformacionAcademica();
 			nivelDiversificado.nivelAcademico = perfil.NIVEL_ADIVERSIFICADO;
 			nivelDiversificado.gradoAprobado = perfil.GRADO_ADIVERSIFICADO;
@@ -474,7 +460,7 @@ public class ConvocatoriasExternasManager {
 		}
 
 		for (InformacionAcademica info : listaInfoAcademica) {
-			System.out.println("Dentro de armar lista informacion académica  ......" + "\n");
+			System.out.println("Dentro de armar lista informacion académica a modificar ......" + "\n");
 			informacionAcademicaManager.modInformacionAcademica(info, usuario);
 		}
 	}

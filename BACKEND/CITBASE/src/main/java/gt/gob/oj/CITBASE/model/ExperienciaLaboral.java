@@ -1,7 +1,7 @@
 package gt.gob.oj.CITBASE.model;
 
 public class ExperienciaLaboral {
-
+	public Integer id;
 	public String institucionEmpresa;
 	public String fechaInicio;
 	public String fechaFinalizacion;

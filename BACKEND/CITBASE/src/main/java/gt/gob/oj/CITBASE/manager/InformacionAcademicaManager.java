@@ -79,7 +79,7 @@ public class InformacionAcademicaManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
-		System.out.println("dentro de llamar a modificar informacion academica ......" + this.SCHEMA + "\n");
+		System.out.println("dentro de llamar a modificar informacion academica ......" + id + "\n");
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
 				+ ".PKG_TC_INFORMACION_ACADEMICA.PROC_ACTUALIZAR_TC_INFORMACION_ACADEMICA (?,?,?,?,?,?,?,?,?)");
 		call.setInt("P_ID_INFORMACION_ACADEMICA", id);
@@ -89,11 +89,13 @@ public class InformacionAcademicaManager {
 		call.setString("P_CONTANCIA", informacionAcademica.constancia);
 		call.setString("P_ANIO_GRADUACION", informacionAcademica.anioGraduacion);
 		call.setString("P_CARRERA", informacionAcademica.carrera);
+		System.out.println("carrera ......" + informacionAcademica.carrera + "\n");
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
 		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
 		call.execute();
 		salida.id = call.getInt("p_id_salida");
 		salida.msj = call.getString("p_msj");
+		System.out.println(" mensaje modificar informacion academica ......" + salida.msj + "\n");
 		if (salida.id > 0)
 			salida.result = "OK";
 		System.out.println("todo ok......" + this.SCHEMA + "\n");

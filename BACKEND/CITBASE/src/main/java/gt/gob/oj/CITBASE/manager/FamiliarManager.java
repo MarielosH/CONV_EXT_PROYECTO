@@ -38,6 +38,9 @@ public class FamiliarManager {
 				String key = meta.getColumnName(i).toString();
 				String value = Objects.toString(rset.getString(key), "");
 				switch (key) {
+				case "ID_FAMILIAR":
+					nuevoFamiliar.id= Integer.parseInt(value);
+					break;
 				case "NOMBRE":
 					nuevoFamiliar.nombreFamiliar = value;
 					break;

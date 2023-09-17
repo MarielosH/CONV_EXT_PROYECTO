@@ -1,7 +1,7 @@
 package gt.gob.oj.CITBASE.model;
 
 public class FamiliaPerfilSE {
-
+	public Integer id;
 	public String parentesco; //P,M,C, H...
 	public String fechaNacimiento;
 	public String nombreFamiliar;

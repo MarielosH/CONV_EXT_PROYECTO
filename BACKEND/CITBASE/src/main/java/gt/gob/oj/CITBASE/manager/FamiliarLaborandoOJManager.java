@@ -63,6 +63,9 @@ public class FamiliarLaborandoOJManager {
 				String key = meta.getColumnName(i).toString();
 				String value = Objects.toString(rset.getString(key), "");
 				switch (key) {
+				case "ID_FAMILIAR_LABORANDO_OJ":
+					nuevoFamiliarLaborandoOJ.id= Integer.parseInt(value);
+					break;
 				case "NOMBRE_COMPLETO":
 					nuevoFamiliarLaborandoOJ.nombreCompleto = value;
 					break;

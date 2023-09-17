@@ -230,6 +230,14 @@
           </mat-form-field>
         </div>
         <div class="form-group col">
+          <mat-form-field color="warn" style="font-size: 12px;">
+            <input matInput (click)="picker21.open()" formControlName="fechaVencLicencia" [matDatepicker]="picker21"
+              (ngModelChange)="parseDate($event)" placeholder="FECHA VENCIMIENTO LICENCIA">
+            <mat-datepicker-toggle matSuffix [for]="picker21"></mat-datepicker-toggle>
+            <mat-datepicker startView="year" touchUi #picker21></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="form-group col">
           <mat-form-field>
             <mat-select placeholder="DISCAPACIDAD" formControlName="discapacidad" required>
               <mat-option *ngFor="let tipo of discapacidades" [value]="tipo.ID" style="font-size: 12px;">
