@@ -1479,20 +1479,19 @@
     <br />
     <div class="container">
       <div id="pdfTable" #pdfTable>
-        <h2>Resumen Perfil Solicitud de Empleo</h2>
         <div class="table table-bordered">
           <table class="table">
 
             <head>
               <tr>
-                <td style="width:50%"></td>
-                <td style="width:50%"></td>
+                <td style="width:40%"></td>
+                <td style="width:60%"></td>
               </tr>
             </head>
 
             <body>
               <tr>
-                <td style="width:50%">
+                <td style="width:40%">
                   <mat-list>
                     <mat-list-item> <strong>Nombre:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.nombres
                       }}</mat-list-item>
@@ -1537,17 +1536,19 @@
                       this.firstFormGroup.value.numeroLicencia }}</mat-list-item>
                     <mat-list-item> <strong>Clase Licencia:</strong> &nbsp;&nbsp;{{
                       buscarClaseLicencia(this.firstFormGroup.value.nombreClase) }}</mat-list-item>
+                      <mat-list-item> <strong>Fecha Vencimiento Licencia:</strong> &nbsp;&nbsp;{{
+                      parseDate(this.firstFormGroup.value.fechaVencLicencia) }}</mat-list-item>
                     <mat-list-item> <strong>Discapacidad:</strong> &nbsp;&nbsp;{{
                       buscarDiscapacidad(this.firstFormGroup.value.discapacidad) }}</mat-list-item>
+                      <mat-list-item> <strong>Etnia:</strong>
+                        &nbsp;&nbsp;{{buscarEtnia(this.secondFormGroup.value.etnia)}}</mat-list-item>
+                      <mat-list-item> <strong>Comunidad Linguistica:</strong>
+                        &nbsp;&nbsp;{{buscarComunidadLinguistica(this.secondFormGroup.value.comunidadLinguistica)}}</mat-list-item>
                   </mat-list>
                 </td>
-                <td style="width:50%">
-                  <mat-list>
-                    <mat-list-item> <strong>Etnia:</strong>
-                      &nbsp;&nbsp;{{buscarEtnia(this.secondFormGroup.value.etnia)}}</mat-list-item>
-                    <mat-list-item> <strong>Comunidad Linguistica:</strong>
-                      &nbsp;&nbsp;{{buscarComunidadLinguistica(this.secondFormGroup.value.comunidadLinguistica)}}</mat-list-item>
-                    <mat-list-item *ngFor="let idioma of idiomas"> <strong>Idioma:</strong>&nbsp;&nbsp; {{ idioma.idioma
+                <td style="width:60%">
+                  <mat-list>                   
+                    <mat-list-item *ngFor="let idioma of idiomas"> <strong>Idioma:</strong>&nbsp;&nbsp; {{ buscarIdioma(idioma.idiomaId) + ' Escribe: '+ buscarNivelIdioma(idioma.escribe) + ' Habla: '+ buscarNivelIdioma(idioma.habla) + ' Lee: '+ buscarNivelIdioma(idioma.lee)
                       }}</mat-list-item>
                     <mat-list-item> <strong>Hijos:</strong> &nbsp;&nbsp;{{this.thirdFormGroup.value.hijos == 0 ? 'No':
                       'Si'

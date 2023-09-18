@@ -24,9 +24,9 @@ public class EstadoAplicacionConvManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
-		System.out.println("dentro de llamar a insertar otro conv......" + this.SCHEMA + "\n");
+		System.out.println("dentro de llamar a insertar estado aplicacion conv ......" + this.SCHEMA + "\n");
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
-				+ ".PKG_TC_ESTADO_APLICACION_CONV.PROC_AGREGAR_TC_ESTADO_APLICACION_CONV (?,?,?,?,?)");
+				+ ".PKG_TC_ESTADO_APLICACION_CONV.PROC_AGREGAR_TC_ESTADO_APLICACION_CONV (?,?,?,?,?,?)");
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
 		call.setInt("P_FK_TC_ESTADO_APLICACION_CONV_REF_TC_INFORMACION_PERSONAL_USUARIO", usuario);
 		call.setInt("P_FK_TC_ESTADO_APLICACION_CONV_REF_TC_CONV", convocatoria);
@@ -36,6 +36,7 @@ public class EstadoAplicacionConvManager {
 	    call.execute();
 	    salida.id = call.getInt("p_id_salida");
 	    salida.msj = call.getString("p_msj");
+	    System. out. println("mensaje ......"+salida.msj+"\n");
 	    if (salida.id > 0)
 		      salida.result = "OK"; 
 			  System. out. println("todo ok......"+this.SCHEMA+"\n");
@@ -86,9 +87,9 @@ public class EstadoAplicacionConvManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
-		System.out.println("dentro de llamar a modificar otro conv......" + this.SCHEMA + "\n");
+		System.out.println("dentro de llamar a modificar ESTADO APLICACION CONV......" + this.SCHEMA + "\n");
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
-				+ ".PKG_TC_ESTADO_APLICACION_CONV.PROC_ACTUALIZAR_TC_ESTADO_APLICACION_CONV (?,?,?,?)");
+				+ ".PKG_TC_ESTADO_APLICACION_CONV.PROC_ACTUALIZAR_TC_ESTADO_APLICACION_CONV (?,?,?,?,?)");
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
 		call.setInt("P_ID_APLICACION_CONVOCATORIA", id);
 		call.setString("P_ESTADO", estadoAplicacionConv.estado);
