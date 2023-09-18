@@ -71,6 +71,7 @@ export class CreacionConvocatoriaComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   tmp_id = '';
   fileNames = '';
+  dpi = '';
 
   aspirante = false;
   coordinador = false;
@@ -106,6 +107,7 @@ export class CreacionConvocatoriaComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dpi = localStorage.getItem('cui');
     this.localStorageRol()
     const conv = JSON.parse(localStorage.getItem('convocatoria'));
     this.creation = this.fb.group({
@@ -203,7 +205,7 @@ export class CreacionConvocatoriaComponent implements OnInit {
     const files: FileList = event.target.files;
     for (let i = 0; i < files.length; i++) {
       this.selectedFiles.push(files[i]);
-      this.fileNames = this.fileNames + files[i].name + ','
+      this.fileNames = `${this.fileNames}${this.dpi}/${files[i].name},`
     }
     console.log(this.fileNames)
   }
@@ -321,8 +323,12 @@ export class CreacionConvocatoriaComponent implements OnInit {
 
   aplicarConvocatoria() {
     this.selectedFiles.forEach(element => {
-      this.convocatoriasService.uploadDocument(element, localStorage.getItem('cui'))
+      this.convocatoriasService.uploadDocument(element, this.dpi).subscribe(data => {})
     });
+    const body = {documentos: this.fileNames, estado: 'E'}
+    this.convocatoriasService.applyConv(1,this.id, body).subscribe(data => {
+      console.log(data);
+    })
   }
 
   actualizarConvocatoria() {

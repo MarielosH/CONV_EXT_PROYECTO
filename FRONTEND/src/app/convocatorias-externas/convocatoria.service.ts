@@ -12,7 +12,7 @@ export class ConvocatoriaService {
   uploadDocument(file: any, dpi: string): Observable<any>{
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('dpi', dpi);
+    formData.append('directory', dpi);
     return this.http.post<any>(this.appSettings.restApiServiceBaseUri + 'AplicarConvocatoria/aplicar', formData)
     .pipe(
       catchError(this.handleError('uploadFile', []))
@@ -20,7 +20,7 @@ export class ConvocatoriaService {
   }
 
   applyConv(idUsuario: any, idConv: any, body: any): Observable<any>{
-    return this.http.post<any>(this.appSettings.restApiServiceBaseUri + `/inEstadoAplicacionConv/usuario/${idUsuario}/convocatoria/${idConv}`, body)
+    return this.http.post<any>(this.appSettings.restApiServiceBaseUri + `Estado-Aplicacion-Conv/inEstadoAplicacionConv/usuario/${idUsuario}/convocatoria/${idConv}`, body)
     .pipe(
       catchError(this.handleError('inEstarConvocatoria',[]))
     )
