@@ -1477,121 +1477,135 @@
     <ng-template matStepLabel>Resumen</ng-template>
     <mat-label style="font-size: 24px; "> <b>Resumen Perfil Solicitud Empleo</b></mat-label>
     <br />
-    <div class="table-responsive">
-      <table class="table">
+    <div class="container">
+      <div id="pdfTable" #pdfTable>
+        <div class="table table-bordered">
+          <table class="table">
 
-        <head>
-          <tr>
-            <td style="width:50%"></td>
-            <td style="width:50%"></td>
-          </tr>
-        </head>
+            <head>
+              <tr>
+                <td style="width:40%"></td>
+                <td style="width:60%"></td>
+              </tr>
+            </head>
 
-        <body>
-          <tr>
-            <td style="width:50%">
-              <mat-list>
-                <mat-list-item> <strong>Nombre:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.nombres
-                  }}</mat-list-item>
-                <mat-list-item> <strong>Primer apellido:</strong> &nbsp;&nbsp;{{
-                  this.firstFormGroup.value.primerApellido }}</mat-list-item>
-                <mat-list-item> <strong>Segundo apellido:</strong> &nbsp;&nbsp;{{
-                  this.firstFormGroup.value.segundoApellido }}</mat-list-item>
-                <mat-list-item> <strong>Fecha Nacimiento:</strong> &nbsp;&nbsp;{{
-                  parseDate(this.firstFormGroup.value.fechaNac)
-                  }}</mat-list-item>
-                <mat-list-item> <strong>Edad:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.edad }}</mat-list-item>
-                <mat-list-item> <strong>Sexo:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.sexo == 0 ? 'Femenino':
-                  'Masculino' }}</mat-list-item>
-                <mat-list-item> <strong>Estado Civil:</strong>
-                  &nbsp;&nbsp;{{buscarEstadoCivil(this.firstFormGroup.value.estadoCivilAspirante)}}</mat-list-item>
-                <mat-list-item> <strong>Nacionalidad:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.nacionalidad
-                  }}</mat-list-item>
-                <mat-list-item> <strong>Profesion:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.profesion
-                  }}</mat-list-item>
-                <mat-list-item> <strong>Direccion:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.direccion
-                  }}</mat-list-item>
-                <mat-list-item> <strong>Departamento:</strong> &nbsp;&nbsp;{{
-                  buscarDepartamento(this.firstFormGroup.value.selDepartamento) }}</mat-list-item>
-                <mat-list-item> <strong>Municipio:</strong> &nbsp;&nbsp;{{
-                  buscarMunicipio(this.firstFormGroup.value.selMunicipio) }}</mat-list-item>
-                <mat-list-item> <strong>Correo:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.correo
-                  }}</mat-list-item>
-                <mat-list-item> <strong>Telefono Casa:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.telefonoCasa
-                  }}</mat-list-item>
-                <mat-list-item> <strong>Telefono Celular:</strong> &nbsp;&nbsp;{{
-                  this.firstFormGroup.value.telefonoCelular }}</mat-list-item>
-                <mat-list-item> <strong>DPI:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.dpi }}</mat-list-item>
-                <mat-list-item> <strong>Fecha Vencimiento DPI:</strong> &nbsp;&nbsp;{{
-                  parseDate(this.firstFormGroup.value.fechaVencDPI) }}</mat-list-item>
-                <mat-list-item> <strong>NIT:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.nit }}</mat-list-item>
-                <mat-list-item> <strong>Numero Licencia:</strong> &nbsp;&nbsp;{{
-                  this.firstFormGroup.value.numeroLicencia }}</mat-list-item>
-                <mat-list-item> <strong>Clase Licencia:</strong> &nbsp;&nbsp;{{
-                  buscarClaseLicencia(this.firstFormGroup.value.nombreClase) }}</mat-list-item>
-                <mat-list-item> <strong>Discapacidad:</strong> &nbsp;&nbsp;{{
-                  buscarDiscapacidad(this.firstFormGroup.value.discapacidad) }}</mat-list-item>
-              </mat-list>
-            </td>
-            <td style="width:50%">
-              <mat-list>
-                <mat-list-item> <strong>Etnia:</strong>
-                  &nbsp;&nbsp;{{buscarEtnia(this.secondFormGroup.value.etnia)}}</mat-list-item>
-                <mat-list-item> <strong>Comunidad Linguistica:</strong>
-                  &nbsp;&nbsp;{{buscarComunidadLinguistica(this.secondFormGroup.value.comunidadLinguistica)}}</mat-list-item>
-                <mat-list-item *ngFor="let idioma of idiomas"> <strong>Idioma:</strong>&nbsp;&nbsp; {{ idioma.idioma
-                  }}</mat-list-item>
-                <mat-list-item> <strong>Hijos:</strong> &nbsp;&nbsp;{{this.thirdFormGroup.value.hijos == 0 ? 'No': 'Si'
-                  }}</mat-list-item>
-                <mat-list-item> <strong>Numero de hijos:</strong>
-                  &nbsp;&nbsp;{{this.thirdFormGroup.value.noHijo}}</mat-list-item>
-                <mat-list-item *ngFor="let dependiente of listaDependientes"> <strong>Dependiente:</strong>&nbsp;&nbsp;
-                  {{ buscarDependientes(dependiente) }}</mat-list-item>
-                <mat-list-item *ngFor="let familiar of familiares"> <strong>Familiar:</strong>&nbsp;&nbsp; {{
-                  buscarparentesco(familiar.parentesco) + ' : ' + familiar.nombreFamiliar }}</mat-list-item>
-                <mat-list-item *ngFor="let familiarOJ of familiaresLaborandoOJ"> <strong>Familiar Laborando en el
-                    OJ:</strong>&nbsp;&nbsp; {{ buscarparentesco(familiarOJ.parentesco) + ' : ' +
-                  familiarOJ.nombreCompleto + ' Dependencia: '+ familiarOJ.dependencia }}</mat-list-item>
-                <mat-list-item> <strong>Grado Aprobado Primaria:</strong>
-                  &nbsp;&nbsp;{{this.fifthFormGroup.value.gradoAprobadoPrimaria + ' Institución Estudios:
-                  '+this.fifthFormGroup.value.institucionEstudiosPrimaria}}</mat-list-item>
-                <mat-list-item> <strong>Grado Aprobado Basicos:</strong>
-                  &nbsp;&nbsp;{{this.fifthFormGroup.value.gradoAprobadoBasicos + ' Institución Estudios:
-                  '+this.fifthFormGroup.value.institucionEstudiosBasicos}}</mat-list-item>
-                <mat-list-item> <strong>Grado Aprobado Diversificado:</strong>
-                  &nbsp;&nbsp;{{this.fifthFormGroup.value.gradoAprobadoDiversificado + ' Institución Estudios:
-                  '+this.fifthFormGroup.value.institucionEstudiosDiversificado}}</mat-list-item>
-                <mat-list-item> <strong>Universidad:</strong>
-                  &nbsp;&nbsp;{{this.fifthFormGroup.value.carreraU + ' Universidad:
-                  '+this.fifthFormGroup.value.universidad+ ' Semestre Aprobado:
-                  '+this.fifthFormGroup.value.semestreA}}</mat-list-item>
-                <mat-list-item> <strong>Posgrado:</strong>
-                  &nbsp;&nbsp;{{this.fifthFormGroup.value.carreraPosgrado + ' Universidad:
-                  '+this.fifthFormGroup.value.universidadPosgrado }}</mat-list-item>
-                <mat-list-item *ngFor="let pasantia of pasantiasOJ"> <strong>Pasantia OJ:</strong>&nbsp;&nbsp;
-                  {{ pasantia.dependencia + ', del ' + parseDate(pasantia.fechaInicio) + ' al '+
-                  parseDate(pasantia.fechaFinalizacion)}}</mat-list-item>
-                <mat-list-item *ngFor="let exp of experienciaLaboralOJ"> <strong>Experiencia Laboral
-                    OJ:</strong>&nbsp;&nbsp;
-                  {{ exp.puesto + ', del ' + parseDate(exp.fechaInicio) + ' al '+
-                  parseDate(exp.fechaFinalizacion)}}</mat-list-item>
-                <mat-list-item *ngFor="let experiencia of experienciaLaboral"> <strong>Experiencia
-                    Laboral:</strong>&nbsp;&nbsp;
-                  {{ 'Institucion/Empresa: '+ experiencia.institucionEmpresa + ', Puesto: '+ experiencia.puesto + ' del
-                  '
-                  + parseDate(experiencia.fechaInicio) + ' al '+
-                  parseDate(experiencia.fechaFinalizacion)}}</mat-list-item>
-                <mat-list-item *ngFor="let referencia of referenciasPersonales"> <strong>Referencia
-                    Personal:</strong>&nbsp;&nbsp;
-                  {{ referencia.nombre + ', tipo de relacion: '+ referencia.tipoRelacion + ', años de conocerlo: ' +
-                  referencia.aniosConocerlo}}</mat-list-item>
-              </mat-list>
-            </td>
-          </tr>
-        </body>
-      </table>
+            <body>
+              <tr>
+                <td style="width:40%">
+                  <mat-list>
+                    <mat-list-item> <strong>Nombre:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.nombres
+                      }}</mat-list-item>
+                    <mat-list-item> <strong>Primer apellido:</strong> &nbsp;&nbsp;{{
+                      this.firstFormGroup.value.primerApellido }}</mat-list-item>
+                    <mat-list-item> <strong>Segundo apellido:</strong> &nbsp;&nbsp;{{
+                      this.firstFormGroup.value.segundoApellido }}</mat-list-item>
+                    <mat-list-item> <strong>Fecha Nacimiento:</strong> &nbsp;&nbsp;{{
+                      parseDate(this.firstFormGroup.value.fechaNac)
+                      }}</mat-list-item>
+                    <mat-list-item> <strong>Edad:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.edad
+                      }}</mat-list-item>
+                    <mat-list-item> <strong>Sexo:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.sexo == 0 ?
+                      'Femenino':
+                      'Masculino' }}</mat-list-item>
+                    <mat-list-item> <strong>Estado Civil:</strong>
+                      &nbsp;&nbsp;{{buscarEstadoCivil(this.firstFormGroup.value.estadoCivilAspirante)}}</mat-list-item>
+                    <mat-list-item> <strong>Nacionalidad:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.nacionalidad
+                      }}</mat-list-item>
+                    <mat-list-item> <strong>Profesion:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.profesion
+                      }}</mat-list-item>
+                    <mat-list-item> <strong>Direccion:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.direccion
+                      }}</mat-list-item>
+                    <mat-list-item> <strong>Departamento:</strong> &nbsp;&nbsp;{{
+                      buscarDepartamento(this.firstFormGroup.value.selDepartamento) }}</mat-list-item>
+                    <mat-list-item> <strong>Municipio:</strong> &nbsp;&nbsp;{{
+                      buscarMunicipio(this.firstFormGroup.value.selMunicipio) }}</mat-list-item>
+                    <mat-list-item> <strong>Correo:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.correo
+                      }}</mat-list-item>
+                    <mat-list-item> <strong>Telefono Casa:</strong> &nbsp;&nbsp;{{
+                      this.firstFormGroup.value.telefonoCasa
+                      }}</mat-list-item>
+                    <mat-list-item> <strong>Telefono Celular:</strong> &nbsp;&nbsp;{{
+                      this.firstFormGroup.value.telefonoCelular }}</mat-list-item>
+                    <mat-list-item> <strong>DPI:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.dpi
+                      }}</mat-list-item>
+                    <mat-list-item> <strong>Fecha Vencimiento DPI:</strong> &nbsp;&nbsp;{{
+                      parseDate(this.firstFormGroup.value.fechaVencDPI) }}</mat-list-item>
+                    <mat-list-item> <strong>NIT:</strong> &nbsp;&nbsp;{{ this.firstFormGroup.value.nit
+                      }}</mat-list-item>
+                    <mat-list-item> <strong>Numero Licencia:</strong> &nbsp;&nbsp;{{
+                      this.firstFormGroup.value.numeroLicencia }}</mat-list-item>
+                    <mat-list-item> <strong>Clase Licencia:</strong> &nbsp;&nbsp;{{
+                      buscarClaseLicencia(this.firstFormGroup.value.nombreClase) }}</mat-list-item>
+                      <mat-list-item> <strong>Fecha Vencimiento Licencia:</strong> &nbsp;&nbsp;{{
+                      parseDate(this.firstFormGroup.value.fechaVencLicencia) }}</mat-list-item>
+                    <mat-list-item> <strong>Discapacidad:</strong> &nbsp;&nbsp;{{
+                      buscarDiscapacidad(this.firstFormGroup.value.discapacidad) }}</mat-list-item>
+                      <mat-list-item> <strong>Etnia:</strong>
+                        &nbsp;&nbsp;{{buscarEtnia(this.secondFormGroup.value.etnia)}}</mat-list-item>
+                      <mat-list-item> <strong>Comunidad Linguistica:</strong>
+                        &nbsp;&nbsp;{{buscarComunidadLinguistica(this.secondFormGroup.value.comunidadLinguistica)}}</mat-list-item>
+                  </mat-list>
+                </td>
+                <td style="width:60%">
+                  <mat-list>                   
+                    <mat-list-item *ngFor="let idioma of idiomas"> <strong>Idioma:</strong>&nbsp;&nbsp; {{ buscarIdioma(idioma.idiomaId) + ' Escribe: '+ buscarNivelIdioma(idioma.escribe) + ' Habla: '+ buscarNivelIdioma(idioma.habla) + ' Lee: '+ buscarNivelIdioma(idioma.lee)
+                      }}</mat-list-item>
+                    <mat-list-item> <strong>Hijos:</strong> &nbsp;&nbsp;{{this.thirdFormGroup.value.hijos == 0 ? 'No':
+                      'Si'
+                      }}</mat-list-item>
+                    <mat-list-item> <strong>Numero de hijos:</strong>
+                      &nbsp;&nbsp;{{this.thirdFormGroup.value.noHijo}}</mat-list-item>
+                    <mat-list-item *ngFor="let dependiente of listaDependientes">
+                      <strong>Dependiente:</strong>&nbsp;&nbsp;
+                      {{ buscarDependientes(dependiente) }}</mat-list-item>
+                    <mat-list-item *ngFor="let familiar of familiares"> <strong>Familiar:</strong>&nbsp;&nbsp; {{
+                      buscarparentesco(familiar.parentesco) + ' : ' + familiar.nombreFamiliar }}</mat-list-item>
+                    <mat-list-item *ngFor="let familiarOJ of familiaresLaborandoOJ"> <strong>Familiar Laborando en el
+                        OJ:</strong>&nbsp;&nbsp; {{ buscarparentesco(familiarOJ.parentesco) + ' : ' +
+                      familiarOJ.nombreCompleto + ' Dependencia: '+ familiarOJ.dependencia }}</mat-list-item>
+                    <mat-list-item> <strong>Grado Aprobado Primaria:</strong>
+                      &nbsp;&nbsp;{{this.fifthFormGroup.value.gradoAprobadoPrimaria + ' Institución Estudios:
+                      '+this.fifthFormGroup.value.institucionEstudiosPrimaria}}</mat-list-item>
+                    <mat-list-item> <strong>Grado Aprobado Basicos:</strong>
+                      &nbsp;&nbsp;{{this.fifthFormGroup.value.gradoAprobadoBasicos + ' Institución Estudios:
+                      '+this.fifthFormGroup.value.institucionEstudiosBasicos}}</mat-list-item>
+                    <mat-list-item> <strong>Grado Aprobado Diversificado:</strong>
+                      &nbsp;&nbsp;{{this.fifthFormGroup.value.gradoAprobadoDiversificado + ' Institución Estudios:
+                      '+this.fifthFormGroup.value.institucionEstudiosDiversificado}}</mat-list-item>
+                    <mat-list-item> <strong>Universidad:</strong>
+                      &nbsp;&nbsp;{{this.fifthFormGroup.value.carreraU + ' Universidad:
+                      '+this.fifthFormGroup.value.universidad+ ' Semestre Aprobado:
+                      '+this.fifthFormGroup.value.semestreA}}</mat-list-item>
+                    <mat-list-item> <strong>Posgrado:</strong>
+                      &nbsp;&nbsp;{{this.fifthFormGroup.value.carreraPosgrado + ' Universidad:
+                      '+this.fifthFormGroup.value.universidadPosgrado }}</mat-list-item>
+                    <mat-list-item *ngFor="let pasantia of pasantiasOJ"> <strong>Pasantia OJ:</strong>&nbsp;&nbsp;
+                      {{ pasantia.dependencia + ', del ' + parseDate(pasantia.fechaInicio) + ' al '+
+                      parseDate(pasantia.fechaFinalizacion)}}</mat-list-item>
+                    <mat-list-item *ngFor="let exp of experienciaLaboralOJ"> <strong>Experiencia Laboral
+                        OJ:</strong>&nbsp;&nbsp;
+                      {{ exp.puesto + ', del ' + parseDate(exp.fechaInicio) + ' al '+
+                      parseDate(exp.fechaFinalizacion)}}</mat-list-item>
+                    <mat-list-item *ngFor="let experiencia of experienciaLaboral"> <strong>Experiencia
+                        Laboral:</strong>&nbsp;&nbsp;
+                      {{ 'Institucion/Empresa: '+ experiencia.institucionEmpresa + ', Puesto: '+ experiencia.puesto + '
+                      del
+                      '
+                      + parseDate(experiencia.fechaInicio) + ' al '+
+                      parseDate(experiencia.fechaFinalizacion)}}</mat-list-item>
+                    <mat-list-item *ngFor="let referencia of referenciasPersonales"> <strong>Referencia
+                        Personal:</strong>&nbsp;&nbsp;
+                      {{ referencia.nombre + ', tipo de relacion: '+ referencia.tipoRelacion + ', años de conocerlo: ' +
+                      referencia.aniosConocerlo}}</mat-list-item>
+                  </mat-list>
+                </td>
+              </tr>
+            </body>
+          </table>
+        </div>
+      </div>
+      <button class="btn btn-primary" (click)="downloadAsPDF()">Export To PDF</button>
     </div>
-
 
     <div>
       <button mat-button matStepperPrevious>Atrás</button>

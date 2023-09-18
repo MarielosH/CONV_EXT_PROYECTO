@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Observable, Subscription, BehaviorSubject } from '../../../../node_modules/rxjs';
 import { HttpEvent, HttpRequest, HttpClient, HttpResponse } from '../../../../node_modules/@angular/common/http';
@@ -9,6 +9,12 @@ import { AuthService } from '../../recursos/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConvocatoriasExternasService } from '../convocatorias-externas.service';
 import { TiposLicencia, Discapacidad, Idioma, Familiar, FamiliarLaborandoOJ, PasantiaOJ, ExperienciaLaboralOJ, ExperienciaLaboral, ReferenciaPersonal, Sexo } from 'app/constantes';
+
+import jsPDF from 'jspdf';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import htmlToPdfmake from 'html-to-pdfmake';
 @Component({
   selector: 'app-perfilwizard',
   templateUrl: './perfilwizard.component.html',
@@ -178,6 +184,10 @@ export class PerfilwizardComponent implements OnInit {
   nineFormGroup: FormGroup;
   startDate = new Date(1950, 0, 1);
 
+  //title = 'htmltopdf';
+
+  @ViewChild('pdfTable') pdfTable: ElementRef;
+
   constructor(private convocatoriasService: ConvocatoriasExternasService, public authService: AuthService,
     public HttpClient: HttpClient, private fb: FormBuilder, private _location: Location, private datePipe: DatePipe,
     private router: Router, private route: ActivatedRoute
@@ -208,7 +218,7 @@ export class PerfilwizardComponent implements OnInit {
       telefonoCelular: ['', Validators.required],
       dpi: [localStorage.getItem('cui'), Validators.required],
       fechaVencDPI: ['', Validators.required],
-      fechaVencLicencia : [''],
+      fechaVencLicencia: [''],
       nit: ['', Validators.required],
       nombreClase: ['', Validators.required],
       numeroLicencia: [''],
@@ -424,6 +434,18 @@ export class PerfilwizardComponent implements OnInit {
       });
   }
 
+  public downloadAsPDF() {
+    const doc = new jsPDF();
+
+    const pdfTable = this.pdfTable.nativeElement;
+
+    var html = htmlToPdfmake(pdfTable.innerHTML);
+
+    const documentDefinition = { content: html };
+    pdfMake.createPdf(documentDefinition).open();
+
+  }
+
   obtenerDepartamentos() {
     this.convocatoriasService
       .getListaDepartamentosConv()
@@ -456,6 +478,7 @@ export class PerfilwizardComponent implements OnInit {
       .getListaIdiomasExtranjeros()
       .subscribe(
         data => {
+          console.log(data);
           this.listaIdiomasExtranjeros = data;
         });
   }
@@ -650,6 +673,29 @@ export class PerfilwizardComponent implements OnInit {
       });
     }
 
+  }
+
+  buscarNivelIdioma(id): string {
+    switch (id) {
+      case 0:
+        return 'Excelente'
+      case 1:
+        return 'Muy bueno'
+      case 2:
+        return 'Bueno'
+      case 3:
+        return 'Regular'
+      default:
+        return '';
+    }
+
+  }
+  buscarIdioma(id): string {
+    if (this.listaIdiomasExtranjeros != null && this.listaIdiomasExtranjeros.length > 0) {
+      let encontrado = this.listaIdiomasExtranjeros.find(x => x.ID_IDIOMA == id);
+      return encontrado != null ? encontrado.IDIOMA : '';
+    }
+    return '';
   }
 
   buscarDepartamento(id): string {
@@ -879,7 +925,7 @@ export class PerfilwizardComponent implements OnInit {
       TELEFONO_CELULAR: this.firstFormGroup.value.telefonoCelular,
       DPI: this.firstFormGroup.value.dpi,
       FECHA_VENC_DPI: this.parseDate(this.firstFormGroup.value.fechaVencDPI),
-      FECHA_VENC_LICENCIA : this.parseDate(this.firstFormGroup.value.fechaVencLicencia),
+      FECHA_VENC_LICENCIA: this.parseDate(this.firstFormGroup.value.fechaVencLicencia),
       NIT: this.firstFormGroup.value.nit,
       CLASE_LICENCIA: this.firstFormGroup.value.nombreClase,
       NUMERO_LICENCIA: this.firstFormGroup.value.numeroLicencia,
