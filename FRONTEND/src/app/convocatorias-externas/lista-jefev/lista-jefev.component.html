@@ -1,133 +1,55 @@
 <div class="main-content">
   <div class="container-fluid">
-   <!-- <style>
-      html,
-      .slide {
-        background-color: #3c8dbc;
-        color: #17384C;
-        height: 100%;
-      }
+    <div class="row">
+      <div class="col-md-6">
+        <div class="material-datatables; mat-elevation-z8 table-responsive"
+        style="border: 2px solid #215074; padding-left: 10px; padding-right: 10px; padding-top: 10px; margin-bottom: 40px; font-size: 14px; border-radius: 5px; ">
+        <table id="datatables" mat-table matSort
+          class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+          <ng-container matColumnDef="NOMBRE">
+            <th mat-header-cell *matHeaderCellDef class="encabezado"> NOMBRE </th>
+            <!-- <td mat-cell style="text-align: left;" *matCellDef="let element"><span>
+                {{element.TITULO}} </span> </td> -->
+          </ng-container>
 
-      .titulo {
-        text-align: center;
-        font-size: 24px;
-        background-color: #215074;
-        height: 5%;
-        font-weight: 400;
-        color: white;
-        padding: 1%;
-      }
+          <ng-container matColumnDef="CONVOCATORIA">
+            <th mat-header-cell *matHeaderCellDef class="encabezado"> CONVOCATORIA </th>
+            <!-- <td mat-cell style="text-align: justify;" *matCellDef="let element">
+              {{element.DATA}} </td> -->
+          </ng-container>
 
-      .etiqueta {
-        color: black;
-        font-weight: 401;
-      }
+          <ng-container matColumnDef="OPCIONES">
+            <th mat-header-cell *matHeaderCellDef class="encabezado"> OPCIONES </th>
+            <td mat-cell style="text-align: justify;" *matCellDef="let row">
+              <a class="btn btn-link btn-warning btn-just-icon"
+                matTooltipClass="primary-tooltip" matTooltip="Editar" data-toggle="modal"
+                data-target="#dtConvModal"><i class="fa fa-edit"></i></a>
+              <!-- <a class="btn btn-link btn-danger btn-just-icon" (click)="borrar(row);"
+                matTooltipClass="primary-tooltip" matTooltip="Eliminar Solicitud"><i class="fa fa-trash"></i></a> -->
+            </td>
+          </ng-container>
 
-      .textos {
-        font-size: 14px;
-      }
-
-      .encabezado {
-        font-size: 14px;
-        text-align: center;
-        font-weight: bold;
-        color: black;
-      }
-    </style>-->
-    <style>
-      .encabezado {
-        font-size: 14px;
-        text-align: center;
-        font-weight: bold;
-        color: black;
-      }
-    </style>
-    <div class="titulo">
-      <p>
-        Convocatorias Externas Abiertas
-      </p>
-    </div>
-    <br>
-    <br>
-    <form [formGroup]="dependencia" name="formDependencia" class="register-form">
-      <div>
-        <div style="background-color: white; padding-left: 2%; padding-right: 2%; padding-top: 0.5%; padding-bottom: 2.5%;">
-          <div class="=col-md-6 mx-auto mt-5 ">
-            <div class="container-fluid" style="padding-left: inherit; padding-right: inherit;">
-
-              <div style="border: 2px solid #215074; padding-left: 2px; padding-right: 2px; padding-top: 10px; margin-bottom: 40px; font-size: 12px; border-radius: 5px; ">
-
-                <div class="container">                  
-                  <div class="row mb-3">
-                    <div class="col-2" style="text-align: center;">
-                    </div>
-
-                    <div class="col" style="text-align: right; padding-top:15px;  padding-right: 2px;">
-                      <label>
-                        <i class="fa fa-search"></i>
-                      </label>
-                    </div>
-
-                    <div class="col-6" style="text-align: left; padding-left: 0px;">
-                      <mat-form-field  [floatLabel]="floatLabelControl.value" class="textos">
-                        <input type="text" (ngModelChange)="filterMatTable($event)" placeholder="Convocatoria" matInput formControlName="busqueda">
-                      </mat-form-field>
-                    </div>
-
-                    <div class="col">
-                      <!--<mat-form-field [floatLabel]="floatLabelControl.value">
-                          <mat-label  style="font-size: 14px;">TODOS</mat-label>
-                          <mat-select >
-                            <mat-option   style="font-size: 12px;"></mat-option>
-                        </mat-select>
-                      </mat-form-field>-->
-                    </div>
-                  </div>
-
-                </div>
-
-              </div>
-              <div>
-
-                
-                  <div  class="material-datatables; mat-elevation-z8 table-responsive" style="border: 2px solid #215074; padding-left: 10px; padding-right: 10px; padding-top: 10px; margin-bottom: 40px; font-size: 14px; border-radius: 5px; ">
-                      <table id="datatables" mat-table [dataSource]="dataSource" matSort class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%" matSort>
-                            
-                    
-                        <ng-container matColumnDef="TITULO">
-                          <th mat-header-cell *matHeaderCellDef class="encabezado"> TÍTULO </th>
-                          <td mat-cell style="text-align: center;" *matCellDef="let element"><span> {{element.TITULO}} </span>  </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="DESCRIPCION">
-                            <th mat-header-cell *matHeaderCellDef class="encabezado"> DESCRIPCION </th>
-                            <td mat-cell style="text-align: justify;"  *matCellDef="let element"> {{element.DESCRIPCION}} </td>
-                          </ng-container>
-                              
-                          <ng-container matColumnDef="OPCIONES">
-                            <th mat-header-cell *matHeaderCellDef class="encabezado"> APLICACIONES A CONVOCATORIA </th>
-                            <td mat-cell style="text-align: center;" *matCellDef="let row" >
-                                <a class="btn btn-link btn-info btn-just-icon" (click)="viewDependencia(row);"  matTooltipClass="primary-tooltip" matTooltip="Ver Perfiles" ><i class="fas fa-user-alt"></i> 5</a>                                                               
-                                </td>
-                          </ng-container>
-                                
-                        <tr mat-header-row *matHeaderRowDef="['TITULO','DESCRIPCION','OPCIONES']"></tr>
-                        <tr mat-row *matRowDef="let row; columns: ['TITULO','DESCRIPCION','OPCIONES'];"></tr>
-                      </table>
-                    
-                      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-                    </div>
-                    
-              </div>
-
-
-            </div>
-          </div>
+          <tr mat-header-row *matHeaderRowDef="['NOMBRE','CONVOCATORIA','OPCIONES']"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['NOMBRE','CONVOCATORIA','OPCIONES'];"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+      </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <h3>Jose Lorenzo</h3>
+        </div>
+        <div class="row">
+          <h5>Convocatoria externa no 4</h5>
+        </div>
+        <div class="row">
+          <ul>
+            <li><a href="#">Archivo 1</a></li>
+            <li><a href="#">Archivo 2</a></li>
+            <li><a href="#">Archivo 3</a></li>
+          </ul>
         </div>
       </div>
-    </form>
-
+    </div>
   </div>
 </div>
-
-

@@ -42,6 +42,7 @@ import { DetalleConvocatoriaComponent } from './detalle-convocatoria/detalle-con
     MaterialModule,
     ngfModule
   ],
-  entryComponents:[]
+  entryComponents:[],
+  exports: [GestionCoordinadorComponent],
 })
 export class ConvocatoriasExternasModule { }

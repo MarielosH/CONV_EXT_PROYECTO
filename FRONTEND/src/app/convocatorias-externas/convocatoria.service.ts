@@ -9,6 +9,23 @@ import { catchError, map, tap } from 'rxjs/operators';
 })
 export class ConvocatoriaService {
 
+  uploadDocument(file: any, dpi: string): Observable<any>{
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('dpi', dpi);
+    return this.http.post<any>(this.appSettings.restApiServiceBaseUri + 'AplicarConvocatoria/aplicar', formData)
+    .pipe(
+      catchError(this.handleError('uploadFile', []))
+    );
+  }
+
+  applyConv(idUsuario: any, idConv: any, body: any): Observable<any>{
+    return this.http.post<any>(this.appSettings.restApiServiceBaseUri + `/inEstadoAplicacionConv/usuario/${idUsuario}/convocatoria/${idConv}`, body)
+    .pipe(
+      catchError(this.handleError('inEstarConvocatoria',[]))
+    )
+  }
+
   insConvocatoria(convVal): Observable<any> {
     return this.http.post<any>(this.appSettings.restApiServiceBaseUri + 'Convocatoria/inConvocatoria', convVal)
       .pipe(

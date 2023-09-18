@@ -42,13 +42,16 @@ export class CreacionConvocatoriaComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @Input() idConvoctoria_in: number;
+  selectedFiles: File[] = [];
 
   creation: FormGroup;
   dtConv: FormGroup;
   dependencia: FormGroup;
+  aplicante: FormGroup;
   //hideRequiredControl = new FormControl(false);
   floatLabelControl = new FormControl('none');
   convFloatLabelCtrl = new FormControl('none');
+  aplicanteFL = new FormControl('none');
   departamentos;
   listArea;
   municipios;
@@ -67,6 +70,11 @@ export class CreacionConvocatoriaComponent implements OnInit {
   convDetalles;
   dataSource = new MatTableDataSource<any>();
   tmp_id = '';
+  fileNames = '';
+
+  aspirante = false;
+  coordinador = false;
+  jefeV = false;
 
   /* Controles */
   titulo;
@@ -98,6 +106,7 @@ export class CreacionConvocatoriaComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.localStorageRol()
     const conv = JSON.parse(localStorage.getItem('convocatoria'));
     this.creation = this.fb.group({
       floatLabel: this.floatLabelControl,
@@ -123,6 +132,12 @@ export class CreacionConvocatoriaComponent implements OnInit {
     this.convDetalles = []
     this.loadDetalles();
 
+    this.aplicante = this.fb.group({
+      floatlabelA: this.aplicanteFL,
+      dpi: [0, Validators.required],
+      fileInput: [File, Validators.required],
+    })
+
     if (conv) {
       this.creation.setValue({
         floatLabel: this.floatLabelControl,
@@ -139,6 +154,24 @@ export class CreacionConvocatoriaComponent implements OnInit {
       this.cargarDetalles(parseInt(conv.ID_CONVOCATORIA))
     }
 
+  }
+
+  public localStorageRol() {
+    const rol = parseInt(localStorage.getItem('rol'))
+    switch(rol){
+      case 1:
+        this.aspirante = true;
+        this.coordinador = this.jefeV = !this.aspirante;
+      break;
+      case 2:
+        this.coordinador = true;
+        this.aspirante = this.jefeV = !this.coordinador;
+        break;
+      case 3:
+        this.jefeV = true;
+        this.coordinador = this.aspirante = !this.jefeV;
+        break
+    }
   }
 
   cargarDetalles(id) {
@@ -165,6 +198,15 @@ export class CreacionConvocatoriaComponent implements OnInit {
     { value: 'DEL', viewValue: 'DEL' },
     { value: 'DE LA', viewValue: 'DE LA' }
   ];
+
+  onFileSelected(event: any) {
+    const files: FileList = event.target.files;
+    for (let i = 0; i < files.length; i++) {
+      this.selectedFiles.push(files[i]);
+      this.fileNames = this.fileNames + files[i].name + ','
+    }
+    console.log(this.fileNames)
+  }
 
   loadDetalles() {
     this.dataSource = new MatTableDataSource(this.convDetalles);
@@ -275,6 +317,12 @@ export class CreacionConvocatoriaComponent implements OnInit {
     }
 
 
+  }
+
+  aplicarConvocatoria() {
+    this.selectedFiles.forEach(element => {
+      this.convocatoriasService.uploadDocument(element, localStorage.getItem('cui'))
+    });
   }
 
   actualizarConvocatoria() {

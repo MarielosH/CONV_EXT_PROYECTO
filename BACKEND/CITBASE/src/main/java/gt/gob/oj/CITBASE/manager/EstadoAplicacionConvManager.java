@@ -4,7 +4,6 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +31,7 @@ public class EstadoAplicacionConvManager {
 		call.setInt("P_FK_TC_ESTADO_APLICACION_CONV_REF_TC_INFORMACION_PERSONAL_USUARIO", usuario);
 		call.setInt("P_FK_TC_ESTADO_APLICACION_CONV_REF_TC_CONV", convocatoria);
 		call.setString("P_ESTADO", estadoAplicacionConv.estado);
+		call.setString("P_DOCUMENTOS", estadoAplicacionConv.documentos);
 		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
 	    call.execute();
 	    salida.id = call.getInt("p_id_salida");
@@ -43,8 +43,8 @@ public class EstadoAplicacionConvManager {
 		return salida;
 	}
 	
-	public List<Map<String, Object>> getEstadoAplicacionConv(Integer usuario) throws Exception {
-		List<Map<String,Object>> salida = new ArrayList<>();
+	public List<EstadoAplicacionConv> getEstadoAplicacionConv(Integer usuario) throws Exception {
+		List<EstadoAplicacionConv> listaEstados = new ArrayList<>();
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
@@ -57,19 +57,29 @@ public class EstadoAplicacionConvManager {
 		ResultSet rset = (ResultSet) call.getObject("p_cur_dataset");
 		ResultSetMetaData meta = rset.getMetaData();
 		while (rset.next()) {
-			Map<String, Object> map = new HashMap<>();
+			EstadoAplicacionConv estadoConv = new EstadoAplicacionConv();
 			for (int i = 1; i <= meta.getColumnCount(); i++) {
 				String key = meta.getColumnName(i).toString();
 				String value = Objects.toString(rset.getString(key), "");
-				map.put(key, value);
+				switch (key) {
+				case "ID_APLICACION_CONVOCATORIA":
+					estadoConv.id= Integer.parseInt(value);
+					break;
+				case "ESTADO_APLICACION_CONV":
+					estadoConv.estado = value;
+					break;
+				case "DOCUMENTOS":
+					estadoConv.documentos = value;					
+					break;
+				}
 			}
-			salida.add(map);
+			listaEstados.add(estadoConv);
 		}
 		rset.close();
 		call.close();
 		conn.close();
 		
-		return salida;
+		return listaEstados;
 	}
 	
 	public jsonResult modEstadoAplicacionConv(EstadoAplicacionConv estadoAplicacionConv, Integer id) throws Exception {
@@ -82,6 +92,7 @@ public class EstadoAplicacionConvManager {
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
 		call.setInt("P_ID_APLICACION_CONVOCATORIA", id);
 		call.setString("P_ESTADO", estadoAplicacionConv.estado);
+		call.setString("P_DOCUMENTOS", estadoAplicacionConv.documentos);
 		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
 	    call.execute();
 	    salida.id = call.getInt("p_id_salida");

@@ -37,7 +37,7 @@
       <div class="col-4"></div>
       <div class="col-7">
         <h1>
-          Creación Convocatoria
+          <p *ngIf="coordinador">Creación</p> Convocatoria
         </h1>
       </div>
       <div class="col-1">
@@ -139,7 +139,7 @@
                     <div class="form-group col">
                     </div>
                     <div class="form-group col">
-                      <div class="btn-group btn-group-toggle">
+                      <div class="btn-group btn-group-toggle" *ngIf="coordinador">
                         <button mat-raised-button class="btn btn-primary btn-lg" (click)="crearConvocatoria()"
                           style="font-size: 12px;" *ngIf="!validaCreate">Crear Encabezado Convocatoria</button>
                         <button mat-raised-button class="btn btn-warning btn-lg" (click)="actualizarConvocatoria()"
@@ -155,7 +155,7 @@
             </div>
           </div>
         </form>
-        <form [formGroup]="dtConv" name="formDtConv" class="register-form">
+        <form [formGroup]="dtConv" name="formDtConv" class="register-form" *ngIf="coordinador">
           <div style="background-color: white; padding-left: 2%; padding-right: 2%; padding-top: 1.5%; padding-bottom: 2.5%;">
             <div class="row">
               <div class="col-6">
@@ -262,13 +262,13 @@
             </ng-container>
 
             <ng-container matColumnDef="OPCIONES">
-              <th mat-header-cell *matHeaderCellDef class="encabezado"> OPCIONES </th>
+              <th mat-header-cell *matHeaderCellDef class="encabezado"> <p *ngIf="coordinador">OPCIONES</p> </th>
               <td mat-cell style="text-align: justify;" *matCellDef="let row">
                 <a class="btn btn-link btn-warning btn-just-icon" (click)="editar(row);"
                   matTooltipClass="primary-tooltip" matTooltip="Editar" data-toggle="modal"
-                  data-target="#dtConvModal"><i class="fa fa-edit"></i></a>
+                  data-target="#dtConvModal" *ngIf="coordinador"><i class="fa fa-edit"></i></a>
                 <a class="btn btn-link btn-danger btn-just-icon" (click)="borrar(row);"
-                  matTooltipClass="primary-tooltip" matTooltip="Eliminar Solicitud"><i class="fa fa-trash"></i></a>
+                  matTooltipClass="primary-tooltip" matTooltip="Eliminar Solicitud" *ngIf="coordinador"><i class="fa fa-trash"></i></a>
               </td>
             </ng-container>
 
@@ -279,12 +279,20 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="coordinador">
       <div style="width: 100%; text-align: right;">
         <div class="col">
           <button mat-raised-button class="btn btn-success btn-lg" ui-sref="login" (click)="clean();"
             style="font-size: 12px; float: right;">Limpiar</button>
         </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="aspirante">
+      <div style="width: 100%; text-align: right;">
+        <input type="file" name="files" multiple (change)="onFileSelected($event)" />
+        <br>
+        <button type="submit" mat-raised-button class="btn btn-success btn-lg" ui-sref="login"
+        style="font-size: 12px; float: right;" (click)="aplicarConvocatoria()">Subir archivos</button>  
       </div>
     </div>
   </div>

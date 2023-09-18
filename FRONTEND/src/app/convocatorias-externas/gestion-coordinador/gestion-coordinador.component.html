@@ -119,8 +119,9 @@
                             <th mat-header-cell *matHeaderCellDef class="encabezado"> OPCIONES </th>
                             <td mat-cell style="text-align: center;" *matCellDef="let row" >
                                 <a class="btn btn-link btn-info btn-just-icon" (click)="viewDependencia(row);"  matTooltipClass="primary-tooltip" matTooltip="Ver Convocatoria" ><i class="fa fa-eye"></i></a>                                                               
-                                <a class="btn btn-link btn-danger btn-just-icon"  (click)="eliminar(row);" matTooltipClass="primary-tooltip" matTooltip="Eliminar Convocatoria"><i class="fa fa-trash"></i></a>                                           
-                            </td>
+                                <a *ngIf="coordinador" class="btn btn-link btn-danger btn-just-icon"  (click)="eliminar(row);" matTooltipClass="primary-tooltip" matTooltip="Eliminar Convocatoria"><i class="fa fa-trash"></i></a>
+                                <a *ngIf="jefeV" class="btn btn-link btn-warning btn-just-icon" (click)="verAspirantes(row);" matTooltipClass="primary-tooltip" matTooltip="Ver aspirantes"><i class="fa fa-archive"></i></a>
+                              </td>
                           </ng-container>
                                 
                         <tr mat-header-row *matHeaderRowDef="['TITULO','DESCRIPCION','OPCIONES']"></tr>

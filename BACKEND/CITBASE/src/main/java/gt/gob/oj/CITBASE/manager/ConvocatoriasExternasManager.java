@@ -416,10 +416,10 @@ public class ConvocatoriasExternasManager {
 		}
 
 		// actualizar informacion academica
-		modificarInformacionAcademicaPerfil(perfil, salida.id);
+		modificarInformacionAcademicaPerfil(perfil, perfilExistente.ID);
 
 		// actualizar informacion universitaria
-		modificarInformacionUniversitariaPerfil(perfil, salida.id);
+		modificarInformacionUniversitariaPerfil(perfil, perfilExistente.ID);
 
 		salida.result = "OK";
 		return salida;

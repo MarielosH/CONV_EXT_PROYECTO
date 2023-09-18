@@ -37,6 +37,10 @@ export class GestionCoordinadorComponent implements OnInit {
   viewCIDEJ = false;
   viewCIT = false;
   dataSource = new MatTableDataSource<any>();
+
+  aspirante = false;
+  coordinador = false;
+  jefeV = false;
     
   constructor(public authService: AuthService,
     public HttpClient: HttpClient,private fb: FormBuilder,  private _location: Location, private datePipe : DatePipe,
@@ -48,7 +52,7 @@ export class GestionCoordinadorComponent implements OnInit {
       }
 
   ngOnInit() {
-    
+    this.localStorageRol();
     this.dependencia = this.fb.group({
       floatLabel: this.floatLabelControl,
       busqueda: [''],      
@@ -65,6 +69,24 @@ export class GestionCoordinadorComponent implements OnInit {
     this.getConvocatorias();
   }
 
+  public localStorageRol() {
+    const rol = parseInt(localStorage.getItem('rol'))
+    switch(rol){
+      case 1:
+        this.aspirante = true;
+        this.coordinador = this.jefeV = !this.aspirante;
+      break;
+      case 2:
+        this.coordinador = true;
+        this.aspirante = this.jefeV = !this.coordinador;
+        break;
+      case 3:
+        this.jefeV = true;
+        this.coordinador = this.aspirante = !this.jefeV;
+        break
+    }
+  }
+
   viewDependencia(row){
     console.log(row);
     const conv = {
@@ -75,6 +97,11 @@ export class GestionCoordinadorComponent implements OnInit {
     }
     localStorage.setItem('convocatoria', JSON.stringify(row))
     this.router.navigate(['convocatorias-externas/crear-convocatoria']);
+  }
+
+  verAspirantes(row) {
+    localStorage.setItem('convocatoria', JSON.stringify(row))
+    this.router.navigate(['convocatorias-externas/ver-convocatoria-jefe']);
   }
 
   getConvocatorias(){
