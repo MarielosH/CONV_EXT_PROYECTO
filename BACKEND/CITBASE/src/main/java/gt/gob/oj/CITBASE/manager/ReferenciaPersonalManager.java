@@ -63,6 +63,9 @@ String SCHEMA = new Config().getDBSchema();
 				String key = meta.getColumnName(i).toString();
 				String value = Objects.toString(rset.getString(key), "");
 				switch (key) {
+				case "ID_REFERENCIA_PERSONAL":
+					nuevaReferencia.id = Integer.parseInt(value);
+					break;
 				case "NOMBRE":
 					nuevaReferencia.nombre = value;
 					break;

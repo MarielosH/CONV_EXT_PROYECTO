@@ -57,7 +57,7 @@ public class ExperienciaLaboralController {
 	}
 	
 	@GET
-	@Path("/borIdiomasUsuario/id/{id}")
+	@Path("/borExperienciaLaboral/id/{id}")
 	@Produces("application/json")
 	public Response borIdioma(@PathParam("id") Integer id) {
 		try {

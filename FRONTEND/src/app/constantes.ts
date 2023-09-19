@@ -15,14 +15,16 @@ export interface Familiar {
     profesion: string, 
     trabaja: string,
     lugarTrabajo: string,
-    dependeEconomicamente: string
+    dependeEconomicamente: string,
+    id? : string
 }
 
 export interface FamiliarLaborandoOJ {
     nombreCompleto: string,
     parentesco: string,
     dependencia: string,
-    puesto: string
+    puesto: string,
+    id? : string
 }
 
 export interface PasantiaOJ {
@@ -30,7 +32,8 @@ export interface PasantiaOJ {
     fechaInicio: string,    
     fechaFinalizacion: string,
     secretarioJuez: string,
-    registrada: string
+    registrada: string,
+    id? : string
 }
 
 export interface ExperienciaLaboralOJ {
@@ -40,7 +43,8 @@ export interface ExperienciaLaboralOJ {
     jefeInmediato: string,
     puesto: string, 
     renglonPresupuestario: string, 
-    motivoFinRelacionLaboral: string
+    motivoFinRelacionLaboral: string,
+    id? : string
 }
 
 export interface ExperienciaLaboral {
@@ -51,14 +55,16 @@ export interface ExperienciaLaboral {
     puesto: string, 
     jefeInmediato: string,
     telefono: string,
-    motivoFinRelacionLaboral: string
+    motivoFinRelacionLaboral: string,
+    id? : string
 }
 
 export interface ReferenciaPersonal {
     nombre: string,
     tipoRelacion: string,    
     aniosConocerlo: string,
-    telefono: string
+    telefono: string,
+    id? : string
 }
 
 export const ConvocatoriaEjemplo = [

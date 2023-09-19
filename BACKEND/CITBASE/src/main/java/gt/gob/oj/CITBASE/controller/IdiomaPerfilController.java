@@ -60,7 +60,7 @@ public class IdiomaPerfilController {
 	}
 	
 	@GET
-	@Path("/modIdiomasUsuario/idioma/{idioma}/usuario/{usuario}")
+	@Path("/borIdiomasUsuario/idioma/{idioma}/usuario/{usuario}")
 	@Produces("application/json")
 	public Response borIdioma(@PathParam("usuario") Integer usuario, @PathParam("idioma") Integer idioma) {
 		try {

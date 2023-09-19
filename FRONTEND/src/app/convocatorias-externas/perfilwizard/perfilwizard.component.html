@@ -495,7 +495,7 @@
       <br />
       <br />
       <div *ngIf="familiares.length>0">
-        <mat-card *ngFor="let familiar of familiares">
+        <mat-card *ngFor="let familiar of familiares; let index = index">
           <mat-card-content>
             <div class="row">
               <div class="col-4">
@@ -645,7 +645,7 @@
       <br />
       <br />
       <div>
-        <mat-card *ngFor="let familiar of familiaresLaborandoOJ">
+        <mat-card *ngFor="let familiar of familiaresLaborandoOJ; let index = index">
           <mat-card-content>
             <div class="row">
               <div class="col-6">
@@ -1149,7 +1149,7 @@
       <br />
       <br />
       <div>
-        <mat-card *ngFor="let experiencia of experienciaLaboralOJ">
+        <mat-card *ngFor="let experiencia of experienciaLaboralOJ; let index = index">
           <mat-card-content>
             <div class="row">
               <div class="col-3">
@@ -1309,7 +1309,7 @@
       </div>
       <br />
       <div>
-        <mat-card *ngFor="let experiencia of experienciaLaboral">
+        <mat-card *ngFor="let experiencia of experienciaLaboral; let index = index">
           <mat-card-content>
             <div class="row">
               <div class="col-4">

@@ -21,6 +21,7 @@ import htmlToPdfmake from 'html-to-pdfmake';
   styleUrls: ['./perfilwizard.component.scss']
 })
 export class PerfilwizardComponent implements OnInit {
+  idInformacionPersonal = 0;
   cantidiomas = 0;
   tiposLicencias = [];
   discapacidades = [];
@@ -338,6 +339,7 @@ export class PerfilwizardComponent implements OnInit {
           console.log("Perfil Usuario");
           console.log(data);
           localStorage.setItem("informacion_personal_id", data.ID);
+          this.idInformacionPersonal = data.ID;
           this.firstFormGroup.patchValue({
             nombres: (data.NOMBRE != undefined && data.NOMBRE != null) ? data.NOMBRE : '',
             primerApellido: (data.PRIMER_APELLIDO != undefined && data.PRIMER_APELLIDO != null) ? data.PRIMER_APELLIDO : '',
@@ -987,6 +989,8 @@ export class PerfilwizardComponent implements OnInit {
         if (data.result == 'OK') {
           console.log("res: " + data.msj);
           localStorage.setItem("informacion_personal_id", data.id);
+          this.idInformacionPersonal = data.id;
+          console.log("id infopersonal: " + data.id);
           swal("Perfil Usuario Guardado", data.msj, "success");
         } else {
           swal("Error", data.msj, "error")
@@ -995,30 +999,72 @@ export class PerfilwizardComponent implements OnInit {
   }
 
   eliminarIdioma(index: number) {
+    if (this.idInformacionPersonal > 0) {
+      this.convocatoriasService.borIdiomasUsuario(this.idInformacionPersonal, this.idiomas[index].idiomaId).subscribe(
+        data => {
+          console.log(data.p_msj);
+        });
+    }
     this.idiomas.splice(index, 1);
   }
 
   eliminarFamiliar(index: number) {
+    if (this.idInformacionPersonal > 0) {
+      this.convocatoriasService.borFamiliar(this.familiares[index].id).subscribe(
+        data => {
+          console.log(data.p_msj);
+        });
+    }
     this.familiares.splice(index, 1);
   }
 
   eliminarFamiliarLaborandoOJ(index: number) {
+    if (this.idInformacionPersonal > 0) {
+      this.convocatoriasService.borFamiliarLaborandoOJ(this.familiaresLaborandoOJ[index].id).subscribe(
+        data => {
+          console.log(data.p_msj);
+        });
+    }
     this.familiaresLaborandoOJ.splice(index, 1);
   }
 
   eliminarPasantiaOJ(index: number) {
+    if (this.idInformacionPersonal > 0) {
+      this.convocatoriasService.borPasantiaOJ(this.pasantiasOJ[index].id).subscribe(
+        data => {
+          console.log(data.p_msj);
+        })
+    }
     this.pasantiasOJ.splice(index, 1);
   }
 
   eliminarExperienciaOJ(index: number) {
+    if (this.idInformacionPersonal > 0) {
+      this.convocatoriasService.borExperienciaLaboralOJ(this.experienciaLaboralOJ[index].id).subscribe(
+        data => {
+          console.log(data.p_msj);
+        })
+    }
     this.experienciaLaboralOJ.splice(index, 1);
   }
 
   eliminarExperiencia(index: number) {
+    if (this.idInformacionPersonal > 0) {
+      this.convocatoriasService.borExperienciaLaboral(this.experienciaLaboral[index].id).subscribe(
+        data => {
+          console.log(data.p_msj);
+        })
+    }
     this.experienciaLaboral.splice(index, 1);
   }
 
   eliminarReferenciaPersonal(index: number) {
+    if (this.idInformacionPersonal > 0) {
+      this.convocatoriasService.borReferenciaPersonal(this.referenciasPersonales[index].id).subscribe(
+        data => {
+          console.log(data.p_msj);
+        })
+    }
     this.referenciasPersonales.splice(index, 1);
   }
 }

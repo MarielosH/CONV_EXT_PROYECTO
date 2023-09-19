@@ -95,4 +95,53 @@ export class ConvocatoriasExternasService {
     };
   }
 
+  borFamiliar(id): Observable<any> {
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + `Familiar/borFamiliar/id/${id}`)
+      .pipe(
+        catchError(this.handleError('borFamiliar', []))
+      );
+  }
+
+  borFamiliarLaborandoOJ(id): Observable<any> {
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + `Familiar-Laborando-OJ/borFamiliarLaborandoOJ/id/${id}`)
+      .pipe(
+        catchError(this.handleError('borFamiliarLaborandoOJ', []))
+      );
+  }
+
+  borPasantiaOJ(id): Observable<any> {
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + `Pasantia-OJ/borPasantiaOJ/id/${id}`)
+      .pipe(
+        catchError(this.handleError('borPasantiaOJ', []))
+      );
+  }
+
+  borExperienciaLaboral(id): Observable<any> {
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + `Experiencia-Laboral/borExperienciaLaboral/id/${id}`)
+      .pipe(
+        catchError(this.handleError('borExperienciaLaboral', []))
+      );
+  }
+
+  borExperienciaLaboralOJ(id): Observable<any> {
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + `Experiencia-Laboral-OJ/borExperienciaLaboralOJ/id/${id}`)
+      .pipe(
+        catchError(this.handleError('borExperienciaLaboralOJ', []))
+      );
+  }
+
+  borReferenciaPersonal(id): Observable<any> {
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + `Referencia-Personal/borReferenciaPersonal/id/${id}`)
+      .pipe(
+        catchError(this.handleError('borReferenciaPersonal', []))
+      );
+  }
+
+  borIdiomasUsuario(usuarioId, idiomaId): Observable<any> {
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + `Idiomas-Usuario/borIdiomasUsuarioidioma/idioma/${idiomaId}/usuario/${usuarioId}`)
+      .pipe(
+        catchError(this.handleError('borIdiomasUsuario', []))
+      );
+  }
+
 }
