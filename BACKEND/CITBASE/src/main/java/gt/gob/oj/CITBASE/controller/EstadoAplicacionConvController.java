@@ -57,6 +57,18 @@ public class EstadoAplicacionConvController {
 	}
 	
 	@GET
+	@Path("/getEstadoAplicacionConv/conv/{conv}")
+	@Produces("application/json")
+	public Response getAplicantesConv(@PathParam("conv") Integer conv) {
+		try {
+			return Response.ok(manager.getAplicantesConv(conv)).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.ok(new jsonResult(-1, "Error", e.getMessage())).build();
+		}
+	}
+	
+	@GET
 	@Path("/borEstadoAplicacionConv/id/{id}")
 	@Produces("application/json")
 	public Response borEstadoAplicacionConv(@PathParam("id") Integer id) {
