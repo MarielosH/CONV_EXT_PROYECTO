@@ -71,6 +71,7 @@ export class CreacionConvocatoriaComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   tmp_id = '';
   fileNames = '';
+  dpi = '';
 
   aspirante = false;
   coordinador = false;
@@ -106,6 +107,7 @@ export class CreacionConvocatoriaComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dpi = localStorage.getItem('cui');
     this.localStorageRol()
     const conv = JSON.parse(localStorage.getItem('convocatoria'));
     this.creation = this.fb.group({
@@ -203,9 +205,8 @@ export class CreacionConvocatoriaComponent implements OnInit {
     const files: FileList = event.target.files;
     for (let i = 0; i < files.length; i++) {
       this.selectedFiles.push(files[i]);
-      this.fileNames = this.fileNames + files[i].name + ','
+      this.fileNames = `${this.fileNames}${this.dpi}/${files[i].name},`
     }
-    console.log(this.fileNames)
   }
 
   loadDetalles() {
@@ -320,9 +321,19 @@ export class CreacionConvocatoriaComponent implements OnInit {
   }
 
   aplicarConvocatoria() {
-    this.selectedFiles.forEach(element => {
-      this.convocatoriasService.uploadDocument(element, localStorage.getItem('cui'))
-    });
+    if (this.selectedFiles.length == 0) {
+      swal("Error", "Debes adjuntar la papeleria requerida para poder aplicar", "error");
+    } else {
+      this.selectedFiles.forEach(element => {
+        this.convocatoriasService.uploadDocument(element, this.dpi).subscribe(data => {})
+      });
+      const body = {documentos: this.fileNames, estado: 'E'}
+      this.convocatoriasService.applyConv(localStorage.getItem('informacion_personal_id'),this.id, body).subscribe(data => {
+        if (data.id >= 1) {
+          swal("Su aplicación a la convocatoria a sido guardada", '', "success");
+        }
+      })
+    }
   }
 
   actualizarConvocatoria() {

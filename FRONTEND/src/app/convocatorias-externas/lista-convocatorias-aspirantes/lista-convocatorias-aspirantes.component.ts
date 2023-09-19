@@ -11,6 +11,7 @@ import { startWith, map } from 'rxjs/operators';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { Convocatorias } from 'app/constantes';
+import { ConvocatoriaService } from '../convocatoria.service';
 @Component({
   selector: 'app-lista-convocatorias-aspirantes',
   templateUrl: './lista-convocatorias-aspirantes.component.html',
@@ -34,7 +35,7 @@ export class ListaConvocatoriasAspirantesComponent implements OnInit {
     
   constructor(public authService: AuthService,
     public HttpClient: HttpClient,private fb: FormBuilder,  private _location: Location, private datePipe : DatePipe,
-    private router: Router,private route:ActivatedRoute,public dialog: MatDialog
+    private router: Router,private route:ActivatedRoute,public dialog: MatDialog, private convocatoriaService: ConvocatoriaService
   ) { 
     this.session = this.authService.getsession().SESSION;
     this.constantes = this.authService.getsession().CONSTANTES;
@@ -49,7 +50,16 @@ export class ListaConvocatoriasAspirantesComponent implements OnInit {
     );
 
     this.valProfile();
+    this.getListaAplicadas();
+  }
 
+  getListaAplicadas(){
+    this.convocatoriaService.showApplyConv(localStorage.getItem('informacion_personal_id')).subscribe(data => {
+      console.log(data);
+      if (data.length > 0) {
+        this.dataSource.data = [...data];
+      }
+    });
   }
 
   valProfile(){

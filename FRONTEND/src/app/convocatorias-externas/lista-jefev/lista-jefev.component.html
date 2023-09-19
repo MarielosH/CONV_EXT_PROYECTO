@@ -1,53 +1,53 @@
 <div class="main-content">
   <div class="container-fluid">
     <div class="row">
+      <h1>{{title}}</h1>
+    </div>
+    <div class="row">
       <div class="col-md-6">
         <div class="material-datatables; mat-elevation-z8 table-responsive"
         style="border: 2px solid #215074; padding-left: 10px; padding-right: 10px; padding-top: 10px; margin-bottom: 40px; font-size: 14px; border-radius: 5px; ">
-        <table id="datatables" mat-table matSort
+        <table id="datatables" mat-table [dataSource]="dataSource" matSort
           class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-          <ng-container matColumnDef="NOMBRE">
-            <th mat-header-cell *matHeaderCellDef class="encabezado"> NOMBRE </th>
-            <!-- <td mat-cell style="text-align: left;" *matCellDef="let element"><span>
-                {{element.TITULO}} </span> </td> -->
+          <ng-container matColumnDef="USUARIO">
+            <th mat-header-cell *matHeaderCellDef class="encabezado"> USUARIO </th>
+            <td mat-cell style="text-align: left;" *matCellDef="let element"><span>
+                {{element.usuario}} </span> </td>
           </ng-container>
 
-          <ng-container matColumnDef="CONVOCATORIA">
-            <th mat-header-cell *matHeaderCellDef class="encabezado"> CONVOCATORIA </th>
-            <!-- <td mat-cell style="text-align: justify;" *matCellDef="let element">
-              {{element.DATA}} </td> -->
+          <ng-container matColumnDef="ESTADO">
+            <th mat-header-cell *matHeaderCellDef class="encabezado"> ESTADO </th>
+            <td mat-cell style="text-align: justify;" *matCellDef="let element">
+              {{element.estado}} </td>
           </ng-container>
 
           <ng-container matColumnDef="OPCIONES">
             <th mat-header-cell *matHeaderCellDef class="encabezado"> OPCIONES </th>
             <td mat-cell style="text-align: justify;" *matCellDef="let row">
-              <a class="btn btn-link btn-warning btn-just-icon"
-                matTooltipClass="primary-tooltip" matTooltip="Editar" data-toggle="modal"
-                data-target="#dtConvModal"><i class="fa fa-edit"></i></a>
-              <!-- <a class="btn btn-link btn-danger btn-just-icon" (click)="borrar(row);"
-                matTooltipClass="primary-tooltip" matTooltip="Eliminar Solicitud"><i class="fa fa-trash"></i></a> -->
+              <a class="btn btn-link btn-info btn-just-icon" (click)="cargarDocumentos(row)"
+                matTooltipClass="primary-tooltip" matTooltip="Ver documentos" data-toggle="modal"
+                data-target="#dtConvModal"><i class="fa fa-eye"></i></a>
             </td>
           </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="['NOMBRE','CONVOCATORIA','OPCIONES']"></tr>
-          <tr mat-row *matRowDef="let row; columns: ['NOMBRE','CONVOCATORIA','OPCIONES'];"></tr>
+          <tr mat-header-row *matHeaderRowDef="['USUARIO','ESTADO','OPCIONES']"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['USUARIO','ESTADO','OPCIONES'];"></tr>
         </table>
         <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
       </div>
       </div>
       <div class="col-md-6">
-        <div class="row">
-          <h3>Jose Lorenzo</h3>
-        </div>
-        <div class="row">
-          <h5>Convocatoria externa no 4</h5>
-        </div>
-        <div class="row">
-          <ul>
-            <li><a href="#">Archivo 1</a></li>
-            <li><a href="#">Archivo 2</a></li>
-            <li><a href="#">Archivo 3</a></li>
+        <div class="card" style="width: 23rem;" *ngIf="user">
+          <div class="card-header">
+            <h3>{{user.usuario}}</h3>
+          </div>
+          <ul class="list-group list-group-flush" *ngFor="let archivo of archivos">
+            <li class="list-group-item"><a (click)="openFile(archivo.path, archivo.dir)">{{archivo.dir}}</a></li>
           </ul>
+          <div class="card-footer">
+            <button type="button" class="btn btn-outline-success" (click)="aceptar()">Aceptar</button>
+            <button type="button" class="btn btn-outline-danger" (click)="rechazar()">Rechazar</button>
+          </div>
         </div>
       </div>
     </div>

@@ -101,7 +101,7 @@ export class GestionCoordinadorComponent implements OnInit {
 
   verAspirantes(row) {
     localStorage.setItem('convocatoria', JSON.stringify(row))
-    this.router.navigate(['convocatorias-externas/ver-convocatoria-jefe']);
+    this.router.navigate(['convocatorias-externas/ver-convocatorias-jefe']);
   }
 
   getConvocatorias(){

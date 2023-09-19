@@ -12,18 +12,52 @@ export class ConvocatoriaService {
   uploadDocument(file: any, dpi: string): Observable<any>{
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('dpi', dpi);
+    formData.append('directory', dpi);
     return this.http.post<any>(this.appSettings.restApiServiceBaseUri + 'AplicarConvocatoria/aplicar', formData)
     .pipe(
       catchError(this.handleError('uploadFile', []))
     );
   }
 
+  getDocument(path: string): Observable<any> {
+    const httpOptions = {
+      observe: 'response' as 'body',
+      responseType: 'blob' as 'json',
+    };
+    const formData = new FormData();
+    formData.append('path', path);
+    return this.http.post<any>(this.appSettings.restApiServiceBaseUri + 'AplicarConvocatoria/mostrar', formData, httpOptions)
+    .pipe(
+      catchError(this.handleError('viewFile',[]))
+    )
+  }
+
   applyConv(idUsuario: any, idConv: any, body: any): Observable<any>{
-    return this.http.post<any>(this.appSettings.restApiServiceBaseUri + `/inEstadoAplicacionConv/usuario/${idUsuario}/convocatoria/${idConv}`, body)
+    return this.http.post<any>(this.appSettings.restApiServiceBaseUri + `Estado-Aplicacion-Conv/inEstadoAplicacionConv/usuario/${idUsuario}/convocatoria/${idConv}`, body)
     .pipe(
       catchError(this.handleError('inEstarConvocatoria',[]))
     )
+  }
+
+  showApplyConv(idUsuario: any){
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + `Estado-Aplicacion-Conv/getEstadoAplicacionConv/usuario/${idUsuario}`)
+    .pipe(
+      catchError(this.handleError('getAplicacionConvocatorias', []))
+    );
+  }
+
+  mostrarAplicantesConv(idConv: string){
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + `Estado-Aplicacion-Conv/getEstadoAplicacionConv/conv/${idConv}`)
+    .pipe(
+      catchError(this.handleError('getAplicantesConvocatorias', []))
+    );
+  }
+
+  aceptarRechazarAplicante(idEstadoAppConv: any, estado: string){
+    return this.http.post<any>(this.appSettings.restApiServiceBaseUri + `Estado-Aplicacion-Conv/modEstadoAplicacionConv/id/${idEstadoAppConv}`, {estado})
+    .pipe(
+      catchError(this.handleError('getAplicantesConvocatorias', []))
+    );
   }
 
   insConvocatoria(convVal): Observable<any> {

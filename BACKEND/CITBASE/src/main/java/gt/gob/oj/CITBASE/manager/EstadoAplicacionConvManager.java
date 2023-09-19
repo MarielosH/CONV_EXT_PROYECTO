@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import gt.gob.oj.CITBASE.model.AplicantesConv;
 import gt.gob.oj.CITBASE.model.EstadoAplicacionConv;
 import gt.gob.oj.utils.Config;
 import gt.gob.oj.utils.ConnectionsPool;
@@ -67,10 +68,71 @@ public class EstadoAplicacionConvManager {
 					estadoConv.id= Integer.parseInt(value);
 					break;
 				case "ESTADO_APLICACION_CONV":
-					estadoConv.estado = value;
+					if(value.equals("E")) {
+						estadoConv.estado = "En proceso";
+					} else if (value.equals("A")) {
+						estadoConv.estado = "Aceptado";
+					} else {
+						estadoConv.estado = "Rechazado";
+					}
+					
 					break;
 				case "DOCUMENTOS":
 					estadoConv.documentos = value;					
+					break;
+				case "TITULO_CONVOCATORIA":
+					estadoConv.titulo = value;
+					break;
+				}
+			}
+			listaEstados.add(estadoConv);
+		}
+		rset.close();
+		call.close();
+		conn.close();
+		
+		return listaEstados;
+	}
+	
+	public List<AplicantesConv> getAplicantesConv(Integer conv) throws Exception {
+		List<AplicantesConv> listaEstados = new ArrayList<>();
+		ConnectionsPool c = new ConnectionsPool();
+		Connection conn = c.conectar();
+		CallableStatement call = conn
+				.prepareCall("call " + "C##CIT_BASE" +
+						".PKG_TC_ESTADO_APLICACION_CONV.PROC_MOSTRAR_TC_ESTADO_APLICACION_CONV_FILTER_CONV(?,?,?)");
+		call.setInt("p_id_conv", conv);
+		call.registerOutParameter("p_cur_dataset", OracleTypes.CURSOR);
+		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
+		call.execute();
+		ResultSet rset = (ResultSet) call.getObject("p_cur_dataset");
+		ResultSetMetaData meta = rset.getMetaData();
+		while (rset.next()) {
+			AplicantesConv estadoConv = new AplicantesConv();
+			for (int i = 1; i <= meta.getColumnCount(); i++) {
+				String key = meta.getColumnName(i).toString();
+				String value = Objects.toString(rset.getString(key), "");
+				switch (key) {
+				case "ID_APLICACION_CONVOCATORIA":
+					estadoConv.id= Integer.parseInt(value);
+					break;
+				case "ESTADO_APLICACION_CONV":
+					if(value.equals("E")) {
+						estadoConv.estado = "En proceso";
+					} else if (value.equals("A")) {
+						estadoConv.estado = "Aceptado";
+					} else {
+						estadoConv.estado = "Rechazado";
+					}
+					break;
+				case "DOCUMENTOS":
+					estadoConv.documentos = value;					
+					break;
+				case "TITULO_CONVOCATORIA":
+					estadoConv.titulo = value;
+					break;
+				case "USUARIO":
+					estadoConv.usuario = value;
 					break;
 				}
 			}

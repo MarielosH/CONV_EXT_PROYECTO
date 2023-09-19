@@ -11,6 +11,10 @@ import { startWith, map } from '../../../../node_modules/rxjs/operators';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { Convocatorias } from 'app/constantes';
+import { ConvocatoriaService } from '../convocatoria.service';
+import { AppconfigService } from 'app/appconfig.service';
+import { element } from 'protractor';
+import { data } from 'jquery';
 
 @Component({
   selector: 'app-lista-jefev',
@@ -33,23 +37,21 @@ export class ListaJefevComponent implements OnInit {
   viewCIDEJ = false;
   viewCIT = false;
   dataSource = new MatTableDataSource<any>();
-    
+  title = '';
+  user: any = null;
+  archivos = [];
+  sanRoute = this.appSettings.pathSAN;
+  idConvocatoria = 0;
   constructor(public authService: AuthService,
     public HttpClient: HttpClient,private fb: FormBuilder,  private _location: Location, private datePipe : DatePipe,
-    private router: Router,private route:ActivatedRoute,public dialog: MatDialog
+    private router: Router,private route:ActivatedRoute,public dialog: MatDialog, private convocatoriaService: ConvocatoriaService,
+    private appSettings: AppconfigService
   ) { 
     this.session = this.authService.getsession().SESSION;
     this.constantes = this.authService.getsession().CONSTANTES;
       }
 
   ngOnInit() {
-    
-    this.dependencia = this.fb.group({
-      floatLabel: this.floatLabelControl,
-      busqueda: [''],      
-      selEstados: ['']      
-    });
-    
     this.route.params.subscribe(
       (params: Params) => {
         this.loadDependencias();
@@ -57,7 +59,60 @@ export class ListaJefevComponent implements OnInit {
     );
 
     this.valProfile();
+    const tmp = JSON.parse(localStorage.getItem('convocatoria'))
+    this.idConvocatoria = tmp.ID_CONVOCATORIA;
+    this.getParticipantes(this.idConvocatoria)
+    this.title = tmp.TITULO;
+  }
 
+  getParticipantes(idConv) {
+    this.convocatoriaService.mostrarAplicantesConv(idConv).subscribe( data => {
+      this.dataSource.data = [...data]
+    });
+  }
+
+  cargarDocumentos(row){
+    this.user = row;
+    const tmp = row.documentos.split(',');
+    tmp.forEach(dir => {
+      const path = this.appSettings.pathSAN + dir;
+      this.archivos.push({path, dir})
+    })
+  }
+
+  openFile(path, nombre) {
+    this.convocatoriaService.getDocument(path).subscribe(
+      data=> {
+        let blob: Blob = new Blob([data.body], {type: 'application/pdf'});
+        var fileURL = window.URL.createObjectURL(blob);
+        let pdfWindow = window.open("");
+        pdfWindow.document.write("<iframe  width='100%' height='100%' src='" + fileURL+"'></iframe>")
+        pdfWindow.document.title = "Documentación " + nombre;
+      }
+    )
+  }
+
+  aceptar(){
+    this.modAplicacionConv(this.user.id, 'A');
+  }
+
+  rechazar(){
+    this.modAplicacionConv(this.user.id, 'R');
+  }
+
+  modAplicacionConv(id, estado){
+    this.convocatoriaService.aceptarRechazarAplicante(id,estado).subscribe(
+      data => {
+        if (data.id != id) {
+          swal("Error", data.msj, "error")
+        } else if (estado == 'A') {
+          swal("Genial", "El nuevo aspirante sera contactado", "success")
+        } else {
+          swal("", "Se retiro al participante de la convocatoria", "error")
+        }
+        this.getParticipantes(this.idConvocatoria)
+      }
+    )
   }
 
   valProfile(){
