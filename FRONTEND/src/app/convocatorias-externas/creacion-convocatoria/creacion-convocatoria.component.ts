@@ -207,7 +207,6 @@ export class CreacionConvocatoriaComponent implements OnInit {
       this.selectedFiles.push(files[i]);
       this.fileNames = `${this.fileNames}${this.dpi}/${files[i].name},`
     }
-    console.log(this.fileNames)
   }
 
   loadDetalles() {
@@ -322,13 +321,19 @@ export class CreacionConvocatoriaComponent implements OnInit {
   }
 
   aplicarConvocatoria() {
-    this.selectedFiles.forEach(element => {
-      this.convocatoriasService.uploadDocument(element, this.dpi).subscribe(data => {})
-    });
-    const body = {documentos: this.fileNames, estado: 'E'}
-    this.convocatoriasService.applyConv(1,this.id, body).subscribe(data => {
-      console.log(data);
-    })
+    if (this.selectedFiles.length == 0) {
+      swal("Error", "Debes adjuntar la papeleria requerida para poder aplicar", "error");
+    } else {
+      this.selectedFiles.forEach(element => {
+        this.convocatoriasService.uploadDocument(element, this.dpi).subscribe(data => {})
+      });
+      const body = {documentos: this.fileNames, estado: 'E'}
+      this.convocatoriasService.applyConv(1,this.id, body).subscribe(data => {
+        if (data.id >= 1) {
+          swal("Su aplicación a la convocatoria a sido guardada", '', "success");
+        }
+      })
+    }
   }
 
   actualizarConvocatoria() {

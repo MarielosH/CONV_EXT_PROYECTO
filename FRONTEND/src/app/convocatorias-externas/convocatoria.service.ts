@@ -26,6 +26,13 @@ export class ConvocatoriaService {
     )
   }
 
+  showApplyConv(idUsuario: number){
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + `Estado-Aplicacion-Conv/getEstadoAplicacionConv/usuario/1`)
+    .pipe(
+      catchError(this.handleError('getAplicacionConvocatorias', []))
+    );
+  }
+
   insConvocatoria(convVal): Observable<any> {
     return this.http.post<any>(this.appSettings.restApiServiceBaseUri + 'Convocatoria/inConvocatoria', convVal)
       .pipe(
