@@ -49,7 +49,7 @@ export class ListaJefevComponent implements OnInit {
       busqueda: [''],      
       selEstados: ['']      
     });
-    console.log("prueba");
+    
     this.route.params.subscribe(
       (params: Params) => {
         this.loadDependencias();
@@ -58,7 +58,6 @@ export class ListaJefevComponent implements OnInit {
 
     this.valProfile();
 
-    console.log("prueba de impresion");
   }
 
   valProfile(){
