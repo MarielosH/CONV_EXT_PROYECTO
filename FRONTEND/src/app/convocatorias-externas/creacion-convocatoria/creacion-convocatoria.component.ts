@@ -328,7 +328,7 @@ export class CreacionConvocatoriaComponent implements OnInit {
         this.convocatoriasService.uploadDocument(element, this.dpi).subscribe(data => {})
       });
       const body = {documentos: this.fileNames, estado: 'E'}
-      this.convocatoriasService.applyConv(1,this.id, body).subscribe(data => {
+      this.convocatoriasService.applyConv(localStorage.getItem('informacion_personal_id'),this.id, body).subscribe(data => {
         if (data.id >= 1) {
           swal("Su aplicación a la convocatoria a sido guardada", '', "success");
         }

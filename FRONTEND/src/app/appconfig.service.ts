@@ -16,7 +16,7 @@ export class AppconfigService {
   sistemaId = 54  //id sistema  oauth  CITBASE2 16
   sistemaIdOAUTH = 2  //id sistema  oauth
   sistemaIdRRHH = 33
-  
+  pathSAN = 'C:/SAN/'
   
   Sistema: 'UNAP'
 

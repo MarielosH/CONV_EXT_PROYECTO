@@ -19,6 +19,19 @@ export class ConvocatoriaService {
     );
   }
 
+  getDocument(path: string): Observable<any> {
+    const httpOptions = {
+      observe: 'response' as 'body',
+      responseType: 'blob' as 'json',
+    };
+    const formData = new FormData();
+    formData.append('path', path);
+    return this.http.post<any>(this.appSettings.restApiServiceBaseUri + 'AplicarConvocatoria/mostrar', formData, httpOptions)
+    .pipe(
+      catchError(this.handleError('viewFile',[]))
+    )
+  }
+
   applyConv(idUsuario: any, idConv: any, body: any): Observable<any>{
     return this.http.post<any>(this.appSettings.restApiServiceBaseUri + `Estado-Aplicacion-Conv/inEstadoAplicacionConv/usuario/${idUsuario}/convocatoria/${idConv}`, body)
     .pipe(
@@ -26,10 +39,24 @@ export class ConvocatoriaService {
     )
   }
 
-  showApplyConv(idUsuario: number){
-    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + `Estado-Aplicacion-Conv/getEstadoAplicacionConv/usuario/1`)
+  showApplyConv(idUsuario: any){
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + `Estado-Aplicacion-Conv/getEstadoAplicacionConv/usuario/${idUsuario}`)
     .pipe(
       catchError(this.handleError('getAplicacionConvocatorias', []))
+    );
+  }
+
+  mostrarAplicantesConv(idConv: string){
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + `Estado-Aplicacion-Conv/getEstadoAplicacionConv/conv/${idConv}`)
+    .pipe(
+      catchError(this.handleError('getAplicantesConvocatorias', []))
+    );
+  }
+
+  aceptarRechazarAplicante(idEstadoAppConv: any, estado: string){
+    return this.http.post<any>(this.appSettings.restApiServiceBaseUri + `Estado-Aplicacion-Conv/modEstadoAplicacionConv/id/${idEstadoAppConv}`, {estado})
+    .pipe(
+      catchError(this.handleError('getAplicantesConvocatorias', []))
     );
   }
 

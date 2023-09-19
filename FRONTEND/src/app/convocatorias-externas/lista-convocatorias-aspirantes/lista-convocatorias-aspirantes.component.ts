@@ -54,10 +54,10 @@ export class ListaConvocatoriasAspirantesComponent implements OnInit {
   }
 
   getListaAplicadas(){
-    this.convocatoriaService.showApplyConv(1).subscribe(data => {
+    this.convocatoriaService.showApplyConv(localStorage.getItem('informacion_personal_id')).subscribe(data => {
       console.log(data);
       if (data.length > 0) {
-        this.dataSource.data = [...data, ...this.dataSource.data];
+        this.dataSource.data = [...data];
       }
     });
   }
