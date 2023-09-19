@@ -478,7 +478,6 @@ export class PerfilwizardComponent implements OnInit {
       .getListaIdiomasExtranjeros()
       .subscribe(
         data => {
-          console.log(data);
           this.listaIdiomasExtranjeros = data;
         });
   }
