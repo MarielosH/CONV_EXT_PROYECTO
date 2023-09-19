@@ -1430,7 +1430,7 @@
               </tr>
             </thead>
             <tbody *ngIf="referenciasPersonales.length>0">
-              <tr *ngFor="let referencia of referenciasPersonales; let index = index">
+              <tr *ngFor="let referencia of referenciasPersonales; let index = index" >
                 <td class="text-center" style="width: 150px;">
                   <mat-form-field color="warn" [floatLabel]="floatLabelControl.value" class="textos">
                     <input disabled matInput [value]="referencia.nombre" type="text" placeholder="Nombre">

@@ -335,6 +335,9 @@ export class PerfilwizardComponent implements OnInit {
     this.convocatoriasService.getPerfilUsuarioByDPI(localStorage.getItem('cui')).subscribe(
       (data: any) => {
         if (data != null && data != undefined) {
+          console.log("Perfil Usuario");
+          console.log(data);
+          localStorage.setItem("informacion_personal_id", data.ID);
           this.firstFormGroup.patchValue({
             nombres: (data.NOMBRE != undefined && data.NOMBRE != null) ? data.NOMBRE : '',
             primerApellido: (data.PRIMER_APELLIDO != undefined && data.PRIMER_APELLIDO != null) ? data.PRIMER_APELLIDO : '',
@@ -983,16 +986,12 @@ export class PerfilwizardComponent implements OnInit {
       data => {
         if (data.result == 'OK') {
           console.log("res: " + data.msj);
+          localStorage.setItem("informacion_personal_id", data.id);
           swal("Perfil Usuario Guardado", data.msj, "success");
         } else {
           swal("Error", data.msj, "error")
         }
       })
-  }
-
-  submit() {
-    console.log(this.firstFormGroup.value);
-    console.log(this.secondFormGroup.value);
   }
 
   eliminarIdioma(index: number) {
