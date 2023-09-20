@@ -1627,13 +1627,24 @@
           </table>
         </div>
       </div>
-      <button class="btn btn-primary" (click)="downloadAsPDF()">Descargar PDF</button>
+      <div class="row">
+        <div class="col-9"> <h4> Favor debe descargar el pdf, firmarlo y subirlo firmado. </h4></div>
+        <div class="col-3"> <button class="btn btn-primary" (click)="downloadAsPDF()">Descargar PDF</button> </div>
+      </div>  
+      <div class="row" >
+        <div style="width: 100%; text-align: right;">
+          <input type="file" name="files" multiple (change)="onFileSelected($event)" />
+          <br>
+          <button type="submit" mat-raised-button class="btn btn-success btn-lg" ui-sref="login"
+          style="font-size: 12px; float: right;" (click)="subirPerfil()">Aplicar a la convocatoria</button>  
+        </div>
+      </div>    
     </div>
 
     <div>
       <button mat-button matStepperPrevious>Atrás</button>
       <button mat-button (click)="stepper.reset()">Reiniciar</button>
-      <button mat-button (click)="guardarData()">Enviar</button>
+      <button mat-button (click)="guardarData()">Guardar</button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>

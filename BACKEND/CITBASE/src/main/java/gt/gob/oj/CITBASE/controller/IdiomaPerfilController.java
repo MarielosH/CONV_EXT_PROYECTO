@@ -62,9 +62,9 @@ public class IdiomaPerfilController {
 	@GET
 	@Path("/borIdiomasUsuario/idioma/{idioma}/usuario/{usuario}")
 	@Produces("application/json")
-	public Response borIdioma(@PathParam("usuario") Integer usuario, @PathParam("idioma") Integer idioma) {
+	public Response borIdioma(@PathParam("idioma") Integer idioma, @PathParam("usuario") Integer usuario) {
 		try {
-			return Response.ok(manager.modVisibilidadIdiomaUsuario(usuario, idioma)).build();
+			return Response.ok(manager.modVisibilidadIdiomaUsuario(idioma, usuario)).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.ok(new jsonResult(-1, "Error", e.getMessage())).build();

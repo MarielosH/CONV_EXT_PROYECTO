@@ -138,10 +138,20 @@ export class ConvocatoriasExternasService {
   }
 
   borIdiomasUsuario(usuarioId, idiomaId): Observable<any> {
-    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + `Idiomas-Usuario/borIdiomasUsuarioidioma/idioma/${idiomaId}/usuario/${usuarioId}`)
+    return this.http.get<any>(this.appSettings.restApiServiceBaseUri + `Idiomas-Usuario/borIdiomasUsuario/idioma/${idiomaId}/usuario/${usuarioId}`)
       .pipe(
         catchError(this.handleError('borIdiomasUsuario', []))
       );
+  }
+
+  uploadDocument(file: any, dpi: string): Observable<any>{
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('directory', dpi);
+    return this.http.post<any>(this.appSettings.restApiServiceBaseUri + 'Convocatorias-Externas/guardarPerfilPdf', formData)
+    .pipe(
+      catchError(this.handleError('uploadFile', []))
+    );
   }
 
 }

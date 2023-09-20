@@ -99,7 +99,7 @@ public class EstadoAplicacionConvManager {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		CallableStatement call = conn
-				.prepareCall("call " + "C##CIT_BASE" +
+				.prepareCall("call " + "CIT_BASE" +
 						".PKG_TC_ESTADO_APLICACION_CONV.PROC_MOSTRAR_TC_ESTADO_APLICACION_CONV_FILTER_CONV(?,?,?)");
 		call.setInt("p_id_conv", conv);
 		call.registerOutParameter("p_cur_dataset", OracleTypes.CURSOR);

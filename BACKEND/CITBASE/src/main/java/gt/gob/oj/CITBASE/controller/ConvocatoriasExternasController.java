@@ -1,5 +1,11 @@
 package gt.gob.oj.CITBASE.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -8,10 +14,16 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+
 import gt.gob.oj.CITBASE.manager.ConvocatoriasExternasManager;
+import gt.gob.oj.CITBASE.manager.EstadoAplicacionConvManager;
 import gt.gob.oj.CITBASE.manager.LoginManager;
+import gt.gob.oj.CITBASE.model.EstadoAplicacionConv;
 import gt.gob.oj.CITBASE.model.ExperienciaLaboralOJ;
 import gt.gob.oj.CITBASE.model.PerfilSolicitudEmpleo;
 import gt.gob.oj.CITBASE.model.Usuario;
@@ -21,7 +33,40 @@ import gt.gob.oj.utils.jsonResult;
 public class ConvocatoriasExternasController {
 
 	ConvocatoriasExternasManager manager = new ConvocatoriasExternasManager();
+	EstadoAplicacionConvManager managerEstadoAplicacion = new EstadoAplicacionConvManager();
+	@POST
+	 @Path("/guardarPerfilPdf")
+		@Produces("application/json")
+	    @Consumes(MediaType.MULTIPART_FORM_DATA)
+	    public Response uploadFile(
+	        @Context HttpServletRequest request,
+	        @FormDataParam("file") InputStream fileInputStream,
+	        @FormDataParam("file") FormDataContentDisposition fileFormDataContentDisposition,
+				@FormDataParam("directory") String directory) throws Exception {
+		 String fileLocation = "C://SAN//" + directory + "//" + "PerfilSolicitudEmpleo_"+fileFormDataContentDisposition.getFileName();  
+			// saving file
+			try {
+				File directoryFile = new File("C://SAN//" + directory);
+				if (!directoryFile.exists()) {
+					directoryFile.mkdirs();
+				}
 
+				int read = 0;
+				byte[] bytes = new byte[1024];
+				FileOutputStream out = new FileOutputStream(new File(fileLocation));
+				while ((read = fileInputStream.read(bytes)) != -1) {
+					out.write(bytes, 0, read);
+				}
+				out.flush();
+				out.close();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			String output = "File successfully uploaded to : " + fileLocation;
+			return Response.status(200).entity(output).build();
+		}
+	
 	@GET
 	@Path("/getConvocatoriasExt")
 	@Produces("application/json")

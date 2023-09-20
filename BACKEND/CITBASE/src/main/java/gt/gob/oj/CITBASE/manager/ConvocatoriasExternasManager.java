@@ -328,8 +328,9 @@ public class ConvocatoriasExternasManager {
 
 		// actualizar idioma usuario
 		for (IdiomasPerfilSE idioma : perfil.IDIOMAS) {
-			if (perfilExistente.IDIOMAS.stream().filter(actual -> actual.idiomaId.equals(idioma.idiomaId)).findFirst()
-					.orElse(null) != null) {
+			if (perfilExistente.IDIOMAS.stream()
+					.filter(actual -> (actual.idiomaId.equals(idioma.idiomaId)))
+					.findFirst().orElse(null) != null) {
 				idiomaUsuarioManager.modIdiomaUsuario(idioma, idioma.idiomaId, perfilExistente.ID);
 			} else {
 				idiomaUsuarioManager.inIdiomaUsuario(idioma, idioma.idiomaId, perfilExistente.ID);
@@ -338,7 +339,8 @@ public class ConvocatoriasExternasManager {
 
 		// actualizar familiares
 		for (FamiliaPerfilSE familiar : perfil.FAMILIARES) {
-			if (perfilExistente.FAMILIARES.stream().filter(fam -> fam.nombreFamiliar.equals(familiar.nombreFamiliar))
+			if (perfilExistente.FAMILIARES.stream()
+					.filter(fam -> fam.nombreFamiliar.equals(familiar.nombreFamiliar) && fam.mostrar.equals("T"))
 					.findFirst().orElse(null) != null) {
 				familiarManager.modFamiliar(familiar, familiar.id);
 			} else {
@@ -348,13 +350,11 @@ public class ConvocatoriasExternasManager {
 
 		// actualizar familiares laborando OJ
 		for (FamiliaresLaborandoOJ familiarLaborandoOJ : perfil.FAMILIARES_LABORANDO_OJ) {
-			if (perfilExistente.FAMILIARES_LABORANDO_OJ.stream()
-					.filter(fam -> fam.nombreCompleto.equals(familiarLaborandoOJ.nombreCompleto)).findFirst()
-					.orElse(null) != null) {
+			if (perfilExistente.FAMILIARES_LABORANDO_OJ.stream().filter(
+					fam -> fam.nombreCompleto.equals(familiarLaborandoOJ.nombreCompleto) && fam.mostrar.equals("T"))
+					.findFirst().orElse(null) != null) {
 				familiarLaborandoManager.modFamiliarLaborandoOJ(familiarLaborandoOJ, familiarLaborandoOJ.id);
 			} else {
-				//System.out.println("No encontró un familiar laborando OJ igual en el perfil existente ......"
-					//	+ familiarLaborandoOJ.nombreCompleto + "\n");
 				familiarLaborandoManager.inFamiliarLaborandoOJ(familiarLaborandoOJ, perfilExistente.ID);
 			}
 		}
@@ -363,12 +363,10 @@ public class ConvocatoriasExternasManager {
 		for (PasantiasOJ pasantia : perfil.PASANTIAS) {
 			if (perfilExistente.PASANTIAS.stream()
 					.filter(actual -> (actual.dependencia.equals(pasantia.dependencia)
-							&& actual.secretarioJuez.equals(pasantia.secretarioJuez)))
+							&& actual.secretarioJuez.equals(pasantia.secretarioJuez) && actual.mostrar.equals("T")))
 					.findFirst().orElse(null) != null) {
 				pasantiaManager.modPasantiaOJ(pasantia, pasantia.id);
 			} else {
-				//System.out.println(
-				//		"No encontró una pasantia igual en el perfil existente ......" + pasantia.dependencia + "\n");
 				pasantiaManager.inPasantiaOJ(pasantia, perfilExistente.ID);
 			}
 		}
@@ -378,12 +376,10 @@ public class ConvocatoriasExternasManager {
 			if (perfilExistente.EXPERIENCIA_LABORAL.stream()
 					.filter(actual -> (actual.institucionEmpresa.equals(experiencia.institucionEmpresa)
 							&& actual.jefeInmediato.equals(experiencia.jefeInmediato)
-							&& actual.puesto.equals(experiencia.puesto)))
+							&& actual.puesto.equals(experiencia.puesto) && actual.mostrar.equals("T")))
 					.findFirst().orElse(null) != null) {
 				experienciaLaboralManager.modExperienciaLaboral(experiencia, experiencia.id);
 			} else {
-				//System.out.println("No encontró una experiencia laboral igual en el perfil existente ......"
-					//	+ experiencia.institucionEmpresa + "\n");
 				experienciaLaboralManager.inExperienciaLaboral(experiencia, perfilExistente.ID);
 			}
 		}
@@ -393,12 +389,11 @@ public class ConvocatoriasExternasManager {
 			if (perfilExistente.EXPERIENCIA_LABORAL_OJ.stream()
 					.filter(actual -> (actual.dependencia.equals(experiencia.dependencia)
 							&& actual.jefeInmediato.equals(experiencia.jefeInmediato)
-							&& actual.motivoFinRelacionLaboral.equals(experiencia.motivoFinRelacionLaboral)))
+							&& actual.motivoFinRelacionLaboral.equals(experiencia.motivoFinRelacionLaboral)
+							&& actual.mostrar.equals("T")))
 					.findFirst().orElse(null) != null) {
 				experienciaLaboralOJManager.modExperienciaLaboralOJ(experiencia, experiencia.id);
 			} else {
-				//System.out.println("No encontró una experiencia laboral OJ igual en el perfil existente ......"
-				//		+ experiencia.dependencia + "\n");
 				experienciaLaboralOJManager.inExperienciaLaboralOJ(experiencia, perfilExistente.ID);
 			}
 		}
@@ -406,11 +401,10 @@ public class ConvocatoriasExternasManager {
 		// actualizar referencias personales
 		for (ReferenciasPersonales referencia : perfil.REFERENCIAS_PERSONALES) {
 			if (perfilExistente.REFERENCIAS_PERSONALES.stream()
-					.filter(actual -> actual.nombre.equals(referencia.nombre)).findFirst().orElse(null) != null) {
+					.filter(actual -> actual.nombre.equals(referencia.nombre) && actual.mostrar.equals("T")).findFirst()
+					.orElse(null) != null) {
 				referenciaPersonalManager.modReferenciaPersonal(referencia, referencia.id);
 			} else {
-				//System.out.println("No encontró una referencia personal igual en el perfil existente ......"
-				//		+ referencia.nombre + "\n");
 				referenciaPersonalManager.inReferenciaPersonal(referencia, perfilExistente.ID);
 			}
 		}
@@ -430,7 +424,8 @@ public class ConvocatoriasExternasManager {
 
 		List<InformacionAcademica> listaInfoAcademica = new ArrayList<InformacionAcademica>();
 		if (!perfil.NIVEL_APRIMARIA.equals("") && !perfil.GRADO_APRIMARIA.equals("")) {
-			System.out.println("nivel primaria, grado ......" + perfil.GRADO_APRIMARIA + " institucion: " + perfil.INSTITUCION_PRIMARIA+ "\n");
+			System.out.println("nivel primaria, grado ......" + perfil.GRADO_APRIMARIA + " institucion: "
+					+ perfil.INSTITUCION_PRIMARIA + "\n");
 			InformacionAcademica nivelPrimario = new InformacionAcademica();
 			nivelPrimario.nivelAcademico = perfil.NIVEL_APRIMARIA;
 			nivelPrimario.gradoAprobado = perfil.GRADO_APRIMARIA;
@@ -439,7 +434,8 @@ public class ConvocatoriasExternasManager {
 			listaInfoAcademica.add(nivelPrimario);
 		}
 		if (!perfil.NIVEL_ABASICOS.equals("") && !perfil.GRADO_ABASICOS.equals("")) {
-			System.out.println("nivel primaria, grado ......" + perfil.GRADO_ABASICOS + " institucion: " + perfil.INSTITUCION_BASICOS+ "\n");
+			System.out.println("nivel primaria, grado ......" + perfil.GRADO_ABASICOS + " institucion: "
+					+ perfil.INSTITUCION_BASICOS + "\n");
 			InformacionAcademica nivelBasico = new InformacionAcademica();
 			nivelBasico.nivelAcademico = perfil.NIVEL_ABASICOS;
 			nivelBasico.gradoAprobado = perfil.GRADO_ABASICOS;
@@ -448,7 +444,8 @@ public class ConvocatoriasExternasManager {
 			listaInfoAcademica.add(nivelBasico);
 		}
 		if (!perfil.NIVEL_ADIVERSIFICADO.equals("") && !perfil.GRADO_ADIVERSIFICADO.equals("")) {
-			System.out.println("nivel primaria, grado ......" + perfil.GRADO_ADIVERSIFICADO + " institucion: " + perfil.INSTITUCION_DIVERSIFICADO+ "\n");
+			System.out.println("nivel primaria, grado ......" + perfil.GRADO_ADIVERSIFICADO + " institucion: "
+					+ perfil.INSTITUCION_DIVERSIFICADO + "\n");
 			InformacionAcademica nivelDiversificado = new InformacionAcademica();
 			nivelDiversificado.nivelAcademico = perfil.NIVEL_ADIVERSIFICADO;
 			nivelDiversificado.gradoAprobado = perfil.GRADO_ADIVERSIFICADO;
@@ -464,7 +461,7 @@ public class ConvocatoriasExternasManager {
 			informacionAcademicaManager.modInformacionAcademica(info, usuario);
 		}
 	}
-	
+
 	public void insertarInformacionAcademicaPerfil(PerfilSolicitudEmpleo perfil, Integer usuario) throws Exception {
 
 		List<InformacionAcademica> listaInfoAcademica = new ArrayList<InformacionAcademica>();
@@ -557,7 +554,8 @@ public class ConvocatoriasExternasManager {
 		}
 	}
 
-	public void modificarInformacionUniversitariaPerfil(PerfilSolicitudEmpleo perfil, Integer usuario) throws Exception {
+	public void modificarInformacionUniversitariaPerfil(PerfilSolicitudEmpleo perfil, Integer usuario)
+			throws Exception {
 
 		List<InformacionUniversitaria> listaInfoUniversitaria = new ArrayList<InformacionUniversitaria>();
 
@@ -755,7 +753,7 @@ public class ConvocatoriasExternasManager {
 				perfil.CONSTANCIA_UNIVERSIDAD_POSGRADO = map.get("CONSTANCIA").toString();
 				perfil.SEMESTRE_APROBADO_POSGRADO = map.get("SEMESTRE_APROBADO").toString();
 				perfil.CIERRE_PENSUM_POSGRADO = map.get("CIERRE_PENSUM").toString();
-				perfil.GRADUADO_MAESTRIA = map.get("GRADUADO_MAESTRIA").toString();				
+				perfil.GRADUADO_MAESTRIA = map.get("GRADUADO_MAESTRIA").toString();
 				perfil.GRADUADO_DOCTORADO = map.get("GRADUADO_DOCTORADO").toString();
 			} else {
 				perfil.CARRERA_U = map.get("CARRERA").toString();

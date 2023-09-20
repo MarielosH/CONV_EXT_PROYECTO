@@ -207,6 +207,8 @@ export class CreacionConvocatoriaComponent implements OnInit {
       this.selectedFiles.push(files[i]);
       this.fileNames = `${this.fileNames}${this.dpi}/${files[i].name},`
     }
+    console.log(this.selectedFiles);
+    console.log(this.fileNames);
   }
 
   loadDetalles() {

@@ -128,12 +128,13 @@ public class IdiomaUsuarioManager {
 		jsonResult salida = new jsonResult();
 		System.out.println("dentro de llamar a modificar idioma usuario ......" + this.SCHEMA + "\n");
 		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
-				+ ".PKG_TC_IDIOMA_USUARIO.PROC_ACTUALIZAR_IDIOMA_USUARIO (?,?,?,?,?,?,?)");
+				+ ".PKG_TC_IDIOMA_USUARIO.PROC_ACTUALIZAR_IDIOMA_USUARIO (?,?,?,?,?,?,?,?)");
 		call.setInt("P_FK_TC_IDIOMA_USUARIO_REF_TC_IDIOMA", idioma);
 		call.setInt("P_FK_TC_IDIOMA_USUARIO_REF_TC_INFORMACION_PERSONAL_USUARIO", usuario);
 		call.setString("P_HABLA", calificacionIdioma(idiomaUsuario.habla));
 		call.setString("P_LEE", calificacionIdioma(idiomaUsuario.lee));
 		call.setString("P_ESCRIBE", calificacionIdioma(idiomaUsuario.escribe));
+		call.setString("P_MOSTRAR", "T");
 		call.registerOutParameter("p_id_salida", OracleTypes.NUMBER);
 		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
 	    call.execute();
@@ -141,12 +142,12 @@ public class IdiomaUsuarioManager {
 	    salida.msj = call.getString("p_msj");
 	    if (salida.id > 0)
 		      salida.result = "OK"; 
-			  System. out. println("todo ok......"+this.SCHEMA+"\n");
+			  System. out. println("MENSAJE ......"+salida.msj+"\n");
 		    call.close();		
 		return salida;
 	}
 	
-	public jsonResult modVisibilidadIdiomaUsuario(Integer usuario, Integer idioma) throws Exception {
+	public jsonResult modVisibilidadIdiomaUsuario(Integer idioma, Integer usuario) throws Exception {
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
 		jsonResult salida = new jsonResult();
@@ -160,6 +161,7 @@ public class IdiomaUsuarioManager {
 	    call.execute();
 	    salida.id = call.getInt("p_id_salida");
 	    salida.msj = call.getString("p_msj");
+	    System.out.println("mensaje eliminar idioma usuario ......" +  salida.msj + "\n");
 	    if (salida.id > 0)
 		      salida.result = "OK"; 
 			  System. out. println("todo ok......"+this.SCHEMA+"\n");

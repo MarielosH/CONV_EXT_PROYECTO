@@ -26,6 +26,7 @@ export class PerfilwizardComponent implements OnInit {
   tiposLicencias = [];
   discapacidades = [];
   generos = [];
+  selectedFiles: File[] = [];
   floatLabelControl = new FormControl('none');
   floatLabelControl2 = new FormControl('none');
   title = 'newMat';
@@ -48,6 +49,7 @@ export class PerfilwizardComponent implements OnInit {
   municipios;
   selMunicipio;
   selDepartamento;
+  fileNames = '';
   /* Controles */
   dpi;
   nombres;
@@ -1067,4 +1069,23 @@ export class PerfilwizardComponent implements OnInit {
     }
     this.referenciasPersonales.splice(index, 1);
   }
+
+  onFileSelected(event: any) {
+    const files: FileList = event.target.files;
+    for (let i = 0; i < files.length; i++) {
+      this.selectedFiles.push(files[i]);
+    }
+      console.log(this.selectedFiles);
+  }
+
+  subirPerfil() {
+    if (this.selectedFiles.length == 0) {
+      swal("Error", "Debes adjuntar la papeleria requerida para poder aplicar", "error");
+    } else {
+      this.selectedFiles.forEach(element => {
+        this.convocatoriasService.uploadDocument(element, localStorage.getItem('cui')).subscribe(data => { })
+      });
+    }
+  }
+
 }
