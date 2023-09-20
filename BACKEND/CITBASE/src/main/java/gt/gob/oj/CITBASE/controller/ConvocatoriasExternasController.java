@@ -43,10 +43,10 @@ public class ConvocatoriasExternasController {
 	        @FormDataParam("file") InputStream fileInputStream,
 	        @FormDataParam("file") FormDataContentDisposition fileFormDataContentDisposition,
 				@FormDataParam("directory") String directory) throws Exception {
-		 String fileLocation = "C://SAN//" + directory + "//" + "PerfilSolicitudEmpleo_"+fileFormDataContentDisposition.getFileName();  
+		 String fileLocation = "C://SAN//" + directory + "//perfil//Informacion_firmada.pdf";  
 			// saving file
 			try {
-				File directoryFile = new File("C://SAN//" + directory);
+				File directoryFile = new File("C://SAN//" + directory + "//perfil");
 				if (!directoryFile.exists()) {
 					directoryFile.mkdirs();
 				}
