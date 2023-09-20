@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
     this.aspirante = true;
     this.jefev = false;
     this.coordinador = false;
-    this.router.navigate(['/convocatorias-externas/gestion-convocatorias']);
+   // this.router.navigate(['/convocatorias-externas/gestion-convocatorias']);
   }
 
   clickCoordinador(){
@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
     this.aspirante = false;
     this.jefev = false;
     this.coordinador = true;
-    this.router.navigate(['/convocatorias-externas/gestion-convocatorias']);
+   // this.router.navigate(['/convocatorias-externas/gestion-convocatorias']);
   }
 
   clickJefeV(){
@@ -38,6 +38,6 @@ export class HomeComponent implements OnInit {
     this.aspirante = false;
     this.jefev = true;
     this.coordinador = false;
-    this.router.navigate(['/convocatorias-externas/gestion-convocatorias']);
+   // this.router.navigate(['/convocatorias-externas/gestion-convocatorias']);
   }
 }

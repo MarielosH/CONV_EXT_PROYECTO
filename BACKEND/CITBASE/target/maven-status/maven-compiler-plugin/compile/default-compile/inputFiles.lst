@@ -11,6 +11,7 @@ C:\Users\MarielosH\Desktop\CONV_EXT_PROYECTO\BACKEND\CITBASE\src\main\java\gt\go
 C:\Users\MarielosH\Desktop\CONV_EXT_PROYECTO\BACKEND\CITBASE\src\main\java\gt\gob\oj\CITBASE\model\FamiliaPerfilSE.java
 C:\Users\MarielosH\Desktop\CONV_EXT_PROYECTO\BACKEND\CITBASE\src\main\java\gt\gob\oj\CITBASE\model\ReferenciasPersonales.java
 C:\Users\MarielosH\Desktop\CONV_EXT_PROYECTO\BACKEND\CITBASE\src\main\java\gt\gob\oj\CITBASE\controller\EducacionConvController.java
+C:\Users\MarielosH\Desktop\CONV_EXT_PROYECTO\BACKEND\CITBASE\src\main\java\gt\gob\oj\CITBASE\controller\AplicarConvoctoriaController.java
 C:\Users\MarielosH\Desktop\CONV_EXT_PROYECTO\BACKEND\CITBASE\src\main\java\gt\gob\oj\CITBASE\manager\PasantiaOJManager.java
 C:\Users\MarielosH\Desktop\CONV_EXT_PROYECTO\BACKEND\CITBASE\src\main\java\gt\gob\oj\CITBASE\model\EstadoAplicacionConv.java
 C:\Users\MarielosH\Desktop\CONV_EXT_PROYECTO\BACKEND\CITBASE\src\main\java\gt\gob\oj\CITBASE\manager\ConvocatoriaManager.java
@@ -56,6 +57,7 @@ C:\Users\MarielosH\Desktop\CONV_EXT_PROYECTO\BACKEND\CITBASE\src\main\java\gt\go
 C:\Users\MarielosH\Desktop\CONV_EXT_PROYECTO\BACKEND\CITBASE\src\main\java\gt\gob\oj\CITBASE\controller\InformacionAcademicaController.java
 C:\Users\MarielosH\Desktop\CONV_EXT_PROYECTO\BACKEND\CITBASE\src\main\java\gt\gob\oj\CITBASE\manager\FamiliarManager.java
 C:\Users\MarielosH\Desktop\CONV_EXT_PROYECTO\BACKEND\CITBASE\src\main\java\gt\gob\oj\CITBASE\controller\ConvocatoriasExternasController.java
+C:\Users\MarielosH\Desktop\CONV_EXT_PROYECTO\BACKEND\CITBASE\src\main\java\gt\gob\oj\CITBASE\model\AplicantesConv.java
 C:\Users\MarielosH\Desktop\CONV_EXT_PROYECTO\BACKEND\CITBASE\src\main\java\gt\gob\oj\CITBASE\model\FamiliaresLaborandoOJ.java
 C:\Users\MarielosH\Desktop\CONV_EXT_PROYECTO\BACKEND\CITBASE\src\main\java\gt\gob\oj\CITBASE\manager\EducacionConvManager.java
 C:\Users\MarielosH\Desktop\CONV_EXT_PROYECTO\BACKEND\CITBASE\src\main\java\gt\gob\oj\CITBASE\controller\PasantiaOJController.java

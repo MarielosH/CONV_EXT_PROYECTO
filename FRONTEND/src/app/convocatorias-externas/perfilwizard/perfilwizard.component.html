@@ -1,15 +1,6 @@
 <br />
 <br />
 <br />
-<div class="row">
-  <div class="col-10"></div>
-  <div class="col-2">
-    <div class="button-group">
-      <button mat-raised-button class="btn btn-primary btn-block" (click)="crearPerfil()"
-        style="font-size: 12px;">Actualizar</button>
-    </div>
-  </div>
-</div>
 <br />
 
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
@@ -1606,22 +1597,17 @@
                       {{ referencia.nombre + ', tipo de relacion: '+ referencia.tipoRelacion + ', años de conocerlo: ' +
                       referencia.aniosConocerlo + ', telefono '+ referencia.telefono}}</mat-list-item>
                   </mat-list>
-                </td>               
-              </tr>
-              <tr>
-                <td style="width:40%">
-                </td>
-                <td style="width:60%">
-                  <br>
-                  <br>
-                  <br>
-                  <br>
-                  <br>
-                  <br>
-                  <p> _____________________________________________________</p>
-                  <p> {{ 'Firma del aspirante ' + this.firstFormGroup.value.nombres + ' ' +  this.firstFormGroup.value.primerApellido + ' ' + this.firstFormGroup.value.segundoApellido  }} </p>
 
-                </td>
+                  <br>
+                  <br>
+                  <br>
+                  <br>
+                  <br>
+                  <br>
+                  <p> &nbsp;&nbsp; _____________________________________________________</p>
+                  <p> &nbsp;&nbsp; {{ 'Firma del aspirante ' + this.firstFormGroup.value.nombres + ' ' +  this.firstFormGroup.value.primerApellido + ' ' + this.firstFormGroup.value.segundoApellido  }} </p>
+
+                </td>               
               </tr>
             </body>
           </table>
@@ -1629,15 +1615,16 @@
       </div>
       <div class="row">
         <div class="col-9"> <h4> Favor debe descargar el pdf, firmarlo y subirlo firmado. </h4></div>
-        <div class="col-3"> <button class="btn btn-primary" (click)="downloadAsPDF()">Descargar PDF</button> </div>
+        <div class="col-3"> <button class="btn btn-primary btn-lg" style="font-size: 14px; float: right;" (click)="downloadAsPDF()">Descargar archivo en PDF</button> </div>
       </div>  
-      <div class="row" >
-        <div style="width: 100%; text-align: right;">
-          <input type="file" name="files" multiple (change)="onFileSelected($event)" />
-          <br>
-          <button type="submit" mat-raised-button class="btn btn-success btn-lg" ui-sref="login"
-          style="font-size: 12px; float: right;" (click)="subirPerfil()">Aplicar a la convocatoria</button>  
-        </div>
+      <br>
+      <br>
+      <div class="row" > 
+        <div class="col-3">   </div>
+        <div class="col-6"> <input type="file" name="files" multiple (change)="onFileSelected($event)" /> </div>
+        <div class="col-3">  
+          <button class="btn btn-success btn-lg"  style="font-size: 14px; float: right;" (click)="subirPerfil()">Subir archivo pdf firmado</button>  
+         </div>
       </div>    
     </div>
 

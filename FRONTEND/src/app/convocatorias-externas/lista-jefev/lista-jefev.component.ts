@@ -74,6 +74,7 @@ export class ListaJefevComponent implements OnInit {
   cargarDocumentos(row){
     this.user = row;
     const tmp = row.documentos.split(',');
+    this.archivos = [];
     tmp.forEach(dir => {
       const path = this.appSettings.pathSAN + dir;
       this.archivos.push({path, dir})

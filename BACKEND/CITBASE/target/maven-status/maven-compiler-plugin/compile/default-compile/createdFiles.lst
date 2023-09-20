@@ -16,8 +16,10 @@ gt\gob\oj\CITBASE\manager\LoginManager.class
 gt\gob\oj\utils\ResourceLoader.class
 gt\gob\oj\CITBASE\Authorize.class
 gt\gob\oj\CITBASE\manager\EducacionManager.class
+gt\gob\oj\CITBASE\controller\AplicarConvoctoriaController.class
 gt\gob\oj\CITBASE\manager\HabilidadTecnicaManager.class
 gt\gob\oj\CITBASE\model\InformacionUniversitaria.class
+gt\gob\oj\CITBASE\model\AplicantesConv.class
 gt\gob\oj\CITBASE\model\Convocatoria.class
 gt\gob\oj\CITBASE\controller\ExperienciaLaboralController.class
 gt\gob\oj\CITBASE\manager\EstadoAplicacionConvManager.class

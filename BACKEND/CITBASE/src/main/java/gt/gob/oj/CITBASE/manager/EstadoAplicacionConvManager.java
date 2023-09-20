@@ -1,5 +1,6 @@
 package gt.gob.oj.CITBASE.manager;
 
+import java.io.File;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -98,9 +99,8 @@ public class EstadoAplicacionConvManager {
 		List<AplicantesConv> listaEstados = new ArrayList<>();
 		ConnectionsPool c = new ConnectionsPool();
 		Connection conn = c.conectar();
-		CallableStatement call = conn
-				.prepareCall("call " + "CIT_BASE" +
-						".PKG_TC_ESTADO_APLICACION_CONV.PROC_MOSTRAR_TC_ESTADO_APLICACION_CONV_FILTER_CONV(?,?,?)");
+		CallableStatement call = conn.prepareCall("call " + "CIT_BASE"
+				+ ".PKG_TC_ESTADO_APLICACION_CONV.PROC_MOSTRAR_TC_ESTADO_APLICACION_CONV_FILTER_CONV(?,?,?)");
 		call.setInt("p_id_conv", conv);
 		call.registerOutParameter("p_cur_dataset", OracleTypes.CURSOR);
 		call.registerOutParameter("p_msj", OracleTypes.VARCHAR);
@@ -114,10 +114,10 @@ public class EstadoAplicacionConvManager {
 				String value = Objects.toString(rset.getString(key), "");
 				switch (key) {
 				case "ID_APLICACION_CONVOCATORIA":
-					estadoConv.id= Integer.parseInt(value);
+					estadoConv.id = Integer.parseInt(value);
 					break;
 				case "ESTADO_APLICACION_CONV":
-					if(value.equals("E")) {
+					if (value.equals("E")) {
 						estadoConv.estado = "En proceso";
 					} else if (value.equals("A")) {
 						estadoConv.estado = "Aceptado";
@@ -126,7 +126,16 @@ public class EstadoAplicacionConvManager {
 					}
 					break;
 				case "DOCUMENTOS":
-					estadoConv.documentos = value;					
+					if (!value.equals("")) {
+						String[] parts = value.split("/");
+						String dpi = parts[0]; // dpi
+						System.out.println("   dpi del documento:    " + dpi);
+						String pathPerfil = dpi + "/perfil/Informacion_firmada.pdf,";
+						estadoConv.documentos = value + pathPerfil;
+					} else {
+						estadoConv.documentos = value;
+					}
+
 					break;
 				case "TITULO_CONVOCATORIA":
 					estadoConv.titulo = value;
@@ -141,9 +150,10 @@ public class EstadoAplicacionConvManager {
 		rset.close();
 		call.close();
 		conn.close();
-		
+
 		return listaEstados;
 	}
+	
 	
 	public jsonResult modEstadoAplicacionConv(EstadoAplicacionConv estadoAplicacionConv, Integer id) throws Exception {
 		ConnectionsPool c = new ConnectionsPool();
